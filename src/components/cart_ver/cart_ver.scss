@@ -1,0 +1,68 @@
+@use '../../scss/' as *;
+
+.cart__ver {
+    @include flex (center, space-between);
+    background-color: #FFE4C4;
+
+    img {
+        height: 50px;
+        width: 50px;
+        object-fit: cover;
+        margin: 10px;
+    }
+    
+    &__info {
+        font-size: 1rem;
+        flex: 1;
+
+    
+        span {
+            font-weight: 500;
+            padding-right: 10px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+        }
+    
+        p {
+            font-size: 0.8rem; 
+            padding-right: 10px;
+            display: -webkit-box;
+            flex: 1;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+    }
+
+    &__total {
+        @include flex(end, center);
+        flex-direction: column;
+        font-size: 1rem;
+
+        &__price {
+            @include flex(center, center);
+            margin-right: 10px;
+            span {
+                font-weight: 500;
+                color: #800000;
+            }
+
+            p {
+                padding-left: 5px;
+                font-size: 0.8rem;
+            }
+        }
+
+        &__btn {
+            margin-right: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+
+            &:hover {
+                color: #CD853F;
+            }
+        }
+    }
+}

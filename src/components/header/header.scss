@@ -74,11 +74,77 @@
 
         &__options {
             @include flex (center, space-between);
+            font-size: 1.4rem;
 
             & > * ~ * {
                 margin-left: 40px;
             }
 
+            &__notify {
+                position: relative;
+
+                &__dot {
+                    position: absolute;
+                    background-color: red;
+                    height: 7px;
+                    width: 7px;
+                    border-radius: 50%;
+                    top: 6px;
+                    right: 0px;
+                    @include flex (center, center);
+                }
+
+                &__list {
+                    position: absolute;
+                    top: 41px;
+                    right: -8px;
+                    height: auto;
+                    width: 450px;
+                    background-color: #FFF8DC;
+                    display: none;
+                    $width-show: calc(100% - 22px) ;
+                    transform-origin: $width-show top;
+                    animation: notify_Show ease-in 0.2s;
+                    will-change: transform;
+                    box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: -25px;
+                        right: 0px;
+                        border-style: solid;
+                        border-width: 15px 20px;
+                        border-color: transparent transparent #FFF8DC transparent;
+                    }
+
+                    &.notifyShow {
+                        display: block;
+                    }
+
+                    &__txt {
+                        font-size: 1rem;
+                        font-weight: 500;
+                        color: #999;
+                        padding: 10px 0 10px 10px;
+                    }
+
+                    &__ul {
+                        height: 300px;
+                        list-style: none;
+                        overflow-y: auto;
+                    }
+
+                    &__btn {
+                        height: 40px;
+                        width: 100%;
+                        cursor: pointer;
+                        @include flex (center, center);
+
+                        margin: auto;
+                    }
+                }
+            }
         }
 
         &__mobile {
@@ -100,6 +166,7 @@
             width: 100%;
             @include flex (center, center);
             padding: 0 20px;
+            position: relative;
 
             &__nav {
                 display: none;
@@ -111,8 +178,8 @@
 
             &__mobile {
                 display: block;
-                position: relative;
-                right: -110px;
+                position: absolute;
+                right: 20px;
                 top: 0;
                 bottom: 0;
                 font-size: 2rem;
@@ -127,6 +194,7 @@
                     background-color: rgba(0, 0, 0, 0.3);
                     display: none;
                     animation: fadeIn linear 0.3s;
+                    will-change: opacity;
 
                     &.ovl {
                         display: block;
@@ -139,14 +207,43 @@
                     right: 0;
                     width: 80%;
                     height: 100%;
-                    z-index: 101;
-                    background-color: #B0E0E6;
+                    z-index: 100;
+                    background-color: bisque;
                     font-size: 1.1rem;
                     transform: translateX(100%);
                     transition: transform linear 0.3s;
 
+                    i {
+                        position: fixed;
+                        top: 10px;
+                        right: 10px;
+                        font-size: 3rem;
+                    }
+
+                    ul {
+                        height: 100%;
+                        width: 100%;
+                        margin-top: 50px;
+
+                        li {
+                            height: 7%;
+                            width: 100%;
+                            font-size: 1.6rem;
+                            @include flex (center, center);
+                            border-bottom: 1px solid #ccc;
+                        }
+                    }
+
                     &.show {
                         transform: translateX(0%);
+                    }
+
+                    &__btn {
+                        height: 7%;
+                        width: 100%;
+                        font-size: 1.6rem;
+                        @include flex (center, center);
+                        border-bottom: 1px solid #ccc;
                     }
                 }
             }
@@ -160,5 +257,14 @@
     }
     to {
         opacity: 1;
+    }
+}
+
+@keyframes notify_Show {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
     }
 }
