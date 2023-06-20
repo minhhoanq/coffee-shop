@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.scss';
+import 'swiper/swiper.min.css';
 import { publicRoutes } from './config/routes';
 import DefaultLayout from './components/layout/defaultlayout/DefaultLayout';
 import { Fragment } from 'react';

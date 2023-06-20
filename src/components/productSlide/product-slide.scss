@@ -1,0 +1,48 @@
+@use '../../scss/' as *;
+
+.product-slide-item {
+    @include flex (center, center);
+    background-color: #FFE4C4;
+
+    &__wrapper {
+        @include flex (center, space-between);
+        width: 70%;
+
+        &__content {
+            @include flex (start, center);
+            flex-direction: column;
+            flex: 1;
+            margin-left: 20px;
+
+            &__type {
+                font-size: 1.4rem;
+            }
+
+            &__title {
+                font-size: 2rem;
+                font-weight: 600;
+                margin-right: 100px;
+            }
+
+            &__overview {
+
+            }
+
+            & > * ~ * {
+                margin-top: 10px;
+            }
+        }
+
+        &__img {
+            @include flex (center, flex-end);
+
+            img {
+                
+            height: 400px;
+            width: 400px;
+            object-fit: contain;
+            }
+        }
+    }
+
+}
