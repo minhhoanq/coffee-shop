@@ -152,8 +152,22 @@
         }
     }
 
+    @include tablet {
+        
+       &__wrapper {
+        width: 95%;
+        &__options {
+            @include flex (center, space-between);
+            font-size: 1.4rem;
+
+            & > * ~ * {
+                margin-left: 20px;
+            }
+        }
+       }
+    }
+
     @include mobile {
-       
         $height-header-mobile: calc($header-height * 0.7);
         height: $height-header-mobile;
 

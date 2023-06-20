@@ -1,0 +1,37 @@
+@use '../../scss/' as *;
+
+.button {
+    border: 4px solid transparent;
+    background-color: #F4A460;
+    color: $white-color;
+    border-radius: 10px;
+    padding: 0.5rem 1.8rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: $main-color;
+}
+
+.button-outline {
+    border: 3px solid $white-color;
+    background-color: transparent;
+    color: $white-color;
+    box-shadow: unset;  
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.button-outline:hover {
+    box-shadow: unset;
+    color: $main-color;
+    background-color: $white-color;
+}
+
+.button.small {
+    border-width: 2px;
+    padding: 0.25rem 1.5rem;
+    font-size: 1rem;
+}

@@ -1,3 +1,9 @@
+@use '../../scss/' as *;
+
 .home {
     margin-top: 4rem;
+    @include mobile {
+        $height-header-mobile: calc($header-height * 0.7);
+        margin-top: $height-header-mobile;
+    }
 }

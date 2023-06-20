@@ -7,6 +7,8 @@ import hero from '../../assets/images/hero-img.png';
 import sofa1 from '../../assets/images/double-sofa-01.png';
 import sofa2 from '../../assets/images/double-sofa-02.png';
 
+import Button from "../button/Button";
+
 import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -52,7 +54,7 @@ export const ProductSlideItem = props => {
                     <span className="product-slide-item__wrapper__content__type">Trending product 2023</span>
                     <h1 className="product-slide-item__wrapper__content__title">Make Your Interior More Minimalistic & Modern</h1>
                     <span className="product-slide-item__wrapper__content__overview">Loren ipsum dolor sit amet consectetur, adipisicing elit. Quaerat nulla repellat quo eaque alias corporis sunt, facilis nesciunt rem fugit</span>
-                    {/* <Button>SHOP NOW</Button> */}
+                    <Button>SHOP NOW</Button>
                 </div>
 
                 <div className="product-slide-item__wrapper__img">

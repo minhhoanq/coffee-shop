@@ -1,15 +1,21 @@
 @use '../../scss/' as *;
 
+.product-slide {
+    background-color: #FFE4C4;
+    @include mobile {
+    }
+}
+
 .product-slide-item {
     @include flex (center, center);
-    background-color: #FFE4C4;
-
+    width: 100%;
     &__wrapper {
         @include flex (center, space-between);
         width: 70%;
+        padding: 20px;
 
         &__content {
-            @include flex (start, center);
+            @include flex (flex-start, center);
             flex-direction: column;
             flex: 1;
             margin-left: 20px;
@@ -29,20 +35,93 @@
             }
 
             & > * ~ * {
-                margin-top: 10px;
+                margin-top: 20px;
             }
         }
 
         &__img {
             @include flex (center, flex-end);
 
-            img {
-                
-            height: 400px;
-            width: 400px;
-            object-fit: contain;
+            img { 
+                height: 400px;
+                width: 400px;
+                object-fit: contain;
             }
         }
     }
 
+    @include tablet {
+
+        &__wrapper {
+            @include flex (center, center);
+            flex-direction: column-reverse;
+            padding-bottom: 20px;
+
+            &__content {
+                @include flex (center, center);
+                margin: 0;
+                &__type{
+                    display: none;
+                }
+
+                &__title {
+                    margin: 0;
+                    font-size: 1rem;
+                }
+
+                &__overview {
+                    margin: 0;
+                }
+            }
+
+            &__img {
+                width: 200px;
+                height: 200px;
+                @include flex (center, center);
+                img {
+                    width: 220px;
+                    height: 220px;
+                    object-fit: contain;
+                }
+            }
+        }
+    }
+
+    @include mobile {
+
+        &__wrapper {
+            @include flex (center, center);
+            flex-direction: column-reverse;
+            padding-bottom: 20px;
+            width: 80%;
+
+            &__content {
+                @include flex (center, center);
+                margin: 0;
+                &__type, &__overview {
+                    display: none;
+                }
+
+                &__title {
+                    margin: 0;
+                    font-size: 1.2rem;
+                }
+
+                &__btn {
+                    margin: 0;
+                }
+            }
+
+            &__img {
+                width: 200px;
+                height: 200px;
+                @include flex (center, center);
+                img {
+                    width: 220px;
+                    height: 220px;
+                    object-fit: contain;
+                }
+            }
+        }
+    }
 }

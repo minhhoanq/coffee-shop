@@ -1,0 +1,119 @@
+@use '../../scss/' as *;
+
+.helmet {
+    width: 100%;
+    @include flex(center, center);
+    flex-wrap: wrap;
+
+    margin-top: 70px;
+    & > * ~ * {
+        margin-left: 40px;
+    }
+
+    @include tablet {
+        & > * ~ * {
+            margin-left: 0px;
+        }
+    }
+
+    @include mobile {
+        @include flex(center, center);
+        flex-direction: column;
+
+        margin-top: 40px;
+        & > * ~ * {
+            margin-left: 0;
+        }
+    }
+}
+
+.helmet-item {
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-left: 10px;
+    &__wrapper {
+        padding: 20px;
+        box-sizing: border-box;
+
+        @include flex (center, space-between);
+
+        &__icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: 	#000066;
+            font-size: 2rem;
+            color: $white-color;
+            @include flex (center, center);
+        }
+
+        &__content {
+
+            &__title {
+                font-weight: 600;
+            }
+
+            &__sub-title {
+                font-size: 0.9rem;
+            }
+        }
+
+        & > * ~ * {
+            margin-left: 10px;
+        }
+    }
+
+    @include tablet {
+
+        &__wrapper {
+            padding: 10px;
+            box-sizing: border-box;
+
+            @include flex (center, space-between);
+
+            &__icon {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background-color: 	#000066;
+                font-size: 2rem;
+                color: $white-color;
+                @include flex (center, center);
+            }
+
+            &__content {
+
+                &__title {
+                    font-weight: 600;
+                }
+
+                &__sub-title {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+    }
+
+    @include mobile {
+
+        width: 50%;
+        
+        &__wrapper {
+            @include flex (center, flex-start);
+            padding: 10px;
+            box-sizing: border-box;
+    
+            &__content {
+    
+                &__title {
+                    font-size: 1.6rem;
+                    font-weight: 600;
+                }
+    
+                &__sub-title {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+    }
+}
