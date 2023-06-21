@@ -1,0 +1,7 @@
+@use '../../scss/' as *;
+
+.page-header {
+    @include flex(center, center);
+    height: 200px;
+    font-size: 1.5rem;
+}

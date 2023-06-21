@@ -1,0 +1,38 @@
+@use '../../scss/' as *;
+
+.footer {
+    @include flex(center, center);
+    background-color: #000029;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+
+    &__wrapper {
+        width: 80%;
+        padding: 40px 0;
+        @include flex(flex-start, space-between);
+
+        &__item {
+            @include flex(flex-start,flex-start);
+            
+            flex-direction: column;
+            flex: 1;
+            
+            a, p {
+                font-size: 1rem;
+                font-weight: 300;
+                line-height: 30px;
+            }
+            
+        }
+    }
+
+    @include mobile {
+
+        
+    }
+}
+
+.temp {
+    flex: 2;
+}

@@ -1,0 +1,109 @@
+@use '../../scss/' as *;
+
+.shop {
+    width: 100%;
+    @include flex (center, center);
+
+    &__wrapper {
+        margin: 80px 0 50px 0;
+        @include flex (center, center);
+
+        &__selects {
+            @include flex (center, space-between);
+            margin-right: 80px;
+            &__filter {
+                margin-right: 30px;
+                select {
+                    background-color: $main-color;
+                    height: 30px;
+                    width: 150px;
+                    outline: none;
+                    border-radius: 4px;
+                }
+            }
+    
+            &__sort {
+                select {
+                    background-color: $main-color;
+                    height: 30px;
+                    width: 120px;
+                    outline: none;
+                    border-radius: 4px;
+                }
+            }
+        }
+
+        &__search{
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            width: 440px;
+            height: 30px;
+            input {
+                width: 400px;
+                height: 30px;
+                padding: 0 10px;
+            }
+
+            i {
+                cursor: pointer;
+                box-sizing: border-box;
+                padding: 10px;
+            }
+        }
+    }
+
+    @include tablet {
+
+        &__wrapper {
+            @include flex (center, flex-start);
+            flex-wrap: wrap-reverse;
+            margin-left: 40px;
+
+            &__selects {
+                margin-top: 10px;
+            }
+        }
+    }
+
+    @include mobile {
+        &__wrapper {
+            margin: 50px 0;
+            @include flex (flex-start, space-around);
+            flex-direction: column-reverse;
+    
+            &__selects {
+                @include flex (center, space-between);
+                margin-top: 10px;
+    
+                &__filter {
+
+                    select {
+                        height: 25px;
+                        width: 130px;
+                        font-size: 1.2rem;
+                    }
+                }
+        
+                &__sort {
+                    select {
+                        height: 25px;
+                        width: 100px;
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+           
+            &__search {
+                width: 60%;
+                input {
+                    width: 85%;
+                }
+    
+                i {
+                    padding: 10px;
+                    box-sizing: border-box;
+                }
+            }
+        }
+    }
+}

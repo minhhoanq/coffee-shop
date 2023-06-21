@@ -4,7 +4,7 @@
     width: 250px;
     @include flex (flex-start, center);
     flex-direction: column;
-    margin: 0 10px 20px;
+    margin: 0 20px 20px;
 
     &__link {
         padding: 5px;

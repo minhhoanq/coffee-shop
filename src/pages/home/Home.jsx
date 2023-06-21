@@ -18,19 +18,19 @@ const Home = () => {
 
     useEffect(() => {
         const filterSofas = products.filter((item) => item.category === 'sofa');
-        setSofas(filterSofas)
+        setSofas(filterSofas);
 
         const filtersetMoblies = products.filter((item) => item.category === 'mobile');
-        setMoblies(filtersetMoblies)
+        setMoblies(filtersetMoblies);
 
         const filterWatchs = products.filter((item) => item.category === 'watch');
-        setWatchs(filterWatchs)
+        setWatchs(filterWatchs);
 
         const filterWireless = products.filter((item) => item.category === 'wireless');
-        setWireless(filterWireless)
+        setWireless(filterWireless);
 
         const filterChairs = products.filter((item) => item.category === 'chair');
-        setChairs(filterChairs)
+        setChairs(filterChairs);
     },[]);
 
     return (
