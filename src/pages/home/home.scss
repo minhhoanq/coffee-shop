@@ -6,4 +6,16 @@
         $height-header-mobile: calc($header-height * 0.7);
         margin-top: $height-header-mobile;
     }
+
+    &__list-product {
+        @include flex (flex-start, center);
+        flex-direction: column;
+        margin-top: 70px;
+        
+        &__title {
+            font-size: 2rem;
+            font-weight: 500;
+            margin: auto;
+        }
+    }
 }

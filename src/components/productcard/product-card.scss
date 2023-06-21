@@ -1,0 +1,93 @@
+@use '../../scss/' as *;
+
+.product-card {
+    width: 250px;
+    @include flex (flex-start, center);
+    flex-direction: column;
+    margin: 0 10px 20px;
+
+    &__link {
+        padding: 5px;
+        box-sizing: border-box;
+        &__img {
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+        }
+
+        &__info {
+
+            &__name {
+                font-size: 1rem;
+                font-weight: 500;
+            }
+
+            &__type {
+                font-size: 0.9rem;
+            }
+        }
+    }
+
+    &__actions {
+        @include flex (center, space-between);
+        width: 100%;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        padding: 5px;
+        box-sizing: border-box;
+
+        &__price {
+
+        }
+
+        &__btn {
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+    }
+
+    &:hover {
+        scale: 1.1;
+    }
+
+    @include mobile {
+        width: 200px;
+        margin: 0;
+
+        &__link {
+
+            &__img {
+                width: 200px;
+                height: 200px;
+                object-fit: contain;
+            }
+    
+            &__info {
+    
+                &__name {
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                }
+    
+                &__type {
+                    font-size: 1.1rem;
+                }
+            }
+        }
+    
+        &__actions {
+            &__price {
+                font-size: 1.4rem;
+            }
+    
+            &__btn {
+                font-size: 2rem;
+                cursor: pointer;
+            }
+        }
+
+        &:hover {
+            scale: 1;
+        }
+    }
+}
