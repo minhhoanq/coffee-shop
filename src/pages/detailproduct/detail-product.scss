@@ -1,0 +1,159 @@
+@use '../../scss/' as *;
+
+.detail-product {
+    margin-top: 4rem;
+
+    &__wrapper {
+        width: 100%;
+        @include flex (center, space-between);
+        padding: 0 200px;
+        box-sizing: border-box;
+
+        &__img {
+            height: 450px;
+            width: 450px;
+            @include flex (center, center);
+
+            img {
+                height: 450px;
+                width: 450px;
+                object-fit: contain;
+            }
+        }
+
+        &__info {
+            width: 55%;
+            & > * ~ * {
+                margin-top: 10px;
+            }
+
+            &__name {
+                font-size: 1.6rem;
+                font-weight: 500;
+            } 
+            
+            &__rating {
+                @include flex (center, flex-start);
+                font-size: 1.2rem;
+
+                & > * ~ * {
+                    margin-left: 40px;
+                }
+
+                &__star {
+                    
+                    i {
+                        color: $main-color;
+                    }
+                }
+
+                &__ratings {
+                    span {
+                        color: $main-color;
+                    }
+                }
+                
+            }
+
+            &__cate {
+                @include flex (center, flex-start);
+                & > * ~ * {
+                    margin-left: 100px;
+                }
+
+                &__price {
+                    font-weight: 500;
+                }
+            }
+
+            &__desc {
+                font-size: 1rem;
+            }
+
+            &__btn {
+                @include flex (center, center);
+                width: 140px;
+                height: 40px;
+            }
+        }
+    }
+
+    @include mobile {
+        
+        &__wrapper {
+            width: 100%;
+            @include flex (center, center);
+            flex-direction: column;
+            padding: 0 21%;
+
+            &__img {
+                height: 250px;
+                width: 350px;
+                @include flex (center, center);
+    
+                img {
+                    object-fit: contain;
+                }
+            }
+    
+            &__info {
+                width: 100%;
+                & > * ~ * {
+                    margin-top: 10px;
+                }
+    
+                &__name {
+                    font-size: 2rem;
+                    font-weight: 500;
+                } 
+                
+                &__rating {
+                    @include flex (center, flex-start);
+                    font-size: 1.8rem;
+    
+                    & > * ~ * {
+                        margin-left: 40px;
+                    }
+    
+                    &__star {
+                        
+                        i {
+                            color: $main-color;
+                        }
+                    }
+    
+                    &__ratings {
+                        span {
+                            color: $main-color;
+                        }
+                    }
+                    
+                }
+    
+                &__cate {
+                    @include flex (center, flex-start);
+                    font-size: 1.8rem;
+                    & > * ~ * {
+                        margin-left: 100px;
+                    }
+    
+                    &__price {
+                        font-weight: 500;
+                    }
+                }
+    
+                &__desc {
+                    display: none;
+                }
+    
+                &__btn {
+                    @include flex (center, center);
+                    font-size: 1.4rem;
+                    width: 50%;
+                    height: 35px;
+                    margin: 20px auto;
+                }
+            }
+        }
+    }
+}

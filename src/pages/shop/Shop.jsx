@@ -16,10 +16,10 @@ const Shop = () => {
         const value = e.target.value;
 
         if(value === 'default') {
-            setFilterProducts(products); 
+            setFilterProducts(filterProducts); 
             return;
         } else {
-            const filterItems = products.filter((item) => item.category === value); 
+            const filterItems = filterProducts.filter((item) => item.category === value); 
             setFilterProducts(filterItems); 
             return;
         }
@@ -36,19 +36,16 @@ const Shop = () => {
 
         console.log(value);
         if(value === 'default') {
-            setFilterProducts(products);
+            setFilterProducts(filterProducts);
             return;
         }
 
         if(value === 'ascending') {
-            const sortItems = products.sort((item1, item2) => item1.price - item2.price);
+            const sortItems = filterProducts.sort((item1, item2) => item1.price - item2.price);
             setFilterProducts(sortItems);
             return;
         }
     }
-
-    console.log(filterProducts);
-
 
     //Search
     useEffect(() => {
@@ -61,7 +58,7 @@ const Shop = () => {
 
 
     return (
-        <div className="mb-3">
+        <div className="mb-3" style={{marginTop: '4rem'}}>
             <PageHeader title={'Product Cart'}/>
             <div className="shop">
                 <div className="shop__wrapper">
@@ -77,7 +74,7 @@ const Shop = () => {
                         </div>
 
                         <div className="shop__wrapper__selects__sort" >
-                            <select name="sort" id="sort" onChange={handleSort}>
+                            <select name="sort" id="sort" onClick={handleSort}>
                                 <option value="default">Sort by</option>
                                 <option value="ascending">Ascending</option>
                                 <option value="descending">Descending</option>
