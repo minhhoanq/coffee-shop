@@ -1,12 +1,16 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 import './detail-product.scss';
 import PageHeader from '../../components/pageheader/PageHeader';
 import Button from '../../components/button/Button';
 import { useParams } from "react-router-dom";
 import products from '../../assets/data/products';
+import TabReview from "../../components/tabreview/TabReview";
+import ProductList from '../../components/productlist/ProductList';
 
 const DetailProduct = () => {
+
+    const[productSimilars, setProductSimilars] = useState([]);
 
     const { id } = useParams();
 
@@ -17,6 +21,13 @@ const DetailProduct = () => {
             value = item;
         }
     });
+
+    useEffect(() => {
+        const listSimilars = products.filter((item) => item.category === value.category);
+        setProductSimilars(listSimilars);
+    },[]);
+
+    console.log(productSimilars);
 
     return (
         <div className="detail-product">
@@ -64,6 +75,15 @@ const DetailProduct = () => {
 
                     <Button className="detail-product__wrapper__info__btn">Add to cart</Button>
                 </div>
+            </div>
+
+            <div className="detail-product__review">
+                <TabReview item={value}/>
+            </div>
+
+            <div className="detail-product__similar">
+                <span className="detail-product__similar__title">You might also like</span>
+                <ProductList items={productSimilars}/>
             </div>
         </div>
     );

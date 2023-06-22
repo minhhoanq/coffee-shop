@@ -1,0 +1,84 @@
+@use '../../scss/' as *;
+
+.tab-review {
+    width: 100%;
+
+    margin-bottom: 50px;
+    & > * ~ * {
+        margin-top: 40px
+    }
+
+    &__wrapper {
+        @include flex (center, flex-start);
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #999;
+
+        &__desc {
+            margin-right: 50px;
+        }
+    }
+
+    .tab-reviews {
+
+        &__users {
+            margin-top: 15px;
+            @include flex (flex-start, center);
+            flex-direction: column;
+            font-size: 1rem;
+
+            &__name {
+                font-weight: 500;
+            }
+
+            &__rate {
+                color: $main-color;
+            }
+
+            &__comment {
+                margin-top: 5px;
+            }
+        }
+
+        &__write {
+            width: 70%;
+            margin: 30px auto 0;
+            @include flex (flex-start, center);
+            flex-direction: column;
+
+            & > * ~ * {
+                margin-top: 20px
+            }
+
+            &__title {
+                font-size: 1.1rem;
+                font-weight: 600;
+            }
+
+            &__rating {
+                font-size: 1.2rem;
+                color: $main-color;
+                & > * ~ * {
+                    margin-left: 50px;
+                }
+            }
+
+            &__wrapper {
+                width: 100%;
+                height: 100px;
+
+                &__content {
+                    width: 100%;
+                    height: 100px;
+                    border-radius: 5px;
+                }
+            }
+            
+        }
+    }
+
+    .active {
+        font-weight: 600;
+        color: $black-color;
+    }
+}

@@ -78,6 +78,41 @@
         }
     }
 
+    &__review {
+        margin: 0 200px;
+    }
+
+    &__similar {
+        margin: 0 0 50px 200px;
+
+        &__title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+    }
+
+    @include tablet {
+
+        &__wrapper {
+            width: 100%;
+            @include flex(center, space-between);
+            padding: 0 10%;
+
+            &__img {
+                height: 350px;
+                width: 350px;
+                @include flex (center, center);
+    
+                img {
+                    height: 350px;
+                    width: 350px;
+                    object-fit: contain;
+                }
+            }
+        }
+    }
+
     @include mobile {
         
         &__wrapper {
