@@ -7,69 +7,54 @@ import products from '../../assets/data/products';
 import useDebounce from "../../hooks/useDebounce";
 
 const Shop = () => {
-    //Static variable view
-    const[sofas, setSofas] = useState([]);
-    const[mobiles, setMoblies] = useState([]);
-    const[watchs, setWatchs] = useState([]);
-    const[wireless, setWireless] = useState([]);
-    const[chairs, setChairs] = useState([]);
 
-    //Dymanic variable view
-    const[filterProducts, setFilterProducts] = useState([]);
-
+    const[filterProducts, setFilterProducts] = useState(products);
     const[valueSearch, setValueSearch] = useState('');
-
     const debouncedValue = useDebounce(valueSearch , 800);
 
     const handleFilter = (e) => {
         const value = e.target.value;
 
         if(value === 'default') {
-            setFilterProducts([]); 
+            setFilterProducts(products); 
+            return;
+        } else {
+            const filterItems = products.filter((item) => item.category === value); 
+            setFilterProducts(filterItems); 
             return;
         }
-
-        const filterItems = products.filter((item) => item.category === value); 
-        setFilterProducts(filterItems); 
     }
 
     const handleSearch = (e) => {
         const value = e.target.value;
 
-        setValueSearch(value);
+        setValueSearch(value.trim());
     }
 
-    //console.log(filterProducts);
+    const handleSort = (e) => {
+        const value = e.target.value;
 
-    //Filter
-    useEffect(() => {
-        const filterSofas = products.filter((item) => item.category === 'sofa');
-        setSofas(filterSofas);
+        console.log(value);
+        if(value === 'default') {
+            setFilterProducts(products);
+            return;
+        }
 
-        const filtersetMoblies = products.filter((item) => item.category === 'mobile');
-        setMoblies(filtersetMoblies);
+        if(value === 'ascending') {
+            const sortItems = products.sort((item1, item2) => item1.price - item2.price);
+            setFilterProducts(sortItems);
+            return;
+        }
+    }
 
-        const filterWatchs = products.filter((item) => item.category === 'watch');
-        setWatchs(filterWatchs);
+    console.log(filterProducts);
 
-        const filterWireless = products.filter((item) => item.category === 'wireless');
-        setWireless(filterWireless);
-
-        const filterChairs = products.filter((item) => item.category === 'chair');
-        setChairs(filterChairs);
-    },[]);
 
     //Search
     useEffect(() => {
-        // if(debouncedValue === '') {
-        //     setFilterProducts([]);
-        //     return;
-        // }
         const searchItems = products.filter(
             item => item.productName.toLowerCase().includes(debouncedValue.toLowerCase())
         );
-
-        console.log(searchItems);
 
         setFilterProducts(searchItems);
     },[debouncedValue]);
@@ -82,7 +67,7 @@ const Shop = () => {
                 <div className="shop__wrapper">
                     <div className="shop__wrapper__selects">
                         <div className="shop__wrapper__selects__filter">
-                            <select name="carts" id="carts" onClick={handleFilter}>
+                            <select name="carts" id="carts" onChange={handleFilter}>
                                 <option value="default">Filter by category</option>
                                 <option value="sofa">Sofa</option>
                                 <option value="mobile">Mobile</option>
@@ -91,8 +76,8 @@ const Shop = () => {
                             </select>
                         </div>
 
-                        <div className="shop__wrapper__selects__sort">
-                            <select name="sort" id="sort">
+                        <div className="shop__wrapper__selects__sort" >
+                            <select name="sort" id="sort" onChange={handleSort}>
                                 <option value="default">Sort by</option>
                                 <option value="ascending">Ascending</option>
                                 <option value="descending">Descending</option>
@@ -106,11 +91,19 @@ const Shop = () => {
                     </div>
                 </div>
             </div>
-            
-            <ProductList items={filterProducts} />
+
+            {
+                filterProducts.length > 0 ? (
+                    <ProductList items={filterProducts} />
+                ) : 
+                (
+                    <div className="no-product">
+                        <i class="ri-emotion-sad-line"></i>
+                        No Products...
+                    </div>
+                )
+            }
         </div>
-
-
     )
 }
 
