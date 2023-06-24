@@ -1,11 +1,26 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 import './cart.scss';
 import PageHeader from '../../components/pageheader/PageHeader';
 import Button from '../../components/button/Button';
 import temp from '../../assets/images/arm-chair-01.jpg';
 
+import { useSelector } from "react-redux";
+
 const Cart = () => {
+
+    const cartList = useSelector(state => state.cart.cartItems);
+
+    const [totalPrice, setTotalPrice] = useState(0);
+
+    useEffect(() => {
+        let sum = 0;
+        cartList.map((item) => {
+            sum += item.price;
+        });
+        setTotalPrice(sum);
+    },[cartList]);
+
     return (
         <div className="cart">
             <PageHeader title={"Cart"} />
@@ -23,16 +38,15 @@ const Cart = () => {
                             </div>
                     </div>
 
-                    <CartItem/>
-                    <CartItem/>
-                    <CartItem/>
-                    <CartItem/>
+                    { cartList.map((item, i) => (
+                        <CartItem item={item} key={i}/>
+                    ))}
                 </div>
 
                 <div className="cart__wrapper__check-out">
                     <div className="cart__wrapper__check-out__price">
                         <span >Subtotal</span>
-                        <span className="cart__wrapper__check-out__price__txt">$557</span>
+                        <span className="cart__wrapper__check-out__price__txt">${totalPrice}</span>
                     </div>
 
                     <p className="cart__wrapper__check-out__text">
@@ -50,15 +64,17 @@ const Cart = () => {
 
 export const CartItem = props => {
 
+    const item = props.item;
+
     return (
         <div className="cart-item">
             <div className="cart-item__wrapper">
-                    <img src={temp} alt=""/>
-                    <span className="cart-item__wrapper__title">Sakarias Armchair</span>
+                    <img src={item.imgUrl} alt=""/>
+                    <span className="cart-item__wrapper__title">{item.productName}</span>
 
                     <div className="cart-item__wrapper__title1">
-                        <span className="cart-item__wrapper__title1__price">$99</span>
-                        <span className="cart-item__wrapper__title1__qty">2</span>
+                        <span className="cart-item__wrapper__title1__price">${item.price}</span>
+                        <span className="cart-item__wrapper__title1__qty">{item.quantity}</span>
                         <i class="ri-delete-bin-5-line"></i>
                     </div>
                 </div>

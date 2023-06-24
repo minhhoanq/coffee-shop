@@ -2,10 +2,24 @@ import React from "react";
 
 import './product-card.scss';
 import { Link } from "react-router-dom";
+import { useDispatch} from "react-redux";
+import { cartActions } from "../../redux/slice/cartSlice";
 
 const ProductCard = props => {
 
     const item = props.item;
+    const dispatch = useDispatch();
+
+    const handleAddToCart = () => {
+        dispatch(
+            cartActions.addItem({
+                id: item.id,
+                productName: item.productName,
+                price: item.price,
+                imgUrl: item.imgUrl,
+            })
+        );
+    };
 
     return (
         <div className="product-card">
@@ -29,7 +43,7 @@ const ProductCard = props => {
                 </span>
 
                 <button className="product-card__actions__btn">
-                <i class="ri-add-circle-fill"></i>
+                <i class="ri-add-circle-fill" onClick={handleAddToCart}></i>
                 </button>
             </div>
         </div>
