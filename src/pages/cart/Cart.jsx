@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react"
 import './cart.scss';
 import PageHeader from '../../components/pageheader/PageHeader';
 import Button from '../../components/button/Button';
-import temp from '../../assets/images/arm-chair-01.jpg';
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../../redux/slice/cartSlice";
 
 const Cart = () => {
 
@@ -66,19 +66,25 @@ export const CartItem = props => {
 
     const item = props.item;
 
+    const dispatch = useDispatch();
+
+    const handleDeleteProduct = () => {
+        dispatch(cartActions.deleteItem(item.id));
+    }
+
     return (
         <div className="cart-item">
             <div className="cart-item__wrapper">
-                    <img src={item.imgUrl} alt=""/>
-                    <span className="cart-item__wrapper__title">{item.productName}</span>
+                <img src={item.imgUrl} alt=""/>
+                <span className="cart-item__wrapper__title">{item.productName}</span>
 
-                    <div className="cart-item__wrapper__title1">
-                        <span className="cart-item__wrapper__title1__price">${item.price}</span>
-                        <span className="cart-item__wrapper__title1__qty">{item.quantity}</span>
-                        <i class="ri-delete-bin-5-line"></i>
-                    </div>
+                <div className="cart-item__wrapper__title1">
+                    <span className="cart-item__wrapper__title1__price">${item.price}</span>
+                    <span className="cart-item__wrapper__title1__qty">{item.quantity}</span>
+                    <i class="ri-delete-bin-5-line" onClick={handleDeleteProduct}></i>
                 </div>
             </div>
+        </div>
     )
 }
 
