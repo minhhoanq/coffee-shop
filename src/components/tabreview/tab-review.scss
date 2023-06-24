@@ -3,6 +3,7 @@
 .tab-review {
     width: 100%;
 
+    margin-top: 50px;
     margin-bottom: 50px;
     & > * ~ * {
         margin-top: 40px
@@ -80,5 +81,9 @@
     .active {
         font-weight: 600;
         color: $black-color;
+    }
+
+    @include mobile {
+        
     }
 }

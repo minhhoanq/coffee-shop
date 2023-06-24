@@ -114,7 +114,8 @@
     }
 
     @include mobile {
-        
+        $height-header-mobile: calc($header-height * 0.7);
+        margin-top: $height-header-mobile;
         &__wrapper {
             width: 100%;
             @include flex (center, center);
@@ -126,7 +127,8 @@
                 width: 350px;
                 @include flex (center, center);
     
-                img {
+                img {height: 250px;
+                    width: 350px;
                     object-fit: contain;
                 }
             }
@@ -189,6 +191,14 @@
                     margin: 20px auto;
                 }
             }
+        }
+
+        &__review {
+            margin: 10%;
+        }
+
+        &__similar {
+            margin:0 10px 20px;
         }
     }
 }

@@ -1,0 +1,99 @@
+@use '../../scss/'as *;
+
+.cart {
+    margin-top: 4rem;
+
+    &__wrapper {
+        @include flex(flex-start, space-between);
+        margin: 20px 200px;
+
+        & > * ~ * {
+            margin-left: 50px;
+        }
+
+        &__table {
+            flex: 1;
+            font-size: 1.1rem;
+            font-weight: 600;
+
+            &__title {
+                @include flex(flex-start, flex-start);
+                border-bottom: 1px solid #ccc;
+                padding:0 0 20px 0;
+
+                &__img {
+                    width: 100px;
+                }
+
+                &__name {
+                    width: 35%;
+                    margin-left: 7%
+                }
+
+                &__title1 {
+                    flex: 1;
+                    margin-left: 10%;
+                    @include flex(flex-start, space-between);
+                }
+
+            }
+
+            .cart-item {
+                margin-top: 10px;
+                border-bottom: 1px solid #ccc;
+                &__wrapper {
+                    @include flex(flex-start, flex-start);
+                    img {
+                        width: 100px;
+                        height: 100px;
+                    }
+
+                    &__title {
+                        width: 35%;
+                        margin-left: 7%;
+                    }
+
+                    &__title1 {
+                        flex: 1;
+                        margin-left: 10%;
+                        @include flex(flex-start, space-between);
+
+                        i {
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+
+        &__check-out {
+            width: 270px;
+
+            & > * ~ * {
+                margin-top: 10px;
+            }
+
+            &__price {
+                @include flex(flex-end, space-between);
+                font-size: 0.9rem;
+                font-weight: 500;
+                color: #999;
+                &__txt {
+                    font-size: 1.2rem;
+                    color: #000;
+                    font-weight: 600;
+                }
+            }
+
+            &__text {
+                margin-bottom: 40px;
+            }
+
+            &__btn {
+                @include flex(center, center);
+                height: 35px;
+                border-radius: 5px;
+            }
+        }
+    }
+}
