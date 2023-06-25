@@ -14,20 +14,14 @@ const DetailProduct = () => {
 
     const { id } = useParams();
 
-    let value={};
-
-    products.filter((item) => {
-        if(item.id === id) {
-            value = item;
-        }
-    });
+    const value = products.find(item => item.id === id);
 
     useEffect(() => {
         const listSimilars = products.filter((item) => item.category === value.category);
         setProductSimilars(listSimilars);
-    },[]);
+    },[value.category]);
 
-    console.log(productSimilars);
+    console.log(value);
 
     return (
         <div className="detail-product">

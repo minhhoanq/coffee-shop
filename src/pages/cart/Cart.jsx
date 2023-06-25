@@ -5,6 +5,7 @@ import PageHeader from '../../components/pageheader/PageHeader';
 import Button from '../../components/button/Button';
 
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from 'react-toastify';
 import { cartActions } from "../../redux/slice/cartSlice";
 
 const Cart = () => {
@@ -70,6 +71,9 @@ export const CartItem = props => {
 
     const handleDeleteProduct = () => {
         dispatch(cartActions.deleteItem(item.id));
+
+        toast.success('Delete product successfully');
+
     }
 
     return (

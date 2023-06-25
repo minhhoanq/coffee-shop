@@ -3,6 +3,7 @@ import React from "react";
 import './product-card.scss';
 import { Link } from "react-router-dom";
 import { useDispatch} from "react-redux";
+import { toast } from 'react-toastify';
 import { cartActions } from "../../redux/slice/cartSlice";
 
 const ProductCard = props => {
@@ -19,6 +20,7 @@ const ProductCard = props => {
                 imgUrl: item.imgUrl,
             })
         );
+        toast.success('Product added successfully');
     };
 
     return (
