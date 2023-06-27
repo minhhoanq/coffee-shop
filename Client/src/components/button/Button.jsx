@@ -7,12 +7,12 @@ import './button.scss';
 const Button = props => {
 
     return (
-        <div 
+        <button
             className={`button ${props.className}`}
-            onClick={props.onClick ? props.onClick() : null}
+            onClick={props.onClick ? () => props.onClick() : null}
         >
-            {props.children}
-        </div>
+        {props.children}
+        </button>
     );
 }
 
@@ -21,7 +21,7 @@ export const ButtonOutLine = props => {
     return (
         <Button
             className={`button-outline ${props.className}`}
-            onClick={props.onClick ? props.onClick() : null}
+            onClick={props.onClick ? () => props.onClick() : null}
         >
             {props.children}
         </Button>
