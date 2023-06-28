@@ -11,7 +11,6 @@ import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import request from "../../utils/request";
 import { loginSuccess } from "../../redux/slice/authSlice";
 
 const Home = () => {
@@ -21,8 +20,10 @@ const Home = () => {
     const[wireless, setWireless] = useState([]);
     const[chairs, setChairs] = useState([]);
 
-    //const axiosJWT = axios.create();
-    const user = useSelector(state => state.auth.login.currentUser);
+    const axiosJWT = axios.create({
+        baseURL: 'http://localhost:5000/',
+    });
+    const user = useSelector(state => state.auth.login?.currentUser);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -34,7 +35,7 @@ const Home = () => {
 
     const refreshToken = async () => {
         try {
-            const res = await request.post("/v1/auth/refresh", {
+            const res = await axiosJWT.post("/v1/auth/refresh", {
                 withCredentials: true,
             });
             return res.data;
@@ -43,7 +44,7 @@ const Home = () => {
         }
     }
 
-    request.interceptors.request.use(
+    axiosJWT.interceptors.request.use(
         async(config) => {
             const decodedToken = jwt_decode(user.accessToken);
             let date = new Date();
@@ -54,7 +55,7 @@ const Home = () => {
                     accessToken: data.accessToken,
                 };
                 dispatch(loginSuccess(refreshUser));
-                config.headers["token"] =  "Bearer" +  data.accessToken;
+                config.headers["token"] =  "Bearer " +  data.accessToken;
             }
             return config;
         }, (err) => {

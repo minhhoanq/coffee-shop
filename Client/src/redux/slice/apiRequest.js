@@ -15,7 +15,7 @@ export const loginUSer = async (user, dispatch, navigate) => {
 export const registerUSer = async (user, dispatch, navigate) => {
     dispatch(registerStart());
     try { 
-         await request.post("/v1/auth/register", user);
+        await request.post("/v1/auth/register", user);
         dispatch(registerSuccess());
         navigate('/login');
     } catch (error) {
@@ -23,11 +23,11 @@ export const registerUSer = async (user, dispatch, navigate) => {
     }
 };
 
-export const logoutUser = async (dispatch, id, navigate, accesToken, axiosJWT) => {
+export const logoutUser = async (dispatch, id, navigate, accessToken, axiosJWT) => {
     dispatch(logoutStart());
     try { 
         await axiosJWT.post("/v1/auth/logout", id, {
-            headers: {token: `Bearer ${accesToken}`} 
+            headers: { token: `Bearer ${accessToken}` } 
         });
         dispatch(logoutSuccess());
         navigate('/login');

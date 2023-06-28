@@ -1,13 +1,14 @@
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 import request from "./utils/request";
-
 
 const refreshToken = async () => {
     try {
+        console.log("check1");
         const res = await request.post("/v1/auth/refresh", {
             withCredentials: true,
         });
-        console.log(res.data);
+        console.log("check2");
         return res.data;
     } catch (error) {
         console.log(error);
@@ -15,9 +16,12 @@ const refreshToken = async () => {
 }
 
 const createInstance = (user, dispatch, stateSuccess) => {
-    const newInstance = request.interceptors.request.use(
+    const newInstance = axios.create({
+        baseURL: 'http://localhost:5000/',
+    });
+        newInstance.interceptors.request.use(
         async(config) => {
-            const decodedToken = jwt_decode(user.accessToken);
+            const decodedToken = jwt_decode(user?.accessToken);
             let date = new Date();
             if(decodedToken.exp < date.getTime() / 1000) {
                 const data = await refreshToken();
@@ -26,7 +30,7 @@ const createInstance = (user, dispatch, stateSuccess) => {
                     accessToken: data.accessToken,
                 };
                 dispatch(stateSuccess(refreshUser));
-                config.headers["token"] =  "Bearer" +  data.accessToken;
+                config.headers["token"] =  "Bearer " +  data.accessToken;
             }
             return config;
         }, (err) => {
