@@ -1,4 +1,4 @@
-import { loginFail, loginStart, loginSuccess, registerFail, registerStart, registerSuccess } from "./authSlice";
+import { loginFail, loginStart, loginSuccess, registerFail, registerStart, registerSuccess, logoutFail, logoutStart, logoutSuccess } from "./authSlice";
 import request from "../../utils/request";
 
 export const loginUSer = async (user, dispatch, navigate) => {
@@ -20,5 +20,18 @@ export const registerUSer = async (user, dispatch, navigate) => {
         navigate('/login');
     } catch (error) {
         dispatch(registerFail());
+    }
+};
+
+export const logoutUSer = async (dispatch, id, navigate, accesToken, axiosJWT) => {
+    dispatch(logoutStart());
+    try { 
+        await axiosJWT.post("/v1/auth/logout", id, {
+            headers: {token: `Bearer ${accesToken}`}
+        })
+        dispatch(logoutSuccess());
+        navigate('/login');
+    } catch (error) {
+        dispatch(logoutFail());
     }
 };

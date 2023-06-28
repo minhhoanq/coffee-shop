@@ -7,6 +7,12 @@ import Helmet from "../../components/helmet/Helmet";
 import ProductList from "../../components/productlist/ProductList";
 
 import products from '../../assets/data/products';
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import request from "../../utils/request";
+import { loginSuccess } from "../../redux/slice/authSlice";
 
 const Home = () => {
     const[sofas, setSofas] = useState([]);
@@ -14,6 +20,48 @@ const Home = () => {
     const[watchs, setWatchs] = useState([]);
     const[wireless, setWireless] = useState([]);
     const[chairs, setChairs] = useState([]);
+
+    const axiosJWT = axios.create();
+    const user = useSelector(state => state.auth.login.currentUser);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if(!user) {
+            navigate('/login');
+        }
+    },[]);
+
+    const refreshToken = async () => {
+        try {
+            const res = await request.post("/v1/auth/refresh", {
+                withCredentials: true,
+            });
+            return res.data;
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    axiosJWT.interceptors.request.use(
+        async(config) => {
+            const decodedToken = jwt_decode(user.accessToken);
+            let date = new Date();
+            if(decodedToken.exp < date.getTime() / 1000) {
+                const data = await refreshToken();
+                const refreshUser = {
+                    ...user,
+                    accessToken: data.accessToken,
+                };
+                dispatch(loginSuccess(refreshUser));
+                config.headers["token"] =  "Bearer" +  data.accessToken;
+            }
+            return config;
+        }, (err) => {
+            return Promise.reject(err);
+        }
+    );
 
 
     useEffect(() => {

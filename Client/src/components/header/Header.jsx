@@ -3,6 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 
 import './header.scss';
 import Car_ver from "../cart_ver/Cart_ver";
+import { logoutUSer } from "../../redux/slice/apiRequest";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const headerNav = [
     {
@@ -21,13 +25,20 @@ const headerNav = [
 
 const Header = () => {
     const { pathname } = useLocation();
-    // navigate = useNavigate();
     const active = headerNav.findIndex(e => e.path === pathname);
 
     const headerRef = useRef(null);
     const navMobileRef = useRef(null);
-    const overLayMobileRef = useRef(null);
+    const overLayMobileRef = useRef(null);  
     const notifyListRef = useRef(null);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const accessToken = user.accessToken;
+    const id = user._id;
+
+    const user = useSelector(state => state.auth.login.currentUser);
 
     useEffect(() => {
         const shrinkHeader = () => {
@@ -52,6 +63,10 @@ const Header = () => {
 
     const handleNotify = () => {
         notifyListRef.current.classList.toggle('notifyShow');
+    }
+
+    const handleLogout =(e) => {
+        logoutUSer(dispatch, id, accessToken), axiosJWT;
     }
 
     return (
@@ -111,7 +126,12 @@ const Header = () => {
                         <i class="ri-shopping-cart-line"></i>
                     </div>
                     <div className="header__wrapper__options__profile">
-                        <i class="ri-user-smile-line"></i>
+                        {
+                            user ? <>
+                                <span>Hi,{user.username}</span>
+                                <span onClick={handleLogout}>Logout</span>
+                            </> : <i class="ri-user-smile-line"></i>
+                        }
                     </div>
                 </div>
 
