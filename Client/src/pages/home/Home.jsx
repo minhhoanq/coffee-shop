@@ -21,7 +21,7 @@ const Home = () => {
     const[wireless, setWireless] = useState([]);
     const[chairs, setChairs] = useState([]);
 
-    const axiosJWT = axios.create();
+    //const axiosJWT = axios.create();
     const user = useSelector(state => state.auth.login.currentUser);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -38,13 +38,12 @@ const Home = () => {
                 withCredentials: true,
             });
             return res.data;
-            console.log(res.data);
         } catch (error) {
             console.log(error);
         }
     }
 
-    axiosJWT.interceptors.request.use(
+    request.interceptors.request.use(
         async(config) => {
             const decodedToken = jwt_decode(user.accessToken);
             let date = new Date();

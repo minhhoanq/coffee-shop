@@ -3,10 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 
 import './header.scss';
 import Car_ver from "../cart_ver/Cart_ver";
-import { logoutUSer } from "../../redux/slice/apiRequest";
+import { logoutUser } from "../../redux/slice/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import createAxios from "../../createInstance";
+import { logoutSuccess } from "../../redux/slice/authSlice";
 
 const headerNav = [
     {
@@ -34,11 +35,11 @@ const Header = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const user = useSelector(state => state.auth.login.currentUser);
+    let axiosJWT = createAxios(user, dispatch, logoutSuccess);
+    
     const accessToken = user.accessToken;
     const id = user._id;
-
-    const user = useSelector(state => state.auth.login.currentUser);
 
     useEffect(() => {
         const shrinkHeader = () => {
@@ -65,8 +66,9 @@ const Header = () => {
         notifyListRef.current.classList.toggle('notifyShow');
     }
 
-    const handleLogout =(e) => {
-        logoutUSer(dispatch, id, accessToken), axiosJWT;
+    const handleLogout =() => {
+        logoutUser(dispatch, id, navigate, accessToken, axiosJWT);
+        console.log("Logout");
     }
 
     return (
@@ -129,7 +131,7 @@ const Header = () => {
                         {
                             user ? <>
                                 <span>Hi,{user.username}</span>
-                                <span onClick={handleLogout}>Logout</span>
+                                <span style={{cursor: "pointer"}} onClick={handleLogout}>Logout</span>
                             </> : <i class="ri-user-smile-line"></i>
                         }
                     </div>
