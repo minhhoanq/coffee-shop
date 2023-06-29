@@ -1,15 +1,15 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import request from "./utils/request";
+import requestt from "./utils/request";
 
-const refreshToken = async () => {
+const refreshToken = async() => {
     try {
         console.log("check1");
-        const res = await request.post("/v1/auth/refresh", {
-            withCredentials: true,
+        const req = await requestt.post("/v1/auth/refresh", {
+            withCredentials: true
         });
         console.log("check2");
-        return res.data;
+        return req.data;
     } catch (error) {
         console.log(error);
     }

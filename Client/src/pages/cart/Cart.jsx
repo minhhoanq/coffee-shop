@@ -10,13 +10,13 @@ import { cartActions } from "../../redux/slice/cartSlice";
 
 const Cart = () => {
 
-    const cartList = useSelector(state => state.cart.cartItems);
+    const cartList = useSelector(state => state.cart?.cartItems);
 
     const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
         let sum = 0;
-        cartList.map((item) => {
+        cartList?.map((item) => {
             sum += item.price;
         });
         setTotalPrice(sum);
@@ -39,7 +39,7 @@ const Cart = () => {
                             </div>
                     </div>
 
-                    { cartList.map((item, i) => (
+                    { cartList?.map((item, i) => (
                         <CartItem item={item} key={i}/>
                     ))}
                 </div>
@@ -71,9 +71,7 @@ export const CartItem = props => {
 
     const handleDeleteProduct = () => {
         dispatch(cartActions.deleteItem(item.id));
-
         toast.success('Delete product successfully');
-
     }
 
     return (
