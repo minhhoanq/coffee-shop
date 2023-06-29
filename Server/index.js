@@ -2,10 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
-const authRoute = require("./routes/authRoute");
-const userRoute = require("./routes/userRoute");
-const productRoute = require("./routes/productRoute");
-const db = require("./config/db");
+// const authRoute = require("./routes/authRoute");
+// const userRoute = require("./routes/userRoute");
+// const productRoute = require("./routes/productRoute");
+const db = require("./src/config/db");
+const initRoutes = require("./src/routes");
 
 dotenv.config();
 const app = express();
@@ -21,15 +22,17 @@ const app = express();
 //         return res.status(200).json(data)
 //     })
 // })
-
+db();
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
 // //ROUTES
-app.use("/account", authRoute);
+// app.use("/account", authRoute);
 // app.use("/v1/user", userRoute);
-app.use("/user", productRoute);
+// app.use("/user", productRoute);
+
+initRoutes(app);
 
 app.listen(5000, () => {
     console.log("Server is runing")

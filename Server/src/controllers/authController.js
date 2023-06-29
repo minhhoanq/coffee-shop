@@ -1,30 +1,45 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const db = require("../config/db");
+const dbUser = require("../models");
 
 let refreshTokens = [];
 
 const authController = {
-
     //Register
     registerUser: async(req, res) => {
         try {
+            const {email, username, password} = req.body;
             const salt = await bcrypt.genSalt(10);
-            const hashed = await bcrypt.hash(req.body.password, salt);
+            const hashed = await bcrypt.hash(password, salt);
 
-            //Create new user
-            const newUser = await new User({
-                username: req.body.username,
-                email: req.body.email,
-                password: hashed,
-                _id: 2,
-            });
+            if(!email || !username || !password) {
+                return res.status(400).json('Missing payloads')
+            }
 
-            // Save to DB
-            const user = await db.newUser.create();
+            const existEmail = await dbUser.User.findOne({where: {email}});
+            if(existEmail) {
+                return res.status(400).json({
+                    status: "fail",
+                    field: "email",
+                    msg: "Địa chỉ email này đã được dùng để đăng ký tài khoản khác",
+                });
+            }
+            const existUsername = await dbUser.User.findOne({where: {username}});
+            if (existUsername) {
+                return res.status(400).json({
+                  status: "fail",
+                  field: "username",
+                  msg: "Tên đăng nhập đã tồn tại, vui lòng chọn một tên khác",
+                });
+            }
 
-            return res.status(200).json(user);
+            const newUser = {
+                email, username, password: hashed
+            }
+
+            await dbUser.User.create(newUser);
+
+            return res.status(200).json({status: "Register successfully", data: newUser});
         } catch (error) {
             return res.status(500).json(error);
         }
