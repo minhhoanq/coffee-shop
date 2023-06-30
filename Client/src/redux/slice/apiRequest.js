@@ -4,7 +4,7 @@ import request from "../../utils/request";
 export const loginUSer = async (user, dispatch, navigate) => {
     dispatch(loginStart());
     try {
-        const res = await request.post("/v1/auth/login", user);
+        const res = await request.post("/api/v1/auth/login", user);
         dispatch(loginSuccess(res.data));
         navigate('/');
     } catch (error) {
@@ -15,7 +15,7 @@ export const loginUSer = async (user, dispatch, navigate) => {
 export const registerUSer = async (user, dispatch, navigate) => {
     dispatch(registerStart());
     try { 
-        await request.post("/v1/auth/register", user);
+        await request.post("/api/v1/auth/register", user);
         dispatch(registerSuccess());
         navigate('/login');
     } catch (error) {
@@ -26,7 +26,7 @@ export const registerUSer = async (user, dispatch, navigate) => {
 export const logoutUser = async (dispatch, id, navigate, accessToken, axiosJWT) => {
     dispatch(logoutStart());
     try { 
-        await axiosJWT.post("/v1/auth/logout", id, {
+        await axiosJWT.post("/api/v1/auth/logout", id, {
             headers: { token: `Bearer ${accessToken}` } 
         });
         dispatch(logoutSuccess());

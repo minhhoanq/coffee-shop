@@ -53,7 +53,6 @@ router.post(
        
         body('password', 'Mật khẩu phải tối thiểu 6 ký tự')
             .isLength({ min: 6 })
-            .isAlphanumeric()
             .trim()
             .withMessage('Mật khẩu không hợp lệ'),
         body('confirmPassword')
@@ -80,8 +79,6 @@ router.post(
                         }
                 });
             }),
-        body('sex', 'Giới tính không được để trống')
-            .notEmpty(),
     ],
     authController.registerUser);
 
