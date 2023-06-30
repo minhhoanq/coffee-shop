@@ -18,12 +18,34 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
+      firstname: {
+        type: Sequelize.STRING
+      },
+      lastname: {
+        type: Sequelize.STRING
+      },
       image: {
         type: Sequelize.STRING
       },
       roles: {
         type: Sequelize.STRING,
         defaultValue: "3"
+      },
+      sex: {
+        type: Sequelize.STRING,
+      },
+      phone: {
+        type: Sequelize.STRING,
+      },
+      birth: {
+        type: Sequelize.STRING,
+      },
+      address: {
+        type: Sequelize.STRING,
+      },
+      isDelete: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,

@@ -1,14 +1,38 @@
-const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const dbUser = require("../models");
+const { validationResult, param } = require("express-validator");
+const dotenv = require("dotenv");
+const jwt = require("jsonwebtoken");
+dotenv.config();
 
 let refreshTokens = [];
 
 const authController = {
     //Register
     registerUser: async(req, res) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return res.status(400)
+            .json({ 
+              status: "fail", 
+              field: errors.array()[0].param,
+              msg: errors.array()[0].msg, 
+            });
+        }
         try {
-            const {email, username, password} = req.body;
+            const {
+                email, 
+                username, 
+                password, 
+                confirmPassword,
+                firstname,
+                lastname,
+                image,
+                sex,
+                phone,
+                birth,
+                address,
+                } = req.body;
             const salt = await bcrypt.genSalt(10);
             const hashed = await bcrypt.hash(password, salt);
 
@@ -33,8 +57,25 @@ const authController = {
                 });
             }
 
+            if (password !== confirmPassword) {
+                return res.status(400).json({
+                  status: "fail",
+                  field: "confirmPassword",
+                  msg: "Mật khẩu nhập lại chưa chính xác",
+                });
+              }
+
             const newUser = {
-                email, username, password: hashed
+                email, 
+                username, 
+                password: hashed,
+                firstname,
+                lastname,
+                image,
+                sex,
+                phone,
+                birth,
+                address,
             }
 
             await dbUser.User.create(newUser);
@@ -49,7 +90,7 @@ const authController = {
     generateAccessToken: (user) => {
         return jwt.sign({
             username: user.username,
-            admin: user.admin,
+            roles: user.roles,
         },
         process.env.JWT_ACCESS_KEY,
         { expiresIn: "30s"}
@@ -60,7 +101,7 @@ const authController = {
     generateRefreshToken: (user) => {
         return jwt.sign({
             username: user.username,
-            admin: user.admin,
+            roles: user.roles,
         },
         process.env.JWT_REFRESH_KEY,
         { expiresIn: "365d"}
@@ -71,7 +112,7 @@ const authController = {
     //Login
     loginUser: async(req, res) => {
         try {
-            const user = await User.findOne({username: req.body.username});
+            const user = await dbUser.User.findOne({where: {username: req.body.username}});
             if(!user) {
                 return res.status(404).json("Wrong username!");
             }
@@ -96,8 +137,9 @@ const authController = {
                     path:"/",
                     sameSite:"strict",
                 })
-                const {password, ...others} = user._doc;
-                return res.status(200).json({...others, accessToken});
+                const {password, ...others} = user.dataValues;
+
+                return res.status(200).json({others, accessToken});
             }
 
         } catch (error) {
