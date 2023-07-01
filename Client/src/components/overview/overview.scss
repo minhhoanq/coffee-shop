@@ -12,12 +12,42 @@
 
         &__header {
             @include flex(center, center);
-            flex-direction: column
+            flex-direction: column;
+
+            span {
+                color: #999;
+            }
+
+            &__title {
+                position: relative;
+            }
+
+            &__title::before {
+                content: "";
+                width: 40px;
+                height: 1px;
+                background: black;
+                position: absolute;
+                bottom: -6px;
+                left: 50%;
+                margin-left: -30px;
+            }
+
+            &__title::after {
+                content: "";
+                width: 40px;
+                height: 1px;
+                background: black;
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                margin-left: -10px;
+            }
         }
 
         &__body {
             @include flex(center, space-between);
-
+            margin-top: 20px;
             &__left {
                 width: 50%;
                 @include flex(center, center);
@@ -25,16 +55,65 @@
                 padding: 10px 50px;
 
                 &__title {
-
+                    font-size: 1.6rem;
+                    font-weight: 500;
                 }
 
                 &__desc {
                     margin-top: 20px;
+
+                    & > * ~ * {
+                        margin-top: 10px;
+                    }
                 }
             }
+        }
+    }
 
-            &__right {
+    @include tablet {
+        
+        &__wrapper {
+            width: 100%;
 
+            &__body {
+
+                &__left {
+                    flex: 1;
+                    padding: 0 10px;
+                    font-size: 1.2rem;
+                }
+
+                &__right {
+                    width: 35%;
+                    img {
+                        
+                    }
+                }
+            }
+        }
+    }
+
+    @include mobile {
+        &__wrapper {
+            width: 100%;
+
+            &__body {
+                width: 100%;
+                @include flex(center, space-between);
+                flex-direction: column;
+                &__left {
+                    width: 100%;
+                    font-size: 1.6rem;
+                    padding: 0 10px;
+                    font-weight: 500;
+                }
+
+                &__right {
+                    width: 70%;
+                    img {
+                        width: 100%;
+                    }
+                }
             }
         }
     }

@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../redux/slice/authSlice";
 import Origin from "../../components/origin/Origin";
 import Overview from "../../components/overview/Overview";
+import VideoDesc from "../../components/videodesc/VideoDesc";
 
 const Home = () => {
     const user = useSelector(state => state.auth.login?.currentUser);
@@ -28,10 +29,9 @@ const Home = () => {
     return (
         <div className="home">
             <ProductSlide/>
-
             <Origin/>
-
             <Overview/>
+            <VideoDesc/>
         </div>
     )
 }

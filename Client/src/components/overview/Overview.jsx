@@ -9,22 +9,27 @@ const Overview = () => {
             <div className="overview__wrapper">
                 <div className="overview__wrapper__header">
                     <span>CHI TIẾT VÀ TỔNG QUAN</span>
-                    <h2>MÁY PHA CÀ PHÊ CLIVE COFFEE</h2>
+                    <h1 className="overview__wrapper__header__title">LỊCH SỬ CỦA HẠT CÀ PHÊ</h1>
                 </div>
 
                 <div className="overview__wrapper__body">
                     <div className="overview__wrapper__body__left">
-                        <h3 className="overview__wrapper__body__left__title">
-                        Máy pha cà phê chuyên nghiệp
-                        </h3>
+                        <span className="overview__wrapper__body__left__title">
+                            Nguồn gốc của cà phê Việt Nam
+                        </span>
 
-                        <p className="overview__wrapper__body__left__desc">
-                        Máy pha cà phê hạt A1 chính là một trong top các loại máy pha chế chuyên nghiệp. Máy pha này phù hợp với những quán cà phê có hiệu suất phục vụ khoảng 200-300 ly/ngày. Máy hoạt động với công suất lớn nhưng vẫn đảm bảo chất lượng hương vị cà phê nguyên chất thơm ngon.
+                        <div className="overview__wrapper__body__left__desc">
+                            <p className="overview__wrapper__body__left__desc__line-1">
+                            Cà phê (gốc từ café trong tiếng Pháp) là một loại thức uống màu đen có chứa chất caffein, được sản xuất từ những hạt cà phê rang lên. Cà phê được sử dụng lần đầu tiên vào thế kỉ thứ 9, khi nó được khám phá ra từ vùng cao nguyên Ethiopia.
+                            </p>
 
-                        Sở hữu đầy đủ các chức năng cần thiết nhất của một máy pha cà phê chuyên dụng. Thiết kế bề ngoài khá tinh tế và hiện đại. Các chức năng, phím bấm dễ sử dụng với tất cả mọi người. Đánh giá sơ lược tổng quan, máy pha cafe Clive là một sản phẩm rất phù hợp cho quán cà phê nhỏ, kinh doanh cafe mang đi take away.
-
-                        Máy pha cafe mini bán tự động, máy pha cafe viên nén, máy lọc cà phê, máy pha cà phê tự động và máy pha cà phê chuyên nghiệp là 5 loại chính trên thị trường hiện nay. Giá cả của 5 loại này cũng chênh lệch nhau khá nhiều, tương đương với mức độ tăng dần của sự tiện lợi, công suất phục vụ và chất lượng ly cafe thành phẩm.
-                        </p>
+                            <p className="overview__wrapper__body__left__desc__line-2">
+                            Từ đó, nó lan ra Ai Cập và Yemen và tới thế kỉ thứ 15 thì đến Armenia, Ba Tư, Thổ Nhĩ Kỳ và phía bắc Châu Phi. Từ thế giới Hồi giáo, cà phê đến Ý, sau đó là phần còn lại của Châu Âu, Indonesia và Hoa Kỳ. Ngày nay, cà phê là một trong những thức uống thông dụng toàn cầu.
+                            </p>
+                            <p className="overview__wrapper__body__left__desc__line-3">
+                            Đồn điền cà phê đầu tiên được lập ở Việt Nam là do người Pháp khởi sự ở gần Kẻ Sở, Bắc Kỳ vào năm 1888. Giống cà phê arabica (tức cà phê chè) được trồng ở ven sông. Sau việc canh tác cà phê lan xuống vùng Phủ Lý, Ninh Bình, Thanh Hóa, Nghệ An, Kon Tum và Di Linh.
+                            </p>
+                        </div>
                     </div>
 
                     <div className="overview__wrapper__body__right">

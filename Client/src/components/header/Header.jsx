@@ -16,7 +16,7 @@ const headerNav = [
     },
     {
         path: '/shop',
-        display: "Shop",
+        display: "Coffee",
     },
     {
         path: '/cart',
