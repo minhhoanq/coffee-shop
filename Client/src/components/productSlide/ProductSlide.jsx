@@ -2,18 +2,18 @@ import React from "react";
 
 import './product-slide.scss';
 
-import counter_timer from '../../assets/images/counter-timer-img.png';
-import hero from '../../assets/images/hero-img.png';
-import sofa1 from '../../assets/images/double-sofa-01.png';
-import sofa2 from '../../assets/images/double-sofa-02.png';
-
-import Button from "../button/Button";
+import coffee_slide_1 from '../../assets/coffee_slide/coffeebanner_1.jpg';
+import coffee_slide_2 from '../../assets/coffee_slide/coffeebanner_2.jpg';
+import coffee_slide_3 from '../../assets/coffee_slide/coffeebanner_3.jpg';
+import coffee_slide_4 from '../../assets/coffee_slide/coffeebanner_4.png';
+// import coffee_slide_3 from '../../assets/coffee_slide/coffee_presentation_3.jpg';
+// import coffee_slide_4 from '../../assets/coffee_slide/coffee_presentation_4.jpg';
 
 import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 const itemSlide = [
-    hero, counter_timer, sofa1, sofa2
+    coffee_slide_3, coffee_slide_4, coffee_slide_1, coffee_slide_2,
 ];
 
 const ProductSlide = () => {
@@ -27,7 +27,7 @@ const ProductSlide = () => {
                grabCursor={true}
                spaceBetween={0}
                slidesPerView={1}
-               //autoplay={{delay: 3000}}
+               autoplay={{delay: 2000}}
             >
                 {
                     itemSlide.map((item, i) => (
@@ -49,18 +49,7 @@ export const ProductSlideItem = props => {
 
     return (
         <div className={`product-slide-item ${props.className}`}>
-            <div className="product-slide-item__wrapper">
-                <div className="product-slide-item__wrapper__content">
-                    <span className="product-slide-item__wrapper__content__type">Trending product 2023</span>
-                    <h1 className="product-slide-item__wrapper__content__title">Make Your Interior More Minimalistic & Modern</h1>
-                    <span className="product-slide-item__wrapper__content__overview">Loren ipsum dolor sit amet consectetur, adipisicing elit. Quaerat nulla repellat quo eaque alias corporis sunt, facilis nesciunt rem fugit</span>
-                    <Button>SHOP NOW</Button>
-                </div>
-
-                <div className="product-slide-item__wrapper__img">
-                    <img src={item} alt=""/>
-                </div>
-            </div>
+            <img src={`${item}`} alt="coffeeslide" />
         </div>
     );
 }

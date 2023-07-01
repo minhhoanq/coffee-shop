@@ -1,0 +1,45 @@
+@use '../../scss/' as *;
+
+.origin {
+    width: 100%;
+    @include flex(center, center);
+
+    &__overview {
+        width: 50%;
+        padding: 20px 0 20px 200px;
+        @include flex(center, center);
+        flex-direction: column;
+
+        &__title {
+
+        }
+
+        &__description {
+            @include flex(center, center);
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+    }
+
+    &__img {
+        width: 50%;
+        @include flex(center, center);
+        &__left {
+            @include flex(center, center);
+            flex-direction: column;
+
+            &__up {
+            }
+
+            &__down {
+            }
+
+ 
+        }
+
+        &__right {
+
+        }
+    }
+}

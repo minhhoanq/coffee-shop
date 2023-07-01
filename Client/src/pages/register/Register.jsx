@@ -27,13 +27,13 @@ const Register = () => {
             confirmPassword: "",
         },
         validationSchema: Yup.object({
-            username: Yup.string().required("Vui lòng nhập tên đăng nhập").min(4, "Vui lòng nhập nhiều hơn 4 ký tự."),
+            username: Yup.string().required("Vui lòng nhập tên đăng nhập.").min(4, "Vui lòng nhập nhiều hơn 4 ký tự."),
             firstname: Yup.string().required("Vui lòng nhập họ của bạn."),
-            lastname: Yup.string().required("Vui lòng nhập tên của bạn"),
-            email: Yup.string().required("Vui lòng điền đầy đủ").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Vui lòng nhập đúng định dạng email."),
-            phone: Yup.string().required("Vui lòng điền đầy đủ").matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, "Số điện thoại phải là số và tối thiểu 10 kí tự."),
-            password: Yup.string().required("Vui lòng điền đầy đủ").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,"Mật khẩu tối thiểu tám ký tự, bao gồm ít nhất một chữ cái, một số và một ký tự đặc biệt"),
-            confirmPassword: Yup.string().required("Vui lòng điền đầy đủ").oneOf([Yup.ref("password"),null], "Mật khẩu nhập lại không khớp."),
+            lastname: Yup.string().required("Vui lòng nhập tên của bạn."),
+            email: Yup.string().required("Vui lòng nhập email của bạn.").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Vui lòng nhập đúng định dạng email."),
+            phone: Yup.string().required("Vui lòng nhập số điện thoại.").matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, "Số điện thoại phải là số và tối thiểu 10 kí tự."),
+            password: Yup.string().required("Vui lòng nhập số điện thoại.").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,"Mật khẩu tối thiểu tám ký tự, bao gồm ít nhất một chữ cái, một số và một ký tự đặc biệt."),
+            confirmPassword: Yup.string().required("Vui lòng nhập lại mật khẩu.").oneOf([Yup.ref("password"),null], "Mật khẩu nhập lại không khớp."),
         })
         ,
         onSubmit: (values) => {
@@ -43,6 +43,7 @@ const Register = () => {
 
     return (
         <div className="register">
+            <img className="register__img" src="https://file.hstatic.net/200000351187/file/blog_-_6_cong_thuc_bacxiu_6bdee6c825024cbab10fa0bdab903e8e_1024x1024.png"/>
             <div className="register__container">
                 <div className="register__container__wrapper">
                     <div className="register__container__wrapper__logo">
@@ -173,9 +174,9 @@ const Register = () => {
                     <Link className="register__container__wrapper__forgot-pw">Quên mật khẩu?</Link>
                 </div>
 
-                <div className="register__container__signup">
+                <div className="register__container__signin">
                     Bạn đã có tài khoản ?
-                    <Link to={'/'} className="register__container__signup__link">Đăng nhập</Link>
+                    <Link to={'/login'} className="register__container__signin__link">Đăng nhập</Link>
                 </div>
 
                 <div className="register__container__app">

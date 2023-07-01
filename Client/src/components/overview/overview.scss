@@ -1,0 +1,41 @@
+@use "../../scss/" as *;
+
+.overview {
+    width: 100%;
+    margin-top: 50px;
+    @include flex(center, center);
+
+    &__wrapper {
+        @include flex(center, center);
+        flex-direction: column;
+        width: 80%;
+
+        &__header {
+            @include flex(center, center);
+            flex-direction: column
+        }
+
+        &__body {
+            @include flex(center, space-between);
+
+            &__left {
+                width: 50%;
+                @include flex(center, center);
+                flex-direction: column;
+                padding: 10px 50px;
+
+                &__title {
+
+                }
+
+                &__desc {
+                    margin-top: 20px;
+                }
+            }
+
+            &__right {
+
+            }
+        }
+    }
+}

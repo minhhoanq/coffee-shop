@@ -5,10 +5,21 @@
     height: 80vh;
     @include flex(center, center);
 
+    &__img {
+        height: 400px;
+        width: 600px;
+        margin-right: 80px;
+
+        img {
+            height: 400px;
+            width: 400px;
+        }
+    }
+
     &__container {
         //border: 1px solid #ccc;
         width: 350px;
-        height: 500px;
+        height: auto;
 
         &__wrapper {
             @include flex(center, center);
@@ -27,7 +38,7 @@
 
             &__form {
                 width: 80%;
-                @include flex(center, center);
+                @include flex(flex-start, center);
                 flex-direction: column;
 
                 &__username, &__password {
@@ -49,6 +60,12 @@
                 & > * ~ * {
                     margin-top: 10px;
                 }
+
+                &__error {
+                    font-size: 0.7rem;
+                    font-weight: 500;
+                    color: red;
+                }
             }
 
             &__bulkhead {
@@ -69,9 +86,11 @@
             }
 
             &__with {
+                cursor: pointer;
                 margin-top: 20px;
                 @include flex(center, center);
                 width: 80%;
+                font-size: 1rem;
                 img {
                     padding-right: 10px;
                 }
@@ -81,6 +100,33 @@
                 font-size: 0.9rem;
                 margin: 20px 0;
             }
+        }
+
+        &__signup {
+            width: 100%;
+            height: 60px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            @include flex(center, space-around);
+            padding: 0 10%;
+
+            &__link {
+                font-weight: 600;
+            }
+        }
+    }
+
+    
+    @include tablet {
+        &__img {
+            display: none;
+        }
+    }
+
+    @include mobile {
+        font-size: 1.4rem;
+        &__img {
+            display: none;
         }
     }
 }
