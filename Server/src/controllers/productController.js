@@ -8,7 +8,7 @@ const productController = {
             const product = await db.Product.findOne({
                 where: {id: req.body.id},
                 attributes: {
-                    exclude: ['password', 'categoryId'],
+                    exclude: ['categoryId'],
                 },
                 include: [
                     {
@@ -25,6 +25,51 @@ const productController = {
             return res.status(200).json({status: "Get product success", data: product});
         } catch (error) {
             return res.status(500).json(error);
+        }
+    },
+    getProductDetail: async(req, res) => {
+        try {
+            const detail = await db.Product_Size.findOne({
+                where: {productId: req.body.productId},
+                attributes: {
+                },
+                include: [
+                    {
+                        model: db.Product,
+                        as: 'productData',
+                        attributes: ['id', 'productName', 'categoryId', 'productDescription'],
+                    },
+                    {
+                        model: db.Size,
+                        as: 'sizeData',
+                        attributes: ['id', 'sizeName'],
+                    }
+                ]
+            });
+
+            // const product = await db.Product.findOne({
+            //     where: {id: detail.productId},
+            //     attributes: {
+            //         exclude: ['password', 'categoryId'],
+            //     },
+            //     include: [
+            //         {
+            //             model: db.Category,
+            //             as: 'categoryData',
+            //             attributes: ['id', 'categoryName'],
+            //         }
+            //     ]
+            // });
+
+            // const size = await db.Size.findOne({
+            //     where: {id: detail.sizeId},
+            // })
+
+            // const viewDetail = {product, size};
+
+            return res.status(200).json({status: "Success!", data: detail});
+        } catch (error) {
+            return res.status(200).json(error);
         }
     }
 }
