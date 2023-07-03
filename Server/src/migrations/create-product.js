@@ -1,4 +1,7 @@
 'use strict';
+
+const { Model } = require('sequelize');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -34,6 +37,7 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       }
     });
+    Model.removeAttribute('id');
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Products');
