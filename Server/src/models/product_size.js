@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   Product_Size.init({
     productId: DataTypes.INTEGER,
     sizeId: DataTypes.INTEGER,
+    recipeId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Product_Size',
