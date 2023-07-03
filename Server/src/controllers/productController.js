@@ -38,6 +38,13 @@ const productController = {
                         model: db.Product,
                         as: 'productData',
                         attributes: ['id', 'productName', 'categoryId', 'productDescription'],
+                        include: [
+                            {
+                                model: db.Category,
+                                as: 'categoryData',
+                                attributes: ['id', 'categoryName'],
+                            }
+                        ]
                     },
                     {
                         model: db.Size,
@@ -46,26 +53,6 @@ const productController = {
                     }
                 ]
             });
-
-            // const product = await db.Product.findOne({
-            //     where: {id: detail.productId},
-            //     attributes: {
-            //         exclude: ['password', 'categoryId'],
-            //     },
-            //     include: [
-            //         {
-            //             model: db.Category,
-            //             as: 'categoryData',
-            //             attributes: ['id', 'categoryName'],
-            //         }
-            //     ]
-            // });
-
-            // const size = await db.Size.findOne({
-            //     where: {id: detail.sizeId},
-            // })
-
-            // const viewDetail = {product, size};
 
             return res.status(200).json({status: "Success!", data: detail});
         } catch (error) {
