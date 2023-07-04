@@ -9,24 +9,24 @@ import { cartActions } from "../../redux/slice/cartSlice";
 const ProductCard = props => {
 
     const item = props.item;
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
-    const handleAddToCart = () => {
-        dispatch(
-            cartActions.addItem({
-                id: item.id,
-                productName: item.productName,
-                price: item.price,
-                imgUrl: item.imgUrl,
-            })
-        );
-        toast.success('Product added successfully');
-    };
+    // const handleAddToCart = () => {
+    //     dispatch(
+    //         cartActions.addItem({
+    //             id: item.id,
+    //             productName: item.productName,
+    //             price: item.price,
+    //             imgUrl: item.imgUrl,
+    //         })
+    //     );
+    //     toast.success('Product added successfully');
+    // };
 
     return (
         <div className="product-card">
             <Link className="product-card__link" to={`/shop/${item.id}`}>
-                <img className="product-card__link__img" src={`${item.imgUrl}`}/>
+                <img className="product-card__link__img" src={`${item.productImg}`}/>
 
                 <div className="product-card__link__info">
                     <span className="product-card__link__info__name">
@@ -34,18 +34,18 @@ const ProductCard = props => {
                     </span>
 
                     <p className="product-card__link__info__type">
-                        {item.category}
+                        {item.categoryData.categoryName}
                     </p>
                 </div>
             </Link>
 
             <div className="product-card__actions">
                 <span className="product-card__actions__price">
-                    {`${item.price} $`}
+                    {`100 $`}
                 </span>
 
                 <button className="product-card__actions__btn">
-                <i class="ri-add-circle-fill" onClick={handleAddToCart}></i>
+                <i class="ri-add-circle-fill"></i>
                 </button>
             </div>
         </div>

@@ -1,15 +1,10 @@
-const { where } = require("sequelize");
 const db = require("../models")
 
 const productController = {
     //Get all product
     getAllProduct: async(req, res) => {
         try {
-            const product = await db.Product.findOne({
-                where: {id: req.body.id},
-                attributes: {
-                    exclude: ['categoryId'],
-                },
+            const product = await db.Product.findAll({
                 include: [
                     {
                         model: db.Category,
@@ -37,7 +32,7 @@ const productController = {
                     {
                         model: db.Product,
                         as: 'productData',
-                        attributes: ['id', 'productName', 'categoryId', 'productDescription'],
+                        attributes: ['id', 'productName', 'categoryId', 'productDescription', 'productImg'],
                         include: [
                             {
                                 model: db.Category,

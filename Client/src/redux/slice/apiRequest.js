@@ -35,3 +35,21 @@ export const logoutUser = async (dispatch, id, navigate, accessToken, axiosJWT) 
         dispatch(logoutFail());
     }
 };
+
+export const getAllProduct = async () => {
+    try {
+        const res = await request.get('/api/v1/product');
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getProductDetailById = async (id) => {
+    try {
+        const res = await request.post('/api/v1/product/detail', {productId: id});
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
