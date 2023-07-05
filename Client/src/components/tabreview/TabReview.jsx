@@ -7,8 +7,8 @@ import Button from "../button/Button";
 const TabReview = props => {
 
     const[tab, setTab] = useState('desc');
-
     const item = props.item;
+    console.log(item);
 
     return (
         <div className="tab-review">
@@ -22,7 +22,7 @@ const TabReview = props => {
                 </span>
             </div>
 
-            {tab === 'desc' ? (<TabDescription description={item.description}/>) : (<TabReviews reviews={item.reviews}/>)}
+            {tab === 'desc' ? (<TabDescription description={item?.productDescription}/>) : ('None')}
         </div>
     )
 }

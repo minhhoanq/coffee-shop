@@ -45,6 +45,15 @@ export const getAllProduct = async () => {
     }
 }
 
+export const getProductByCategoryId = async (id) => {
+    try {
+        const res = await request.post('/api/v1/product/category', {categoryId: id});
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const getProductDetailById = async (id) => {
     try {
         const res = await request.post('/api/v1/product/detail', {productId: id});

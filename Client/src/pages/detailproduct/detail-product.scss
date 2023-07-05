@@ -72,6 +72,11 @@
                         color: #bdbdbd;
                         border-color: #bdbdbd;
                     }
+
+                    &.focus {
+                        color: $main-color;
+                        border-color: $main-color;
+                    }
                 }
 
                 & > * ~ * {
@@ -83,8 +88,9 @@
 
             &__cate {
                 @include flex (center, flex-start);
-                & > * ~ * {
-                    margin-left: 100px;
+
+                &__price {
+                    width: 110px;
                 }
 
                 &__price {
@@ -110,6 +116,10 @@
 
     &__similar {
         margin: 0 0 50px 200px;
+
+        & > * ~ * {
+            margin-top: 50px;
+        }
 
         &__title {
             font-size: 1.2rem;

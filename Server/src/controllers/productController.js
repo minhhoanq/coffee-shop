@@ -53,6 +53,23 @@ const productController = {
         } catch (error) {
             return res.status(200).json(error);
         }
+    },
+    getProductByCategory: async(req, res) => {
+        try {
+            const product = await db.Product.findAll({
+                where: {categoryId: req.body.categoryId},
+                include: [
+                    {
+                        model: db.Category,
+                        as: 'categoryData',
+                        attributes: ['id', 'categoryName'],
+                    }
+                ]
+            });
+            return res.status(200).json({status: 'Success!', data: product});
+        } catch (error) {
+            return res.status(500).json(error);
+        }
     }
 }
 
