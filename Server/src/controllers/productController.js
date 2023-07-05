@@ -24,7 +24,7 @@ const productController = {
     },
     getProductDetail: async(req, res) => {
         try {
-            const detail = await db.Product_Size.findOne({
+            const detail = await db.Product_Size.findAll({
                 where: {productId: req.body.productId},
                 attributes: {
                 },

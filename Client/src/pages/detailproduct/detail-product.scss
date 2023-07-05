@@ -15,8 +15,8 @@
             @include flex (center, center);
 
             img {
-                height: 450px;
-                width: 450px;
+                height: 400px;
+                width: 400px;
                 object-fit: contain;
             }
         }
@@ -52,6 +52,32 @@
                         color: $main-color;
                     }
                 }
+                
+            }
+
+            &__sizes {
+                &__size-S, &__size-M, &__size-L {
+                    height: 35px;
+                    width: 70px;
+                    border: 1px solid #ccc;
+                    font-size: 1rem;
+                    &:hover {
+                        cursor: pointer;
+                        color: $main-color;
+                        border-color: $main-color;
+                    }
+
+                    &.disable{
+                        cursor: not-allowed;
+                        color: #bdbdbd;
+                        border-color: #bdbdbd;
+                    }
+                }
+
+                & > * ~ * {
+                    margin-left: 10px;
+                }
+
                 
             }
 

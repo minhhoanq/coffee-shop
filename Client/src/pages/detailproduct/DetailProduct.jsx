@@ -10,30 +10,36 @@ import ProductList from '../../components/productlist/ProductList';
 import { getProductDetailById } from "../../redux/slice/apiRequest";
 
 const DetailProduct = () => {
-
-    //const[productSimilars, setProductSimilars] = useState([]);
-    const [product, setProduct] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [sizeS, setSizeS] = useState(false);
+    const [sizeM, setSizeM] = useState(false);
+    const [sizeL, setSizeL] = useState(false);
 
     const { id } = useParams();
-
-    // const value = products.find(item => item.id === id);
-
-    // useEffect(() => {
-    //     const listSimilars = products.filter((item) => item.category === value.category);
-    //     setProductSimilars(listSimilars);
-    // },[value.category]);
-
-    // console.log(value);
 
     useEffect(() => {
         const getDataById = async() => {
             const result = await getProductDetailById(id);
-            setProduct(result.data)
+            setProducts(result.data);
         }
         getDataById();
+
     },[]);
 
-    console.log(product);
+    useEffect(() => {
+        products.map((item, i) => {
+            if(item.sizeData.id === 1) {
+                setSizeS(true);
+            }
+            if(item.sizeData.id === 2) {
+                setSizeM(true);
+            }
+            if(item.sizeData.id === 3) {
+                setSizeL(true);
+            }
+        });
+    })
+
 
     return (
         <div className="detail-product">
@@ -42,12 +48,12 @@ const DetailProduct = () => {
             <div className="detail-product__wrapper">
 
                 <div className="detail-product__wrapper__img">
-                    <img src={`${product.productData.productImg}`} alt=""/>
+                    <img src={`${products[0]?.productData.productImg}`} alt=""/>
                 </div>
 
                 <div className="detail-product__wrapper__info">
 
-                    <span className="detail-product__wrapper__info__name">{product.productData.productName}</span>
+                    <span className="detail-product__wrapper__info__name">{products[0]?.productData.productName}</span>
 
                     <div className="detail-product__wrapper__info__rating">
 
@@ -60,9 +66,21 @@ const DetailProduct = () => {
                         </div>
                         
                         <div className="detail-product__wrapper__info__rating__ratings">
-                            <span>John Canvas</span>
+                            <span>23  </span>
                             ratings
                         </div>
+                    </div>
+
+                    <div className="detail-product__wrapper__info__sizes">
+                        <button className={`detail-product__wrapper__info__sizes__size-S ${sizeS ? '' : 'disable'}`}>
+                            S
+                        </button>
+                        <button className={`detail-product__wrapper__info__sizes__size-M ${sizeM ? '' : 'disable'}`}>
+                            M
+                        </button>
+                        <button className={`detail-product__wrapper__info__sizes__size-L ${sizeL ? '' : 'disable'}`}>
+                            L
+                        </button>
                     </div>
 
                     <div className="detail-product__wrapper__info__cate">
@@ -71,12 +89,12 @@ const DetailProduct = () => {
                         </span>
 
                         <span className="detail-product__wrapper__info__cate__category">
-                            Category: {product.productData.categoryData.categoryName}
+                            Category: {products[0]?.productData.categoryData.categoryName}
                         </span>
                     </div>
 
                     <p className="detail-product__wrapper__info__desc">
-                        {product.productData.productDescription}
+                        {products[0]?.productData.productDescription}
                     </p>
 
                     <Button className="detail-product__wrapper__info__btn">Add to cart</Button>

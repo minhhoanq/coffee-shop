@@ -8,53 +8,6 @@ import { getAllProduct } from "../../redux/slice/apiRequest";
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
-    // const[filterProducts, setFilterProducts] = useState(products);
-    // const[valueSearch, setValueSearch] = useState('');
-    // const debouncedValue = useDebounce(valueSearch , 800);
-
-    // const handleFilter = (e) => {
-    //     const value = e.target.value;
-
-    //     if(value === 'default') {
-    //         setFilterProducts(filterProducts); 
-    //         return;
-    //     } else {
-    //         const filterItems = filterProducts.filter((item) => item.category === value); 
-    //         setFilterProducts(filterItems); 
-    //         return;
-    //     }
-    // }
-
-    // const handleSearch = (e) => {
-    //     const value = e.target.value;
-
-    //     setValueSearch(value.trim());
-    // }
-
-    // const handleSort = (e) => {
-    //     const value = e.target.value;
-
-    //     console.log(value);
-    //     if(value === 'default') {
-    //         setFilterProducts(filterProducts);
-    //         return;
-    //     }
-
-    //     if(value === 'ascending') {
-    //         const sortItems = filterProducts.sort((item1, item2) => item1.price - item2.price);
-    //         setFilterProducts(sortItems);
-    //         return;
-    //     }
-    // }
-
-    // //Search
-    // useEffect(() => {
-    //     const searchItems = products.filter(
-    //         item => item.productName.toLowerCase().includes(debouncedValue.toLowerCase())
-    //     );
-
-    //     setFilterProducts(searchItems);
-    // },[debouncedValue]);
 
     useEffect(() => {
         const getData = async() => {
