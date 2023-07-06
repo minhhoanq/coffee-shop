@@ -8,15 +8,52 @@ import { getAllProduct } from "../../redux/slice/apiRequest";
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+    const [productsSearch, setProductsSearch] = useState([]);
 
     useEffect(() => {
         const getData = async() => {
             const productList = await getAllProduct();
             setProducts(productList.data);
+            setProductsSearch(productList.data);
         }
         getData();
+    },[]);
 
-    },[])
+    const debounceValue = useDebounce(searchValue, 800);
+
+    const searchProduct = (e) => {
+        setSearchValue(e.target.value);
+    };
+
+    useEffect(() => {
+        const resultArr = products.filter(item => 
+            item.productName.toLowerCase().includes(debounceValue.toLowerCase())
+        );
+        setProductsSearch(resultArr);
+    },[debounceValue]);
+
+    const handleFilter = (e) => {
+        const selected = e.target.value;
+        if(selected === 'default') {
+            setProductsSearch(products);
+            return;
+        }
+
+        const productsFilter = products.filter( item => item.categoryId === Number(selected));
+        setProductsSearch(productsFilter);
+    }
+
+    // const handleSort = (e) => {
+    //     const selected = e.target.value;
+
+    //     if(selected === 'default') {
+    //         setProductsSearch([]);
+    //     }
+
+    //     const productsSort = productsSearch.sort((a, b) => {return a.productName - b.productName});
+    //     setProductsSearch(productsSort);
+    // }
 
     return (
         <div className="mb-3" style={{marginTop: '4rem'}}>
@@ -25,26 +62,26 @@ const Shop = () => {
                 <div className="shop__wrapper">
                     <div className="shop__wrapper__selects">
                         <div className="shop__wrapper__selects__filter">
-                            <select name="carts" id="carts">
-                                <option value="default">Filter by category</option>
-                                <option value="sofa">Sofa</option>
-                                <option value="mobile">Mobile</option>
-                                <option value="chair">Chair</option>
-                                <option value="watch">Smart Watch</option>
+                            <select name="carts" id="carts" onChange={handleFilter}>
+                                <option value="default">Chọn loại sản phẩm</option>
+                                <option value="1">Cà phê</option>
+                                <option value="2">Trà</option>
+                                <option value="3">Trà sữa</option>
+                                <option value="4">Sinh tố</option>
                             </select>
                         </div>
 
-                        <div className="shop__wrapper__selects__sort" >
+                        <div className="shop__wrapper__selects__sort">
                             <select name="sort" id="sort">
-                                <option value="default">Sort by</option>
-                                <option value="ascending">Ascending</option>
-                                <option value="descending">Descending</option>
+                                <option value="default">Sắp xếp giá</option>
+                                <option value="ascending">Giá từ thấp đến cao</option>
+                                <option value="descending">Giá từ cao đến thấp</option>
                             </select>
                         </div>
                     </div>
 
                     <div className="shop__wrapper__search">
-                        <input type="text" placeholder="Search..."/>
+                        <input type="text" placeholder="Search..." onChange={searchProduct}/>
                         <i class="ri-search-line"></i>
                     </div>
                 </div>
@@ -52,7 +89,7 @@ const Shop = () => {
 
             {
                 products.length > 0 ? (
-                    <ProductList items={products} />
+                    <ProductList items={productsSearch} />
                 ) : 
                 (
                     <div className="no-product">
