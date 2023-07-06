@@ -40,7 +40,7 @@ const ProductCard = props => {
 
             <div className="product-card__actions">
                 <span className="product-card__actions__price">
-                    {`100 $`}
+                    {`${item.price}.000 đ`}
                 </span>
 
                 <button className="product-card__actions__btn">

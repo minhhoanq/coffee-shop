@@ -11,7 +11,7 @@ import { getProductDetailById, getProductByCategoryId } from "../../redux/slice/
 const DetailProduct = () => {
     const [products, setProducts] = useState([]);
     const [size, setSize] = useState('');
-    const [price, setPrice] = useState('(100 - 200)');
+    const [price, setPrice] = useState(0);
     const [productSimilars, setproductSimilars] = useState([]);
 
     const { id } = useParams();
@@ -19,6 +19,7 @@ const DetailProduct = () => {
     const getDataById = async() => {
         const result = await getProductDetailById(id);
         setProducts(result.data);
+        setPrice(`${result.data[0]?.productData.price} - ${result.data[0]?.productData.price + 10}`);
     }
 
     const getDataByCategoryId = async() => {
@@ -55,11 +56,11 @@ const DetailProduct = () => {
             setSize(e.target.id);
             document.getElementById(`${e.target.id}`).classList.add('focus');
             if(e.target.id === 'btn-size-S') { 
-                setPrice('100');
+                setPrice(products[0].productData.price);
             } else if ( e.target.id === 'btn-size-M') {
-                setPrice('200');
+                setPrice(products[0].productData.price + 5);
             } else if (e.target.id === 'btn-size-L') {
-                setPrice('300');
+                setPrice(products[0].productData.price + 10);
             }
             return;
         }
@@ -67,7 +68,7 @@ const DetailProduct = () => {
         if(size === e.target.id) {
             document.getElementById(`${e.target.id}`).classList.remove('focus');
             setSize('');
-            setPrice('(100 - 200)');
+            setPrice(`${products[0].productData.price} - ${products[0].productData.price + 10}`);
             return;
         } 
 
@@ -76,11 +77,11 @@ const DetailProduct = () => {
             document.getElementById(`${e.target.id}`).classList.add('focus');
             setSize(e.target.id);
             if(e.target.id === 'btn-size-S') { 
-                setPrice('100');
+                setPrice(products[0].productData.price);
             } else if ( e.target.id === 'btn-size-M') {
-                setPrice('200');
+                setPrice(products[0].productData.price + 5);
             } else if (e.target.id === 'btn-size-L') {
-                setPrice('300');
+                setPrice(products[0].productData.price + 10);
             }
             return;
         }
@@ -152,7 +153,7 @@ const DetailProduct = () => {
 
                     <div className="detail-product__wrapper__info__cate">
                         <span className="detail-product__wrapper__info__cate__price">
-                            $ {price}
+                            {price}.000đ
                         </span>
 
                         <span className="detail-product__wrapper__info__cate__category">

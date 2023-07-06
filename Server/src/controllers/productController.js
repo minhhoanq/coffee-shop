@@ -32,7 +32,7 @@ const productController = {
                     {
                         model: db.Product,
                         as: 'productData',
-                        attributes: ['id', 'productName', 'categoryId', 'productDescription', 'productImg'],
+                        attributes: ['id', 'productName', 'categoryId', 'productDescription', 'productImg', 'price'],
                         include: [
                             {
                                 model: db.Category,

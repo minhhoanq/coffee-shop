@@ -46,13 +46,16 @@ const Shop = () => {
 
     // const handleSort = (e) => {
     //     const selected = e.target.value;
-
+    //     console.log(selected);
     //     if(selected === 'default') {
-    //         setProductsSearch([]);
+    //         setProductsSearch(products);
+    //         return;
     //     }
 
-    //     const productsSort = productsSearch.sort((a, b) => {return a.productName - b.productName});
-    //     setProductsSearch(productsSort);
+    //     if(selected === 'ascending') {
+    //         const productsSort = productsSearch.sort((a, b) => {return a.price - b.price});
+    //         setProductsSearch(productsSort);
+    //     }
     // }
 
     return (
@@ -71,7 +74,7 @@ const Shop = () => {
                             </select>
                         </div>
 
-                        <div className="shop__wrapper__selects__sort">
+                        <div className="shop__wrapper__selects__sort" >
                             <select name="sort" id="sort">
                                 <option value="default">Sắp xếp giá</option>
                                 <option value="ascending">Giá từ thấp đến cao</option>
