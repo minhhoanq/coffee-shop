@@ -10,16 +10,19 @@ import { getProductDetailById, getProductByCategoryId } from "../../redux/slice/
 
 const DetailProduct = () => {
     const [products, setProducts] = useState([]);
-    const [size, setSize] = useState('');
-    const [price, setPrice] = useState(0);
+    const [size, setSize] = useState('btn-size-S');
+    const [price, setPrice] = useState();
     const [productSimilars, setproductSimilars] = useState([]);
+    const [quantity, setQuantity] = useState(1);
+    const [note, setNote] = useState('');
 
-    const { id } = useParams();
+    const { id } = useParams()
 
+    //Get api
     const getDataById = async() => {
         const result = await getProductDetailById(id);
         setProducts(result.data);
-        setPrice(`${result.data[0]?.productData.price} - ${result.data[0]?.productData.price + 10}`);
+        setPrice(result.data[0]?.productData.price);
     }
 
     const getDataByCategoryId = async() => {
@@ -29,8 +32,10 @@ const DetailProduct = () => {
     useEffect(() => {
         getDataById();
         getDataByCategoryId();
+        document.getElementById(`${size}`).classList.add('focus');
     },[]);
 
+    //Disable button size
     const disableBtnSize = (str) => {
         document.getElementById(`btn-size-${str}`).disabled = true;
         document.getElementById(`btn-size-${str}`).classList.add('disable');
@@ -49,26 +54,11 @@ const DetailProduct = () => {
         });
     });
 
+    //Selected size
     const handleBtnSize = (e) => {
         e.preventDefault();
-        console.log(e.target.id);
-        if(size === '') {
-            setSize(e.target.id);
-            document.getElementById(`${e.target.id}`).classList.add('focus');
-            if(e.target.id === 'btn-size-S') { 
-                setPrice(products[0].productData.price);
-            } else if ( e.target.id === 'btn-size-M') {
-                setPrice(products[0].productData.price + 5);
-            } else if (e.target.id === 'btn-size-L') {
-                setPrice(products[0].productData.price + 10);
-            }
-            return;
-        }
 
         if(size === e.target.id) {
-            document.getElementById(`${e.target.id}`).classList.remove('focus');
-            setSize('');
-            setPrice(`${products[0].productData.price} - ${products[0].productData.price + 10}`);
             return;
         } 
 
@@ -77,28 +67,72 @@ const DetailProduct = () => {
             document.getElementById(`${e.target.id}`).classList.add('focus');
             setSize(e.target.id);
             if(e.target.id === 'btn-size-S') { 
-                setPrice(products[0].productData.price);
+                setPrice(products[0].productData.price * quantity);
             } else if ( e.target.id === 'btn-size-M') {
-                setPrice(products[0].productData.price + 5);
+                setPrice((products[0].productData.price + 5) * quantity);
             } else if (e.target.id === 'btn-size-L') {
-                setPrice(products[0].productData.price + 10);
+                setPrice((products[0].productData.price + 10) * quantity);
             }
             return;
         }
     }
 
+    //Selected quantity
+
+    const handleBtnMinus = (e) => {
+        e.preventDefault();
+        let cost = 0;
+        if(size === 'btn-size-S') {
+            cost = products[0]?.productData.price;
+        } else if (size === 'btn-size-M') {
+            cost = products[0]?.productData.price + 5;
+        } else {
+            cost = products[0]?.productData.price + 10;
+        }
+
+        if(quantity <= 1) {
+            return;
+        }
+
+        setQuantity(quantity - 1);
+        setPrice(price - cost);
+    }
+
+    const handleBtnPlus = (e) => {
+        e.preventDefault();
+        let cost = 0;
+        if(size === 'btn-size-S') {
+            cost = products[0]?.productData.price;
+        } else if (size === 'btn-size-M') {
+            cost = products[0]?.productData.price + 5;
+        } else {
+            cost = products[0]?.productData.price + 10;
+        }
+
+        if(quantity >= 20) {
+            return;
+        }
+
+        setQuantity(quantity + 1);
+        setPrice(price + cost);
+    }
+
+    const handleNote = (e) => {
+        setNote(e.target.value);
+    }
+
     const handleAddToCart = (e) => {
         const newProduct = {
             size,
-            price
+            price,
+            note
         }
         console.log(newProduct);
-
     }
 
     return (
         <div className="detail-product">
-            <PageHeader title={'Product Detail'}/>
+            <PageHeader title={products[0]?.productData.productName}/>
 
             <div className="detail-product__wrapper">
 
@@ -122,7 +156,7 @@ const DetailProduct = () => {
                         
                         <div className="detail-product__wrapper__info__rating__ratings">
                             <span>23  </span>
-                            ratings
+                            đánh giá
                         </div>
                     </div>
 
@@ -151,19 +185,35 @@ const DetailProduct = () => {
                         </button>
                     </div>
 
+                    <div className="detail-product__wrapper__info__quantity">
+                        <button className="detail-product__wrapper__info__quantity__btn-minus" onClick={handleBtnMinus}>
+                            <i class="ri-subtract-line"></i>
+                        </button>
+
+                        <span className="detail-product__wrapper__info__quantity__number">
+                            {quantity}
+                        </span>
+
+                        <button className="detail-product__wrapper__info__quantity__btn-plus" onClick={handleBtnPlus}>
+                            <i class="ri-add-line"></i>
+                        </button>
+                    </div>
+
                     <div className="detail-product__wrapper__info__cate">
                         <span className="detail-product__wrapper__info__cate__price">
                             {price}.000đ
                         </span>
 
                         <span className="detail-product__wrapper__info__cate__category">
-                            Category: {products[0]?.productData.categoryData.categoryName}
+                            Loại: {products[0]?.productData.categoryData.categoryName}
                         </span>
                     </div>
 
-                    <p className="detail-product__wrapper__info__desc">
-                        {products[0]?.productData.productDescription}
-                    </p>
+                    <textarea 
+                        className="detail-product__wrapper__info__note" placeholder="Bạn cần lưu ý gì thì viết ở đây nhé ^^"
+                        onChange={handleNote}
+                        >
+                    </textarea>
 
                     <Button onClick={handleAddToCart} className="detail-product__wrapper__info__btn">Add to cart</Button>
                 </div>

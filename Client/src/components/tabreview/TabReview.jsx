@@ -14,11 +14,11 @@ const TabReview = props => {
         <div className="tab-review">
             <div className={"tab-review__wrapper"} >
                 <span className={`tab-review__wrapper__desc  ${tab === 'desc' ? 'active' : ''}`} onClick={() => setTab('desc')}>
-                    Description
+                    Mô tả
                 </span>
 
                 <span className={`tab-review__wrapper__reviews ${tab === 'reviews' ? 'active' : ''}`} onClick={() => setTab('reviews')}>
-                    Reviews (2)
+                    Đánh giá (2)
                 </span>
             </div>
 
