@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Size.init({
     sizeName: DataTypes.STRING,
+    sizePriceModifier: DataTypes.FLOAT,
   }, {
     sequelize,
     modelName: 'Size',

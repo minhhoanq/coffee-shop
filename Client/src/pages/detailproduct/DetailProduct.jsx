@@ -52,7 +52,7 @@ const DetailProduct = () => {
                 return;
             }
         });
-    });
+    },[products]);
 
     //Selected size
     const handleBtnSize = (e) => {
@@ -67,11 +67,11 @@ const DetailProduct = () => {
             document.getElementById(`${e.target.id}`).classList.add('focus');
             setSize(e.target.id);
             if(e.target.id === 'btn-size-S') { 
-                setPrice(products[0].productData.price * quantity);
+                setPrice((products[0].productData.price + products[0].sizeData.sizePriceModifier) * quantity);
             } else if ( e.target.id === 'btn-size-M') {
-                setPrice((products[0].productData.price + 5) * quantity);
+                setPrice((products[0].productData.price + products[1].sizeData.sizePriceModifier) * quantity);
             } else if (e.target.id === 'btn-size-L') {
-                setPrice((products[0].productData.price + 10) * quantity);
+                setPrice((products[0].productData.price + products[2].sizeData.sizePriceModifier) * quantity);
             }
             return;
         }
@@ -83,11 +83,11 @@ const DetailProduct = () => {
         e.preventDefault();
         let cost = 0;
         if(size === 'btn-size-S') {
-            cost = products[0]?.productData.price;
+            cost = products[0]?.productData.price + products[0]?.sizeData.sizePriceModifier;
         } else if (size === 'btn-size-M') {
-            cost = products[0]?.productData.price + 5;
+            cost = products[0]?.productData.price + products[1]?.sizeData.sizePriceModifier;
         } else {
-            cost = products[0]?.productData.price + 10;
+            cost = products[0]?.productData.price + products[2]?.sizeData.sizePriceModifier;
         }
 
         if(quantity <= 1) {
@@ -102,11 +102,11 @@ const DetailProduct = () => {
         e.preventDefault();
         let cost = 0;
         if(size === 'btn-size-S') {
-            cost = products[0]?.productData.price;
+            cost = products[0]?.productData.price + products[0]?.sizeData.sizePriceModifier;
         } else if (size === 'btn-size-M') {
-            cost = products[0]?.productData.price + 5;
+            cost = products[0]?.productData.price + products[1]?.sizeData.sizePriceModifier;
         } else {
-            cost = products[0]?.productData.price + 10;
+            cost = products[0]?.productData.price + products[2]?.sizeData.sizePriceModifier;
         }
 
         if(quantity >= 20) {

@@ -44,7 +44,7 @@ const productController = {
                     {
                         model: db.Size,
                         as: 'sizeData',
-                        attributes: ['id', 'sizeName'],
+                        attributes: ['id', 'sizeName', 'sizePriceModifier'],
                     }
                 ]
             });
