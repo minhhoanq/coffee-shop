@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Cart_Item.hasOne(models.Cart, {foreignKey: 'id', sourceKey: 'cartId', as: 'cartData'}),
-      Cart_Item.hasOne(models.Product_Size, {foreignKey: 'id', sourceKey: 'sizeId',as: 'sizeData'}),
-      Cart_Item.hasOne(models.Product_Size, {foreignKey: 'id', sourceKey: 'productId',as: 'productData'})
+      // Cart_Item.hasOne(models.Cart, {foreignKey: 'id', sourceKey: 'cartId', as: 'cartData'}),
+      // Cart_Item.hasOne(models.Product_Size, {foreignKey: 'id', sourceKey: 'sizeId',as: 'sizeData'}),
+      // Cart_Item.hasOne(models.Product_Size, {foreignKey: 'id', sourceKey: 'productId',as: 'productData'})
     }
   }
   Cart_Item.init({

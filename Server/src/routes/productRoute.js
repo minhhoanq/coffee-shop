@@ -8,6 +8,6 @@ router.post('/detail', productController.getProductDetail);
 router.post('/category', productController.getProductByCategory);
 
 //Get all products
-router.get('/', productController.getAllProduct);
+router.post('/', productController.getProducts);
 
 module.exports = router;

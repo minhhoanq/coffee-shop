@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Product_Size.hasOne(models.Product, {foreignKey: 'id', sourceKey: 'productId', as: 'productData'}),
-      Product_Size.hasOne(models.Size, {foreignKey: 'id', sourceKey: 'sizeId',as: 'sizeData'}),
+      Product_Size.hasOne(models.Size, {foreignKey: 'id', sourceKey: 'sizeId',as: 'sizeData'})
       
-      Product_Size.belongsToMany(models.Cart, {through: models.Cart_Item, foreignKey: 'cartId', targetKey: 'id', as: 'cartData'});
+      // Product_Size.belongsToMany(models.Cart, {through: models.Cart_Item, foreignKey: 'cartId', targetKey: 'id', as: 'cartData'});
     }
   }
   Product_Size.init({
