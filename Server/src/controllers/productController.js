@@ -33,7 +33,7 @@ const productController = {
             const query = req.query;
 
             console.log("page: " + page + "/" + "limit: " + limit + "/" + "order: " + order + "/" + "name: " + name);
-
+            console.log(query);
             const queries = { raw: true, nest: true};
             const offset = (!page || +page <=1) ? 0 : (+page - 1);
             const flimit = +limit || +process.env.LIMIT_PRODUCT;

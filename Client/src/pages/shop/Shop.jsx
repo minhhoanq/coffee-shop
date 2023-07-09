@@ -24,6 +24,7 @@ const Shop = () => {
                 order = undefined;
             }
             const limit = 6;
+            
             const productList = await getProducts(name, page, order, limit);
             setProducts(productList.data.rows);
         }
@@ -36,14 +37,7 @@ const Shop = () => {
     };
 
     const handleFilter = (e) => {
-        // const selected = e.target.value;
-        // if(selected === 'default') {
-        //     setProductsSearch(products);
-        //     return;
-        // }
-
-        // const productsFilter = products.filter( item => item.categoryId === Number(selected));
-        // setProductsSearch(productsFilter);
+        const selected = e.target.value;
     }
 
     const handleSort = (e) => {
