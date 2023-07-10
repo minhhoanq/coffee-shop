@@ -5,6 +5,7 @@ import PageHeader from "../../components/pageheader/PageHeader";
 import ProductList from '../../components/productlist/ProductList';
 import useDebounce from "../../hooks/useDebounce";
 import { getProducts } from "../../redux/slice/apiRequest";
+import Pagination from "../../components/pagination/Pagination";
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -95,6 +96,8 @@ const Shop = () => {
                     </div>
                 )
             }
+
+            <Pagination/>
         </div>
     )
 }
