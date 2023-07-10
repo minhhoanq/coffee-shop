@@ -20,7 +20,7 @@ const Shop = () => {
             const name = debounceValue;
             const page = 0;
             let order = [];
-            if(sort) {
+            if(sort && sort != 'default') {
                 order = ["price", sort];
             } else {
                 order = undefined;
@@ -87,7 +87,10 @@ const Shop = () => {
 
             {
                 products.length > 0 ? (
-                    <ProductList items={products} />
+                    <>
+                        <ProductList items={products} />
+                        <Pagination/>
+                    </>
                 ) : 
                 (
                     <div className="no-product">
@@ -97,7 +100,7 @@ const Shop = () => {
                 )
             }
 
-            <Pagination/>
+            
         </div>
     )
 }
