@@ -1,5 +1,5 @@
 const db = require("../models");
-const { Op } = require("sequelize");
+const bookService = require("../services/bookService");
 
 const productController = {
     //Get all product
@@ -26,32 +26,7 @@ const productController = {
     //Get product by name, page, limit, order
     getProducts: async(req, res) => {
         try {
-            const page = req.body.page;
-            const limit = req.body.limit;
-            const order = req.body.order;
-            const name = req.body.name;
-            const query = req.query;
-
-            console.log("page: " + page + "/" + "limit: " + limit + "/" + "order: " + order + "/" + "name: " + name);
-            console.log(query);
-            const queries = { raw: true, nest: true};
-            const offset = (!page || +page <=1) ? 0 : (+page - 1);
-            const flimit = +limit || +process.env.LIMIT_PRODUCT;
-            queries.offset = offset * flimit;
-            queries.limit = flimit;
-            if(order) queries.order = [order];
-            if(name) query.productName = { [Op.substring]: name }
-            const response = await db.Product.findAndCountAll({
-                where: query,
-                ...queries,
-                include: [
-                    {
-                        model: db.Category,
-                        as: 'categoryData',
-                        attributes: ['id', 'categoryName'],
-                    }
-                ]
-            });
+            const response = await bookService.getBooks(req.query);
             return res.status(200).json({status: 'Success', data: response});
         } catch (error) {
             return res.status(500).json(error);

@@ -45,9 +45,18 @@ export const getAllProduct = async () => {
     }
 }
 
-export const getProducts = async (name, page, order, limit, ...query) => {
+export const getProducts = async (name, order, page, limit, categoryId) => {
     try {
-        const res = await request.post('/api/v1/product', {name, page, order, limit, ...query});
+        const res = await request.get('/api/v1/product', {
+            params: {
+                name,
+                order,
+                page,
+                limit,
+                categoryId,
+            }
+        });
+        console.log(name);
         return res.data;
     } catch (error) {
         console.log(error);

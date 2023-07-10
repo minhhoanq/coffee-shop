@@ -10,6 +10,7 @@ const Shop = () => {
     const [products, setProducts] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [sort, setSort] = useState('');
+    const [idOfCate, setIdOfCate] = useState(0);
 
     const debounceValue = useDebounce(searchValue, 800);
 
@@ -24,13 +25,18 @@ const Shop = () => {
                 order = undefined;
             }
             const limit = 6;
+
+            let categoryId = undefined;
+
+            if(idOfCate) {
+                categoryId = idOfCate;
+            }
             
-            const productList = await getProducts(name, page, order, limit);
-            setProducts(productList.data.rows);
+            const productList = await getProducts(name, order, page, limit, categoryId);
+            setProducts(productList.data.productData.rows);
         }
         getData();
-    },[debounceValue, sort]);
-
+    },[debounceValue, sort, idOfCate]);
 
     const searchProduct = (e) => {
         setSearchValue(e.target.value);
@@ -38,6 +44,7 @@ const Shop = () => {
 
     const handleFilter = (e) => {
         const selected = e.target.value;
+        setIdOfCate(Number(selected));
     }
 
     const handleSort = (e) => {
