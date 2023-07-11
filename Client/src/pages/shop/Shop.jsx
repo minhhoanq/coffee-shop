@@ -28,6 +28,10 @@ const Shop = () => {
     const [sort, setSort] = useState('');
     const [idOfCate, setIdOfCate] = useState(0);
     const [numPage, setNumPage] = useState(0);
+    const [totalPage, setTotalPage] = useState(0);
+    const numbers = [...Array(totalPage + 1).keys()].slice(1);
+
+    console.log(numbers);
 
     const debounceValue = useDebounce(searchValue, 800);
 
@@ -41,7 +45,7 @@ const Shop = () => {
             } else {
                 order = undefined;
             }
-            const limit = 2;
+            const limit = 5;
 
             let categoryId = undefined;
 
@@ -53,7 +57,7 @@ const Shop = () => {
             setProducts(productList.data.productData.rows);
 
             const quantityPage = Math.ceil(productList.data.productData.count / limit);
-            console.log(quantityPage);
+            setTotalPage(quantityPage);
         }
         getData();
     },[debounceValue, sort, idOfCate, numPage]);
@@ -112,7 +116,7 @@ const Shop = () => {
                 products.length > 0 ? (
                     <>
                         <ProductList items={products} />
-                        <Pagination parentCallback={handlePagination} array={array}/>
+                        <Pagination parentCallback={handlePagination} numbers={numbers}/>
                     </>
                 ) : 
                 (
