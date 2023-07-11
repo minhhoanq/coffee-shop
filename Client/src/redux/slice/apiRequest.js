@@ -56,7 +56,6 @@ export const getProducts = async (name, order, page, limit, categoryId) => {
                 categoryId,
             }
         });
-        console.log(name);
         return res.data;
     } catch (error) {
         console.log(error);

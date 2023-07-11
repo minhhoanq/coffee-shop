@@ -6,6 +6,21 @@ import ProductList from '../../components/productlist/ProductList';
 import useDebounce from "../../hooks/useDebounce";
 import { getProducts } from "../../redux/slice/apiRequest";
 import Pagination from "../../components/pagination/Pagination";
+    
+const array = [
+    {
+        arr: 1,
+    },
+    {
+        arr: 2,
+    },
+    {
+        arr: 3,
+    },
+    {
+        arr: 4,
+    }
+];
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -36,9 +51,12 @@ const Shop = () => {
             
             const productList = await getProducts(name, order, page, limit, categoryId);
             setProducts(productList.data.productData.rows);
+
+            const quantityPage = Math.ceil(productList.data.productData.count / limit);
+            console.log(quantityPage);
         }
         getData();
-    },[debounceValue, sort, idOfCate]);
+    },[debounceValue, sort, idOfCate, numPage]);
 
     const searchProduct = (e) => {
         setSearchValue(e.target.value);
@@ -52,6 +70,10 @@ const Shop = () => {
     const handleSort = (e) => {
         const selected = e.target.value;
         setSort(selected);
+    }
+
+    const handlePagination = (numberPage) => {
+        setNumPage(numberPage);
     }
 
     return (
@@ -90,7 +112,7 @@ const Shop = () => {
                 products.length > 0 ? (
                     <>
                         <ProductList items={products} />
-                        <Pagination onClick={(numberPage) => setNumPage(numberPage)}/>
+                        <Pagination parentCallback={handlePagination} array={array}/>
                     </>
                 ) : 
                 (

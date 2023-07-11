@@ -2,29 +2,18 @@ import React, { useRef, useState } from "react";
 
 import './pagination.scss';
 
-const array = [
-    {
-        arr: 1,
-    },
-    {
-        arr: 2,
-    },
-    {
-        arr: 3,
-    }
-];
-
 const Pagination = props => {
     const [page, setPage] = useState(1);
 
-    const active = array.findIndex(e => e.arr === page);
-    console.log(page);
-    console.log(active);
+    const active = props.array.findIndex(e => e.arr === page);
 
     const handleClickPage = (e) => {
         e.preventDefault();
         const numberPage = (Number(e.target.id) + 1);
-        console.log(numberPage);
+        
+        if(props.parentCallback) {
+            props.parentCallback(numberPage);
+        };
         if(numberPage === 1) {
             setPage(1);
             return;
@@ -48,7 +37,7 @@ const Pagination = props => {
                             <i class="ri-arrow-left-s-line"></i>
                         </button>
                     </li>
-                    {array.map((item, i) => (
+                    {props.array.map((item, i) => (
                         <li 
                             className={`pagination__page-action__ul__li ${i === active ? 'active' : ''}`} 
                             onClick={handleClickPage}
