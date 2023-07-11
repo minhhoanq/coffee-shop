@@ -12,20 +12,21 @@ const Shop = () => {
     const [searchValue, setSearchValue] = useState('');
     const [sort, setSort] = useState('');
     const [idOfCate, setIdOfCate] = useState(0);
+    const [numPage, setNumPage] = useState(0);
 
     const debounceValue = useDebounce(searchValue, 800);
 
     useEffect(() => {
         const getData = async() => {
             const name = debounceValue;
-            const page = 0;
+            const page = numPage;
             let order = [];
             if(sort && sort != 'default') {
                 order = ["price", sort];
             } else {
                 order = undefined;
             }
-            const limit = 6;
+            const limit = 2;
 
             let categoryId = undefined;
 
@@ -89,7 +90,7 @@ const Shop = () => {
                 products.length > 0 ? (
                     <>
                         <ProductList items={products} />
-                        <Pagination/>
+                        <Pagination onClick={(numberPage) => setNumPage(numberPage)}/>
                     </>
                 ) : 
                 (
