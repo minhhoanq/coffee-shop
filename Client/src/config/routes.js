@@ -5,6 +5,7 @@ import Login from '../pages/login/Login';
 import Register from '../pages/register/Register';
 import FooterOnly from '../components/layout/footeronly/FooterOnly';
 import DetailProduct from "../pages/detailproduct/DetailProduct";
+import GirdSystem from "../pages/grid_system/GridSystem";
 
 //Public routes
 const publicRoutes = [
@@ -14,6 +15,7 @@ const publicRoutes = [
     { path: '/cart', component: Cart},
     { path: '/login', component: Login, layout: FooterOnly},
     { path: '/register', component: Register,layout: FooterOnly},
+    { path: '/gridsystem', component: GirdSystem, layout: null},
 ];
 
 const privateRoutes = [];

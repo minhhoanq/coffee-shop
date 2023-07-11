@@ -26,28 +26,24 @@
                 font-size: 0.9rem;
             }
         }
-    }
 
-    &__actions {
-        @include flex (center, space-between);
-        width: 100%;
-        padding-right: 10px;
-        padding-bottom: 10px;
-        padding: 5px;
-        box-sizing: border-box;
-
-        &__price {
-
-        }
-
-        &__btn {
-            font-size: 1.6rem;
-            cursor: pointer;
+        &__actions {
+            @include flex (center, space-between);
+            width: 100%;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            padding: 5px;
+            box-sizing: border-box;
+    
+            &__price {
+    
+            }
         }
     }
 
     &:hover {
         scale: 1.1;
+        // box-shadow: 0 1px 8px 0 rgba(107, 107, 107, 0.27);
     }
 
     @include mobile {

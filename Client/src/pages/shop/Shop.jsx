@@ -30,9 +30,6 @@ const Shop = () => {
     const [numPage, setNumPage] = useState(0);
     const [totalPage, setTotalPage] = useState(0);
     const numbers = [...Array(totalPage + 1).keys()].slice(1);
-
-    console.log(numbers);
-
     const debounceValue = useDebounce(searchValue, 800);
 
     useEffect(() => {

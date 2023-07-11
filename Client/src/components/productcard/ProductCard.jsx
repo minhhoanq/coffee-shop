@@ -36,17 +36,13 @@ const ProductCard = props => {
                         {item.categoryData.categoryName}
                     </p>
                 </div>
+                
+                <div className="product-card__actions">
+                    <span className="product-card__actions__price">
+                        {`${item.price}.000 đ`}
+                    </span>
+                </div>
             </a>
-
-            <div className="product-card__actions">
-                <span className="product-card__actions__price">
-                    {`${item.price}.000 đ`}
-                </span>
-
-                <button className="product-card__actions__btn">
-                <i class="ri-add-circle-fill"></i>
-                </button>
-            </div>
         </div>
     );
 }
