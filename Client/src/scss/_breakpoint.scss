@@ -7,7 +7,25 @@
 };
 
 @mixin tablet {
-    @media only screen and (max-width: $tablet-width) and (min-width: 601px) {
+    @media only screen and (min-width: $tablet-min-width) {
+        @content
+    }
+};
+
+@mixin tabletToPcLR {
+    @media only screen and (min-width: $tablet-min-width) and (max-width: $tablet-max-width) {
+        @content
+    }
+};
+
+@mixin pcMR {
+    @media only screen and (min-width: $pcMR-min-width) {
+        @content
+    }
+};
+
+@mixin pcLR {
+    @media only screen and (min-width: $pcLR-min-width) and (max-width: $pcLR-max-width) {
         @content
     }
 };

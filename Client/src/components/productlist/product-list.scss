@@ -8,21 +8,21 @@
         flex-wrap: wrap;
     }
 
-    &__mobile {
-        display: none;
-    }
+    // &__mobile {
+    //     display: none;
+    // }
 
-    @include mobile {
+    // @include mobile {
 
-        &__mobile {
-            display: block;
-            .swiper-slide {
-                width: 60%;
-            }
-        }
+    //     &__mobile {
+    //         display: block;
+    //         .swiper-slide {
+    //             width: 60%;
+    //         }
+    //     }
 
-        &__default {
-            display: none;
-        }
-    }
+    //     &__default {
+    //         display: none;
+    //     }
+    // }
 }

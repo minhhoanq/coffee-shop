@@ -10,7 +10,16 @@ $box-shadow: rgb(100, 100, 111, 0.2) 0px 7px 29px 0px;
 $header-height: 8rem;
 $header-shrink-height: 5rem;
 $border-radius: 30px;
-$mobile-width: 600px;
-$tablet-width: 1024px;
+//mobile
+$mobile-width: 739px;
+//tablet
+$tablet-min-width: 740px;
+$tablet-max-width: 1023px;
+//PC Medium Resolution
+$pcMR-min-width: 1113px;
+//PC Low Resolution
+$pcLR-min-width: 1024px;
+$pcLR-max-width: 1239px;
+
 
 $font-family: "Montserrat", sans-seif;

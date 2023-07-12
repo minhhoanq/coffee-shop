@@ -11,13 +11,15 @@ const ProductList = props => {
 
     return (
         <div className="product-list">
-            <div className="product-list__default">
-                { itemList.map((item, i) => (
-                    <ProductCard key={i} item={item}/>
-                ))}
+            <div className="grid wide">
+                <div className="product-list__default">
+                    { itemList.map((item, i) => (
+                        <ProductCard className={"col l-2-4 m-4 c-6"} key={i} item={item}/>
+                    ))}
+                </div>
             </div>
 
-            <div className="product-list__mobile">
+            {/* <div className="product-list__mobile">
                 <Swiper
                     grabCursor={true}
                     spaceBetween={10}
@@ -31,7 +33,7 @@ const ProductList = props => {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            </div>
+            </div> */}
         </div>
     );
 }

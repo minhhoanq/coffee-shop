@@ -1,4 +1,5 @@
-@use '../../scss/' as *;
+@use "./breakpoint" as *;
+@use "./variables" as *;
 
 .grid {
     width: 100%;
@@ -7,7 +8,7 @@
 }
 
 .grid.wide {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
@@ -142,7 +143,7 @@
 }
 
 /* >= Tablet */
-@media (min-width: 740px) {
+@include tablet{
     .row {
         margin-left: -8px;
         margin-right: -8px;
@@ -278,7 +279,7 @@
 }
 
 /* PC medium resolution > */
-@media (min-width: 1113px) {
+@include pcMR {
     .row {
         margin-left: -12px;
         margin-right: -12px;
@@ -430,16 +431,16 @@
 }
 
 /* Tablet - PC low resolution */
-@media (min-width: 740px) and (max-width: 1023px) {
+@include tabletToPcLR{
     .wide {
-        width: 644px;
+        width: 744px;
     }
 }
 
 /* > PC low resolution */
-@media (min-width: 1024px) and (max-width: 1239px) {
+@include pcLR {
     .wide {
-        width: 984px;
+        width: auto;
     }
 
     .wide .row {
@@ -592,25 +593,8 @@
     }
 }
 
-//
-
-.container {
-    text-align: center;
-}
-
-.course_item {
-    background-color: orange;
-    height: 260px;
-}
-
 @media (max-width: 1023px) {
     .course_item {
         margin-top: 16px;
     }
-}
-
-h1 {
-    color: #fff;
-    line-height: 260px;
-    margin: 0;
 }

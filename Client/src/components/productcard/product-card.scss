@@ -1,10 +1,10 @@
 @use '../../scss/' as *;
 
 .product-card {
-    width: 250px;
+    min-width: 250px;
     @include flex (flex-start, center);
     flex-direction: column;
-    margin: 0 20px 20px;
+    // margin: 0 20px 20px;
 
     &__link {
         padding: 5px;
@@ -16,7 +16,6 @@
         }
 
         &__info {
-
             &__name {
                 font-size: 1rem;
                 font-weight: 500;
@@ -44,46 +43,5 @@
     &:hover {
         scale: 1.1;
         // box-shadow: 0 1px 8px 0 rgba(107, 107, 107, 0.27);
-    }
-
-    @include mobile {
-        width: 200px;
-        margin: 0;
-
-        &__link {
-
-            &__img {
-                width: 200px;
-                height: 200px;
-                object-fit: contain;
-            }
-    
-            &__info {
-    
-                &__name {
-                    font-size: 1.2rem;
-                    font-weight: 600;
-                }
-    
-                &__type {
-                    font-size: 1.1rem;
-                }
-            }
-        }
-    
-        &__actions {
-            &__price {
-                font-size: 1.4rem;
-            }
-    
-            &__btn {
-                font-size: 2rem;
-                cursor: pointer;
-            }
-        }
-
-        &:hover {
-            scale: 1;
-        }
     }
 }

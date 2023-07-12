@@ -78,7 +78,7 @@ const Shop = () => {
     }
 
     return (
-        <div className="mb-3" style={{marginTop: '4rem'}}>
+        <div className="mb-3" style={{marginTop: '4rem', width: '100%'}}>
             <PageHeader title={'Product Cart'}/>
             <div className="shop">
                 <div className="shop__wrapper">
