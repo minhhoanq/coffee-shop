@@ -3,11 +3,12 @@
 .header {
     width: 100%;
     height: 4rem;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     background-color: #FFE4C4;
     position: fixed;
     top: 0;
     left: 0;
+    right: 0;
     transition: height 0.3s ease, background-color 0.3s ease;
     z-index: 99;
 
@@ -18,9 +19,8 @@
 
     &__wrapper {
         @include flex (center, space-between);
-        width: 80%;
+        width: 100%;
         height: 100%;
-
         &__logo {
             i {
                 font-size: 2rem;
@@ -74,7 +74,7 @@
 
         &__options {
             @include flex (center, space-between);
-            font-size: 1.4rem;
+            font-size: 1.6rem;
 
             & > * ~ * {
                 margin-left: 40px;
@@ -152,19 +152,15 @@
         }
     }
 
-    @include tablet {
-        
-       &__wrapper {
-        width: 95%;
-        &__options {
-            @include flex (center, space-between);
-            font-size: 1.4rem;
+    @include tabletToPcLR {
+        font-size: 1.2rem;
 
-            & > * ~ * {
-                margin-left: 20px;
+        &__wrapper {
+
+            &__options {
+                font-size: 1.2rem;
             }
         }
-       }
     }
 
     @include mobile {
