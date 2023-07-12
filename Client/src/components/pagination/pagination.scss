@@ -16,12 +16,12 @@
 
             &__li {
                 cursor: pointer;
-                font-size: 1rem;
+                font-size: 1.6rem;
                 @include flex(center, center);
 
                 &__btn-prev, &__btn-next {
                     @include flex(center, center);
-                    font-size: 1.2rem;
+                    font-size: 1.6rem;
                     cursor: pointer;
                 }
             }

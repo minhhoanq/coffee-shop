@@ -15,8 +15,8 @@
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin-left: -4px;
-    margin-right: -4px;
+    // margin-left: -4px;
+    // margin-right: -4px;
 }
 
 .row.no-gutters {
@@ -145,8 +145,8 @@
 /* >= Tablet */
 @include tablet{
     .row {
-        margin-left: -8px;
-        margin-right: -8px;
+        // margin-left: -8px;
+        // margin-right: -8px;
     }
 
     .col {
@@ -281,8 +281,8 @@
 /* PC medium resolution > */
 @include pcMR {
     .row {
-        margin-left: -12px;
-        margin-right: -12px;
+        // margin-left: -12px;
+        // margin-right: -12px;
     }
 
     .row.sm-gutter {
@@ -444,8 +444,8 @@
     }
 
     .wide .row {
-        margin-left: -12px;
-        margin-right: -12px;
+        // margin-left: -12px;
+        // margin-right: -12px;
     }
 
     .wide .row.sm-gutter {

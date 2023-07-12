@@ -2,27 +2,4 @@
 
 .product-list {
     width: 100%;
-
-    &__default {
-        @include flex (center, flex-start);
-        flex-wrap: wrap;
-    }
-
-    // &__mobile {
-    //     display: none;
-    // }
-
-    // @include mobile {
-
-    //     &__mobile {
-    //         display: block;
-    //         .swiper-slide {
-    //             width: 60%;
-    //         }
-    //     }
-
-    //     &__default {
-    //         display: none;
-    //     }
-    // }
 }

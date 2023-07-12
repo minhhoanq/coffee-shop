@@ -5,12 +5,14 @@
     @include flex (center, center);
 
     &__wrapper {
-        margin: 80px 0 50px 0;
-        @include flex (center, center);
+        margin: 50px 0 50px 0;
+        width: 100%;
+        @include flex (center, flex-start);
 
         &__selects {
-            @include flex (center, space-between);
-            margin-right: 80px;
+            @include flex (center, flex-start);
+            margin: 0;
+            width: 50%;
             &__filter {
                 margin-right: 30px;
                 select {
@@ -34,6 +36,7 @@
         }
 
         &__search{
+            @include flex (center, center);
             border: 2px solid #ccc;
             border-radius: 4px;
             width: 440px;
@@ -52,15 +55,39 @@
         }
     }
 
-    @include tablet {
+    @include tabletToPcLR {
 
         &__wrapper {
-            @include flex (center, flex-start);
-            flex-wrap: wrap-reverse;
-            margin-left: 40px;
-
+            margin: 50px 0;
+            @include flex (flex-start, space-around);
+            flex-direction: column-reverse;
+    
             &__selects {
+                @include flex (center, flex-start);
                 margin-top: 10px;
+    
+                &__filter {
+                    select {
+                        height: 35px;
+                        width: 130px;
+                        font-size: 1.2rem;
+                    }
+                }
+        
+                &__sort {
+                    select {
+                        height: 35px;
+                        width: 130px;
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+           
+            &__search {
+                width: 30%;
+                input {
+                    width: 85%;
+                }
             }
         }
     }
@@ -72,13 +99,12 @@
             flex-direction: column-reverse;
     
             &__selects {
-                @include flex (center, space-between);
+                @include flex (center, flex-start);
                 margin-top: 10px;
     
                 &__filter {
-
                     select {
-                        height: 25px;
+                        height: 35px;
                         width: 130px;
                         font-size: 1.2rem;
                     }
@@ -86,22 +112,17 @@
         
                 &__sort {
                     select {
-                        height: 25px;
-                        width: 100px;
+                        height: 35px;
+                        width: 130px;
                         font-size: 1.2rem;
                     }
                 }
             }
            
             &__search {
-                width: 60%;
+                width: 30%;
                 input {
                     width: 85%;
-                }
-    
-                i {
-                    padding: 10px;
-                    box-sizing: border-box;
                 }
             }
         }

@@ -10,9 +10,9 @@ const ProductList = props => {
     const itemList = props.items;
 
     return (
-        <div className="product-list">
-            <div className="grid wide">
-                <div className="product-list__default">
+        <div className="grid wide">
+            <div className="product-list">
+                <div className="product-list__default row">
                     { itemList.map((item, i) => (
                         <ProductCard className={"col l-2-4 m-4 c-6"} key={i} item={item}/>
                     ))}

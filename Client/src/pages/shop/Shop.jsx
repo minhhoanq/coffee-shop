@@ -80,8 +80,8 @@ const Shop = () => {
     return (
         <div className="mb-3" style={{marginTop: '4rem', width: '100%'}}>
             <PageHeader title={'Product Cart'}/>
-            <div className="shop">
-                <div className="shop__wrapper">
+            <div className="shop grid wide">
+                <div className="shop__wrapper col">
                     <div className="shop__wrapper__selects">
                         <div className="shop__wrapper__selects__filter">
                             <select name="carts" id="carts" onChange={handleFilter}>

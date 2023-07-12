@@ -37,8 +37,8 @@ const ProductCard = props => {
                     </p>
                 </div>
                 
-                <div className="product-card__actions">
-                    <span className="product-card__actions__price">
+                <div className="product-card__link__actions">
+                    <span className="product-card__link__actions__price">
                         {`${item.price}.000 đ`}
                     </span>
                 </div>
