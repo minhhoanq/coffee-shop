@@ -117,16 +117,16 @@
     }
 
     
-    @include tablet {
-        &__img {
-            display: none;
-        }
-    }
+    // @include tablet {
+    //     &__img {
+    //         display: none;
+    //     }
+    // }
 
-    @include mobile {
-        font-size: 1.4rem;
-        &__img {
-            display: none;
-        }
-    }
+    // @include mobile {
+    //     font-size: 1.4rem;
+    //     &__img {
+    //         display: none;
+    //     }
+    // }
 }
