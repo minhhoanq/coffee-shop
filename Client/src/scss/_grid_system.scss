@@ -13,7 +13,7 @@
 }
 
 .wide {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -22,6 +22,13 @@
     flex-wrap: wrap;
     // margin-left: -4px;
     // margin-right: -4px;
+}
+
+.flex-center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .row.no-gutters {

@@ -131,10 +131,10 @@ const DetailProduct = () => {
     }
 
     return (
-        <div className="detail-product">
+        <div className="detail-product grid">
             <PageHeader title={products[0]?.productData.productName}/>
 
-            <div className="detail-product__wrapper">
+            <div className="detail-product__wrapper wide row">
 
                 <div className="detail-product__wrapper__img">
                     <img src={`${products[0]?.productData.productImg}`} alt=""/>
@@ -219,12 +219,12 @@ const DetailProduct = () => {
                 </div>
             </div>
 
-            <div className="detail-product__review">
+            <div className="detail-product__review wide col">
                 <TabReview item={products[0]?.productData}/>
             </div>
 
-            <div className="detail-product__similar">
-                <span className="detail-product__similar__title">You might also like</span>
+            <div className="detail-product__similar wide col">
+                <span className="detail-product__similar__title">Bạn cũng có thể thích</span>
                 <ProductList items={productSimilars}/>
             </div>
         </div>

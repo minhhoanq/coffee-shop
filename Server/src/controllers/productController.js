@@ -80,6 +80,40 @@ const productController = {
         } catch (error) {
             return res.status(500).json(error);
         }
+    },
+    getCartItem: async(req, res) => {
+        try {
+            const product = await db.Cart_Item.findAll({
+                where: {cartId: req.body.cartId},
+                include: [
+                    {
+                        model: db.Product_Size,
+                        as: 'productSizeData',
+                        attributes: ['id', 'productId', 'sizeId'],
+                        include: [
+                            {
+                                model: db.Product,
+                                as: 'productData',
+                                attributes: ['id', 'productName'],
+                            },
+                            {
+                                model: db.Size,
+                                as: 'sizeData',
+                                attributes: ['id', 'sizeName'],
+                            }
+                        ]
+                    },
+                    {
+                        model: db.Cart,
+                        as: 'cartData',
+                        attributes: ['id', 'userId'],
+                    }
+                ]
+            });
+            return res.status(200).json({status: 'Success!', data: product});
+        } catch (error) {
+            return res.status(500).json(error);
+        }
     }
 }
 

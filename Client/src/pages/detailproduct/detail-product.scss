@@ -4,25 +4,24 @@
     margin-top: 4rem;
 
     &__wrapper {
-        width: 100%;
+        margin-top: 40px;        
+        width: 55%;
         @include flex (center, space-between);
-        padding: 0 200px;
-        box-sizing: border-box;
 
         &__img {
-            height: 450px;
-            width: 450px;
+            padding: 20px;
             @include flex (center, center);
 
             img {
-                height: 400px;
-                width: 400px;
-                object-fit: contain;
+                height: 350px;
+                width: 350px;
+                object-fit: cover;
             }
         }
 
         &__info {
-            width: 55%;
+            flex: 1;
+            margin-left: 70px;
             & > * ~ * {
                 margin-top: 10px;
             }
@@ -132,130 +131,127 @@
     }
 
     &__review {
-        margin: 0 200px;
+        // margin: 0 200px;
+        font-size: 1.4rem;
     }
 
     &__similar {
-        margin: 0 0 50px 200px;
-
-        & > * ~ * {
-            margin-top: 50px;
-        }
+        padding: 0 0 50px 0;
 
         &__title {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: 600;
         }
 
     }
 
-    @include tablet {
+    // @include tablet {
 
-        &__wrapper {
-            width: 100%;
-            @include flex(center, space-between);
-            padding: 0 10%;
+    //     &__wrapper {
+    //         width: 100%;
+    //         @include flex(center, space-between);
+    //         padding: 0 10%;
 
-            &__img {
-                height: 350px;
-                width: 350px;
-                @include flex (center, center);
+    //         &__img {
+    //             height: 350px;
+    //             width: 350px;
+    //             @include flex (center, center);
     
-                img {
-                    height: 350px;
-                    width: 350px;
-                    object-fit: contain;
-                }
-            }
-        }
-    }
+    //             img {
+    //                 height: 350px;
+    //                 width: 350px;
+    //                 object-fit: contain;
+    //             }
+    //         }
+    //     }
+    // }
 
-    @include mobile {
-        $height-header-mobile: calc($header-height * 0.7);
-        margin-top: $height-header-mobile;
-        &__wrapper {
-            width: 100%;
-            @include flex (center, center);
-            flex-direction: column;
-            padding: 0 21%;
+    // @include mobile {
+    //     $height-header-mobile: calc($header-height * 0.7);
+    //     margin-top: $height-header-mobile;
+    //     &__wrapper {
+    //         width: 100%;
+    //         @include flex (center, center);
+    //         flex-direction: column;
+    //         padding: 0 21%;
 
-            &__img {
-                height: 250px;
-                width: 350px;
-                @include flex (center, center);
+    //         &__img {
+    //             height: 250px;
+    //             width: 350px;
+    //             @include flex (center, center);
     
-                img {height: 250px;
-                    width: 350px;
-                    object-fit: contain;
-                }
-            }
+    //             img {height: 250px;
+    //                 width: 350px;
+    //                 object-fit: contain;
+    //             }
+    //         }
     
-            &__info {
-                width: 100%;
-                & > * ~ * {
-                    margin-top: 10px;
-                }
+    //         &__info {
+    //             width: 100%;
+    //             & > * ~ * {
+    //                 margin-top: 10px;
+    //             }
     
-                &__name {
-                    font-size: 2rem;
-                    font-weight: 500;
-                } 
+    //             &__name {
+    //                 font-size: 2rem;
+    //                 font-weight: 500;
+    //             } 
                 
-                &__rating {
-                    @include flex (center, flex-start);
-                    font-size: 1.8rem;
+    //             &__rating {
+    //                 @include flex (center, flex-start);
+    //                 font-size: 1.8rem;
     
-                    & > * ~ * {
-                        margin-left: 40px;
-                    }
+    //                 & > * ~ * {
+    //                     margin-left: 40px;
+    //                 }
     
-                    &__star {
+    //                 &__star {
                         
-                        i {
-                            color: $main-color;
-                        }
-                    }
+    //                     i {
+    //                         color: $main-color;
+    //                     }
+    //                 }
     
-                    &__ratings {
-                        span {
-                            color: $main-color;
-                        }
-                    }
+    //                 &__ratings {
+    //                     span {
+    //                         color: $main-color;
+    //                     }
+    //                 }
                     
-                }
+    //             }
     
-                &__cate {
-                    @include flex (center, flex-start);
-                    font-size: 1.8rem;
-                    & > * ~ * {
-                        margin-left: 100px;
-                    }
+    //             &__cate {
+    //                 @include flex (center, flex-start);
+    //                 font-size: 1.8rem;
+    //                 & > * ~ * {
+    //                     margin-left: 100px;
+    //                 }
     
-                    &__price {
-                        font-weight: 500;
-                    }
-                }
+    //                 &__price {
+    //                     font-weight: 500;
+    //                 }
+    //             }
     
-                &__desc {
-                    display: none;
-                }
+    //             &__desc {
+    //                 display: none;
+    //             }
     
-                &__btn {
-                    @include flex (center, center);
-                    font-size: 1.4rem;
-                    width: 50%;
-                    height: 35px;
-                    margin: 20px auto;
-                }
-            }
-        }
+    //             &__btn {
+    //                 @include flex (center, center);
+    //                 font-size: 1.4rem;
+    //                 width: 50%;
+    //                 height: 35px;
+    //                 margin: 20px auto;
+    //             }
+    //         }
+    //     }
 
-        &__review {
-            margin: 10%;
-        }
+    //     &__review {
+    //         margin: 10%;
+    //     }
 
-        &__similar {
-            margin:0 10px 20px;
-        }
-    }
+    //     &__similar {
+    //         margin:0 10px 20px;
+    //     }
+    // }
 }

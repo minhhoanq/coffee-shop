@@ -7,6 +7,9 @@ router.post('/detail', productController.getProductDetail);
 //Get product by categoryid
 router.post('/category', productController.getProductByCategory);
 
+//Cart-item
+router.post('/cart-item', productController.getCartItem);
+
 //Get all products
 router.get('/', productController.getProducts);
 
