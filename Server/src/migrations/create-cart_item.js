@@ -13,10 +13,24 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
+        unique: "unique_tag",
       },
       productSizeId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        allowNull: false,
+        unique: "unique_tag",
+      },
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+      },
+      note: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       createdAt: {
@@ -29,7 +43,12 @@ module.exports = {
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       }
-    });
+    },
+    {uniqueKeys: {
+      unique_tag: {
+        customIndex: true,
+        fields: ["cartId", "productSizeId"]
+      }}});
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Cart_Items');

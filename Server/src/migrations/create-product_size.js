@@ -11,13 +11,13 @@ module.exports = {
       },
       productId: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         allowNull: false,
+        unique: "unique_tag",
       }, 
       sizeId: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         allowNull: false,
+        unique: "unique_tag",
       },
       recipeId: {
         type: Sequelize.INTEGER,
@@ -33,7 +33,12 @@ module.exports = {
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       }
-    });
+    },
+    {uniqueKeys: {
+      unique_tag: {
+        customIndex: true,
+        fields: ["productId", "sizeId"]
+      }}});
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Product_Sizes');

@@ -12,16 +12,25 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Cart_Item.hasOne(models.Product_Size, {foreignKey: 'id', sourceKey: 'productSizeId', as: 'productSizeData'}),
-      // Cart_Item.hasOne(models.Product_Size, {foreignKey: 'sizeId', sourceKey: 'sizeId', as: 'sizeData'}),
       Cart_Item.hasOne(models.Cart, {foreignKey: 'id', sourceKey: 'cartId', as: 'cartData'})
     }
   }
   Cart_Item.init({
     cartId: DataTypes.INTEGER,
     productSizeId: DataTypes.INTEGER,
-  }, {
+    quantity: DataTypes.INTEGER,
+    price: DataTypes.DOUBLE,
+    note: DataTypes.STRING,
+  },
+  {
     sequelize,
     modelName: 'Cart_Item',
+    indexes: [
+      {
+        unique: true,
+        fields: ['cartId', 'productSizeId']
+      }
+    ]
   });
   return Cart_Item;
 };
