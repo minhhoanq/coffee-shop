@@ -62,7 +62,7 @@ const Header = () => {
         overLayMobileRef.current.classList.toggle('ovl');
     }
 
-    const handleNotify = () => {
+    const handleCart = () => {
         notifyListRef.current.classList.toggle('notifyShow');
     }
 
@@ -89,42 +89,42 @@ const Header = () => {
                     </ul>
     
                     <div className="header__wrapper__options">
-                        <div className="header__wrapper__options__notify" onClick={handleNotify}>
+                        <div className="header__wrapper__options__notify">
                             <i class="ri-heart-line" ></i>
-                            <div className="header__wrapper__options__notify__dot"></div>
+                        </div>
+                        <div className="header__wrapper__options__cart"  onClick={handleCart}>
+                            <i class="ri-shopping-cart-line"></i>
+                            <div className="header__wrapper__options__cart__dot"></div>
     
-                            <div className="header__wrapper__options__notify__list" ref={notifyListRef}>
-                                <div className="header__wrapper__options__notify__list__txt">Thông báo mới nhận</div>
+                            <div className="header__wrapper__options__cart__list" ref={notifyListRef}>
+                                <div className="header__wrapper__options__cart__list__txt">Thông báo mới nhận</div>
     
-                                <ul className="header__wrapper__options__notify__list__ul">
-                                    <li className="header__wrapper__options__notify__list__ul__li">
+                                <ul className="header__wrapper__options__cart__list__ul">
+                                    <li className="header__wrapper__options__cart__list__ul__li">
                                         <Car_ver/>
                                     </li>
     
-                                    <li className="header__wrapper__options__notify__list__ul__li">
+                                    <li className="header__wrapper__options__cart__list__ul__li">
                                         <Car_ver/>
                                        
                                     </li>
     
-                                    <li className="header__wrapper__options__notify__list__ul__li">
+                                    <li className="header__wrapper__options__cart__list__ul__li">
                                         <Car_ver/>
                                         
                                     </li>
     
-                                    <li className="header__wrapper__options__notify__list__ul__li">
+                                    <li className="header__wrapper__options__cart__list__ul__li">
                                         <Car_ver/>
                                     </li>
     
-                                    <li className="header__wrapper__options__notify__list__ul__li">
+                                    <li className="header__wrapper__options__cart__list__ul__li">
                                         <Car_ver/>
                                     </li>
                                 </ul>
     
-                                <button className="header__wrapper__options__notify__list__btn">Xem tất cả</button>
+                                <button className="header__wrapper__options__cart__list__btn">Xem tất cả</button>
                             </div>
-                        </div>
-                        <div className="header__wrapper__options__cart">
-                            <i class="ri-shopping-cart-line"></i>
                         </div>
                         <div className="header__wrapper__options__profile">
                             {

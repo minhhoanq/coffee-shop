@@ -122,9 +122,15 @@ const DetailProduct = () => {
     }
 
     const handleAddToCart = (e) => {
+        const productPost = products.find(
+            item => item.productData.id === Number(id) && item.sizeData.id === 3
+        )
+
+        const n = productPost.id;
         const newProduct = {
-            size,
+            n,
             price,
+            quantity,
             note
         }
         console.log(newProduct);

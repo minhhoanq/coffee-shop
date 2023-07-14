@@ -81,8 +81,10 @@
             }
 
             &__notify {
-                position: relative;
+            }
 
+            &__cart {
+                position: relative;
                 &__dot {
                     position: absolute;
                     background-color: red;

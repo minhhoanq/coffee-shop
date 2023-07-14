@@ -36,8 +36,7 @@ const productController = {
         try {
             const detail = await db.Product_Size.findAll({
                 where: {productId: req.body.productId},
-                attributes: {
-                },
+                attributes: ['id'],
                 include: [
                     {
                         model: db.Product,

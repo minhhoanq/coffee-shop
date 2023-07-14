@@ -79,3 +79,18 @@ export const getProductDetailById = async (id) => {
         console.log(error);
     }
 }
+
+export const addToCartItem = async (cartId, productSizeId, quantity, price, note) => {
+    try {
+        const res = await request.post('/api/v1/product/cart-item', {
+            cartId, 
+            productSizeId, 
+            quantity, 
+            price,
+            note,
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
