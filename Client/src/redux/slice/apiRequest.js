@@ -80,10 +80,23 @@ export const getProductDetailById = async (id) => {
     }
 }
 
+export const getToCartItem = async (cartId) => {
+    try {
+        const res = await request.get('/api/v1/product/cart-item', {
+            params: {
+                cartId,
+            }
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const addToCartItem = async (cartId, productSizeId, quantity, price, note) => {
     try {
         const res = await request.post('/api/v1/product/cart-item', {
-            cartId, 
+            cartId,
             productSizeId, 
             quantity, 
             price,

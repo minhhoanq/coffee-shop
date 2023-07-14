@@ -8,7 +8,6 @@ const TabReview = props => {
 
     const[tab, setTab] = useState('desc');
     const item = props.item;
-    console.log(item);
 
     return (
         <div className="tab-review">

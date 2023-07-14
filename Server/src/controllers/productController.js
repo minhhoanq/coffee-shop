@@ -1,5 +1,6 @@
 const db = require("../models");
 const bookService = require("../services/bookService");
+const cartItemService = require("../services/cartItemService");
 
 const productController = {
     //Get all product
@@ -82,34 +83,8 @@ const productController = {
     },
     getCartItem: async(req, res) => {
         try {
-            const product = await db.Cart_Item.findAll({
-                where: {cartId: req.body.cartId},
-                include: [
-                    {
-                        model: db.Product_Size,
-                        as: 'productSizeData',
-                        attributes: ['id', 'productId', 'sizeId'],
-                        include: [
-                            {
-                                model: db.Product,
-                                as: 'productData',
-                                attributes: ['id', 'productName'],
-                            },
-                            {
-                                model: db.Size,
-                                as: 'sizeData',
-                                attributes: ['id', 'sizeName'],
-                            }
-                        ]
-                    },
-                    {
-                        model: db.Cart,
-                        as: 'cartData',
-                        attributes: ['id', 'userId'],
-                    }
-                ]
-            });
-            return res.status(200).json({status: 'Success!', data: product});
+            const response = await cartItemService.getCartItemByID(req.query);
+            return res.status(200).json({status: 'Success!', data: response});
         } catch (error) {
             return res.status(500).json(error);
         }

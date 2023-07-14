@@ -1,4 +1,4 @@
-import React, { useEffect, useRef} from "react"
+import React, { useEffect, useRef, useState} from "react"
 import { Link, useLocation } from 'react-router-dom';
 
 import './header.scss';
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import createAxios from "../../createInstance";
 import { logoutSuccess } from "../../redux/slice/authSlice";
+import { getToCartItem } from "../../redux/slice/apiRequest";
 
 const headerNav = [
     {
@@ -27,6 +28,8 @@ const headerNav = [
 const Header = () => {
     const { pathname } = useLocation();
     const active = headerNav.findIndex(e => e.path === pathname);
+
+    const [cart, setCart] = useState([]);
 
     const headerRef = useRef(null);
     const navMobileRef = useRef(null);
@@ -48,7 +51,14 @@ const Header = () => {
             } else {
                 headerRef.current.classList.remove('shrink');
             }
+        };
+
+        const getDataCart = async () => {
+            const cartArr = await getToCartItem(1);
+            setCart(cartArr.data.productData);
         }
+
+        getDataCart();
 
         window.addEventListener('scroll', shrinkHeader);
 
@@ -57,13 +67,18 @@ const Header = () => {
         };
     },[]);
 
+
     const toggleHandleMenuShow = () => {
         navMobileRef.current.classList.toggle('show');
         overLayMobileRef.current.classList.toggle('ovl');
     }
 
     const handleCart = () => {
-        notifyListRef.current.classList.toggle('notifyShow');
+        notifyListRef.current.classList.toggle('cartShow');
+    }
+
+    const handleUser = (e) => {
+
     }
 
     const handleLogout =() => {
@@ -100,27 +115,11 @@ const Header = () => {
                                 <div className="header__wrapper__options__cart__list__txt">Thông báo mới nhận</div>
     
                                 <ul className="header__wrapper__options__cart__list__ul">
-                                    <li className="header__wrapper__options__cart__list__ul__li">
-                                        <Car_ver/>
-                                    </li>
-    
-                                    <li className="header__wrapper__options__cart__list__ul__li">
-                                        <Car_ver/>
-                                       
-                                    </li>
-    
-                                    <li className="header__wrapper__options__cart__list__ul__li">
-                                        <Car_ver/>
-                                        
-                                    </li>
-    
-                                    <li className="header__wrapper__options__cart__list__ul__li">
-                                        <Car_ver/>
-                                    </li>
-    
-                                    <li className="header__wrapper__options__cart__list__ul__li">
-                                        <Car_ver/>
-                                    </li>
+                                    {cart?.map((item, i) => (
+                                        <li className="header__wrapper__options__cart__list__ul__li" key={i}>
+                                            <Car_ver item = {item}/>
+                                        </li>
+                                    ))}
                                 </ul>
     
                                 <button className="header__wrapper__options__cart__list__btn">Xem tất cả</button>
@@ -129,7 +128,7 @@ const Header = () => {
                         <div className="header__wrapper__options__profile">
                             {
                                 user ? <>
-                                    <span>Hi,{user.username}</span>
+                                    <i class="ri-user-follow-line" onClick={handleUser}></i>
                                     <span style={{cursor: "pointer"}} onClick={handleLogout}>Logout</span>
                                 </> : <i class="ri-user-smile-line"></i>
                             }

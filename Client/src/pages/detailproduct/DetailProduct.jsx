@@ -4,6 +4,7 @@ import './detail-product.scss';
 import PageHeader from '../../components/pageheader/PageHeader';
 import Button from '../../components/button/Button';
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import TabReview from "../../components/tabreview/TabReview";
 import ProductList from '../../components/productlist/ProductList';
 import { getProductDetailById, getProductByCategoryId } from "../../redux/slice/apiRequest";
@@ -16,7 +17,10 @@ const DetailProduct = () => {
     const [quantity, setQuantity] = useState(1);
     const [note, setNote] = useState('');
 
-    const { id } = useParams()
+    const { id } = useParams();
+    const user = useSelector(state => state.auth.login?.currentUser);
+
+    console.log(user.others);
 
     //Get api
     const getDataById = async() => {
@@ -122,8 +126,9 @@ const DetailProduct = () => {
     }
 
     const handleAddToCart = (e) => {
+        const s = size.slice(-1);
         const productPost = products.find(
-            item => item.productData.id === Number(id) && item.sizeData.id === 3
+            item => item.productData.id === Number(id) && item.sizeData.sizeName === s
         )
 
         const n = productPost.id;

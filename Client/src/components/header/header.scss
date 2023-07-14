@@ -120,7 +120,7 @@
                         border-color: transparent transparent #FFF8DC transparent;
                     }
 
-                    &.notifyShow {
+                    &.cartShow {
                         display: block;
                     }
 
@@ -132,7 +132,7 @@
                     }
 
                     &__ul {
-                        height: 300px;
+                        height: auto;
                         list-style: none;
                         overflow-y: auto;
                     }
@@ -145,6 +145,13 @@
 
                         margin: auto;
                     }
+                }
+            }
+
+            &__profile {
+
+                i {
+                    
                 }
             }
         }
