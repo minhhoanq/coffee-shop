@@ -135,6 +135,19 @@
                         height: auto;
                         list-style: none;
                         overflow-y: auto;
+
+                        &__no-cart {
+                            width: 100%;
+                            @include flex (center, center);
+                            flex-direction: column;
+                            i{
+                                font-size: 4rem;
+                            }
+
+                            span {
+                                font-size: 1.4rem;
+                            }
+                        }
                     }
 
                     &__btn {

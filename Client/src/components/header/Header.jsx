@@ -67,6 +67,8 @@ const Header = () => {
         };
     },[]);
 
+    console.log(cart);
+
 
     const toggleHandleMenuShow = () => {
         navMobileRef.current.classList.toggle('show');
@@ -112,14 +114,17 @@ const Header = () => {
                             <div className="header__wrapper__options__cart__dot"></div>
     
                             <div className="header__wrapper__options__cart__list" ref={notifyListRef}>
-                                <div className="header__wrapper__options__cart__list__txt">Thông báo mới nhận</div>
+                                <div className="header__wrapper__options__cart__list__txt">Giỏ hàng của bạn</div>
     
                                 <ul className="header__wrapper__options__cart__list__ul">
-                                    {cart?.map((item, i) => (
+                                    {cart.length !== 0 ? (cart?.map((item, i) => (
                                         <li className="header__wrapper__options__cart__list__ul__li" key={i}>
                                             <Car_ver item = {item}/>
                                         </li>
-                                    ))}
+                                    ))) : <div className="header__wrapper__options__cart__list__ul__no-cart">
+                                             <i class="ri-emotion-unhappy-line"></i>
+                                             <span>Bạn không có sản phẩm nào trong giỏ hàng</span>
+                                        </div>}
                                 </ul>
     
                                 <button className="header__wrapper__options__cart__list__btn">Xem tất cả</button>
