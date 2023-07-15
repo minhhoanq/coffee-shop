@@ -1,25 +1,40 @@
-// import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-// const initialState = {
-//     cartItems: null,
-// }
+const initialState = {
+    cartItems: [1],
+}
 
-// const cartSlice = createSlice({
-//     name: 'cart',
-//     initialState,
-//     reducers: {
-//         addItem: (state, action) => {
-//             // const newItem = action.payload;
-//             // const existingItem = state.cartItems.find(
-//             //     (item) => item.id === newItem.id
-//             // )
+const cartSlice = createSlice({
+    name: 'cart',
+    initialState,
+    reducers: {
+        addItem: (state, action) => {
+            const newItem = action.payload;
+            // const existingCartId = state.cartItems.find(
+            //     item => item.cartId === newItem.cartId
+            // );
 
-//             // if(!existingItem) {
-//             //     state.cartItems.push({
-//             //         id: newItem.id,
-                    
-//             //     })
-//             // }
-//         }
-//     }
-// })
+            // const existingproductSizeId = state.cartItems.find(
+            //     (item) => item.productSizeId === newItem.productSizeId
+            // )
+
+            // if(!existingCartId && !existingproductSizeId) {
+                // state.cartItems.push({
+                //     cartId: newItem.cartId,
+                //     productSizeId: newItem.productSizeId,
+                //     quantity: newItem.quantity,
+                //     price: newItem.price,
+                //     note: newItem.note,
+                // });
+                console.log(newItem);
+            //     return 1;
+            // } else {
+            //     return 0;
+            // }
+        }
+    }
+});
+
+export const cartActions = cartSlice.actions;
+
+export default cartSlice.reducer;

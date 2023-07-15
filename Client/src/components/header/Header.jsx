@@ -42,8 +42,7 @@ const Header = () => {
     let axiosJWT = createAxios(user, dispatch, logoutSuccess);
     
     const accessToken = user?.accessToken;
-    const id = user?._id;
-
+    const id = user?.others.id;
     useEffect(() => {
         const shrinkHeader = () => {
             if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
@@ -54,7 +53,7 @@ const Header = () => {
         };
 
         const getDataCart = async () => {
-            const cartArr = await getToCartItem(1);
+            const cartArr = await getToCartItem(id);
             setCart(cartArr.data.productData);
         }
 
@@ -66,9 +65,6 @@ const Header = () => {
             window.removeEventListener('scroll', shrinkHeader);
         };
     },[]);
-
-    console.log(cart);
-
 
     const toggleHandleMenuShow = () => {
         navMobileRef.current.classList.toggle('show');

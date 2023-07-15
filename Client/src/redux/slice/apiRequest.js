@@ -104,6 +104,6 @@ export const addToCartItem = async (cartId, productSizeId, quantity, price, note
         });
         return res.data;
     } catch (error) {
-        console.log(error);
+        return error;
     }
 }

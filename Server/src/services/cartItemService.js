@@ -9,7 +9,8 @@ const postAddToCartItem = ({cartId, productSizeId, quantity, price, note}) => ne
             reject({
                 err: 1,
                 msg: "Exist Cart and Product",
-            })
+            });
+            return;
         };
 
         const newCartItem = {

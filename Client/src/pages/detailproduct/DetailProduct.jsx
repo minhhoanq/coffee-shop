@@ -8,6 +8,9 @@ import { useSelector } from "react-redux";
 import TabReview from "../../components/tabreview/TabReview";
 import ProductList from '../../components/productlist/ProductList';
 import { getProductDetailById, getProductByCategoryId } from "../../redux/slice/apiRequest";
+import { toast } from "react-toastify";
+import { addToCartItem } from "../../redux/slice/apiRequest";
+
 
 const DetailProduct = () => {
     const [products, setProducts] = useState([]);
@@ -19,8 +22,7 @@ const DetailProduct = () => {
 
     const { id } = useParams();
     const user = useSelector(state => state.auth.login?.currentUser);
-
-    console.log(user.others);
+    const userId = user?.others.id;
 
     //Get api
     const getDataById = async() => {
@@ -125,7 +127,7 @@ const DetailProduct = () => {
         setNote(e.target.value);
     }
 
-    const handleAddToCart = (e) => {
+    const handleAddToCart = async(e) => {
         const s = size.slice(-1);
         const productPost = products.find(
             item => item.productData.id === Number(id) && item.sizeData.sizeName === s
@@ -139,6 +141,11 @@ const DetailProduct = () => {
             note
         }
         console.log(newProduct);
+
+        const response = await addToCartItem(userId, n, quantity, price, note);
+
+        // console.log(response.response.data.msg);
+
     }
 
     return (
