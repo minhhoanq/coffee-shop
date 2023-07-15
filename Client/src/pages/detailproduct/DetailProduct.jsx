@@ -144,7 +144,6 @@ const DetailProduct = () => {
 
         const response = await addToCartItem(userId, n, quantity, price, note);
 
-        // console.log(response.response.data.msg);
 
     }
 

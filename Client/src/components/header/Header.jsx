@@ -52,18 +52,21 @@ const Header = () => {
             }
         };
 
+        window.addEventListener('scroll', shrinkHeader);
+
+        return () => {
+            window.removeEventListener('scroll', shrinkHeader);
+        };
+    },[]);
+
+    useEffect(() => {
+        
         const getDataCart = async () => {
             const cartArr = await getToCartItem(id);
             setCart(cartArr.data.productData);
         }
 
         getDataCart();
-
-        window.addEventListener('scroll', shrinkHeader);
-
-        return () => {
-            window.removeEventListener('scroll', shrinkHeader);
-        };
     },[]);
 
     const toggleHandleMenuShow = () => {

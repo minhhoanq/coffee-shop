@@ -2,15 +2,17 @@ const db = require("../models");
 
 const postAddToCartItem = ({cartId, productSizeId, quantity, price, note}) => new Promise(async (resolve, reject) => {
     try {
-        const existCartId = await db.Cart_Item.findOne({where: cartId});
-        const existProductSizeId = await db.Cart_Item.findOne({where: productSizeId});
-
-        if(existCartId && existProductSizeId) {
-            reject({
-                err: 1,
-                msg: "Exist Cart and Product",
-            });
-            return;
+        const existCartItem = await db.Cart_Item.findOne({
+                where: {cartId : cartId, productSizeId: productSizeId},
+            }
+        );
+        if(existCartItem) {
+            return reject(
+                {
+                    err: 1,
+                    msg: "Sản phẩm đã có trong giỏ hàng."
+                }
+            )
         };
 
         const newCartItem = {
@@ -23,13 +25,13 @@ const postAddToCartItem = ({cartId, productSizeId, quantity, price, note}) => ne
 
         const response = await db.Cart_Item.create(newCartItem);
 
-        resolve({
+        return resolve({
             err: response ? 0 : 1,
             mes: response ? "Got it" : "Can't found product",
             productData: response,
         });
     } catch (error) {
-        reject(error);
+        return reject(error);
     }
 });
 
