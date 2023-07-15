@@ -38,32 +38,39 @@
 
             }
 
-            .cart-item {
-                margin-top: 10px;
-                border-bottom: 1px solid #ccc;
-                &__wrapper {
-                    @include flex(flex-start, flex-start);
-                    img {
-                        width: 100px;
-                        height: 100px;
-                    }
+            &__item {
+                overflow-y: auto;
+                max-height: 400px;
 
-                    &__title {
-                        width: 35%;
-                        margin-left: 7%;
-                    }
-
-                    &__title1 {
-                        flex: 1;
-                        margin-left: 10%;
-                        @include flex(flex-start, space-between);
-
-                        i {
-                            cursor: pointer;
+                .cart-item {
+                    padding: 10px 0;
+                    border-bottom: 1px solid #ccc;
+                    
+                    &__wrapper {
+                        @include flex(flex-start, flex-start);
+                        img {
+                            width: 100px;
+                            height: 100px;
+                        }
+    
+                        &__title {
+                            width: 35%;
+                            margin-left: 7%;
+                        }
+    
+                        &__title1 {
+                            flex: 1;
+                            margin-left: 10%;
+                            @include flex(flex-start, space-between);
+    
+                            i {
+                                cursor: pointer;
+                            }
                         }
                     }
                 }
             }
+
         }
 
         &__check-out {

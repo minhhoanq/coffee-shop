@@ -81,6 +81,15 @@ const productController = {
             return res.status(500).json(error);
         }
     },
+    postCartItem: async(req, res) => {
+        try {
+            const response = await cartItemService.postAddToCartItem(req.body);
+            return res.status(200).json({status: 'Success!', data: response});
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    }
+    ,
     getCartItem: async(req, res) => {
         try {
             const response = await cartItemService.getCartItemByID(req.query);

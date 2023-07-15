@@ -4,31 +4,43 @@ import './cart.scss';
 import PageHeader from '../../components/pageheader/PageHeader';
 import Button from '../../components/button/Button';
 
+import { getToCartItem } from "../../redux/slice/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import { cartActions } from "../../redux/slice/cartSlice";
 
 const Cart = () => {
 
-    const cartList = useSelector(state => state.cart?.cartItems);
-
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        let sum = 0;
-        cartList?.map((item) => {
-            sum += item.price;
-        });
-        setTotalPrice(sum);
-    },[cartList]);
+        const getProductsData = async () => {
+            const cartArr = await getToCartItem(1);
+            setProducts(cartArr.data.productData);
+        };
+
+        getProductsData();
+    },[]);
+
+    // const cartList = useSelector(state => state.cart?.cartItems);
+
+    // const [totalPrice, setTotalPrice] = useState(0);
+
+    // useEffect(() => {
+    //     let sum = 0;
+    //     cartList?.map((item) => {
+    //         sum += item.price;
+    //     });
+    //     setTotalPrice(sum);
+    // },[cartList]);
 
     return (
         <div className="cart">
             <PageHeader title={"Cart"} />
 
             <div className="cart__wrapper">
-                <div className="cart__wrapper__table">
-                    <div className="cart__wrapper__table__title">
+                <div className="cart__wrapper__table grid wide">
+                    <div className="cart__wrapper__table__title ">
                             <span className="cart__wrapper__table__title__img">Image</span>
                             <span className="cart__wrapper__table__title__name">Title</span>
 
@@ -39,15 +51,17 @@ const Cart = () => {
                             </div>
                     </div>
 
-                    { cartList?.map((item, i) => (
-                        <CartItem item={item} key={i}/>
-                    ))}
+                    <div className="cart__wrapper__table__item">
+                        {products?.map((item, i) => (
+                            <CartItem item={item} key={i}/>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="cart__wrapper__check-out">
                     <div className="cart__wrapper__check-out__price">
                         <span >Subtotal</span>
-                        <span className="cart__wrapper__check-out__price__txt">${totalPrice}</span>
+                        <span className="cart__wrapper__check-out__price__txt">415.000đ</span>
                     </div>
 
                     <p className="cart__wrapper__check-out__text">
@@ -66,24 +80,25 @@ const Cart = () => {
 export const CartItem = props => {
 
     const item = props.item;
+    console.log(item);
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
-    const handleDeleteProduct = () => {
-        dispatch(cartActions.deleteItem(item.id));
-        toast.success('Delete product successfully');
-    }
+    // const handleDeleteProduct = () => {
+    //     dispatch(cartActions.deleteItem(item.id));
+    //     toast.success('Delete product successfully');
+    // }
 
     return (
         <div className="cart-item">
             <div className="cart-item__wrapper">
-                <img src={item.imgUrl} alt=""/>
-                <span className="cart-item__wrapper__title">{item.productName}</span>
+                <img src={item.productSizeData.productData.productImg} alt=""/>
+                <span className="cart-item__wrapper__title">{item.productSizeData.productData.productName}</span>
 
                 <div className="cart-item__wrapper__title1">
                     <span className="cart-item__wrapper__title1__price">${item.price}</span>
                     <span className="cart-item__wrapper__title1__qty">{item.quantity}</span>
-                    <i class="ri-delete-bin-5-line" onClick={handleDeleteProduct}></i>
+                    <i class="ri-delete-bin-5-line" ></i>
                 </div>
             </div>
         </div>
