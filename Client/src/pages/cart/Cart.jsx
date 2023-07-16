@@ -15,7 +15,7 @@ const Cart = () => {
 
     useEffect(() => {
         const getProductsData = async () => {
-            const cartArr = await getToCartItem(1);
+            const cartArr = await getToCartItem(2);
             setProducts(cartArr.data.productData);
         };
 

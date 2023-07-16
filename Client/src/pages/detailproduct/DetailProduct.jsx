@@ -144,7 +144,13 @@ const DetailProduct = () => {
 
         const response = await addToCartItem(userId, n, quantity, price, note);
 
+        const responseErr = {...response.response?.data};
+        if(responseErr.err === 1) {
+            toast.error(responseErr.msg);
+            return;
+        }
 
+        toast.success({...response}.status);
     }
 
     return (

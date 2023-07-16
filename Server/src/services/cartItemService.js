@@ -31,7 +31,9 @@ const postAddToCartItem = ({cartId, productSizeId, quantity, price, note}) => ne
             productData: response,
         });
     } catch (error) {
-        return reject(error);
+        return reject({
+            err: 1
+        });
     }
 });
 
