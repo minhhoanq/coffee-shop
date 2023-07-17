@@ -107,3 +107,12 @@ export const addToCartItem = async (cartId, productSizeId, quantity, price, note
         return error;
     }
 }
+
+export const getAllStaff = async () => {
+    try {
+        const res = await request.get('/api/v1/user/staff');
+        return res.data;
+    } catch (error) {
+        return error;
+    }
+}
