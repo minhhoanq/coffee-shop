@@ -29,6 +29,10 @@
     padding: 0 10px;
     @include flex (center, flex-start);
 
+    &__title {
+        margin-left: 10px;
+    }
+
     &:hover {
         background-color: #ccc;
     }

@@ -16,7 +16,7 @@ const MenuSideBarItem = props => {
                 {item.iconActive}
             </span>
 
-            <span>
+            <span className="menu-side-bar-item__title">
                 {item.title}
             </span>
         </NavLink>

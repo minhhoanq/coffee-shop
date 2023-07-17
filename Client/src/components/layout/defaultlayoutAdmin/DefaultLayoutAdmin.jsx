@@ -8,7 +8,7 @@ const DefaultLayoutAdmin = props => {
     return (
         <div style={{display: "flex"}}>
             <SideBar />
-            <div>{props.children}</div>
+            <div style={{maxWidth: "80%"}}>{props.children}</div>
         </div>
     )
 }
