@@ -1,0 +1,18 @@
+@use '../../../scss/' as *;
+
+.staff {
+    width: 100%;
+    @include flex (flex-start, center);
+    flex-direction: column;
+
+    &__title {
+        font-size: 1.6rem;
+        font-weight: 600;
+        padding: 20px;
+    }
+
+    &__list-st {
+        @include flex (center, center);
+        flex-wrap: wrap;
+    }
+}

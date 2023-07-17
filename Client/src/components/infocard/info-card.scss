@@ -35,5 +35,9 @@
                 flex: 1;
             }
         }
+
+        &:hover {
+            outline: 1px solid #2e65ff;
+        }
     }
 }

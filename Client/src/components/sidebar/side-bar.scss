@@ -5,6 +5,10 @@
     border: 1px solid #ccc;
     height: 100vh;
     padding: 10px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
 
     &__logo {
         width: 100%;

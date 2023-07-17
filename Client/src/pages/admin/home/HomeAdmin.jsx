@@ -29,6 +29,11 @@ const MORES_CARD = [
         text1: '',
         text2: '',
     },
+    {
+        icon: '',
+        text1: '',
+        text2: '',
+    },
 ]
 
 const HomeAdmin = () => {

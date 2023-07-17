@@ -1,0 +1,77 @@
+@use '../../scss/' as *;
+
+.person-card {
+    width: 300px;
+    height: 350px;
+    padding: 16px;
+
+    &__wrapper {
+        @include flex(flex-start, center);
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0rem 0.25rem 0.5rem;
+        -webkit-box-flex: 1;
+        background-color: $white-color;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        &__inner {
+            @include flex (center, center);
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+
+            &__up {
+                width: 100%;
+                height: 70%;
+                @include flex (center, center);
+                flex-direction: column;
+                font-size: 1.1rem;
+
+                & > * ~ * {
+                    margin-top: 5px;
+                }
+
+                &__img {
+                    width: 100px;
+                    height: auto;
+                    object-fit: cover;
+                    border-radius: 50px;
+                    box-shadow: rgba(0, 0, 0, 0.2) 0rem 0.25rem 0.5rem;
+                }
+
+                &__name {
+                    @include flex (center, center);
+                    
+                    &__txt {
+                        font-weight: 500;
+                    }
+
+                    &__dot {
+                        margin-left: 5px;
+                        width: 6px;
+                        height: 6px;
+                        border-radius: 50px;
+                        background-color: #0aff0a;
+                    }
+                }
+
+                &__position {
+                    
+                }
+            }
+
+            &__down {
+                @include flex (flex-start, center);
+                flex-direction: column;
+                border-top: 1px solid #ccc;
+                width: 100%;
+                height: 30%;
+            }
+        }
+
+        &:hover {
+            outline: 1px solid #2e65ff;
+            color: #000;
+        }
+    }
+}
