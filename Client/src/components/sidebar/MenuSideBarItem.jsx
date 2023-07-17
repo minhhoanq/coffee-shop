@@ -8,7 +8,17 @@ const MenuSideBarItem = props => {
             className={(`menu-side-bar-item`)}
             to={item.pathname}
         >
-            {item.title}
+            <span className="menu-side-bar-item__icon">
+                {item.icon}
+            </span>
+
+            <span className="menu-side-bar-item__icon-active">
+                {item.iconActive}
+            </span>
+
+            <span>
+                {item.title}
+            </span>
         </NavLink>
     )
 }

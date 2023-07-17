@@ -3,45 +3,66 @@ import React from "react";
 import './side-bar.scss';
 import MenuSidebar from "./MenuSideBar";
 import MenuSidebarItem from "./MenuSideBarItem";
+import { 
+    CustomerIcon,
+    CustomerIconActive,
+    HomeIcon, 
+    HomeIconActive, 
+    ImportOrderIcon, 
+    IngredientIcon, 
+    IngredientIconActive, 
+    OrderIcon, 
+    OrderIconActive, 
+    StaffIcon, 
+    StaffIconActive 
+} from "../icon/Icons";
 
 const MORE_ITEMS = [
     {
-        icon: "",
+        icon: <HomeIcon/>,
+        iconActive: <HomeIconActive/>,
         title: "Trang chủ",
         pathname: "/admin",
     },
     {
-        icon: "",
+        icon: <StaffIcon/>,
+        iconActive: <StaffIconActive/>,
         title: "Nhân viên",
         pathname: "/staff",
     },
     {
-        icon: "",
+        icon: <CustomerIcon/>,
+        iconActive: <CustomerIconActive/>,
         title: "Khách hàng",
         pathname: "/customer",
     },
     {
-        icon: "",
+        icon: <IngredientIcon/>,
+        iconActive: <IngredientIconActive/>,
         title: "Nguyên liệu",
         pathname: "/ingredient",
     },
     {
-        icon: "",
+        icon: <OrderIcon/>,
+        iconActive: <OrderIconActive/>,
         title: "Đơn đặt hàng",
         pathname: "/order",
     },
     {
-        icon: "",
+        icon: <ImportOrderIcon/>,
+        iconActive: <ImportOrderIcon/>,
         title: "Đơn nhập hàng",
         pathname: "import-orders",
     },
     {
-        icon: "",
+        icon: <HomeIcon/>,
+        iconActive: <HomeIconActive/>,
         title: "Quản lý ...",
         pathname: "/#",
     },
     {
-        icon: "",
+        icon: <HomeIcon/>,
+        iconActive: <HomeIconActive/>,
         title: "Quản lý ...",
         pathname: "/#",
     }
@@ -51,6 +72,9 @@ const SideBar = () => {
 
     return (
         <div className="side-bar">
+            <div className="side-bar__logo">
+                <img src="https://adminjs-demo.herokuapp.com/admin/frontend/assets/logo.svg" alt="" />
+            </div>
             <MenuSidebar>
                 { MORE_ITEMS.map((item, i) => (
                     <MenuSidebarItem item={item} key={i}/>

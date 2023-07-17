@@ -1,0 +1,46 @@
+@use '../../scss/' as *;
+
+.side-bar {
+    width: 20%;
+    border: 1px solid #ccc;
+    height: 100vh;
+    padding: 10px 30px;
+
+    &__logo {
+        width: 100%;
+        height: 100px;
+        @include flex (center, center);
+        font-size: 1.6rem
+    }
+}
+
+.menu-side-bar {
+    @include flex (flex-start, flex-start);
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.menu-side-bar-item {
+    font-size: 1.2rem;
+    height: 35px;
+    width: 100%;
+    border-radius: 4px;
+    padding: 0 10px;
+    @include flex (center, flex-start);
+
+    &:hover {
+        background-color: #ccc;
+    }
+
+    &__icon-active {
+        display: none;
+    }
+
+    &.active > &__icon-active {
+        display: flex;
+    }
+    &.active > &__icon {
+        display: none;
+    }
+}
