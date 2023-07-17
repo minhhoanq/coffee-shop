@@ -6,6 +6,8 @@ import Register from '../pages/register/Register';
 import FooterOnly from '../components/layout/footeronly/FooterOnly';
 import DetailProduct from "../pages/detailproduct/DetailProduct";
 import HomeAdmin from "../pages/admin/home/HomeAdmin";
+import Staff from "../pages/admin/staff/Staff";
+import DefaultLayoutAdmin from "../components/layout/defaultlayoutAdmin/DefaultLayoutAdmin";
 
 //Public routes
 const publicRoutes = [
@@ -15,7 +17,8 @@ const publicRoutes = [
     { path: '/cart', component: Cart},
     { path: '/login', component: Login, layout: FooterOnly},
     { path: '/register', component: Register,layout: FooterOnly},
-    { path: '/admin', component: HomeAdmin,layout: null},
+    { path: '/admin', component: HomeAdmin,layout: DefaultLayoutAdmin},
+    { path: '/staff', component: Staff,layout: DefaultLayoutAdmin},
 ];
 
 const privateRoutes = [];

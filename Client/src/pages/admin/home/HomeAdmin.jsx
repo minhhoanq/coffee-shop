@@ -6,7 +6,7 @@ const HomeAdmin = () => {
 
     return (
         <div className="home-admin">
-            <SideBar/>
+            Home
         </div>
     )
 }
