@@ -23,6 +23,18 @@ export const registerUSer = async (user, dispatch, navigate) => {
     }
 };
 
+//Register Staff
+export const registerStaff = async (user, dispatch, navigate) => {
+    dispatch(registerStart());
+    try { 
+        await request.post("/api/v1/auth/register", user);
+        dispatch(registerSuccess());
+        navigate('/staff');
+    } catch (error) {
+        dispatch(registerFail());
+    }
+};
+
 export const logoutUser = async (dispatch, id, navigate, accessToken, axiosJWT) => {
     dispatch(logoutStart());
     try { 

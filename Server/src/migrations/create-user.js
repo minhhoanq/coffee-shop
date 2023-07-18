@@ -29,7 +29,6 @@ module.exports = {
       },
       roles: {
         type: Sequelize.STRING,
-        defaultValue: "3"
       },
       sex: {
         type: Sequelize.STRING,
