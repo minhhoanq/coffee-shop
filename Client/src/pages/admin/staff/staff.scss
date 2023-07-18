@@ -11,6 +11,191 @@
         padding: 20px;
     }
 
+    &__modal {
+        &__btn-create {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 200px;
+            height: 50px;
+            font-size: 1.2rem;
+            box-shadow: rgba(0, 0, 0, 0.2) 0rem 0.25rem 0.5rem;
+            @include flex (center, center);
+    
+            i {
+                font-size: 1.4rem;
+            }
+    
+            span {
+                margin-left: 5px;
+            }
+    
+            &:hover {
+                cursor: pointer;
+                outline: 1px solid #2e65ff;
+                color: #000; 
+            }
+        }
+
+        &__form {
+            width: 100%;
+            height: 600px;
+
+            &__wrapper {
+                width: 100%;
+                height: 95%;
+                padding: 20px;
+                font-size: 1.2rem;
+                font-weight: 600;
+
+                &__inner {
+                    border: 1px solid #ccc;
+                    border-radius: 10px;
+                    width: 100%;
+                    height: 100%;
+                    @include flex (center, center);
+                    flex-direction: column;
+
+                    &__info-login {
+                        width: 100%;
+                        height: 50%;
+                        @include flex (center, center);
+
+                        &__left {
+                            padding: 20px 0;
+                            width: 50%;
+                            height: 100%;
+                            @include flex (center, flex-start);
+                            flex-direction: column;
+
+                            & > * ~ * {
+                                margin-top: 5%;
+                            }
+
+                            &__title {
+                                color: #2e65ff;
+                            }
+
+                            &__email, &__username, &__password, &__password-cf {
+                                border: 1px solid #ccc;
+                                border-radius: 5px;
+                                height: 30px;
+                                width: 200px;
+                                padding: 5px;
+                                font-size: 0.9rem;
+                            }
+                        }
+
+                        &__right {
+                            padding: 20px 0;
+                            width: 50%;
+                            height: 100%;
+                            @include flex (center, center);
+                            flex-direction: column;
+                            color: #2e65ff;
+
+                            &__in {
+                                flex: 1;
+                                @include flex (center, center);
+                                &__img {
+                                    width: 100px;
+                                    height: 100px;
+                                    border-radius: 50px;
+                                    box-shadow: rgba(0, 0, 0, 0.2) 0rem 0.25rem 0.5rem;
+                                }
+    
+                                &__btn {
+                                    @include flex(flex-start, center);
+                                    flex-direction: column;
+                                    font-size: 1rem;
+                                    margin-left: 10px;
+
+                                    &__choose-img {
+                                        @include flex(center, center);
+                                        color: #2e65ff;
+                                        border: 1px solid #ccc;
+                                        border-radius: 5px;
+                                        width: 100px;
+                                        height: 30px;
+                                        cursor: pointer;
+                                    }
+
+                                    &__note {
+                                        font-weight: 400;
+                                        color: #000;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &__info-contact {
+                        width: 100%;
+                        height: 50%;
+                        @include flex(center, flex-start);
+                        flex-direction: column;
+                        color: #2e65ff;
+
+                        &__in {
+                            @include flex(center, flex-start);
+                            width: 100%;
+                            height: 100%;
+                            &__left {
+                                width: 50%;
+                                height: 100%;
+                                @include flex(center, center);
+                                flex-direction: column;
+                                flex-wrap: wrap;
+
+                                & > * ~ * {
+                                    margin-top: 10px;
+                                }
+                                
+                                &__fname, &__lname, &__phone, &__birth, &__address {
+                                    border: 1px solid #ccc;
+                                    border-radius: 5px;
+                                    height: 30px;
+                                    width: 200px;
+                                    padding: 5px;
+                                    font-size: 0.9rem;
+                                }
+                            }
+    
+                            &__right {
+                                width: 50%;
+                                height: 100%;
+                                @include flex(flex-start, center);
+                                flex-direction: column;
+                                padding: 40px;
+                                & > * ~ * {
+                                    margin-top: 40px;
+                                }
+
+                                select {
+                                    outline: none;
+                                    width: 100px;
+                                    height: 25px
+                                }
+
+                                &__birth {
+                                    color: #000;
+                                    font-size: 1rem;
+                                    font-weight: 600;
+
+                                    input {
+                                        margin-left: 10px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     &__list-st {
         @include flex (center, center);
         flex-wrap: wrap;

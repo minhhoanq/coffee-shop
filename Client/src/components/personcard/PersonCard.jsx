@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const PersonCard = props => {
 
     const item = props.item;
-    
+
     return (
         <div className="person-card">
             <Link className="person-card__wrapper">
@@ -15,7 +15,7 @@ const PersonCard = props => {
                         <img 
                             className="person-card__wrapper__inner__up__img"
                             src="https://thuthuatnhanh.com/wp-content/uploads/2019/02/anh-dai-dien-dep-cho-zalo.jpeg" 
-                            alt="" />
+                            alt="" />   
                         <div className="person-card__wrapper__inner__up__name">
                             <span className="person-card__wrapper__inner__up__name__txt">{item.username}</span>
                             <div className="person-card__wrapper__inner__up__name__dot"></div>
