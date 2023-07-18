@@ -24,14 +24,15 @@ export const registerUSer = async (user, dispatch, navigate) => {
 };
 
 //Register Staff
-export const registerStaff = async (user, dispatch, navigate) => {
+export const registerStaff = async (staff, dispatch, navigate) => {
     dispatch(registerStart());
     try { 
-        await request.post("/api/v1/auth/register", user);
+        await request.post("/api/v1/auth/register", staff);
         dispatch(registerSuccess());
         navigate('/staff');
     } catch (error) {
         dispatch(registerFail());
+        return error;
     }
 };
 
