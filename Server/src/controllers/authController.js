@@ -21,7 +21,7 @@ const authController = {
         }
         try {
             const {
-                email, 
+                email,
                 username, 
                 password, 
                 confirmPassword,
