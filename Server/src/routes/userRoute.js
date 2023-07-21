@@ -6,6 +6,9 @@ const userController = require("../controllers/userController");
 //Get all staff
 router.get("/staff", userController.getAllUser);
 
+//Update staff by id
+router.put("/:id", userController.updateUser);
+
 //Delete staff by id
 router.delete("/:id", userController.deleteUser);
 
