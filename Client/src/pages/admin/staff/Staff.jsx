@@ -35,7 +35,7 @@ const Staff = () => {
                     <span>Thêm nhân viên</span>
     
                 </button>
-                <StaffCreate/>
+                <StaffCreate item={staff[0]}/>
             </div>
 
             <div className="staff__list-st">

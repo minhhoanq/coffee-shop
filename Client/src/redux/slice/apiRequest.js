@@ -123,8 +123,16 @@ export const addToCartItem = async (cartId, productSizeId, quantity, price, note
 
 export const getAllStaff = async () => {
     try {
-        const res = await request.get('/api/v1/user/staff');
+        const res = await request.get('/api/v1/users/staff');
         return res.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export const deleteUserById = async(id) => {
+    try {
+        const res = await request.delete(`/api/v1/users/${id}`)
     } catch (error) {
         return error;
     }
