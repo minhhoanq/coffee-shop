@@ -3,20 +3,33 @@ import React from "react";
 import './person-card.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { deleteUserById } from '../../redux/slice/apiRequest';
+import Modal, { ModalContent } from "../modal/Modal";
 
 const PersonCard = props => {
 
     const item = props.item;
     const navigate = useNavigate();
 
+    const toggleModal = () => {
+        const modal = document.querySelector('#modal-delete');
+        modal.classList.toggle('active');
+    }
+
     const handleDeleteUser = async(e) => {
         e.preventDefault();
 
-        console.log(item.id);
-        
-        const res = await deleteUserById(item.id);
-        navigate('/admin');
+        toggleModal();
+    }
 
+    const handleModalCancel = (e) => {
+        e.preventDefault();
+        toggleModal();
+    }
+
+    const handleModalOK = async(e) => {
+        e.preventDefault();
+        // const res = await deleteUserById(item.id);
+        
     }
     return (
         <div className="person-card">
@@ -43,6 +56,30 @@ const PersonCard = props => {
                 <button className="person-card__wrapper__delete-user" onClick={handleDeleteUser}>
                     <i class="ri-user-unfollow-line"></i>
                 </button>
+
+                <Modal active={false} id={'modal-delete'}>
+                    <ModalContent className="person-card__wrapper__modal">
+                        {/* <div className="person-card__wrapper__modal__inner"> */}
+                            <div className="person-card__wrapper__modal__header">
+                                Xóa nhân viên
+                            </div>
+
+                            <div className="person-card__wrapper__modal__body">
+                                Bạn có chắc chắn muốn xóa nhân viên này không ?
+                            </div>
+
+                            <div className="person-card__wrapper__modal__footer">
+                                <button className="person-card__wrapper__modal__footer__cancel" onClick={handleModalCancel}>
+                                    Hủy
+                                </button>
+
+                                <button className="person-card__wrapper__modal__footer__ok">
+                                    Đồng ý
+                                </button>
+                            </div>
+                        {/* </div> */}
+                    </ModalContent>
+                </Modal>
             </div>
         </div>
     )

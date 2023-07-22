@@ -33,7 +33,7 @@ export const ModalContent = props => {
     }
 
     return (
-        <div ref={contentRef} className="modal__content">
+        <div ref={contentRef} className={`modal__content ${props.className}`}>
             {props.children}
             <div className="modal__content__close" onClick={closeModal}>
                 <i class="ri-close-line"></i>

@@ -29,6 +29,11 @@ const Staff = () => {
                 Quản lý nhân viên
             </div>
 
+            <a href="/staff" className="staff__trash">
+                <i class="ri-archive-line"></i>
+                Thùng rác
+            </a>
+
             <div className="staff__modal">
                 <button className="staff__modal__btn-create" onClick={handleAddStaff}>
                     <i class="ri-user-add-line"></i>

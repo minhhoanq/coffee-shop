@@ -11,6 +11,16 @@
         padding: 20px;
     }
 
+    &__trash {
+        padding: 0 20px;
+        font-size: 1.2rem;
+
+        i {
+            font-size: 1.4rem;
+            margin-right: 10px;
+        }
+    }
+
     &__modal {
         &__btn-create {
             position: fixed;
