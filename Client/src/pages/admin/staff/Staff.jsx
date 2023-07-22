@@ -38,7 +38,6 @@ const Staff = () => {
                 <button className="staff__modal__btn-create" onClick={handleAddStaff}>
                     <i class="ri-user-add-line"></i>
                     <span>Thêm nhân viên</span>
-    
                 </button>
                 <StaffCreate item={staff[0]}/>
             </div>

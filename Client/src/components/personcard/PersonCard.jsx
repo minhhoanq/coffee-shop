@@ -17,7 +17,6 @@ const PersonCard = props => {
 
     const handleDeleteUser = async(e) => {
         e.preventDefault();
-
         toggleModal();
     }
 
@@ -34,7 +33,7 @@ const PersonCard = props => {
     return (
         <div className="person-card">
             <div className="person-card__wrapper">
-                <Link to={'/cc'} className="person-card__wrapper__inner">
+                <a href={`/admin/staff/${item.id}`} className="person-card__wrapper__inner">
                     <div className="person-card__wrapper__inner__up">
                         <img 
                             className="person-card__wrapper__inner__up__img"
@@ -52,7 +51,7 @@ const PersonCard = props => {
                         <span className="person-card__wrapper__inner__address">{item.address}</span>
                     </div>
 
-                </Link>
+                </a>
                 <button className="person-card__wrapper__delete-user" onClick={handleDeleteUser}>
                     <i class="ri-user-unfollow-line"></i>
                 </button>
