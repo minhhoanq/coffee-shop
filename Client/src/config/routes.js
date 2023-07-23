@@ -9,6 +9,7 @@ import HomeAdmin from "../pages/admin/home/HomeAdmin";
 import Staff from "../pages/admin/staff/Staff";
 import DefaultLayoutAdmin from "../components/layout/defaultlayoutAdmin/DefaultLayoutAdmin";
 import StaffDetail from "../pages/admin/staffdetail/StaffDetail";
+import StaffTrash from "../pages/admin/stafftrash/StaffTrash";
 
 //Public routes
 const publicRoutes = [
@@ -21,6 +22,7 @@ const publicRoutes = [
     { path: '/admin', component: HomeAdmin,layout: DefaultLayoutAdmin},
     { path: '/admin/staff', component: Staff,layout: DefaultLayoutAdmin},
     { path: '/admin/staff/:id', component: StaffDetail,layout: DefaultLayoutAdmin},
+    { path: '/admin/staff/trash', component: StaffTrash,layout: DefaultLayoutAdmin},
 ];
 
 const privateRoutes = [];

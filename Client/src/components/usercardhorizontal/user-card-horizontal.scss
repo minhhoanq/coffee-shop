@@ -1,0 +1,98 @@
+@use '../../scss/' as *;
+
+.user-card-horizontal {
+    width: 100%;
+    margin-bottom: 10px;
+
+    &__wrapper {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        @include flex (center, space-between);
+        &__info {
+            @include flex (center, space-between);
+            width: 250px;
+            font-size: 1.2rem;
+            &__img {
+                width: 70px;
+                height: 70px;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+            }
+
+            &__inner {
+                @include flex (center, center);
+                flex-direction: column;
+
+                &__name {
+
+                }
+
+                &__role {
+                    font-size: 1.1rem;
+                    font-weight: 500;
+                }
+            }
+        }
+
+        &__date-delete {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        &__btn-drop {
+            width: 100px;
+            height: 50%;
+
+            i {
+                font-size: 2.5rem;
+                background-color: #ccc;
+                border-radius: 5px;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+    }
+
+    &__drop {
+        margin-top: 10px;
+        padding: 0 10px 10px;
+        width: 100%;
+        @include flex (flex-start, space-between);
+        font-size: 1.2rem;
+        display: none;
+
+        border-bottom: 1px solid #ccc;
+        &__personal {
+            width: 49%;
+            border-right: 1px solid #ccc;
+
+            &__username, &__birth, &__sex, &__address {
+                font-size: 1.1rem;
+
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+
+        &__contact {
+            width: 49%;
+
+            &__username, &__birth, &__sex, &__address {
+                font-size: 1.1rem;
+
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+
+    .active {
+        display: flex;
+    }
+}

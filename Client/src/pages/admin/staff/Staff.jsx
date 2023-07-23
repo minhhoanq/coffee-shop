@@ -29,7 +29,7 @@ const Staff = () => {
                 Quản lý nhân viên
             </div>
 
-            <a href="/staff" className="staff__trash">
+            <a href="/admin/staff/trash" className="staff__trash">
                 <i class="ri-archive-line"></i>
                 Thùng rác
             </a>
