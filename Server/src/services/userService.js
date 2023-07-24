@@ -1,11 +1,31 @@
 const db = require("../models")
 
-const getAllStaffService = () => new Promise( async(resolve, reject) => {
+const getAllUserService = ({roles}) => new Promise( async(resolve, reject) => {
     try {
         const response = await db.User.findAll({
             where: {
-                roles: 2,
+                roles,
             },
+            attributes: ['id', 'image', 'username', 'roles', 'sex', 'email', 'address'],
+        });
+
+        resolve({
+            err: response ? 0 : 1,
+            mes: response ? "success!" : "Can't found user",
+            staffData: response,
+        })
+    } catch (error) {
+        reject(error)
+    }
+});
+
+const getAllUserSoftDeteleService = ({roles}) => new Promise( async(resolve, reject) => {
+    try {
+        const response = await db.User.findAll({
+            where: {
+                roles,
+            },
+            paranoid: false,
             attributes: ['id', 'image', 'username', 'roles', 'sex', 'email', 'address'],
         });
 
@@ -101,4 +121,4 @@ const restoreUserById = ({ id }) => new Promise( async(resolve, reject) => {
     }
 });
 
-module.exports = { getAllStaffService, updateUserByIdService, softDeleteUserbyIdService, hardDeleteUserbyIdService, restoreUserById };
+module.exports = { getAllUserService, getAllUserSoftDeteleService, updateUserByIdService, softDeleteUserbyIdService, hardDeleteUserbyIdService, restoreUserById };

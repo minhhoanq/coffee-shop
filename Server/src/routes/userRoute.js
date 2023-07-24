@@ -4,7 +4,10 @@ const isAuth = require("../middlewares/isAuth");
 const userController = require("../controllers/userController");
 
 //Get all user
-router.get("/staff", userController.getAllUser);
+router.get("/", userController.getAllUser);
+
+//Get all user soft delete
+router.get("/trash", userController.getAllUserSoftDelete);
 
 //Update user by id
 router.put("/:id", userController.updateUser);

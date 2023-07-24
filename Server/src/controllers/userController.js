@@ -7,7 +7,16 @@ const userController = {
     //Get All Staff
     getAllUser: async(req, res) => {
         try {
-            const response = await userService.getAllStaffService();
+            const response = await userService.getAllUserService(req.query);
+            return res.status(200).json({status: 'Success!', data: response});
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
+
+    getAllUserSoftDelete: async(req, res) => {
+        try {
+            const response = await userService.getAllUserSoftDeteleService(req.query);
             return res.status(200).json({status: 'Success!', data: response});
         } catch (error) {
             return res.status(500).json(error);
