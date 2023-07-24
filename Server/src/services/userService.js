@@ -6,13 +6,13 @@ const getAllUserService = ({roles}) => new Promise( async(resolve, reject) => {
             where: {
                 roles,
             },
-            attributes: ['id', 'image', 'username', 'roles', 'sex', 'email', 'address'],
+            attributes: ['id', 'email', 'username', 'firstname', 'lastname', 'roles', 'sex', 'phone', 'address'],
         });
 
         resolve({
             err: response ? 0 : 1,
             mes: response ? "success!" : "Can't found user",
-            staffData: response,
+            usersData: response,
         })
     } catch (error) {
         reject(error)
@@ -26,13 +26,13 @@ const getAllUserSoftDeteleService = ({roles}) => new Promise( async(resolve, rej
                 roles,
             },
             paranoid: false,
-            attributes: ['id', 'image', 'username', 'roles', 'sex', 'email', 'address'],
+            attributes: ['id', 'email', 'username', 'firstname', 'lastname', 'roles', 'birth', 'sex', 'phone', 'deletedAt', 'address'],
         });
 
         resolve({
             err: response ? 0 : 1,
             mes: response ? "success!" : "Can't found user",
-            staffData: response,
+            usersData: response,
         })
     } catch (error) {
         reject(error)

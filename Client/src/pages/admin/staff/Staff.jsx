@@ -11,7 +11,7 @@ const Staff = () => {
     useEffect(() => {
         const getData = async() => {
             const result = await getAllStaff();
-            setStaff(result.data.staffData);
+            setStaff(result.data.usersData);
         };
 
         getData();

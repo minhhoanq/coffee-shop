@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import './staff-trash.scss';
 import UserCardHorizontal from "../../../components/usercardhorizontal/UserCardHorizontal";
+import { getAllUserSoftDelete } from "../../../redux/slice/apiRequest";
 
 const StaffTrash = () => {
+    const [users, setUsers] = useState([]);
+    const [chooses, setChooses] = useState([]);
+
+    useEffect(() => {
+        const getDataUser = async() => {
+            const roles = 2;
+            const response = await getAllUserSoftDelete(roles);
+            setUsers(response.data.usersData);
+        }
+
+        getDataUser();
+    },[]);
+
+    const handleUserChoose = (e) => {
+        console.log(e.target.value);
+        setChooses((prev) => [...prev, prev]);
+    }
+    console.log(chooses);
 
     return (
         <div className="staff-trash">
@@ -33,41 +52,13 @@ const StaffTrash = () => {
                 </div>
 
                 <div className="staff-trash__wrapper__footer">
-                    <div className="staff-trash__wrapper__footer__inner">
-                        <input className="staff-trash__wrapper__footer__inner__checkbox" type="checkbox" />
+                    {users?.map((item, i) => (
+                        <div className="staff-trash__wrapper__footer__inner" key={i}>
+                            <input className="staff-trash__wrapper__footer__inner__checkbox" type="checkbox" value={item.id} onChange={handleUserChoose}/>
 
-                        <UserCardHorizontal/>
-                    </div>
-
-                    <div className="staff-trash__wrapper__footer__inner">
-                        <input className="staff-trash__wrapper__footer__inner__checkbox" type="checkbox" />
-
-                        <UserCardHorizontal/>
-                    </div>
-
-                    <div className="staff-trash__wrapper__footer__inner">
-                        <input className="staff-trash__wrapper__footer__inner__checkbox" type="checkbox" />
-
-                        <UserCardHorizontal/>
-                    </div>
-
-                    <div className="staff-trash__wrapper__footer__inner">
-                        <input className="staff-trash__wrapper__footer__inner__checkbox" type="checkbox" />
-
-                        <UserCardHorizontal/>
-                    </div>
-
-                    <div className="staff-trash__wrapper__footer__inner">
-                        <input className="staff-trash__wrapper__footer__inner__checkbox" type="checkbox" />
-
-                        <UserCardHorizontal/>
-                    </div>
-
-                    <div className="staff-trash__wrapper__footer__inner">
-                        <input className="staff-trash__wrapper__footer__inner__checkbox" type="checkbox" />
-
-                        <UserCardHorizontal/>
-                    </div>
+                            <UserCardHorizontal item={item}/>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
