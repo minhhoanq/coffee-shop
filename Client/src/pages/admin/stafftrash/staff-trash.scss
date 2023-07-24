@@ -37,8 +37,9 @@
                 width: 150px;
                 height: 35px;
                 border-radius: 5px;
+                font-size: 1.2rem;
                 @include flex (center, center);
-                
+
                 i {
                     font-size: 1.4rem;
                     margin-right: 10px;

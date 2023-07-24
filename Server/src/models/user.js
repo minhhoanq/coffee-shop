@@ -25,10 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING,
     birth: DataTypes.STRING,
     address: DataTypes.STRING,
-    isDelete: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'User',
+    paranoid: true,
   });
   return User;
 };

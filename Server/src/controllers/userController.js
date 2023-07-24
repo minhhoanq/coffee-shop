@@ -26,15 +26,35 @@ const userController = {
     },
 
     //Detele user
-    deleteUser: async(req, res) => {
+    sortDeleteUser: async(req, res) => {
         try {
-            const response = await userService.deleteUserbyIdService(req.params);
+            const response = await userService.softDeleteUserbyIdService(req.params);
             
             return res.status(200).json({status: 'Done!', data: response});
         } catch (error) {
             return res.status(500).json(error);
         }
-    }
+    },
+
+    hardDeleteUser: async(req, res) => {
+        try {
+            const response = await userService.hardDeleteUserbyIdService(req.params);
+            
+            return res.status(200).json({status: 'Done!', data: response});
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
+
+    restoreUser: async(req, res) => {
+        try {
+            const response = await userService.restoreUserById(req.params);
+            
+            return res.status(200).json({status: 'Done!', data: response});
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
 }
 
 module.exports = userController;

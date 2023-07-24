@@ -6,7 +6,7 @@ const getAllStaffService = () => new Promise( async(resolve, reject) => {
             where: {
                 roles: 2,
             },
-            attributes: ['id', 'image', 'username', 'roles', 'sex', 'email', 'address', 'isDelete'],
+            attributes: ['id', 'image', 'username', 'roles', 'sex', 'email', 'address'],
         });
 
         resolve({
@@ -32,9 +32,8 @@ const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, rejec
             const phone = user.phone;
             const birth = user.birth;
             const address = user.address;
-            const isDelete = user.isDelete;
             //
-            const response = await db.User.update({email, username, password, firstname, lastname, image, roles, sex, phone, birth, address, isDelete}, {
+            const response = await db.User.update({email, username, password, firstname, lastname, image, roles, sex, phone, birth, address}, {
                 where: {id}
             });
         resolve({
@@ -45,9 +44,9 @@ const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, rejec
     } catch (error) {
         reject(error);
     }
-})
+});
 
-const deleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject) => {
+const softDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject) => {
     try {
         const response = await db.User.destroy({
             where: {
@@ -65,4 +64,41 @@ const deleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject) =>
     }
 });
 
-module.exports = { getAllStaffService, updateUserByIdService, deleteUserbyIdService };
+const hardDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject) => {
+    try {
+        const response = await db.User.destroy({
+            where: {
+                id,
+            },
+            force: true
+        });
+
+        resolve({
+            err: response ? 0 : 1,
+            mes: response ? "success!" : "Can't found staff",
+            staffData: id,
+        })
+    } catch (error) {
+        reject(error)
+    }
+});
+
+const restoreUserById = ({ id }) => new Promise( async(resolve, reject) => {
+    try {
+        const response = await db.User.restore({
+            where: {
+                id,
+            },
+        });
+
+        resolve({
+            err: response ? 0 : 1,
+            mes: response ? "success!" : "Can't found staff",
+            staffData: id,
+        })
+    } catch (error) {
+        reject(error)
+    }
+});
+
+module.exports = { getAllStaffService, updateUserByIdService, softDeleteUserbyIdService, hardDeleteUserbyIdService, restoreUserById };

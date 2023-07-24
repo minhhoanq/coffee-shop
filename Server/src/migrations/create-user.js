@@ -42,10 +42,6 @@ module.exports = {
       address: {
         type: Sequelize.STRING,
       },
-      isDelete: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: 0,
-      },
       createdAt: {
         allowNull: false,
         type: 'TIMESTAMP',
@@ -55,6 +51,10 @@ module.exports = {
         allowNull: false,
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+      deletedAt: {
+        allowNull: false,
+        type: 'TIMESTAMP',
       }
     });
   },
