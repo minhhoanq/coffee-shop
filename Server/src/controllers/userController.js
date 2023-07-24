@@ -23,6 +23,15 @@ const userController = {
         }
     },
 
+    getUserById: async(req, res) => {
+        try {
+            const response = await userService.getUserByIdService(req.params);
+            return res.status(200).json({status: 'Success!', data: response});
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
+
     //UpdateUser
     updateUser: async(req, res) => {
         try {

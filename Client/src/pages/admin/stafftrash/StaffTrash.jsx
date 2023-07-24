@@ -20,7 +20,7 @@ const StaffTrash = () => {
 
     const handleUserChoose = (e) => {
         console.log(e.target.value);
-        setChooses((prev) => [...prev, prev]);
+        setChooses([...chooses, e.target.value]);
     }
     console.log(chooses);
 

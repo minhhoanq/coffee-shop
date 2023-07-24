@@ -39,6 +39,26 @@ const getAllUserSoftDeteleService = ({roles}) => new Promise( async(resolve, rej
     }
 });
 
+const getUserByIdService = ({id}) => new Promise( async(resolve, reject) => {
+    try {
+        const response = await db.User.findOne({
+            where: {
+                id,
+            },
+            paranoid: false,
+            attributes: ['id', 'email', 'username', 'firstname', 'lastname', 'roles', 'birth', 'sex', 'phone', 'deletedAt', 'address'],
+        });
+
+        resolve({
+            err: response ? 0 : 1,
+            mes: response ? "success!" : "Can't found user",
+            usersData: response,
+        })
+    } catch (error) {
+        reject(error)
+    }
+});
+
 const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, reject) => {
     try {
             const email = user.email;
@@ -121,4 +141,4 @@ const restoreUserById = ({ id }) => new Promise( async(resolve, reject) => {
     }
 });
 
-module.exports = { getAllUserService, getAllUserSoftDeteleService, updateUserByIdService, softDeleteUserbyIdService, hardDeleteUserbyIdService, restoreUserById };
+module.exports = { getAllUserService, getAllUserSoftDeteleService, getUserByIdService, updateUserByIdService, softDeleteUserbyIdService, hardDeleteUserbyIdService, restoreUserById };

@@ -147,6 +147,15 @@ export const getAllUserSoftDelete = async (roles) => {
     }
 }
 
+export const getUserById = async (id) => {
+    try {
+        const res = await request.get(`/api/v1/users/${id}`);
+        return res.data;
+    } catch (error) {
+        return error;
+    }
+}
+
 export const deleteUserById = async(id) => {
     try {
         const res = await request.delete(`/api/v1/users/${id}`)
