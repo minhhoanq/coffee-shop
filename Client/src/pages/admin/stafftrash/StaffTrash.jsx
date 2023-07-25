@@ -6,23 +6,43 @@ import { getAllUserSoftDelete } from "../../../redux/slice/apiRequest";
 
 const StaffTrash = () => {
     const [users, setUsers] = useState([]);
-    const [chooses, setChooses] = useState([]);
+    const [checks, setChecks] = useState([]);
 
     useEffect(() => {
         const getDataUser = async() => {
             const roles = 2;
             const response = await getAllUserSoftDelete(roles);
             setUsers(response.data.usersData);
+            setChecks(response.data.usersData)
         }
 
         getDataUser();
     },[]);
 
     const handleUserChoose = (e) => {
-        console.log(e.target.value);
-        setChooses([...chooses, e.target.value]);
+        const {name, checked} = e.target;
+        if(name === 'check-all') {
+            let tempUser = users.map((user) =>
+                {
+                    return {...user, isChecked: checked}
+                }
+            );
+
+            setUsers(tempUser);
+        } else {
+            let tempUser = users.map((user) =>
+                user.username === name ? {...user, isChecked: checked} : user
+            );
+            setUsers(tempUser);
+        }
+        
+    };
+
+    const handleRestoreUser = () => {
+        let arr;
+        arr = (users.filter(user => user.isChecked === true));
+        console.log(arr[0].id);
     }
-    console.log(chooses);
 
     return (
         <div className="staff-trash">
@@ -31,7 +51,13 @@ const StaffTrash = () => {
             <div className="staff-trash__wrapper">
                 <div className="staff-trash__wrapper__header">
                     <div className="staff-trash__wrapper__header__checkbox">
-                        <input type="checkbox" />
+                        <input 
+                            type="checkbox" 
+                            id="checkbox-all"
+                            name="check-all"
+                            checked={users.filter((user) => user?.isChecked !== true).length < 1}
+                            onChange={handleUserChoose}
+                        />
                         <span> Chọn tất cả</span>
                     </div>
 
@@ -40,7 +66,7 @@ const StaffTrash = () => {
                         Xóa vĩnh viễn
                     </button>
 
-                    <button className="staff-trash__wrapper__header__btn-undo">
+                    <button className="staff-trash__wrapper__header__btn-undo" onClick={handleRestoreUser}>
                         <i class="ri-loop-left-line"></i>
                         Khôi phục
                     </button>
@@ -54,7 +80,13 @@ const StaffTrash = () => {
                 <div className="staff-trash__wrapper__footer">
                     {users?.map((item, i) => (
                         <div className="staff-trash__wrapper__footer__inner" key={i}>
-                            <input className="staff-trash__wrapper__footer__inner__checkbox" type="checkbox" value={item.id} onChange={handleUserChoose}/>
+                            <input 
+                                className="staff-trash__wrapper__footer__inner__checkbox" 
+                                name={item.username} 
+                                type="checkbox" 
+                                value={item.id}
+                                checked={item?.isChecked ? true : false}
+                                onChange={handleUserChoose}/>
 
                             <UserCardHorizontal item={item}/>
                         </div>
