@@ -156,9 +156,28 @@ export const getUserById = async (id) => {
     }
 }
 
-export const deleteUserById = async(id) => {
+export const softDeleteUserById = async(id) => {
     try {
-        const res = await request.delete(`/api/v1/users/${id}`)
+        const res = await request.delete(`/api/v1/users/${id}`);
+        return res.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export const hardDeleteUserById = async(id) => {
+    try {
+        const res = await request.delete(`/api/v1/users/${id}/force`);
+        return res.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export const restoreUserById = async(id) => {
+    try {
+        const res = await request.patch(`/api/v1/users/${id}/restore`);
+        return res.data;
     } catch (error) {
         return error;
     }

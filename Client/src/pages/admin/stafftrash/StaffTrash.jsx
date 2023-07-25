@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import './staff-trash.scss';
 import UserCardHorizontal from "../../../components/usercardhorizontal/UserCardHorizontal";
-import { getAllUserSoftDelete } from "../../../redux/slice/apiRequest";
+import { getAllUserSoftDelete, hardDeleteUserById, restoreUserById } from "../../../redux/slice/apiRequest";
 
 const StaffTrash = () => {
     const [users, setUsers] = useState([]);
@@ -39,9 +39,15 @@ const StaffTrash = () => {
     };
 
     const handleRestoreUser = () => {
-        let arr;
-        arr = (users.filter(user => user.isChecked === true));
-        console.log(arr[0].id);
+        let arrs;
+        arrs = (users.filter(user => user.isChecked === true));
+        arrs.map(async(arr) => (await restoreUserById(arr.id)))
+    }
+
+    const handleHardDeleteUser = () => {
+        let arrs;
+        arrs = (users.filter(user => user.isChecked === true));
+        arrs.map(async(arr) => (await hardDeleteUserById(arr.id)))
     }
 
     return (
@@ -61,7 +67,7 @@ const StaffTrash = () => {
                         <span> Chọn tất cả</span>
                     </div>
 
-                    <button className="staff-trash__wrapper__header__btn-delete-forever">
+                    <button className="staff-trash__wrapper__header__btn-delete-forever" onClick={handleHardDeleteUser}>
                         <i class="ri-delete-bin-5-line"></i>
                         Xóa vĩnh viễn
                     </button>

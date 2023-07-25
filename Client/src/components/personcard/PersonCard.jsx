@@ -2,12 +2,13 @@ import React from "react";
 
 import './person-card.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { deleteUserById } from '../../redux/slice/apiRequest';
+import { softDeleteUserById } from '../../redux/slice/apiRequest';
 import Modal, { ModalContent } from "../modal/Modal";
 
 const PersonCard = props => {
 
     const item = props.item;
+    const id  = item.id;
     const navigate = useNavigate();
 
     const toggleModal = () => {
@@ -18,6 +19,7 @@ const PersonCard = props => {
     const handleDeleteUser = async(e) => {
         e.preventDefault();
         toggleModal();
+        console.log(item.id);
     }
 
     const handleModalCancel = (e) => {
@@ -27,8 +29,9 @@ const PersonCard = props => {
 
     const handleModalOK = async(e) => {
         e.preventDefault();
-        // const res = await deleteUserById(item.id);
-        
+        const res = await softDeleteUserById(item.id);
+        console.log(id);
+        toggleModal();
     }
     return (
         <div className="person-card">
@@ -72,7 +75,7 @@ const PersonCard = props => {
                                     Hủy
                                 </button>
 
-                                <button className="person-card__wrapper__modal__footer__ok">
+                                <button className="person-card__wrapper__modal__footer__ok" onClick={handleModalOK}>
                                     Đồng ý
                                 </button>
                             </div>

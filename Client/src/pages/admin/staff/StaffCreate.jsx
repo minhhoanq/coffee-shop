@@ -54,7 +54,7 @@ const StaffCreate = () => {
         if(validate === 1) {
             await registerStaff(staff, dispatch, navigate);
         }
-        navigate('/staff');
+        navigate('/admin/staff');
     }
 
     return (
