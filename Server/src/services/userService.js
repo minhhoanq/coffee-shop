@@ -96,7 +96,7 @@ const softDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject
 
         resolve({
             err: response ? 0 : 1,
-            mes: response ? "success!" : "Can't found staff",
+            mes: response ? "Xóa thành công!" : "Lỗi! Chưa thể xóa nhân viên",
             staffData: id,
         })
     } catch (error) {

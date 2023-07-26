@@ -48,7 +48,7 @@ const userController = {
         try {
             const response = await userService.softDeleteUserbyIdService(req.params);
             
-            return res.status(200).json({status: 'Done!', data: response});
+            return res.status(200).json(response);
         } catch (error) {
             return res.status(500).json(error);
         }
@@ -58,7 +58,7 @@ const userController = {
         try {
             const response = await userService.hardDeleteUserbyIdService(req.params);
             
-            return res.status(200).json({status: 'Done!', data: response});
+            return res.status(200).json(response);
         } catch (error) {
             return res.status(500).json(error);
         }
@@ -68,7 +68,7 @@ const userController = {
         try {
             const response = await userService.restoreUserById(req.params);
             
-            return res.status(200).json({status: 'Done!', data: response});
+            return res.status(200).json(response);
         } catch (error) {
             return res.status(500).json(error);
         }

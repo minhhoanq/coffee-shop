@@ -6,14 +6,12 @@ import { getAllUserSoftDelete, hardDeleteUserById, restoreUserById } from "../..
 
 const StaffTrash = () => {
     const [users, setUsers] = useState([]);
-    const [checks, setChecks] = useState([]);
 
     useEffect(() => {
         const getDataUser = async() => {
             const roles = 2;
             const response = await getAllUserSoftDelete(roles);
             setUsers(response.data.usersData);
-            setChecks(response.data.usersData)
         }
 
         getDataUser();
@@ -41,13 +39,15 @@ const StaffTrash = () => {
     const handleRestoreUser = () => {
         let arrs;
         arrs = (users.filter(user => user.isChecked === true));
-        arrs.map(async(arr) => (await restoreUserById(arr.id)))
+        arrs.map(async(arr) => (await restoreUserById(arr.id)));
+        window.location.reload(false);
     }
 
     const handleHardDeleteUser = () => {
         let arrs;
         arrs = (users.filter(user => user.isChecked === true));
-        arrs.map(async(arr) => (await hardDeleteUserById(arr.id)))
+        arrs.map(async(arr) => (await hardDeleteUserById(arr.id)));
+        window.location.reload(false);
     }
 
     return (

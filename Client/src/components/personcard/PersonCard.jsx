@@ -1,9 +1,10 @@
 import React from "react";
 
 import './person-card.scss';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { softDeleteUserById } from '../../redux/slice/apiRequest';
 import Modal, { ModalContent } from "../modal/Modal";
+import { toast } from "react-toastify";
 
 const PersonCard = props => {
 
@@ -30,8 +31,19 @@ const PersonCard = props => {
     const handleModalOK = async(e) => {
         e.preventDefault();
         const res = await softDeleteUserById(item.id);
-        console.log(id);
-        toggleModal();
+        const status = res.data;
+        if(status.err === 0) {
+            toast.success(status.mes);
+            toggleModal();
+            setTimeout(() => {
+                window.location.reload(false);
+            }, 2000)
+            return;
+        } else {
+            toast.error(status.mes);
+            toggleModal();
+            return;
+        }
     }
     return (
         <div className="person-card">

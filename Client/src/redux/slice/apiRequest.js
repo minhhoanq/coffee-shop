@@ -27,9 +27,10 @@ export const registerUSer = async (user, dispatch, navigate) => {
 export const registerStaff = async (staff, dispatch, navigate) => {
     dispatch(registerStart());
     try { 
-        await request.post("/api/v1/auth/register", staff);
+        const res = await request.post("/api/v1/auth/register", staff);
         dispatch(registerSuccess());
-        navigate('/staff');
+        navigate('/admin/staff');
+        return res;
     } catch (error) {
         dispatch(registerFail());
         return error;
@@ -159,7 +160,7 @@ export const getUserById = async (id) => {
 export const softDeleteUserById = async(id) => {
     try {
         const res = await request.delete(`/api/v1/users/${id}`);
-        return res.data;
+        return res;
     } catch (error) {
         return error;
     }
