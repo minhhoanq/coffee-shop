@@ -23,14 +23,22 @@ const StaffCreate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const Validate = ({username, firstname, lastname, email, password, confirmPassword, phone, address, birth}) => {
-        console.log(username);
-        if(username && firstname && lastname && email && password && confirmPassword && phone && address && birth === null) {
-            setMsg('Vui lòng điền đầy đủ thông tin.')
-            return 0;
+    const Validate = (staff) => {
+        if(staff.username || 
+            staff.firstname || 
+            staff.lastname || 
+            staff.email || 
+            staff.password || 
+            staff.confirmPassword || 
+            staff.phone || 
+            staff.address || 
+            staff.birth === "") {
+                console.log("Check");
+                setMsg('Vui lòng điền đầy đủ thông tin.')
+                return false;
         }
 
-        return 1;
+        return true;
     } 
 
     const handleSubmit = async(e) => {
@@ -49,12 +57,18 @@ const StaffCreate = () => {
             sex,
             roles,
         }
+        console.log(staff);
 
         const validate = Validate(staff);
-        if(validate === 1) {
-            await registerStaff(staff, dispatch, navigate);
+        console.log(validate);
+        if(validate) {
+            // await registerStaff(staff, dispatch, navigate);
+            // navigate('/admin/staff');
+            // window.location.reload(false);
+            // return;
         }
-        navigate('/admin/staff');
+
+        return;
     }
 
     return (
@@ -129,7 +143,7 @@ const StaffCreate = () => {
 
                             <div className="staff__modal__form__wrapper__inner__info-contact">
                                 Thông tin liên hệ
-
+                                {msg}
                                 <div className="staff__modal__form__wrapper__inner__info-contact__in">
                                     <div className="staff__modal__form__wrapper__inner__info-contact__in__left">
                                         <input 
