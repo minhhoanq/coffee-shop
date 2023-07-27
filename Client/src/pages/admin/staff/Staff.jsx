@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import './staff.scss';
 import PersonCard from "../../../components/personcard/PersonCard";
-import { getAllStaff } from "../../../redux/slice/apiRequest";
+import { getAllStaff } from "../../../api/userApi";
 import StaffCreate from "./StaffCreate";
 
 const Staff = () => {

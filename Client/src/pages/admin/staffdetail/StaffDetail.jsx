@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import './staff-detail.scss';
-import { getUserById } from "../../../redux/slice/apiRequest";
+import { getUserById } from "../../../api/userApi";
 import { useParams } from "react-router-dom";
 
 const StaffDetail = () => {

@@ -4,7 +4,7 @@ import './cart.scss';
 import PageHeader from '../../components/pageheader/PageHeader';
 import Button from '../../components/button/Button';
 
-import { getToCartItem } from "../../redux/slice/apiRequest";
+import { getToCartItem } from "../../api/productApi";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import { cartActions } from "../../redux/slice/cartSlice";

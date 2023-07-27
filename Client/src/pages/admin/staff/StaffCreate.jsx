@@ -1,77 +1,17 @@
 import React, { useState } from "react";
 
 import './staff.scss';
-import Modal, {ModalContent} from '../../../components/modal/Modal';
-import { registerStaff } from "../../../redux/slice/apiRequest";
+import Modal, { ModalContent } from '../../../components/modal/Modal';
+import { registerStaff } from "../../../api/authApi";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 
 const StaffCreate = () => {
-    // const [username, setUsername] = useState('');
-    // const [firstname, setFirstname] = useState('');
-    // const [lastname, setLastname] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [confirmPassword, setConfirmPassword] = useState('');
-    // const [phone, setPhone] = useState('');
-    // const [address, setAddress] = useState('');
-    // const [birth, setBirth] = useState('');
-    // const [sex, setSex] = useState('Nam');
-    // const [roles, setRoles] = useState('1');
-    // const [msg, setMsg] = useState('');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    // const Validate = (staff) => {
-    //     if(staff.username || 
-    //         staff.firstname || 
-    //         staff.lastname || 
-    //         staff.email || 
-    //         staff.password || 
-    //         staff.confirmPassword || 
-    //         staff.phone || 
-    //         staff.address || 
-    //         staff.birth === "") {
-    //             console.log("Check");
-    //             setMsg('Vui lòng điền đầy đủ thông tin.')
-    //             return false;
-    //     }
-
-    //     return true;
-    // } 
-
-    // const handleSubmit = async(e) => {
-    //     e.preventDefault();
-
-    //     const staff = {
-            // username,
-            // firstname,
-            // lastname,
-            // email,
-            // password,
-            // confirmPassword,
-            // phone,
-            // address,
-            // birth,
-            // sex,
-            // roles,
-    //     }
-    //     console.log(staff);
-
-    //     const validate = Validate(staff);
-    //     console.log(validate);
-    //     if(validate) {
-    //         // await registerStaff(staff, dispatch, navigate);
-    //         // navigate('/admin/staff');
-    //         // window.location.reload(false);
-    //         // return;
-    //     }
-
-    //     return;
-    // }
 
     const formik = useFormik({
         initialValues: {

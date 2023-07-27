@@ -2,7 +2,7 @@ import React from "react";
 
 import './person-card.scss';
 import { useNavigate } from 'react-router-dom';
-import { softDeleteUserById } from '../../redux/slice/apiRequest';
+import { softDeleteUserById } from '../../api/userApi';
 import Modal, { ModalContent } from "../modal/Modal";
 import { toast } from "react-toastify";
 

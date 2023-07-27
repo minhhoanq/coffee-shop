@@ -7,10 +7,8 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import TabReview from "../../components/tabreview/TabReview";
 import ProductList from '../../components/productlist/ProductList';
-import { getProductDetailById, getProductByCategoryId } from "../../redux/slice/apiRequest";
+import { addToCartItem, getProductDetailById, getProductByCategoryId } from "../../api/productApi";
 import { toast } from "react-toastify";
-import { addToCartItem } from "../../redux/slice/apiRequest";
-
 
 const DetailProduct = () => {
     const [products, setProducts] = useState([]);

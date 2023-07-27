@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import './staff-trash.scss';
 import UserCardHorizontal from "../../../components/usercardhorizontal/UserCardHorizontal";
-import { getAllUserSoftDelete, hardDeleteUserById, restoreUserById } from "../../../redux/slice/apiRequest";
+import { getAllUserSoftDelete, hardDeleteUserById, restoreUserById } from "../../../api/userApi";
 
 const StaffTrash = () => {
     const [users, setUsers] = useState([]);

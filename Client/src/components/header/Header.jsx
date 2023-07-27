@@ -3,12 +3,12 @@ import { Link, useLocation } from 'react-router-dom';
 
 import './header.scss';
 import Car_ver from "../cart_ver/Cart_ver";
-import { logoutUser } from "../../redux/slice/apiRequest";
+import { logoutUser } from "../../api/authApi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import createAxios from "../../createInstance";
 import { logoutSuccess } from "../../redux/slice/authSlice";
-import { getToCartItem } from "../../redux/slice/apiRequest";
+import { getToCartItem } from "../../api/productApi";
 
 const headerNav = [
     {

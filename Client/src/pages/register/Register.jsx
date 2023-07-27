@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/button/Button';
 
 import googleImg from '../../assets/images/google.png';
-import { registerUSer } from "../../redux/slice/apiRequest";
+import { registerUSer } from "../../api/authApi";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
