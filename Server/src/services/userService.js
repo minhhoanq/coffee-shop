@@ -11,7 +11,7 @@ const getAllUserService = ({roles}) => new Promise( async(resolve, reject) => {
 
         resolve({
             err: response ? 0 : 1,
-            mes: response ? "success!" : "Can't found user",
+            mes: response ? "Thành công!" : "Không tìm thấy Users!",
             usersData: response,
         })
     } catch (error) {
@@ -31,7 +31,7 @@ const getAllUserSoftDeteleService = ({roles}) => new Promise( async(resolve, rej
 
         resolve({
             err: response ? 0 : 1,
-            mes: response ? "success!" : "Can't found user",
+            mes: response ? "Thành công!" : "Không tìm thấy Users bị xóa",
             usersData: response,
         })
     } catch (error) {
@@ -51,7 +51,7 @@ const getUserByIdService = ({id}) => new Promise( async(resolve, reject) => {
 
         resolve({
             err: response ? 0 : 1,
-            mes: response ? "success!" : "Can't found user",
+            mes: response ? "Thành công!" : "Không tìm thấy User",
             usersData: response,
         })
     } catch (error) {
@@ -78,7 +78,7 @@ const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, rejec
             });
         resolve({
             err: response ? 0 : 1,
-            mes: response ? "success!" : "Can't found user",
+            mes: response ? "Cập nhật thành công!" : "Cập nhật thất bại!",
             data: response,
         })
     } catch (error) {
@@ -96,7 +96,7 @@ const softDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject
 
         resolve({
             err: response ? 0 : 1,
-            mes: response ? "Xóa thành công!" : "Lỗi! Chưa thể xóa nhân viên",
+            mes: response ? "Xóa thành công!" : "Lỗi! Chưa thể xóa, hãy thử lại",
             staffData: id,
         })
     } catch (error) {
@@ -115,7 +115,7 @@ const hardDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject
 
         resolve({
             err: response ? 0 : 1,
-            mes: response ? "success!" : "Can't found staff",
+            mes: response ? "Xóa vĩnh viễn thành công!" : "Xóa vĩnh viễn thất bại! Hãy thử lại.",
             staffData: id,
         })
     } catch (error) {
@@ -123,7 +123,7 @@ const hardDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject
     }
 });
 
-const restoreUserById = ({ id }) => new Promise( async(resolve, reject) => {
+const restoreUserByIdService = ({ id }) => new Promise( async(resolve, reject) => {
     try {
         const response = await db.User.restore({
             where: {
@@ -133,7 +133,7 @@ const restoreUserById = ({ id }) => new Promise( async(resolve, reject) => {
 
         resolve({
             err: response ? 0 : 1,
-            mes: response ? "success!" : "Can't found staff",
+            mes: response ? "Hoàn tác thành công!" : "Hoàn tác thất bại!",
             staffData: id,
         })
     } catch (error) {
@@ -141,4 +141,4 @@ const restoreUserById = ({ id }) => new Promise( async(resolve, reject) => {
     }
 });
 
-module.exports = { getAllUserService, getAllUserSoftDeteleService, getUserByIdService, updateUserByIdService, softDeleteUserbyIdService, hardDeleteUserbyIdService, restoreUserById };
+module.exports = { getAllUserService, getAllUserSoftDeteleService, getUserByIdService, updateUserByIdService, softDeleteUserbyIdService, hardDeleteUserbyIdService, restoreUserByIdService };

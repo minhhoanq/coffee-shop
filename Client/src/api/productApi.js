@@ -37,8 +37,8 @@ export const getProductByCategoryId = async (id) => {
 
 export const getProductDetailById = async (id) => {
     try {
-        const res = await request.post('/api/v1/product/detail', {productId: id});
-        return res.data;
+        const res = await request.get(`/api/v1/product/${id}/detail`);
+        return res;
     } catch (error) {
         console.log(error);
     }

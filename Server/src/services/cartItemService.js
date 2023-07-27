@@ -1,6 +1,6 @@
 const db = require("../models");
 
-const postAddToCartItem = ({cartId, productSizeId, quantity, price, note}) => new Promise(async (resolve, reject) => {
+const postAddToCartItemService = ({cartId, productSizeId, quantity, price, note}) => new Promise(async (resolve, reject) => {
     try {
         const existCartItem = await db.Cart_Item.findOne({
                 where: {cartId : cartId, productSizeId: productSizeId},
@@ -37,7 +37,7 @@ const postAddToCartItem = ({cartId, productSizeId, quantity, price, note}) => ne
     }
 });
 
-const getCartItemByID = ({cartId}) => new Promise(async (resolve, reject) => {
+const getCartItemByIDService = ({cartId}) => new Promise(async (resolve, reject) => {
     try {
         const response = await db.Cart_Item.findAll({
             where: {cartId: cartId},
@@ -77,4 +77,4 @@ const getCartItemByID = ({cartId}) => new Promise(async (resolve, reject) => {
     }
 })
 
-module.exports = { postAddToCartItem, getCartItemByID};
+module.exports = { postAddToCartItemService, getCartItemByIDService};

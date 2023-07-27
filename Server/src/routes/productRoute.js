@@ -2,10 +2,10 @@ const router = require("express").Router();
 const productController = require("../controllers/productController");
 
 //Get product detail
-router.post('/detail', productController.getProductDetail);
+router.get('/:id/detail', productController.getProductDetail);
 
 //Get product by categoryid
-router.post('/category', productController.getProductByCategory);
+router.get('/category', productController.getProductByCategory);
 
 //Post Cart-item
 router.post('/cart-item', productController.postCartItem);

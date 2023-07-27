@@ -8,7 +8,7 @@ const userController = {
     getAllUser: async(req, res) => {
         try {
             const response = await userService.getAllUserService(req.query);
-            return res.status(200).json({status: 'Success!', data: response});
+            return res.status(200).json(response);
         } catch (error) {
             return res.status(500).json(error);
         }
@@ -17,7 +17,7 @@ const userController = {
     getAllUserSoftDelete: async(req, res) => {
         try {
             const response = await userService.getAllUserSoftDeteleService(req.query);
-            return res.status(200).json({status: 'Success!', data: response});
+            return res.status(200).json(response);
         } catch (error) {
             return res.status(500).json(error);
         }
@@ -26,7 +26,7 @@ const userController = {
     getUserById: async(req, res) => {
         try {
             const response = await userService.getUserByIdService(req.params);
-            return res.status(200).json({status: 'Success!', data: response});
+            return res.status(200).json(response);
         } catch (error) {
             return res.status(500).json(error);
         }
@@ -37,7 +37,7 @@ const userController = {
         try {
             const response = await userService.updateUserByIdService({id: req.params.id, user: req.body});
             console.log("check");
-            return res.status(200).json({status: 'Update Success', data: response})
+            return res.status(200).json(response)
         } catch (error) {
             return res.status(500).json(error);
         }
@@ -66,7 +66,7 @@ const userController = {
 
     restoreUser: async(req, res) => {
         try {
-            const response = await userService.restoreUserById(req.params);
+            const response = await userService.restoreUserByIdService(req.params);
             
             return res.status(200).json(response);
         } catch (error) {

@@ -25,9 +25,11 @@ const DetailProduct = () => {
     //Get api
     const getDataById = async() => {
         const result = await getProductDetailById(id);
-        setProducts(result.data);
-        setPrice(result.data[0]?.productData.price);
+        setProducts(result.data.dataDetailProduct);
+        setPrice(result.data.dataDetailProduct[0]?.productData.price);
     }
+
+    console.log(products);
 
     const getDataByCategoryId = async() => {
         const result = await getProductByCategoryId(1);
