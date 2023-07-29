@@ -4,18 +4,21 @@ import './staff.scss';
 import PersonCard from "../../../components/personcard/PersonCard";
 import { getAllStaff } from "../../../api/userApi";
 import StaffCreate from "./StaffCreate";
+import { useSelector } from "react-redux";
 
 const Staff = () => {
     const [staff, setStaff] = useState([]);
+    const isFetching = useSelector((state) => state.user.softDelete.isFetching);
+    const error = useSelector((state) => state.user.error);
 
     useEffect(() => {
         const getData = async() => {
             const result = await getAllStaff();
-            setStaff(result.data.usersData);
+            setStaff(result.usersData);
         };
 
         getData();
-    },[]);
+    },[isFetching]);
 
     const handleAddStaff = (e) => {
         e.preventDefault();
@@ -25,6 +28,8 @@ const Staff = () => {
 
     return (
         <div className="staff">
+            {isFetching ? <>Loading ... </> : 
+            <>
             <div className="staff__title">
                 Quản lý nhân viên
             </div>
@@ -47,6 +52,7 @@ const Staff = () => {
                     <PersonCard item={item} key={i}/>
                 ))}
             </div>
+        </>}
         </div>
     )
 };

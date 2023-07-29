@@ -16,7 +16,7 @@ router.get("/:id", userController.getUserById);
 router.put("/:id", userController.updateUser);
 
 //Delete user by id (soft delete)
-router.delete("/:id", userController.sortDeleteUser);
+router.delete("/:id", userController.softDeleteUser);
 
 //Delete user by id (hard delete)
 router.delete("/:id/force", userController.hardDeleteUser);

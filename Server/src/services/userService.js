@@ -97,7 +97,7 @@ const softDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject
         resolve({
             err: response ? 0 : 1,
             mes: response ? "Xóa thành công!" : "Lỗi! Chưa thể xóa, hãy thử lại",
-            staffData: id,
+            staffData: response,
         })
     } catch (error) {
         reject(error)
@@ -116,7 +116,7 @@ const hardDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject
         resolve({
             err: response ? 0 : 1,
             mes: response ? "Xóa vĩnh viễn thành công!" : "Xóa vĩnh viễn thất bại! Hãy thử lại.",
-            staffData: id,
+            staffData: response,
         })
     } catch (error) {
         reject(error)
@@ -134,7 +134,7 @@ const restoreUserByIdService = ({ id }) => new Promise( async(resolve, reject) =
         resolve({
             err: response ? 0 : 1,
             mes: response ? "Hoàn tác thành công!" : "Hoàn tác thất bại!",
-            staffData: id,
+            staffData: response,
         })
     } catch (error) {
         reject(error)

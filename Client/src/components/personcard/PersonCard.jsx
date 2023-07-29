@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { softDeleteUserById } from '../../api/userApi';
 import Modal, { ModalContent } from "../modal/Modal";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 const PersonCard = props => {
 
     const item = props.item;
-    const id  = item.id;
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const toggleModal = () => {
         const modal = document.querySelector('#modal-delete');
@@ -28,22 +29,9 @@ const PersonCard = props => {
         toggleModal();
     }
 
-    const handleModalOK = async(e) => {
+    const handleModalOK = (e) => {
         e.preventDefault();
-        const res = await softDeleteUserById(item.id);
-        const status = res.data;
-        if(status.err === 0) {
-            toast.success(status.mes);
-            toggleModal();
-            setTimeout(() => {
-                window.location.reload(false);
-            }, 2000)
-            return;
-        } else {
-            toast.error(status.mes);
-            toggleModal();
-            return;
-        }
+        softDeleteUserById(item.id, dispatch, navigate);
     }
     return (
         <div className="person-card">

@@ -44,7 +44,7 @@ const userController = {
     },
 
     //Detele user
-    sortDeleteUser: async(req, res) => {
+    softDeleteUser: async(req, res) => {
         try {
             const response = await userService.softDeleteUserbyIdService(req.params);
             

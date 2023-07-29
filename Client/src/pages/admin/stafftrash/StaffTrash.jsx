@@ -11,7 +11,7 @@ const StaffTrash = () => {
         const getDataUser = async() => {
             const roles = 2;
             const response = await getAllUserSoftDelete(roles);
-            setUsers(response.data.usersData);
+            setUsers(response.usersData);
         }
 
         getDataUser();

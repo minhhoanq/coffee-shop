@@ -1,4 +1,8 @@
 import request from "../utils/request";
+import { softDeleteStart,
+         softDeleteSuccess,
+         softDeleteError
+        } from "../redux/slice/userSlice";
 
 export const getAllStaff = async () => {
     try {
@@ -35,12 +39,15 @@ export const getUserById = async (id) => {
     }
 }
 
-export const softDeleteUserById = async(id) => {
+export const softDeleteUserById = async(id, dispatch, navigate) => {
+    dispatch(softDeleteStart());
     try {
         const res = await request.delete(`/api/v1/users/${id}`);
+        dispatch(softDeleteSuccess());
+        navigate('/admin/staff')
         return res;
     } catch (error) {
-        return error;
+        dispatch(softDeleteError());
     }
 }
 
