@@ -28,31 +28,35 @@ const Staff = () => {
 
     return (
         <div className="staff">
-            {isFetching ? <>Loading ... </> : 
+            {isFetching ? 
+                <div className="staff__loading">
+                    <i class="ri-loader-4-line staff__loading__icon"></i>
+                    Vui lòng đợi ...
+                </div> : 
             <>
-            <div className="staff__title">
-                Quản lý nhân viên
-            </div>
+                <div className="staff__title">
+                    Quản lý nhân viên
+                </div>
 
-            <a href="/admin/staff/trash" className="staff__trash">
-                <i class="ri-archive-line"></i>
-                Thùng rác
-            </a>
+                <a href="/admin/staff/trash" className="staff__trash">
+                    <i class="ri-archive-line"></i>
+                    Thùng rác
+                </a>
 
-            <div className="staff__modal">
-                <button className="staff__modal__btn-create" onClick={handleAddStaff}>
-                    <i class="ri-user-add-line"></i>
-                    <span>Thêm nhân viên</span>
-                </button>
-                <StaffCreate item={staff[0]}/>
-            </div>
+                <div className="staff__modal">
+                    <button className="staff__modal__btn-create" onClick={handleAddStaff}>
+                        <i class="ri-user-add-line"></i>
+                        <span>Thêm nhân viên</span>
+                    </button>
+                    <StaffCreate item={staff[0]}/>
+                </div>
 
-            <div className="staff__list-st">
-                {staff.map((item, i) => (
-                    <PersonCard item={item} key={i}/>
-                ))}
-            </div>
-        </>}
+                <div className="staff__list-st">
+                    {staff.map((item, i) => (
+                        <PersonCard item={item} key={i}/>
+                    ))}
+                </div>
+            </>}
         </div>
     )
 };
