@@ -94,7 +94,7 @@ const authController = {
             roles: user.roles,
         },
         process.env.JWT_ACCESS_KEY,
-        { expiresIn: "2h"}
+        { expiresIn: "15s"}
         );
     },
 
@@ -153,18 +153,17 @@ const authController = {
 
     requestRefreshToken: async(req, res) => {
         const refreshToken = req.cookies.refreshToken;
-        console.log(req.cookies);
         if(!refreshToken) return res.status(401).json("You're not authenticated");
         if(!refreshToken.includes(refreshToken)) {
             return res.status(403).json("Refresh token is not valid");
         } 
-        jwt.sign(refreshToken, process.env.JWT_REFRESH_KEY, async(err, user) => {
+        jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, async(err, user) => {
             if(err) return console.log("err :" + err);
-            console.log("id :" + user.id);
+            // return res.status(403).json(user.username);
             //Check refreshToken in db
             const checkRefreshToken = await db.User.findOne({
-                where: user.id,
-                refreshToken: refreshToken,
+                where: {username: user.username,
+                refreshToken: refreshToken,}
             });
 
             if(checkRefreshToken) {
@@ -173,7 +172,7 @@ const authController = {
                 const newRefreshToken = authController.generateRefreshToken(user);
                 // refreshTokens.push(newRefreshToken);
                 await db.User.update({refreshToken: newRefreshToken},{
-                    where: {id: user.id}
+                    where: {username: user.username}
                 });
                 res.cookie("refreshToken", newRefreshToken, {
                     httpOnly:true,
