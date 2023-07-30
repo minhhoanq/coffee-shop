@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 
 const isAuth = {
-
     verifyToken: (req, res, next) => {
         const token = req.headers.token;
         if(token) {
@@ -15,7 +14,7 @@ const isAuth = {
                 next();
             })
         } else {
-            return res.status(401).json("You're not authenticated2");
+            return res.status(401).json("You're not authenticated");
         }
     },
     verifyTokenAndAdminAuth: (req, res, next) => {

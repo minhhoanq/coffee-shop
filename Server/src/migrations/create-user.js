@@ -42,6 +42,9 @@ module.exports = {
       address: {
         type: Sequelize.STRING,
       },
+      refreshToken: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: 'TIMESTAMP',

@@ -10,7 +10,7 @@ router.get("/", userController.getAllUser);
 router.get("/trash", userController.getAllUserSoftDelete);
 
 //Get user by id
-router.get("/:id", userController.getUserById);
+router.get("/:id", isAuth.verifyToken, userController.getUserById);
 
 //Update user by id
 router.put("/:id", userController.updateUser);
