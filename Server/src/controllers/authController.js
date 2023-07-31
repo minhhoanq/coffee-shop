@@ -223,20 +223,22 @@ const authController = {
 
     resetPassword: async(req, res) => {
         const { token, password } = req.body;
-        if(!token && password) throw new Error('Chưa gửi!');
+        if(!token && !password) throw new Error('Chưa gửi!');
         const passwordResetToken = crypto.createHash('sha256').update(token).digest('hex');
         const user = await db.User.findOne({
             where: {
                 passwordResetToken,
-                passwordResetExpires: { 
-                    $gt: Date.now()
-                }
+                // passwordResetExpires: { 
+                //     $gt: Date.now()
+                // }
             }
         });
-
         if(!user) throw new Error('Không tìm thấy!');
 
-        user.password = password;
+        const salt = await bcrypt.genSalt(10);
+        const hashed = await bcrypt.hash(password, salt);
+
+        user.password = hashed;
         user.passwordResetToken = undefined;
         user.passwordChangedAt = Date.now();
         user.passwordResetExpires = undefined;
