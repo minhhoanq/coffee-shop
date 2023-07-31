@@ -28,7 +28,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       roles: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       sex: {
         type: Sequelize.STRING,

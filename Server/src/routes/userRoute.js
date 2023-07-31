@@ -4,7 +4,7 @@ const isAuth = require("../middlewares/isAuth");
 const userController = require("../controllers/userController");
 
 //Get all user
-router.get("/", userController.getAllUser);
+router.get("/", isAuth.verifyTokenAndAdminAuth, userController.getAllUser);
 
 //Get all user soft delete
 router.get("/trash", userController.getAllUserSoftDelete);

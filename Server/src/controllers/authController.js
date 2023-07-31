@@ -13,18 +13,18 @@ const authController = {
      //Genarate AccessToken
      generateAccessToken: (user) => {
         return jwt.sign({
-            username: user.username,
+            username: user.id,
             roles: user.roles,
         },
         process.env.JWT_ACCESS_KEY,
-        { expiresIn: "15s"}
+        { expiresIn: "2h"}
         );
     },
 
     //Genarate RefreshToken
     generateRefreshToken: (user) => {
         return jwt.sign({
-            username: user.username,
+            username: user.id,
             roles: user.roles,
         },
         process.env.JWT_REFRESH_KEY,
@@ -164,7 +164,7 @@ const authController = {
             // return res.status(403).json(user.username);
             //Check refreshToken in db
             const checkRefreshToken = await db.User.findOne({
-                where: {username: user.username,
+                where: {id: user.id,
                 refreshToken: refreshToken,}
             });
 
@@ -174,7 +174,7 @@ const authController = {
                 const newRefreshToken = authController.generateRefreshToken(user);
                 // refreshTokens.push(newRefreshToken);
                 await db.User.update({refreshToken: newRefreshToken},{
-                    where: {username: user.username}
+                    where: {id: user.id}
                 });
                 res.cookie("refreshToken", newRefreshToken, {
                     httpOnly:true,
