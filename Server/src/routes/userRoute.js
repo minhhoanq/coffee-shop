@@ -16,7 +16,7 @@ router.get("/:id", isAuth.verifyToken, userController.getUserById);
 router.put("/:id", userController.updateUser);
 
 //Delete user by id (soft delete)
-router.delete("/:id", userController.softDeleteUser);
+router.delete("/:id", isAuth.verifyTokenAndAdminAuth, userController.softDeleteUser);
 
 //Delete user by id (hard delete)
 router.delete("/:id/force", userController.hardDeleteUser);

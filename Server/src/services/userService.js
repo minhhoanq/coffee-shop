@@ -59,7 +59,11 @@ const getUserByIdService = ({id}) => new Promise( async(resolve, reject) => {
     }
 });
 
+//Update user by id by admin
+
+//Update user by id
 const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, reject) => {
+    if(!id || Object.keys(user).length === 0) reject("Chưa nhận được id user!");
     try {
             const email = user.email;
             const username = user.username;
@@ -87,6 +91,7 @@ const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, rejec
 });
 
 const softDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject) => {
+    if(!id) reject("Chưa nhận được id user!");
     try {
         const response = await db.User.destroy({
             where: {
@@ -97,7 +102,7 @@ const softDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject
         resolve({
             err: response ? 0 : 1,
             mes: response ? "Xóa thành công!" : "Lỗi! Chưa thể xóa, hãy thử lại",
-            staffData: response,
+            softDeleteData: response,
         })
     } catch (error) {
         reject(error)
@@ -105,6 +110,7 @@ const softDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject
 });
 
 const hardDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject) => {
+    if(!id) reject("Chưa nhận được id user!");
     try {
         const response = await db.User.destroy({
             where: {
@@ -124,6 +130,7 @@ const hardDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject
 });
 
 const restoreUserByIdService = ({ id }) => new Promise( async(resolve, reject) => {
+    if(!id) reject("Chưa nhận được id user!");
     try {
         const response = await db.User.restore({
             where: {

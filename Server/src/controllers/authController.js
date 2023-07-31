@@ -130,22 +130,22 @@ const authController = {
             }
 
             if(user && validPassword) {
-                const accessToken = authController.generateAccessToken(user);
-                const refreshToken = authController.generateRefreshToken(user);
+                const generateAccessToken = authController.generateAccessToken(user);
+                const generateRefreshToken = authController.generateRefreshToken(user);
                 // refreshTokens.push(refreshToken);
-                await db.User.update({refreshToken: refreshToken},{
+                await db.User.update({refreshToken: generateRefreshToken},{
                     where: {id: user.id}
                 });
                 //Save refreshtoken in cookies
-                res.cookie("refreshToken", refreshToken, {
+                res.cookie("refreshToken", generateRefreshToken, {
                     httpOnly:true,
                     secure:false,
                     path:"/",
                     sameSite:"strict",
                 })
-                const {password, ...others} = user.dataValues;
+                const { passwordResetExpires, passwordResetToken, password, refreshToken, createdAt, updatedAt, deletedAt, ...others } = user.dataValues;
 
-                return res.status(200).json({others, accessToken});
+                return res.status(200).json({others, generateAccessToken});
             }
 
         } catch (error) {
@@ -240,7 +240,7 @@ const authController = {
 
         user.password = hashed;
         user.passwordResetToken = undefined;
-        user.passwordChangedAt = Date.now();
+        user.passwordChangedAt = (Date(Date.now())).toString();
         user.passwordResetExpires = undefined;
 
         user.save();
