@@ -45,6 +45,15 @@ module.exports = {
       refreshToken: {
         type: Sequelize.STRING,
       },
+      passwordChangedAt: {
+        type: Sequelize.STRING,
+      },
+      passwordResetToken: {
+        type: Sequelize.STRING,
+      },
+      passwordResetExpires: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: 'TIMESTAMP',

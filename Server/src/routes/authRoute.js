@@ -91,4 +91,8 @@ router.post("/refresh", authController.requestRefreshToken);
 //Logout
 router.post("/logout", authController.logOutUser);
 
+router.get("/forgotpassword", authController.forgotPassword);
+
+router.post("/reset-password", authController.resetPassword);
+
 module.exports = router;

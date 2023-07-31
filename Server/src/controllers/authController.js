@@ -4,9 +4,34 @@ const { validationResult } = require("express-validator");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const db = require("../models");
+const crypto = require('crypto');
+const sendMail = require("../utils/sendMail");
 dotenv.config();
 
 const authController = {
+
+     //Genarate AccessToken
+     generateAccessToken: (user) => {
+        return jwt.sign({
+            username: user.username,
+            roles: user.roles,
+        },
+        process.env.JWT_ACCESS_KEY,
+        { expiresIn: "15s"}
+        );
+    },
+
+    //Genarate RefreshToken
+    generateRefreshToken: (user) => {
+        return jwt.sign({
+            username: user.username,
+            roles: user.roles,
+        },
+        process.env.JWT_REFRESH_KEY,
+        { expiresIn: "365d"}
+        );
+    },
+
     //Register
     registerUser: async(req, res) => {
         const errors = validationResult(req);
@@ -86,29 +111,6 @@ const authController = {
             return res.status(500).json(error);
         }
     },
-
-    //Genarate AccessToken
-    generateAccessToken: (user) => {
-        return jwt.sign({
-            username: user.username,
-            roles: user.roles,
-        },
-        process.env.JWT_ACCESS_KEY,
-        { expiresIn: "15s"}
-        );
-    },
-
-    //Genarate RefreshToken
-    generateRefreshToken: (user) => {
-        return jwt.sign({
-            username: user.username,
-            roles: user.roles,
-        },
-        process.env.JWT_REFRESH_KEY,
-        { expiresIn: "365d"}
-        );
-    },
-
 
     //Login
     loginUser: async(req, res) => {
@@ -193,6 +195,58 @@ const authController = {
 
         return res.status(200).json("Logged out!")
     },
+
+    forgotPassword: async(req, res) => {
+        const { email } = req.query;
+        if(!email) throw new Error('Chưa có Mail!');
+        const user = await db.User.findOne({where: { email }});
+        if(!user) throw new Error('Mail này chưa được đăng ký!');
+        const resetToken = user.createPasswordChangedToken();
+        console.log("resetToken : " + resetToken);
+        await user.save();
+
+        const html = `Vui lòng click vào link dưới đây để thay đổi mật khẩu. Link này sẽ hết hạn sau 10 phút kể từ bây giờ. 
+        <a href=${process.env.URL_SERVER}/api/v1/auth/reset-password/${resetToken}>Nhấn vào đây</a>`
+
+        const data = {
+            email,
+            html,
+        }
+
+        const rs = await sendMail(data);
+
+        return res.status(200).json({
+            success: true,
+            rs: rs,
+        })
+    },
+
+    resetPassword: async(req, res) => {
+        const { token, password } = req.body;
+        if(!token && password) throw new Error('Chưa gửi!');
+        const passwordResetToken = crypto.createHash('sha256').update(token).digest('hex');
+        const user = await db.User.findOne({
+            where: {
+                passwordResetToken,
+                passwordResetExpires: { 
+                    $gt: Date.now()
+                }
+            }
+        });
+
+        if(!user) throw new Error('Không tìm thấy!');
+
+        user.password = password;
+        user.passwordResetToken = undefined;
+        user.passwordChangedAt = Date.now();
+        user.passwordResetExpires = undefined;
+
+        user.save();
+        return res.status(200).json({
+            success: user ? true : false,
+            mes: user ? 'Đổi mật khẩu thành công.' : 'Đổi mật khẩu thất bại!'
+        });
+    }
 }
 
 module.exports = authController;

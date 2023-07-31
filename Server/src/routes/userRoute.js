@@ -24,7 +24,4 @@ router.delete("/:id/force", userController.hardDeleteUser);
 //Restore user by id
 router.patch("/:id/restore", userController.restoreUser);
 
-//Detele user
-// router.delete("/:id", isAuth.verifyTokenAndAdminAuth,userController.deteleUser);
-
 module.exports = router;
