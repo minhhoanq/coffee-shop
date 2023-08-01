@@ -1,4 +1,3 @@
-const db = require("../models");
 const productService = require("../services/productService");
 const cartItemService = require("../services/cartItemService");
 
@@ -27,6 +26,15 @@ const productController = {
     getProductByCategory: async(req, res) => {
         try {
             const response = await productService.getProductByCategoryService(req.query)
+            return res.status(200).json(response);
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
+
+    createProduct: async(req, res) => {
+        try {
+            const response = await productService.createProductService(req.body);
             return res.status(200).json(response);
         } catch (error) {
             return res.status(500).json(error);

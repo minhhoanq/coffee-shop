@@ -16,6 +16,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      slug: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       productImg: {
         type: Sequelize.STRING,
       },
@@ -29,6 +33,27 @@ module.exports = {
       },
       productDescription: {
         type: Sequelize.STRING
+      },
+      sold: {
+        type: Sequelize.INTEGER,
+        defaultValue:0
+      },
+      // ratings: [
+      //   {
+      //     star: {
+      //       type: Sequelize.INTEGER
+      //     },
+      //     postedBy: {
+      //       type: Sequelize.INTEGER
+      //     },
+      //     comment: {
+      //       type: Sequelize.STRING
+      //     }
+      //   }
+      // ],
+      totalRatings: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,

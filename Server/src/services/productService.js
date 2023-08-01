@@ -1,5 +1,6 @@
 const db = require("../models");
 const { Op } = require("sequelize");
+const slugtify = require('slugify');
 
 const getProductsService = ({page, limit, order, name, ...query}) => new Promise(async (resolve, reject) => {
         try {
@@ -31,11 +32,16 @@ const getProductsService = ({page, limit, order, name, ...query}) => new Promise
         }
 });
 
-const getProductDetailService = ({id}) => new Promise(async(resolve, reject) => {
+const getProductDetailService = ({slug}) => new Promise(async(resolve, reject) => {
     try {
-        console.log("id :" + id);
-        const response = await db.Product_Size.findAll({
-            where: {productId: id},
+        if(!slug) {
+            reject("Không nhận được id sản phẩm!");
+            return;
+        }
+        const response = await db.Product_Size.findOne({
+            where: {
+                id: id
+            },
             attributes: ['id'],
             include: [
                 {
@@ -66,7 +72,7 @@ const getProductDetailService = ({id}) => new Promise(async(resolve, reject) => 
     } catch (error) {
         reject(error);
     }
-})
+});
 
 const getProductByCategoryService = ({categoryId}) => new Promise(async(resolve, reject) => {
     try {
@@ -88,6 +94,27 @@ const getProductByCategoryService = ({categoryId}) => new Promise(async(resolve,
     } catch (error) {
         reject(error);
     }
+});
+
+const createProductService = (product) => new Promise(async(resolve, reject) => {
+    try {
+        console.log("cehck1")
+        if(Object.keys(product).length === 0) {
+            reject("Dữ liệu đầu vào chưa đầy đủ!");
+            return;
+        }
+        if(product.productName) {
+            product.slug = slugtify(product.productName, {lower: true});
+        }
+        const newProduct = await db.Product.create(product);
+        resolve({
+            err: newProduct ? 0 : 1,
+            mes: newProduct ? 'Thêm mới sản phẩm thành công' : 'Thêm mới sản phẩm thất bại!',
+            createProduct: newProduct,
+        });
+    } catch (error) {
+        reject(error);
+    }
 })
 
-module.exports = { getProductsService, getProductDetailService, getProductByCategoryService };
+module.exports = { getProductsService, getProductDetailService, getProductByCategoryService, createProductService };
