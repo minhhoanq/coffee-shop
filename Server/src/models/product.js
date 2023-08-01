@@ -24,13 +24,13 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.DOUBLE,
     productDescription: DataTypes.STRING,
     sold: DataTypes.INTEGER,
-    ratings: [
-      {
-        star: DataTypes.INTEGER,
-        postedBy: DataTypes.INTEGER,
-        comment: DataTypes.STRING
-      }
-    ],
+    // ratings: [
+    //   {
+    //     star: DataTypes.INTEGER,
+    //     postedBy: DataTypes.INTEGER,
+    //     comment: DataTypes.STRING
+    //   }
+    // ],
     totalRatings: DataTypes.INTEGER,
   }, {
     sequelize,

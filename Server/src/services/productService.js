@@ -38,9 +38,16 @@ const getProductDetailService = ({slug}) => new Promise(async(resolve, reject) =
             reject("Không nhận được id sản phẩm!");
             return;
         }
-        const response = await db.Product_Size.findOne({
+
+        const product = await db.Product.findOne({
             where: {
-                id: id
+                slug
+            }
+        })
+
+        const response = await db.Product_Size.findAll({
+            where: {
+                productId: product.id
             },
             attributes: ['id'],
             include: [
