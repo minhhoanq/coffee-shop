@@ -51,9 +51,9 @@ const Shop = () => {
             }
             
             const productList = await getProducts(name, order, page, limit, categoryId);
-            setProducts(productList.data.productData.rows);
+            setProducts(productList.productData.rows);
 
-            const quantityPage = Math.ceil(productList.data.productData.count / limit);
+            const quantityPage = Math.ceil(productList.productData.count / limit);
             setTotalPage(quantityPage);
         }
         getData();

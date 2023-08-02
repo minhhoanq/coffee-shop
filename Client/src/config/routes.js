@@ -15,7 +15,7 @@ import StaffTrash from "../pages/admin/stafftrash/StaffTrash";
 const publicRoutes = [
     { path: '/', component: Home},
     { path: '/shop', component: Shop},
-    { path: '/shop/:id', component: DetailProduct},
+    { path: '/shop/:slug', component: DetailProduct},
     { path: '/cart', component: Cart},
     { path: '/login', component: Login, layout: FooterOnly},
     { path: '/register', component: Register,layout: FooterOnly},

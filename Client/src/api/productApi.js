@@ -35,10 +35,10 @@ export const getProductByCategoryId = async (id) => {
     }
 }
 
-export const getProductDetailById = async (id) => {
+export const getProductDetailBySlug = async (slug) => {
     try {
-        const res = await request.get(`/api/v1/product/${id}/detail`);
-        return res;
+        const res = await request.get(`/api/v1/product/${slug}`);
+        return res.data;
     } catch (error) {
         console.log(error);
     }

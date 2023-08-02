@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import TabReview from "../../components/tabreview/TabReview";
 import ProductList from '../../components/productlist/ProductList';
-import { addToCartItem, getProductDetailById, getProductByCategoryId } from "../../api/productApi";
+import { addToCartItem, getProductDetailById, getProductByCategoryId, getProductDetailBySlug } from "../../api/productApi";
 import { toast } from "react-toastify";
 
 const DetailProduct = () => {
@@ -18,18 +18,18 @@ const DetailProduct = () => {
     const [quantity, setQuantity] = useState(1);
     const [note, setNote] = useState('');
 
-    const { id } = useParams();
+    const { slug } = useParams();
     const user = useSelector(state => state.auth.login?.currentUser);
     const userId = user?.others.id;
 
     //Get api
     const getDataById = async() => {
-        const result = await getProductDetailById(id);
-        setProducts(result.data.dataDetailProduct);
+        const result = await getProductDetailBySlug(slug);
+        console.log(result);
+
+        setProducts(result.dataDetailProduct);
         setPrice(result.data.dataDetailProduct[0]?.productData.price);
     }
-
-    console.log(products);
 
     const getDataByCategoryId = async() => {
         const result = await getProductByCategoryId(1);
@@ -40,6 +40,9 @@ const DetailProduct = () => {
         getDataByCategoryId();
         document.getElementById(`${size}`).classList.add('focus');
     },[]);
+
+    console.log(products);
+
 
     //Disable button size
     const disableBtnSize = (str) => {
