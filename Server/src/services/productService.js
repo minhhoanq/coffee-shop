@@ -4,6 +4,41 @@ const slugtify = require('slugify');
 
 const getProductsService = ({page, limit, order, name, ...query}) => new Promise(async (resolve, reject) => {
         try {
+            //
+            const queriess = {...req.query};
+            //Tách các trường đặc biệt ra khỏi query
+            const excludeFields = ['limit', 'sort', 'page', 'fields'];
+            excludeFields.forEach(el => delete queriess[el]);
+
+            //Format lại operators cho đúng với syntax Sequelize
+            let queryString = JSON.stringify(queriess);
+            queryString.replace(/\b(gte|gt|lt|lte)\b/g, macthedEl => `$${macthedEl}`);
+            const formatedQueries = JSON.parse(queryString);
+
+            //Filtering
+            if (queriess?.productName) formatedQueries.productName = {$regex: queriess, $options: "i"};
+            let queriyCommand = db.Product.find(formatedQueries);
+
+            //Excute query
+            //Số lượng sản phẩm thỏa mãn điều kiện !==  số lượng sản phẩm trả về 1 lần gọi API
+            queriyCommand.exec(async(err, response) => {
+                if(err) throw new Error(err.message);
+                const counts = await db.Product.find(formatedQueries).countDocuments();
+                resolve:({
+                    success: response ? 0 : 1,
+                    products: response ? response : "Err",
+                    counst: counts
+                })
+            });
+
+            //Sort
+            //abc, egf => [abc, egf] => abc egf
+            if(sort) {
+                const sortBy = sort.split(',').join(' ');
+                queriyCommand = queriyCommand.sort(sortBy);
+            }
+
+            //
             const queries = { raw: true, nest: true};
             const offset = (!page || +page <=1) ? 0 : (+page - 1);
             const flimit = +limit || +process.env.LIMIT_PRODUCT;
@@ -105,7 +140,6 @@ const getProductByCategoryService = ({categoryId}) => new Promise(async(resolve,
 
 const createProductService = (product) => new Promise(async(resolve, reject) => {
     try {
-        console.log("cehck1")
         if(Object.keys(product).length === 0) {
             reject("Dữ liệu đầu vào chưa đầy đủ!");
             return;

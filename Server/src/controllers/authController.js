@@ -229,7 +229,7 @@ const authController = {
             where: {
                 passwordResetToken,
                 // passwordResetExpires: { 
-                //     $gt: Date.now()
+                //     [Op.gt]: Date.now()
                 // }
             }
         });
