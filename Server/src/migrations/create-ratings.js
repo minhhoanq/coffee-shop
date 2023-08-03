@@ -5,45 +5,24 @@ const { Model, DataTypes } = require('sequelize');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Products', {
+    await queryInterface.createTable('Ratings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      productName: {
+      star: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      slug: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      productImg: {
+      comment: {
         type: Sequelize.STRING,
       },
-      categoryId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      price: {
-        type: Sequelize.DOUBLE,
-        allowNull: false,
-      },
-      productDescription: {
-        type: Sequelize.STRING
-      },
-      sold: {
-        type: Sequelize.INTEGER,
-        defaultValue:0
-      },
-      ratingId: {
-        type: Sequelize.INTEGER,
-      },
-      totalRatings: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
+      userId: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -58,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Products');
+    await queryInterface.dropTable('Ratings');
   }
 };

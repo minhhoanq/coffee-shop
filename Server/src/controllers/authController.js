@@ -13,7 +13,7 @@ const authController = {
      //Genarate AccessToken
      generateAccessToken: (user) => {
         return jwt.sign({
-            username: user.id,
+            id: user.id,
             roles: user.roles,
         },
         process.env.JWT_ACCESS_KEY,
@@ -24,7 +24,7 @@ const authController = {
     //Genarate RefreshToken
     generateRefreshToken: (user) => {
         return jwt.sign({
-            username: user.id,
+            id: user.id,
             roles: user.roles,
         },
         process.env.JWT_REFRESH_KEY,
@@ -132,7 +132,6 @@ const authController = {
             if(user && validPassword) {
                 const generateAccessToken = authController.generateAccessToken(user);
                 const generateRefreshToken = authController.generateRefreshToken(user);
-                // refreshTokens.push(refreshToken);
                 await db.User.update({refreshToken: generateRefreshToken},{
                     where: {id: user.id}
                 });

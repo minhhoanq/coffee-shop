@@ -16,6 +16,11 @@ const getProductsService = ({page, limit, order, name, ...query}) => new Promise
                 where: query,
                 ...queries,
                 include: [
+                    // {
+                    //     model: db.Rating,
+                    //     as: 'ratingData',
+                    //     attributes: ['id', 'star', 'comment', 'userId'],
+                    // },
                     {
                         model: db.Category,
                         as: 'categoryData',
@@ -142,4 +147,30 @@ const createProductService = (body) => new Promise(async(resolve, reject) => {
     }
 })
 
-module.exports = { getProductsService, getProductDetailService, getProductByCategoryService, createProductService };
+const ratingProductService = (user, body) => new Promise(async(resolve, reject) => {
+    try {
+        const userId = user.username;
+        const {star, comment, productId} = body;
+
+        if(!userId || !star) {
+            reject({
+                err: "Chưa đủ thông tin!",
+            });
+            return;
+        }
+
+        const ratingProduct = await db.Product.findOne({where: {id: productId}});
+
+        resolve({
+            star: star,
+            comment: comment, 
+            productId: productId,
+            userId: userId,
+            ratingProduct: ratingProduct
+        })
+    } catch (error) {
+        reject(error)
+    }
+})
+
+module.exports = { getProductsService, getProductDetailService, getProductByCategoryService, createProductService, ratingProductService };
