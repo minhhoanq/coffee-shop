@@ -13,13 +13,15 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
-      Rating.belongsTo(models.Product);
+      Rating.hasOne(models.Product, {foreignKey: 'id', sourceKey: 'productId', as: 'productData'}),
+      Rating.hasOne(models.User, {foreignKey: 'id', sourceKey: 'userId',as: 'userData'})
     }
   }
   Rating.init({
     star: DataTypes.INTEGER,
     comment: DataTypes.STRING,
     userId: DataTypes.INTEGER,
+    productId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Rating',

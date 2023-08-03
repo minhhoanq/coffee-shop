@@ -12,9 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Product.belongsTo(models.Category, {foreignKey: 'categoryId', targetKey: 'id', as: 'categoryData'});
-      Product.hasMany(models.Rating, {foreignKey: 'ratingId', targetKey: 'id', as: 'ratingData'});
 
       Product.belongsToMany(models.Size, {through: models.Product_Size, foreignKey: 'productId', targetKey: 'id', as: 'sizeData'});
+
+      //Product with User M:N => Rating
+      Product.belongsToMany(models.User, {through: models.Rating, foreignKey: 'productId', targetKey: 'id', as: 'userData'});
     }
   }
   Product.init({
@@ -25,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.DOUBLE,
     productDescription: DataTypes.STRING,
     sold: DataTypes.INTEGER,
-    ratingId: DataTypes.INTEGER,
     totalRatings: DataTypes.INTEGER,
   }, {
     sequelize,

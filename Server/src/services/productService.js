@@ -16,11 +16,6 @@ const getProductsService = ({page, limit, order, name, ...query}) => new Promise
                 where: query,
                 ...queries,
                 include: [
-                    // {
-                    //     model: db.Rating,
-                    //     as: 'ratingData',
-                    //     attributes: ['id', 'star', 'comment', 'userId'],
-                    // },
                     {
                         model: db.Category,
                         as: 'categoryData',
@@ -28,10 +23,11 @@ const getProductsService = ({page, limit, order, name, ...query}) => new Promise
                     }
                 ]
             });
+
             resolve({
                 err: response ? 0 : 1,
                 mes: response ? "Thành công!" : "Thất bại!",
-                productData: response
+                productData: response,
             })
         } catch (error) {
             reject(error);
@@ -76,11 +72,27 @@ const getProductDetailService = ({slug}) => new Promise(async(resolve, reject) =
                 }
             ]
         });
+        
+        const productId = response[0]?.productData.id;
+        const ratingProduct = await db.Rating.findAll({
+            where: {
+                productId: productId
+            },
+            attributes: ['id', 'star', 'comment', 'productId', 'createdAt', 'updatedAt'],
+            include: [
+                {
+                    model: db.User,
+                    as: 'userData',
+                    attributes: ['id', 'username']
+                }
+            ]
+        })
 
         resolve({
             err: response ? 0 : 1,
             mes: response ? 'Thành công!' : 'Lỗi',
             dataDetailProduct: response,
+            ratingProduct: ratingProduct,
         });
     } catch (error) {
         reject(error);
@@ -159,14 +171,14 @@ const ratingProductService = (user, body) => new Promise(async(resolve, reject) 
             return;
         }
 
-        const ratingProduct = await db.Product.findOne({where: {id: productId}});
+        
 
         resolve({
             star: star,
             comment: comment, 
             productId: productId,
             userId: userId,
-            ratingProduct: ratingProduct
+            // ratingProduct: ratingProduct
         })
     } catch (error) {
         reject(error)

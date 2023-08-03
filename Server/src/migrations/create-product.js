@@ -38,9 +38,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue:0
       },
-      ratingId: {
-        type: Sequelize.INTEGER,
-      },
       totalRatings: {
         type: Sequelize.INTEGER,
         defaultValue: 0
