@@ -161,24 +161,36 @@ const createProductService = (body) => new Promise(async(resolve, reject) => {
 
 const ratingProductService = (user, body) => new Promise(async(resolve, reject) => {
     try {
-        const userId = user.username;
+        const userId = user.id;
+        console.log(user)
         const {star, comment, productId} = body;
 
         if(!userId || !star) {
             reject({
-                err: "Chưa đủ thông tin!",
+                err: "Vui lòng đánh giá sản phẩm trước!",
             });
             return;
         }
 
-        
+        const [ratingProduct, created] = await db.Rating.findOrCreate({
+            where: {
+                userId: userId,
+                productId: productId,
+                star: star,
+                comment: comment
+            },
+        });
+
+        if(!created) {
+            reject({mes: "Bạn đã đánh giá sản phẩm này!"});
+        }
 
         resolve({
             star: star,
             comment: comment, 
             productId: productId,
             userId: userId,
-            // ratingProduct: ratingProduct
+            ratingProduct: ratingProduct
         })
     } catch (error) {
         reject(error)
