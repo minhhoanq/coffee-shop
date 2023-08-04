@@ -204,6 +204,4 @@ const ratingProductService = (user, body) => new Promise(async(resolve, reject) 
     }
 });
 
-
-
 module.exports = { getProductsService, getProductDetailService, getProductByCategoryService, createProductService, ratingProductService };
