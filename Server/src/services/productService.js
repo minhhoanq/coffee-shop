@@ -162,7 +162,6 @@ const createProductService = (body) => new Promise(async(resolve, reject) => {
 const ratingProductService = (user, body) => new Promise(async(resolve, reject) => {
     try {
         const userId = user.id;
-        console.log(user)
         const {star, comment, productId} = body;
 
         if(!userId || !star) {
@@ -176,13 +175,21 @@ const ratingProductService = (user, body) => new Promise(async(resolve, reject) 
             where: {
                 userId: userId,
                 productId: productId,
+            },
+            defaults: {
                 star: star,
                 comment: comment
-            },
+            }
         });
-
         if(!created) {
-            reject({mes: "Bạn đã đánh giá sản phẩm này!"});
+            await db.Rating.update({
+                    star: star,
+                    comment: comment,
+                }, { where: {
+                    userId: userId,
+                    productId: productId,
+                }
+            });
         }
 
         resolve({
@@ -195,6 +202,8 @@ const ratingProductService = (user, body) => new Promise(async(resolve, reject) 
     } catch (error) {
         reject(error)
     }
-})
+});
+
+
 
 module.exports = { getProductsService, getProductDetailService, getProductByCategoryService, createProductService, ratingProductService };

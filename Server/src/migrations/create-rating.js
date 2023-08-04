@@ -21,15 +21,13 @@ module.exports = {
       },
       userId: {
         type: Sequelize.STRING,
-        unique: true,
         allowNull: false,
-        unique: "unique_tag",
+        // unique: "unique_tag",
       },
       productId: {
         type: Sequelize.STRING,
-        unique: true,
         allowNull: false,
-        unique: "unique_tag",
+        // unique: "unique_tag",
       },
       createdAt: {
         allowNull: false,
@@ -42,11 +40,12 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       }
     },
-    {uniqueKeys: {
-      unique_tag: {
-        customIndex: true,
-        fields: ["productId", "userId"]
-      }}});
+    // {uniqueKeys: {
+    //   unique_tag: {
+    //     customIndex: true,
+    //     fields: ["productId", "userId"]
+    //   }}}
+      );
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Ratings');
