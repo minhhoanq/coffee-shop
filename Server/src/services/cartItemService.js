@@ -2,33 +2,39 @@ const db = require("../models");
 
 const addToCartItemService = ({cartId, productSizeId, quantity, price, note}) => new Promise(async (resolve, reject) => {
     try {
-        const existCartItem = await db.Cart_Item.findOne({
-                where: {cartId : cartId, productSizeId: productSizeId},
+        // const existCartItem = await db.Cart_Item.findOne({
+        //         where: {cartId : cartId, productSizeId: productSizeId},
+        //     }
+        // );
+
+        const [newCartItem, createdCartItem] = await db.Cart_Item.findOrCreate({
+            where: {
+                cartId: cartId,
+                productSizeId: productSizeId
+            },
+            defaults: {
+                quantity: quantity,
+                price: price,
+                note: note
             }
-        );
-        if(existCartItem) {
-            return reject(
-                {
-                    err: 1,
-                    msg: "Sản phẩm đã có trong giỏ hàng!"
-                }
-            )
-        };
+        });
 
-        const newCartItem = {
-            cartId,
-            productSizeId,
-            quantity,
-            price,
-            note
+        if(!createdCartItem) {
+            await db.Cart_Item.update({
+                quantity: quantity,
+                price: price,
+                note: note
+            }, { where: {
+                cartId: cartId,
+                productSizeId: productSizeId
+            }
+        });
         };
-
-        const response = await db.Cart_Item.create(newCartItem);
 
         return resolve({
-            err: response ? 0 : 1,
-            mes: response ? "Got it" : "Can't found product",
-            cartItem: response,
+            err: newCartItem ? 0 : 1,
+            mes: newCartItem ? "Thêm sản phẩm vô giỏ hàng thành công." : "Thêm sản phẩm vô giỏ hàng thất bại!",
+            cartItem: newCartItem,
         });
     } catch (error) {
         return reject(error);

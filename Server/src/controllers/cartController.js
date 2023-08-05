@@ -12,7 +12,7 @@ const cartController = {
 
     addCartItemById: async(req, res) => {
         try {
-            const response = await cartItemService.addToCartItemService();
+            const response = await cartItemService.addToCartItemService(req.body);
             res.status(200).json(response);
         } catch (error) {
             res.status(500).json(error);
