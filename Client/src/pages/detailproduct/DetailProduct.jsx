@@ -25,10 +25,9 @@ const DetailProduct = () => {
     //Get api
     const getDataById = async() => {
         const result = await getProductDetailBySlug(slug);
-        console.log(result);
 
         setProducts(result.dataDetailProduct);
-        setPrice(result.data.dataDetailProduct[0]?.productData.price);
+        setPrice(result.dataDetailProduct[0]?.productData.price);
     }
 
     const getDataByCategoryId = async() => {
@@ -130,31 +129,31 @@ const DetailProduct = () => {
         setNote(e.target.value);
     }
 
-    const handleAddToCart = async(e) => {
-        const s = size.slice(-1);
-        const productPost = products.find(
-            item => item.productData.id === Number(id) && item.sizeData.sizeName === s
-        )
+    // const handleAddToCart = async(e) => {
+    //     const s = size.slice(-1);
+    //     const productPost = products.find(
+    //         item => item.productData.id === Number(id) && item.sizeData.sizeName === s
+    //     )
 
-        const n = productPost.id;
-        const newProduct = {
-            n,
-            price,
-            quantity,
-            note
-        }
-        console.log(newProduct);
+    //     const n = productPost.id;
+    //     const newProduct = {
+    //         n,
+    //         price,
+    //         quantity,
+    //         note
+    //     }
+    //     console.log(newProduct);
 
-        const response = await addToCartItem(userId, n, quantity, price, note);
+    //     const response = await addToCartItem(userId, n, quantity, price, note);
 
-        const responseErr = {...response.response?.data};
-        if(responseErr.err === 1) {
-            toast.error(responseErr.msg);
-            return;
-        }
+    //     const responseErr = {...response.response?.data};
+    //     if(responseErr.err === 1) {
+    //         toast.error(responseErr.msg);
+    //         return;
+    //     }
 
-        toast.success({...response}.status);
-    }
+    //     toast.success({...response}.status);
+    // }
 
     return (
         <div className="detail-product grid">
@@ -241,7 +240,7 @@ const DetailProduct = () => {
                         >
                     </textarea>
 
-                    <Button onClick={handleAddToCart} className="detail-product__wrapper__info__btn">Add to cart</Button>
+                    <Button  className="detail-product__wrapper__info__btn">Add to cart</Button>
                 </div>
             </div>
 
@@ -251,7 +250,7 @@ const DetailProduct = () => {
 
             <div className="detail-product__similar wide col">
                 <span className="detail-product__similar__title">Bạn cũng có thể thích</span>
-                <ProductList items={productSimilars}/>
+                {/* <ProductList items={productSimilars}/> */}
             </div>
         </div>
     );
