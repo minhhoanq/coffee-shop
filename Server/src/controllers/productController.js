@@ -69,6 +69,11 @@ const productController = {
         } catch (error) {
             return res.status(500).json(error);
         }
+    },
+
+    uploadImageProduct: async(req, res) => {
+        console.log(req.file);
+        return res.json('Upload Thành công!')
     }
 }
 

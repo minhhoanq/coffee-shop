@@ -1,6 +1,6 @@
 const db = require("../models");
 
-const postAddToCartItemService = ({cartId, productSizeId, quantity, price, note}) => new Promise(async (resolve, reject) => {
+const addToCartItemService = ({cartId, productSizeId, quantity, price, note}) => new Promise(async (resolve, reject) => {
     try {
         const existCartItem = await db.Cart_Item.findOne({
                 where: {cartId : cartId, productSizeId: productSizeId},
@@ -10,7 +10,7 @@ const postAddToCartItemService = ({cartId, productSizeId, quantity, price, note}
             return reject(
                 {
                     err: 1,
-                    msg: "Sản phẩm đã có trong giỏ hàng."
+                    msg: "Sản phẩm đã có trong giỏ hàng!"
                 }
             )
         };
@@ -28,17 +28,18 @@ const postAddToCartItemService = ({cartId, productSizeId, quantity, price, note}
         return resolve({
             err: response ? 0 : 1,
             mes: response ? "Got it" : "Can't found product",
-            productData: response,
+            cartItem: response,
         });
     } catch (error) {
-        return reject({
-            err: 1
-        });
+        return reject(error);
     }
 });
 
-const getCartItemByIDService = ({cartId}) => new Promise(async (resolve, reject) => {
+const getCartItemByIDService = ({userId}) => new Promise(async (resolve, reject) => {
     try {
+
+        const cart = await db.Cart.findOne
+
         const response = await db.Cart_Item.findAll({
             where: {cartId: cartId},
             include: [
@@ -77,4 +78,4 @@ const getCartItemByIDService = ({cartId}) => new Promise(async (resolve, reject)
     }
 })
 
-module.exports = { postAddToCartItemService, getCartItemByIDService};
+module.exports = { addToCartItemService, getCartItemByIDService};
