@@ -71,6 +71,16 @@ const productController = {
         }
     },
 
+    getAllRatingsProduct: async(req, res) => {
+        try {
+            const response = await productService.getAllRatingsProductService(req.params);
+
+            res.status(200).json(response);
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     uploadImageProduct: async(req, res) => {
         console.log(req.file);
         return res.json('Upload Thành công!')

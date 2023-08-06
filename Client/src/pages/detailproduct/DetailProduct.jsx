@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import TabReview from "../../components/tabreview/TabReview";
 import ProductList from '../../components/productlist/ProductList';
-import { addToCartItem, getProductDetailById, getProductByCategoryId, getProductDetailBySlug } from "../../api/productApi";
+import { addToCartItem, getProductDetailById, getProductByCategoryId, getProductDetailBySlug, getAllRatingsProduct } from "../../api/productApi";
 import { toast } from "react-toastify";
 
 const DetailProduct = () => {
@@ -17,17 +17,24 @@ const DetailProduct = () => {
     const [productSimilars, setproductSimilars] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [note, setNote] = useState('');
+    const [ratings, setRatings] = useState([]);
 
     const { slug } = useParams();
     const user = useSelector(state => state.auth.login?.currentUser);
-    const userId = user?.others.id;
+    // const userId = user?.others.id;
 
     //Get api
-    const getDataById = async() => {
+    const getDataBySlug = async() => {
         const result = await getProductDetailBySlug(slug);
 
         setProducts(result.dataDetailProduct);
         setPrice(result.dataDetailProduct[0]?.productData.price);
+    }
+
+    const getRatingsProductData = async() => {
+        const result = await getAllRatingsProduct(slug);
+        console.log(result.ratingsData);
+        setRatings(result.ratingsData)
     }
 
     const getDataByCategoryId = async() => {
@@ -35,8 +42,9 @@ const DetailProduct = () => {
         setproductSimilars(result.data);
     }
     useEffect(() => {
-        getDataById();
+        getDataBySlug();
         getDataByCategoryId();
+        getRatingsProductData()
         document.getElementById(`${size}`).classList.add('focus');
     },[]);
 
@@ -245,7 +253,7 @@ const DetailProduct = () => {
             </div>
 
             <div className="detail-product__review wide col">
-                <TabReview item={products[0]?.productData}/>
+                <TabReview itemProduct={products[0]?.productData} itemRatings={ratings}/>
             </div>
 
             <div className="detail-product__similar wide col">

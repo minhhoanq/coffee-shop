@@ -7,7 +7,8 @@ import Button from "../button/Button";
 const TabReview = props => {
 
     const[tab, setTab] = useState('desc');
-    const item = props.item;
+    const itemProduct = props.itemProduct;
+    const itemRatings = props.itemRatings;
 
     return (
         <div className="tab-review">
@@ -21,7 +22,7 @@ const TabReview = props => {
                 </span>
             </div>
 
-            {tab === 'desc' ? (<TabDescription description={item?.productDescription}/>) : ('None')}
+            {tab === 'desc' ? (<TabDescription description={itemProduct?.productDescription}/>) : (<TabReviews reviews={itemRatings}/>)}
         </div>
     )
 }
@@ -42,15 +43,15 @@ export const TabReviews = props => {
     return (
         <div className="tab-reviews">
 
-            {reviews.map((review, i) => (
+            {Object.keys(reviews).length !== 0 ? reviews.map((review, i) => (
                 <div className="tab-reviews__users" key={i}>
-                    <span className="tab-reviews__users__name">John Canvas</span>
+                    <span className="tab-reviews__users__name">{review.userId}</span>
 
-                    <span className="tab-reviews__users__rate">{review.rating} (rating)</span>
+                    <span className="tab-reviews__users__rate">{review.star} (rating)</span>
 
-                    <span className="tab-reviews__users__comment">{review.text}</span>
+                    <span className="tab-reviews__users__comment">{review.comment}</span>
                 </div>
-            ))}
+            )) : <div>Không có đánh giá nào!</div>}
 
             <div className="tab-reviews__write">
                 <span className="tab-reviews__write__title">

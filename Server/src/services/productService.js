@@ -204,4 +204,35 @@ const ratingProductService = (user, body) => new Promise(async(resolve, reject) 
     }
 });
 
-module.exports = { getProductsService, getProductDetailService, getProductByCategoryService, createProductService, ratingProductService };
+const getAllRatingsProductService = ({slug}) => new Promise( async(resolve, reject) => {
+    try {
+        if(!slug) {
+            reject({
+                err: 1,
+                mes: "Chưa có thông tin!",
+            })
+        }
+
+        const product = await db.Product.findOne({
+            where: {
+                slug: slug
+            }
+        });
+
+        const response = await db.Rating.findAll({
+            where: {
+                productId: product.id,
+            }
+        });
+
+        resolve({
+            err: response ? 0 : 1,
+            mes: response ? "Lấy thành công Đánh Giá sản phẩm" : "Có lỗi xảy ra, vui lòng thử lại!",
+            ratingsData: response
+        })
+    } catch (error) {
+        reject(error);
+    }
+})
+
+module.exports = { getProductsService, getProductDetailService, getProductByCategoryService, createProductService, ratingProductService, getAllRatingsProductService };

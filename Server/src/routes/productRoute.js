@@ -16,6 +16,8 @@ router.post('/create', productController.createProduct);
 
 router.put('/ratings', isAuth.verifyToken, productController.ratingProduct);
 
+router.get('/ratings/:slug', productController.getAllRatingsProduct);
+
 router.put('/uploadimage/:id', isAuth.verifyToken, uploader.single('images'), productController.uploadImageProduct);
 
 module.exports = router;
