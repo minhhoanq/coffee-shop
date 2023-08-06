@@ -14,9 +14,11 @@ router.get('/', productController.getProducts);
 
 router.post('/create', productController.createProduct);
 
-router.put('/ratings', isAuth.verifyToken, productController.ratingProduct);
+router.put('/ratings/:slug', isAuth.verifyToken, productController.ratingProduct);
 
 router.get('/ratings/:slug', productController.getAllRatingsProduct);
+
+router.delete('/ratings/:slug', isAuth.verifyToken, productController.deleteRatingProduct);
 
 router.put('/uploadimage/:id', isAuth.verifyToken, uploader.single('images'), productController.uploadImageProduct);
 

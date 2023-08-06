@@ -64,7 +64,7 @@ const productController = {
 
     ratingProduct: async(req, res) => {
         try {
-            const response = await productService.ratingProductService(req.user, req.body);
+            const response = await productService.ratingProductService(req.user, req.params, req.body);
             return res.status(200).json(response);
         } catch (error) {
             return res.status(500).json(error);
@@ -74,6 +74,16 @@ const productController = {
     getAllRatingsProduct: async(req, res) => {
         try {
             const response = await productService.getAllRatingsProductService(req.params);
+
+            res.status(200).json(response);
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
+    deleteRatingProduct: async(req, res) => {
+        try {
+            const response = await productService.deleteRatingProductService(req.user, req.params);
 
             res.status(200).json(response);
         } catch (error) {

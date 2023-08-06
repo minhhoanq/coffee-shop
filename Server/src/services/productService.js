@@ -159,10 +159,10 @@ const createProductService = (body) => new Promise(async(resolve, reject) => {
     }
 })
 
-const ratingProductService = (user, body) => new Promise(async(resolve, reject) => {
+const ratingProductService = (user, {slug}, body) => new Promise(async(resolve, reject) => {
     try {
         const userId = user.id;
-        const {star, comment, productId} = body;
+        const {star, comment} = body;
 
         if(!userId || !star) {
             reject({
@@ -170,11 +170,17 @@ const ratingProductService = (user, body) => new Promise(async(resolve, reject) 
             });
             return;
         }
+        
+        const product = await db.Product.findOne({
+            where: {
+                slug: slug,
+            }
+        });
 
         const [ratingProduct, created] = await db.Rating.findOrCreate({
             where: {
                 userId: userId,
-                productId: productId,
+                productId: product.id,
             },
             defaults: {
                 star: star,
@@ -187,16 +193,12 @@ const ratingProductService = (user, body) => new Promise(async(resolve, reject) 
                     comment: comment,
                 }, { where: {
                     userId: userId,
-                    productId: productId,
+                    productId: product.id,
                 }
             });
         }
 
         resolve({
-            star: star,
-            comment: comment, 
-            productId: productId,
-            userId: userId,
             ratingProduct: ratingProduct
         })
     } catch (error) {
@@ -233,6 +235,47 @@ const getAllRatingsProductService = ({slug}) => new Promise( async(resolve, reje
     } catch (error) {
         reject(error);
     }
+});
+
+const deleteRatingProductService = (user, { slug }) => new Promise( async(resolve, reject) => {
+    try {
+        const userId = user.id;
+        if(!userId || !slug) {
+            reject({
+                err: 1,
+                mes: "Thiếu thông tin!",
+            })
+        }
+        
+        const product = await db.Product.findOne({
+            where: {
+                slug: slug,
+            }
+        });
+
+        const response = await db.Rating.destroy({
+            where: {
+                userId: userId,
+                productId: product.id,
+            }
+        });
+
+        resolve({
+            err: response ? 0 : 1,
+            mes: response ? 'Xóa đánh giá thành công.' : 'Xảy ra khi xóa đánh giá này, hãy thử lại sau ít phút!',
+            deleteRating: response
+        });
+    } catch (error) {
+        reject(error);
+    }
 })
 
-module.exports = { getProductsService, getProductDetailService, getProductByCategoryService, createProductService, ratingProductService, getAllRatingsProductService };
+module.exports = { 
+    getProductsService, 
+    getProductDetailService, 
+    getProductByCategoryService, 
+    createProductService, 
+    ratingProductService, 
+    getAllRatingsProductService,
+    deleteRatingProductService,
+};
