@@ -1,60 +1,39 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getProducts } from "../../api/productApi";
 
 const initialState = {
-    cartItems: [],
-    totalAmount: 0,
-    totalQuantity: 0,
+    isCurrent: [],
+    isPending: false,
+    isError: false,
 };
 
-const cartSlice = createSlice({
-    name: 'cart',
+const productSlice = createSlice({
+    name: 'product',
     initialState,
     reducers:{
-        addItem: (state, action) => {
-            const newItem = action.payload;
-            const existingItem = state.cartItems.find(
-                (item) => item.id === newItem.id
-            );
+        //
+    },
 
-            state.totalQuantity++
+    extraReducers: (builder) => {
+        builder.addCase(getProducts.pending, (state) => {
+            // state.isPending = true
+        })
 
-            if(!existingItem) {
-                state.cartItems.push({
-                    id: newItem.id,
-                    productName: newItem.productName,
-                    imgUrl: newItem.imgUrl,
-                    price: newItem.price,
-                    quantity: 1,
-                    totalPrice: newItem.price
-                })
-            } else {
-                existingItem.quantity++
-                existingItem.totalPrice = Number(existingItem.totalPrice) + Number(newItem.price)
-            }
+        //
+        builder.addCase(getProducts.fulfilled, (state, action) => {
+            // state.isPending = false,
+            // state.isCurrent = action.payload
+        })
 
-            state.totalAmount = state.cartItems.reduce(
-                (total, item) => total + Number(item.price) * Number(item.quantity),0
-            );
-        },
-
-        deleteItem: (state, action) => {
-            const id = action.payload;
-
-            const existingItem = state.cartItems.find(item => item.id === id);
-
-            if(existingItem) {
-                state.cartItems = state.cartItems.filter(item => item.id !== id);
-                state.totalQuantity = state.totalQuantity - existingItem.quantity;
-            }
-
-            state.totalAmount = state.cartItems.reduce(
-                (total, item) => total + Number(item.price) * Number(item.quantity),0
-            );
-
-        }
+        //
+        builder.addCase(getProducts.rejected, (state) => {
+            // state.isPending = false,
+            // state.isError = true,
+            // state.isCurrent = []
+        })
     }
 })
 
-export const cartActions = cartSlice.actions;
+export const cartActions = productSlice.actions;
 
-export default cartSlice.reducer;
+export default productSlice.reducer;

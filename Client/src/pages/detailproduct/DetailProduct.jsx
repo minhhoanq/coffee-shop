@@ -4,7 +4,7 @@ import './detail-product.scss';
 import PageHeader from '../../components/pageheader/PageHeader';
 import Button from '../../components/button/Button';
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import TabReview from "../../components/tabreview/TabReview";
 import ProductList from '../../components/productlist/ProductList';
 import { addToCartItem, getProductDetailById, getProductByCategoryId, getProductDetailBySlug, getAllRatingsProduct } from "../../api/productApi";
@@ -22,6 +22,8 @@ const DetailProduct = () => {
     const { slug } = useParams();
     const user = useSelector(state => state.auth.login?.currentUser);
     // const userId = user?.others.id;
+
+    const dispatch = useDispatch();
 
     //Get api
     const getDataBySlug = async() => {

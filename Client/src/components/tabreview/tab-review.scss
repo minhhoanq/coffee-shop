@@ -16,7 +16,14 @@
         color: #999;
 
         &__desc {
+            width: 100px;
             margin-right: 50px;
+            @include flex (center, center);
+        }
+
+        &__reviews {
+            width: 100px;
+            @include flex (center, center);
         }
     }
 
@@ -80,7 +87,9 @@
 
     .active {
         font-weight: 600;
+        font-size: 1.2rem;
         color: $black-color;
+        border-bottom: 1px solid #ccc;
     }
 
     @include mobile {

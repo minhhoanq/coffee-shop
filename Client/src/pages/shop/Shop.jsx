@@ -6,21 +6,7 @@ import ProductList from '../../components/productlist/ProductList';
 import useDebounce from "../../hooks/useDebounce";
 import { getProducts } from "../../api/productApi";
 import Pagination from "../../components/pagination/Pagination";
-    
-const array = [
-    {
-        arr: 1,
-    },
-    {
-        arr: 2,
-    },
-    {
-        arr: 3,
-    },
-    {
-        arr: 4,
-    }
-];
+import { useDispatch } from "react-redux";
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -32,8 +18,10 @@ const Shop = () => {
     const numbers = [...Array(totalPage + 1).keys()].slice(1);
     const debounceValue = useDebounce(searchValue, 800);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        const getData = async() => {
+        const getData = () => {
             const name = debounceValue;
             const page = numPage;
             let order = [];
@@ -50,7 +38,7 @@ const Shop = () => {
                 categoryId = idOfCate;
             }
             
-            const productList = await getProducts(name, order, page, limit, categoryId);
+            const productList = dispatch(getProducts(name, order, page, limit, categoryId));
             setProducts(productList.productData.rows);
 
             const quantityPage = Math.ceil(productList.productData.count / limit);
