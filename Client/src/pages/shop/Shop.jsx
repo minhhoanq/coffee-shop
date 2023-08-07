@@ -4,16 +4,16 @@ import './shop.scss';
 import PageHeader from "../../components/pageheader/PageHeader";
 import ProductList from '../../components/productlist/ProductList';
 import useDebounce from "../../hooks/useDebounce";
-import { getProducts } from "../../api/productApi";
+import { getProducts } from "../../redux/slice/asyncActions";
 import Pagination from "../../components/pagination/Pagination";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [sort, setSort] = useState('');
     const [idOfCate, setIdOfCate] = useState(0);
-    const [numPage, setNumPage] = useState(0);
+    const [numPage, setNumPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
     const numbers = [...Array(totalPage + 1).keys()].slice(1);
     const debounceValue = useDebounce(searchValue, 800);
@@ -21,7 +21,7 @@ const Shop = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const getData = () => {
+        const getData = async() => {
             const name = debounceValue;
             const page = numPage;
             let order = [];
@@ -30,7 +30,7 @@ const Shop = () => {
             } else {
                 order = undefined;
             }
-            const limit = 5;
+            const limit = 1;
 
             let categoryId = undefined;
 
@@ -38,10 +38,12 @@ const Shop = () => {
                 categoryId = idOfCate;
             }
             
-            const productList = dispatch(getProducts(name, order, page, limit, categoryId));
-            setProducts(productList.productData.rows);
+            const productList = await dispatch(getProducts({name, order, page, limit, categoryId}));
+            console.log(productList);
+            setProducts(productList.payload.rows);
 
-            const quantityPage = Math.ceil(productList.productData.count / limit);
+
+            const quantityPage = Math.ceil(productList.payload.count / limit);
             setTotalPage(quantityPage);
         }
         getData();

@@ -1,4 +1,3 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import request from "../utils/request";
 
 export const getAllProduct = async () => {
@@ -10,25 +9,23 @@ export const getAllProduct = async () => {
     }
 }
 
-export const getProducts = createAsyncThunk(
-    'product/getProducts',
-    async (name, order, page, limit, categoryId) => {
-        try {
-            const res = await request.get('/api/v1/product', {
-                params: {
-                    name,
-                    order,
-                    page,
-                    limit,
-                    categoryId,
-                }
-            });
-            return res.data;    
-        } catch (error) {
-            console.log(error);
-        }
+export const getProducts = async (name, order, page, limit, categoryId) => {
+    try {
+        const res = await request.get('/api/v1/product', {
+            params: {
+                name,
+                order,
+                page,
+                limit,
+                categoryId,
+            }
+        });
+        return res.data;
+    } catch (error) {
+        return error;
     }
-)
+}
+
 
 export const getProductByCategoryId = async (id) => {
     try {
