@@ -13,20 +13,23 @@ const productSlice = createSlice({
     reducers:{
 
     },
-    extraReducers: builder => {
+    extraReducers: (builder) => {
         builder
             .addCase(getProducts.pending, (state) => {
                 state.isPending = true;
-                // console.log('pending')
-            }).addCase(getProducts.fulfilled, (state, action) => {
+                state.isError = false;
+            })
+            
+        builder.addCase(getProducts.fulfilled, (state, action) => {
                 state.isPending = false;
+                state.isError = false;
                 state.isCurrent = action.payload;
-                // console.log('fulfilled: ', action.payload)
-            }).addCase(getProducts.rejected, (state) => {
+            })
+            
+        builder.addCase(getProducts.rejected, (state) => {
                 state.isPending = false;
                 state.isError = true;
                 state.isCurrent = [];
-                // console.log('error')
             });
     }
 })

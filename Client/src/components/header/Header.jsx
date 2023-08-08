@@ -41,8 +41,10 @@ const Header = () => {
     const user = useSelector(state => state.auth.login?.currentUser);
     let axiosJWT = createAxios(user, dispatch, logoutSuccess);
     
-    const accessToken = user?.accessToken;
+    const accessToken = user?.generateAccessToken;
     const id = user?.others.id;
+
+    console.log(user)
     useEffect(() => {
         const shrinkHeader = () => {
             if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
@@ -62,7 +64,7 @@ const Header = () => {
     useEffect(() => {
         
         const getDataCart = async () => {
-            const cartArr = await getToCartItem(id);
+            const cartArr = await getToCartItem(accessToken);
             setCart(cartArr.productData);
         }
 
@@ -115,7 +117,7 @@ const Header = () => {
                             <div className="header__wrapper__options__cart__list" ref={notifyListRef}>
                                 <div className="header__wrapper__options__cart__list__txt">Giỏ hàng của bạn</div>
     
-                                {/* <ul className="header__wrapper__options__cart__list__ul">
+                                <ul className="header__wrapper__options__cart__list__ul">
                                     {cart.length !== 0 ? (cart?.map((item, i) => (
                                         <li className="header__wrapper__options__cart__list__ul__li" key={i}>
                                             <Car_ver item = {item}/>
@@ -124,7 +126,7 @@ const Header = () => {
                                              <i class="ri-emotion-unhappy-line"></i>
                                              <span>Bạn không có sản phẩm nào trong giỏ hàng</span>
                                         </div>}
-                                </ul> */}
+                                </ul>
     
                                 <button className="header__wrapper__options__cart__list__btn">Xem tất cả</button>
                             </div>

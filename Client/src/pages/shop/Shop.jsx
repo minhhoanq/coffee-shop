@@ -19,6 +19,9 @@ const Shop = () => {
     const debounceValue = useDebounce(searchValue, 800);
 
     const dispatch = useDispatch();
+    const pending = useSelector(state => state.product.isPending);
+    const error = useSelector(state => state.product.isError);
+    console.log(pending + " : " + error);
 
     useEffect(() => {
         const getData = async() => {
@@ -30,7 +33,7 @@ const Shop = () => {
             } else {
                 order = undefined;
             }
-            const limit = 1;
+            const limit = 5;
 
             let categoryId = undefined;
 
@@ -39,11 +42,9 @@ const Shop = () => {
             }
             
             const productList = await dispatch(getProducts({name, order, page, limit, categoryId}));
-            console.log(productList);
-            setProducts(productList.payload.rows);
+            setProducts(productList.payload?.rows || []);
 
-
-            const quantityPage = Math.ceil(productList.payload.count / limit);
+            const quantityPage = Math.ceil((productList.payload?.count || 0) / limit);
             setTotalPage(quantityPage);
         }
         getData();
@@ -100,7 +101,13 @@ const Shop = () => {
             </div>
 
             {
-                products.length > 0 ? (
+                pending === true ? (
+                    <div className="shop__loading">
+                        <i class="ri-loader-4-line shop__loading__icon"></i>
+                        Vui lòng chờ...
+                    </div> 
+                ) :
+                products?.length > 0 ? (
                     <>
                         <ProductList items={products} />
                         <Pagination parentCallback={handlePagination} numbers={numbers}/>

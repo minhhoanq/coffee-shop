@@ -45,12 +45,13 @@ export const getProductDetailBySlug = async (slug) => {
     }
 }
 
-export const getToCartItem = async (cartId) => {
+export const getToCartItem = async (accessToken) => {
     try {
-        const res = await request.get('/api/v1/product/cart-item', {
-            params: {
-                cartId,
-            }
+        const res = await request.get('/api/v1/cart-item',
+        {
+            headers:({
+                token: `Bearer ${accessToken}`
+            })
         });
         return res.data;
     } catch (error) {

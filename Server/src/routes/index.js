@@ -13,7 +13,7 @@ const initRoutes = (app) => {
 
 
     return app.use('/', (req, res) => {
-        return res.send('SERVER ONN');
+        return res.status(500).send('SERVER ONN');
     })
 }
 

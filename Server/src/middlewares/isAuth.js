@@ -11,7 +11,6 @@ const isAuth = {
                    return res.status(403).json("Token không hợp lệ!");
                 }
                 req.user = user
-                console.log(req.user.username);
                 next();
             })
         } else {
