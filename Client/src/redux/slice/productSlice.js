@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProducts } from "../../redux/slice/asyncActions";
+import { getProductsAction } from "../../redux/asyncActions/productActions";
 
 const initialState = {
     isCurrent: [],
@@ -15,18 +15,18 @@ const productSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getProducts.pending, (state) => {
+            .addCase(getProductsAction.pending, (state) => {
                 state.isPending = true;
                 state.isError = false;
             })
             
-        builder.addCase(getProducts.fulfilled, (state, action) => {
+        builder.addCase(getProductsAction.fulfilled, (state, action) => {
                 state.isPending = false;
                 state.isError = false;
                 state.isCurrent = action.payload;
             })
             
-        builder.addCase(getProducts.rejected, (state) => {
+        builder.addCase(getProductsAction.rejected, (state) => {
                 state.isPending = false;
                 state.isError = true;
                 state.isCurrent = [];

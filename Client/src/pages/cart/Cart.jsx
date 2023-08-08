@@ -12,11 +12,12 @@ import { cartActions } from "../../redux/slice/cartSlice";
 const Cart = () => {
 
     const [products, setProducts] = useState([]);
+    const user = useSelector(state => state.auth.login.currentUser)
 
     useEffect(() => {
         const getProductsData = async () => {
-            const cartArr = await getToCartItem(2);
-            setProducts(cartArr.data.productData);
+            const cartArr = await getToCartItem(user.generateAccessToken);
+            setProducts(cartArr.productData);
         };
 
         getProductsData();

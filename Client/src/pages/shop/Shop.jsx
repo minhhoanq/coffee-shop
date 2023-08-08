@@ -4,7 +4,7 @@ import './shop.scss';
 import PageHeader from "../../components/pageheader/PageHeader";
 import ProductList from '../../components/productlist/ProductList';
 import useDebounce from "../../hooks/useDebounce";
-import { getProducts } from "../../redux/slice/asyncActions";
+import { getProductsAction } from "../../redux/asyncActions/productActions";
 import Pagination from "../../components/pagination/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -41,7 +41,7 @@ const Shop = () => {
                 categoryId = idOfCate;
             }
             
-            const productList = await dispatch(getProducts({name, order, page, limit, categoryId}));
+            const productList = await dispatch(getProductsAction({name, order, page, limit, categoryId}));
             setProducts(productList.payload?.rows || []);
 
             const quantityPage = Math.ceil((productList.payload?.count || 0) / limit);
