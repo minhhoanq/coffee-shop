@@ -59,21 +59,6 @@ export const getToCartItem = async (accessToken) => {
     }
 }
 
-export const addToCartItem = async (cartId, productSizeId, quantity, price, note) => {
-    try {
-        const res = await request.post('/api/v1/product/cart-item', {
-            cartId,
-            productSizeId, 
-            quantity, 
-            price,
-            note,
-        });
-        return res.data;
-    } catch (error) {
-        return error;
-    }
-}
-
 export const getAllRatingsProduct = async (slug) => {
     try {
         const res = await request.get(`/api/v1/product/ratings/${slug}`);

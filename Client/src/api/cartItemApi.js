@@ -1,5 +1,23 @@
 import request from "../utils/request"
 
+export const createCartItem = async(accessToken, {productSizeId, quantity, price, note})=> {
+    try {
+        const response = await request.post('/api/v1/cart-item' ,
+        {
+            productSizeId, 
+            quantity, 
+            price,
+            note,
+        }, {
+            headers:({
+                token: `Bearer ${accessToken}`
+            })
+        });
+        return response.data; 
+    } catch (error) {
+        return error;
+    }
+}
 
 export const deleteCartItem = async(accessToken, productSizeId) => {
     try {
@@ -11,7 +29,7 @@ export const deleteCartItem = async(accessToken, productSizeId) => {
                 productSizeId
             }
         });
-        return response; 
+        return response.data; 
     } catch (error) {
         return error;
     }

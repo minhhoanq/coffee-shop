@@ -9,6 +9,7 @@ import TabReview from "../../components/tabreview/TabReview";
 import ProductList from '../../components/productlist/ProductList';
 import { addToCartItem, getProductDetailById, getProductByCategoryId, getProductDetailBySlug, getAllRatingsProduct } from "../../api/productApi";
 import { toast } from "react-toastify";
+import { createCartItem } from "../../api/cartItemApi";
 
 const DetailProduct = () => {
     const [products, setProducts] = useState([]);
@@ -21,6 +22,7 @@ const DetailProduct = () => {
 
     const { slug } = useParams();
     const user = useSelector(state => state.auth.login?.currentUser);
+    const accessToken = user.generateAccessToken;
     // const userId = user?.others.id;
 
     const dispatch = useDispatch();
@@ -35,7 +37,6 @@ const DetailProduct = () => {
 
     const getRatingsProductData = async() => {
         const result = await getAllRatingsProduct(slug);
-        console.log(result.ratingsData);
         setRatings(result.ratingsData)
     }
 
@@ -49,9 +50,6 @@ const DetailProduct = () => {
         getRatingsProductData()
         document.getElementById(`${size}`).classList.add('focus');
     },[]);
-
-    console.log(products);
-
 
     //Disable button size
     const disableBtnSize = (str) => {
@@ -147,15 +145,17 @@ const DetailProduct = () => {
 
         const productSizeId = productPost.id;
         const newProduct = {
-            n,
-            price,
+            productSizeId,
             quantity,
+            price,
             note
         }
         console.log(newProduct);
+        console.log(accessToken);
 
-        // const response = await addToCartItem(userId, n, quantity, price, note);
+        const response = await createCartItem(accessToken, newProduct);
 
+        console.log(response);
         // const responseErr = {...response.response?.data};
         // if(responseErr.err === 1) {
         //     toast.error(responseErr.msg);
