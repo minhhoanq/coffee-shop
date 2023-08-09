@@ -85,6 +85,11 @@
 
             &__cart {
                 position: relative;
+
+                i{
+                    font-size: 2rem;
+                }
+
                 &__dot {
                     position: absolute;
                     background-color: red;
@@ -109,7 +114,7 @@
                     animation: notify_Show ease-in 0.2s;
                     will-change: transform;
                     box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-
+                    
                     &::before {
                         content: "";
                         position: absolute;

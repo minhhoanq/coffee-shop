@@ -65,9 +65,8 @@ const Header = () => {
         
         const getDataCart = async () => {
             const cartArr = await getToCartItem(accessToken);
-            setCart(cartArr.productData);
+            setCart(cartArr.productData || []);
         }
-
         getDataCart();
     },[]);
 
@@ -110,8 +109,8 @@ const Header = () => {
                         <div className="header__wrapper__options__notify">
                             <i class="ri-heart-line" ></i>
                         </div>
-                        <div className="header__wrapper__options__cart"  onClick={handleCart}>
-                            <i class="ri-shopping-cart-line"></i>
+                        <div className="header__wrapper__options__cart">
+                            <i class="ri-shopping-cart-line" onClick={handleCart}></i>
                             <div className="header__wrapper__options__cart__dot"></div>
     
                             <div className="header__wrapper__options__cart__list" ref={notifyListRef}>

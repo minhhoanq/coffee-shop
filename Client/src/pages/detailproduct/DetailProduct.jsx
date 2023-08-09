@@ -14,7 +14,7 @@ const DetailProduct = () => {
     const [products, setProducts] = useState([]);
     const [size, setSize] = useState('btn-size-S');
     const [price, setPrice] = useState();
-    const [productSimilars, setproductSimilars] = useState([]);
+    // const [productSimilars, setproductSimilars] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [note, setNote] = useState('');
     const [ratings, setRatings] = useState([]);
@@ -40,12 +40,12 @@ const DetailProduct = () => {
     }
 
     const getDataByCategoryId = async() => {
-        const result = await getProductByCategoryId(1);
-        setproductSimilars(result.data);
+        // const result = await getProductByCategoryId(1);
+        // setproductSimilars(result.data);
     }
     useEffect(() => {
         getDataBySlug();
-        getDataByCategoryId();
+        // getDataByCategoryId();
         getRatingsProductData()
         document.getElementById(`${size}`).classList.add('focus');
     },[]);
@@ -139,31 +139,31 @@ const DetailProduct = () => {
         setNote(e.target.value);
     }
 
-    // const handleAddToCart = async(e) => {
-    //     const s = size.slice(-1);
-    //     const productPost = products.find(
-    //         item => item.productData.id === Number(id) && item.sizeData.sizeName === s
-    //     )
+    const handleAddToCart = async(e) => {
+        const s = size.slice(-1);
+        const productPost = products.find(
+            item => item.sizeData.sizeName === s
+        )
 
-    //     const n = productPost.id;
-    //     const newProduct = {
-    //         n,
-    //         price,
-    //         quantity,
-    //         note
-    //     }
-    //     console.log(newProduct);
+        const productSizeId = productPost.id;
+        const newProduct = {
+            n,
+            price,
+            quantity,
+            note
+        }
+        console.log(newProduct);
 
-    //     const response = await addToCartItem(userId, n, quantity, price, note);
+        // const response = await addToCartItem(userId, n, quantity, price, note);
 
-    //     const responseErr = {...response.response?.data};
-    //     if(responseErr.err === 1) {
-    //         toast.error(responseErr.msg);
-    //         return;
-    //     }
+        // const responseErr = {...response.response?.data};
+        // if(responseErr.err === 1) {
+        //     toast.error(responseErr.msg);
+        //     return;
+        // }
 
-    //     toast.success({...response}.status);
-    // }
+        // toast.success({...response}.status);
+    }
 
     return (
         <div className="detail-product grid">
@@ -250,7 +250,7 @@ const DetailProduct = () => {
                         >
                     </textarea>
 
-                    <Button  className="detail-product__wrapper__info__btn">Add to cart</Button>
+                    <Button  className="detail-product__wrapper__info__btn" onClick={handleAddToCart}>Add to cart</Button>
                 </div>
             </div>
 

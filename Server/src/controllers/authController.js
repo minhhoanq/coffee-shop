@@ -17,7 +17,7 @@ const authController = {
             roles: user.roles,
         },
         process.env.JWT_ACCESS_KEY,
-        { expiresIn: "2h"}
+        { expiresIn: "24h"}
         );
     },
 

@@ -1,10 +1,20 @@
 import React from "react";
 
 import "./cart_ver.scss";
+import { deleteCartItem } from "../../api/cartItemApi";
+import { useSelector } from "react-redux";
 
 const Car_ver = props => {
     const item = props.item;
-    console.log(item);
+    // console.log(item);
+    const user = useSelector(state => state.auth.login.currentUser);
+    const accessToken = user.generateAccessToken;
+
+    const handleDeleteCartItem = async() => {
+        const response = await deleteCartItem(accessToken, item.productSizeId);
+
+        console.log(response);
+    }
     return (
         <div className="cart__ver">
             <img src={`${item.productSizeData.productData.productImg}`} alt=""/>
@@ -22,7 +32,7 @@ const Car_ver = props => {
                     <p>{`(${item.quantity} x ${item.productSizeData.productData.price}.000đ)`}</p>
                 </div>
 
-                <button className="cart__ver__total__btn">
+                <button className="cart__ver__total__btn" onClick={handleDeleteCartItem}>
                     Xoá
                 </button>
             </div>
