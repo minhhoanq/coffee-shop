@@ -28,24 +28,62 @@
     }
 
     .tab-reviews {
+        @include flex (center, center);
+        flex-direction: column;
 
         &__users {
             margin-top: 15px;
-            @include flex (flex-start, center);
-            flex-direction: column;
-            font-size: 1rem;
+            @include flex (center, flex-start);
+            width: 70%;
 
-            &__name {
-                font-weight: 500;
+            &__info-ratings {
+                @include flex (flex-start, center);
+                flex-direction: column;
+                font-size: 1rem;
+                border: 1px solid #ccc;
+                padding: 10px;
+                border-radius: 10px;
+
+                &__name {
+                    font-weight: 500;
+                }
+    
+                &__rate {
+                    color: $main-color;
+                }
+    
+                &__comment {
+                    margin-top: 5px;
+                }
             }
 
-            &__rate {
-                color: $main-color;
-            }
+            &__trash {
+                margin-left: 10px;
+                font-size: 1.4rem;
+                width: 25px;
+                height: 25px;
+                cursor: pointer;
+                
+                @include flex (center, center);
+                display: none;
 
-            &__comment {
-                margin-top: 5px;
+                &:hover {
+                    border-radius: 5px;
+                    background-color: #ccc;
+                }
+                  
+                :hover > & {
+                    display: block;
+                }
             }
+            
+
+            
+        }
+
+        &__users:hover > &__user__trash {
+            background-color: aqua;
+            display: flex;
         }
 
         &__write {
@@ -91,9 +129,5 @@
         font-size: 1.2rem;
         color: $black-color;
         border-bottom: 1px solid #ccc;
-    }
-
-    @include mobile {
-        
     }
 }

@@ -57,11 +57,16 @@ export const TabReviews = props => {
 
             {Object.keys(reviews).length !== 0 ? reviews.map((review, i) => (
                 <div className="tab-reviews__users" key={i}>
-                    <span className="tab-reviews__users__name">{review.userData.username}</span>
+                    <div className="tab-reviews__users__info-ratings">
+                        <span className="tab-reviews__users__info-ratings__name">{review.userData.username}</span>
 
-                    <span className="tab-reviews__users__rate">{review.star} (rating)</span>
+                        <span className="tab-reviews__users__info-ratings__rate">{review.star} (rating)</span>
 
-                    <span className="tab-reviews__users__comment">{review.comment}</span>
+                        <span className="tab-reviews__users__info-ratings__comment">{review.comment}</span>
+                    </div>
+                    <div className="tab-reviews__users__trash">
+                        <i class="ri-delete-bin-line"></i>  
+                    </div>
                 </div>
             )) : <div>Không có đánh giá nào!</div>}
 
