@@ -14,7 +14,7 @@ router.get('/', productController.getProducts);
 
 router.post('/create', productController.createProduct);
 
-router.put('/ratings/:slug', isAuth.verifyToken, productController.ratingProduct);
+router.post('/ratings/:slug', isAuth.verifyToken, productController.ratingProduct);
 
 router.get('/ratings/:slug', productController.getAllRatingsProduct);
 

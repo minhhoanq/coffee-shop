@@ -3,6 +3,8 @@ import React from "react";
 import './tab-review.scss';
 import { useState } from "react";
 import Button from "../button/Button";
+import { useSelector } from "react-redux";
+import { createRatingProduct } from "../../api/ratingApi";
 
 const TabReview = props => {
 
@@ -18,11 +20,11 @@ const TabReview = props => {
                 </span>
 
                 <span className={`tab-review__wrapper__reviews ${tab === 'reviews' ? 'active' : ''}`} onClick={() => setTab('reviews')}>
-                    Đánh giá (2)
+                    Đánh giá ({itemRatings.length})
                 </span>
             </div>
 
-            {tab === 'desc' ? (<TabDescription description={itemProduct?.productDescription}/>) : (<TabReviews reviews={itemRatings}/>)}
+            {tab === 'desc' ? (<TabDescription description={itemProduct?.productDescription}/>) : (<TabReviews product={itemProduct} reviews={itemRatings}/>)}
         </div>
     )
 }
@@ -37,15 +39,25 @@ export const TabDescription = props => {
 }
 
 export const TabReviews = props => {
-
+    const[comment, setComment] = useState('');
+    const[star, setStar] = useState(4);
     const reviews = props.reviews;
+    const product = props.product;
+    const user = useSelector(state => state.auth.login?.currentUser);
+    const accessToken = user.generateAccessToken;
+
+    const handleSubmitRating = async(e) => {
+
+        const createRating = await createRatingProduct(accessToken, product.slug, star, comment);
+        console.log(createRating);
+    }
 
     return (
         <div className="tab-reviews">
 
             {Object.keys(reviews).length !== 0 ? reviews.map((review, i) => (
                 <div className="tab-reviews__users" key={i}>
-                    <span className="tab-reviews__users__name">{review.userId}</span>
+                    <span className="tab-reviews__users__name">{review.userData.username}</span>
 
                     <span className="tab-reviews__users__rate">{review.star} (rating)</span>
 
@@ -67,10 +79,10 @@ export const TabReviews = props => {
                 </div>
 
                 <div className="tab-reviews__write__wrapper">
-                    <textarea className="tab-reviews__write__wrapper__content"></textarea>
+                    <textarea className="tab-reviews__write__wrapper__content" onChange={(e) => setComment(e.target.value)}></textarea>
                 </div>
 
-                <Button>Submit</Button>
+                <Button type={'button'} onClick={handleSubmitRating}>Submit</Button>
             </div>
         </div>
     )

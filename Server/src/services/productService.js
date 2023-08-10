@@ -56,7 +56,7 @@ const getProductDetailService = ({slug}) => new Promise(async(resolve, reject) =
                 {
                     model: db.Product,
                     as: 'productData',
-                    attributes: ['id', 'productName', 'categoryId', 'productDescription', 'productImg', 'price'],
+                    attributes: ['id','slug', 'productName', 'categoryId', 'productDescription', 'productImg', 'price'],
                     include: [
                         {
                             model: db.Category,
@@ -159,7 +159,7 @@ const createProductService = (body) => new Promise(async(resolve, reject) => {
     }
 })
 
-const ratingProductService = (user, {slug}, body) => new Promise(async(resolve, reject) => {
+const ratingProductService = (user, { slug }, body) => new Promise(async(resolve, reject) => {
     try {
         const userId = user.id;
         const {star, comment} = body;
@@ -224,7 +224,14 @@ const getAllRatingsProductService = ({slug}) => new Promise( async(resolve, reje
         const response = await db.Rating.findAll({
             where: {
                 productId: product.id,
-            }
+            },
+            include: [
+                {
+                    model: db.User,
+                    as: 'userData',
+                    attributes: ['id', 'username'],
+                }
+            ]
         });
 
         resolve({
