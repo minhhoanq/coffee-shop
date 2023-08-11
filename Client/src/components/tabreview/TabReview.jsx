@@ -40,7 +40,8 @@ export const TabDescription = props => {
 
 export const TabReviews = props => {
     const[comment, setComment] = useState('');
-    const[star, setStar] = useState(4);
+    const[star, setStar] = useState(null);
+    const[hover, setHover] = useState(null);
     const reviews = props.reviews;
     const product = props.product;
     const user = useSelector(state => state.auth.login?.currentUser);
@@ -83,15 +84,36 @@ export const TabReviews = props => {
                 </span>
 
                 <div className="tab-reviews__write__rating">
-                    <i class="ri-star-s-fill">1</i>
-                    <i class="ri-star-s-fill">2</i>
-                    <i class="ri-star-s-fill">3</i>
-                    <i class="ri-star-s-fill">4</i>
-                    <i class="ri-star-s-fill">5</i>
+                    {
+                        [...Array(5)].map((item, index) => {
+                            const currentRating = index + 1;
+                            return (
+                                <label>
+                                    <input
+                                        key={index}
+                                        type="radio"
+                                        name="rating"
+                                        value={currentRating}
+                                        onClick={() => setStar(currentRating)}
+                                    />
+                                        <i
+                                            class="ri-star-fill star"
+                                            style={{color: `${currentRating <= (hover || star) ? "#ffc107" : "#999999"}`}}
+                                            onMouseEnter={() => setHover(currentRating)}
+                                            onMouseLeave={() => setHover(null)}
+                                        ></i>
+                                </label>
+                            )
+                        })
+                    }
                 </div>
 
                 <div className="tab-reviews__write__wrapper">
-                    <textarea className="tab-reviews__write__wrapper__content" onChange={(e) => setComment(e.target.value)}></textarea>
+                    <textarea 
+                        className="tab-reviews__write__wrapper__content" 
+                        onChange={(e) => setComment(e.target.value)} 
+                        placeholder="Hãy cho chúng tôi biết về suy nghĩ của bạn ?"
+                    ></textarea>
                 </div>
 
                 <Button type={'button'} onClick={handleSubmitRating}>Submit</Button>
