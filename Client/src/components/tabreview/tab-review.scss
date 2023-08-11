@@ -65,16 +65,16 @@
                 cursor: pointer;
                 
                 @include flex (center, center);
-                display: none;
+                // display: none;
 
                 &:hover {
                     border-radius: 5px;
                     background-color: #ccc;
                 }
                   
-                :hover > & {
-                    display: block;
-                }
+                // :hover > & {
+                //     display: flex;
+                // }
             }
             
 

@@ -4,7 +4,7 @@ import './tab-review.scss';
 import { useState } from "react";
 import Button from "../button/Button";
 import { useSelector } from "react-redux";
-import { createRatingProduct } from "../../api/ratingApi";
+import { createRatingProduct, deleteRatingProduct } from "../../api/ratingApi";
 
 const TabReview = props => {
 
@@ -52,6 +52,11 @@ export const TabReviews = props => {
         console.log(createRating);
     }
 
+    const handleDeleteRating = async() => {
+        const deleteRating = await deleteRatingProduct(accessToken, product.slug);
+        console.log(deleteRating);
+    }
+
     return (
         <div className="tab-reviews">
 
@@ -60,12 +65,14 @@ export const TabReviews = props => {
                     <div className="tab-reviews__users__info-ratings">
                         <span className="tab-reviews__users__info-ratings__name">{review.userData.username}</span>
 
-                        <span className="tab-reviews__users__info-ratings__rate">{review.star} (rating)</span>
+                        <span className="tab-reviews__users__info-ratings__rate">{review.star} 
+                            <i class="ri-star-s-fill"></i>
+                        </span>
 
                         <span className="tab-reviews__users__info-ratings__comment">{review.comment}</span>
                     </div>
-                    <div className="tab-reviews__users__trash">
-                        <i class="ri-delete-bin-line"></i>  
+                    <div className="tab-reviews__users__trash" onClick={handleDeleteRating}>
+                        <i class="ri-delete-bin-line"></i> 
                     </div>
                 </div>
             )) : <div>Không có đánh giá nào!</div>}
