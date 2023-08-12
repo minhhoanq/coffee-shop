@@ -127,7 +127,9 @@ const Header = () => {
                                         </div>}
                                 </ul>
     
-                                <button className="header__wrapper__options__cart__list__btn">Xem tất cả</button>
+                                <button className="header__wrapper__options__cart__list__btn">
+                                    <a href="/cart">Xem tất cả</a>
+                                </button>
                             </div>
                         </div>
                         <div className="header__wrapper__options__profile">

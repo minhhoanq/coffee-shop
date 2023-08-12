@@ -12,8 +12,6 @@ const Car_ver = props => {
 
     const handleDeleteCartItem = async() => {
         const response = await deleteCartItem(accessToken, item.productSizeId);
-
-        console.log(response);
     }
     return (
         <div className="cart__ver">
