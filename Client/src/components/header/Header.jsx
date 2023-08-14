@@ -40,10 +40,14 @@ const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.login?.currentUser);
-    let axiosJWT = createAxios(user, dispatch, logoutSuccess);
+    // let axiosJWT = createAxios(user, dispatch, logoutSuccess);
+
+    console.log(user);
     
     const accessToken = user?.generateAccessToken;
     const id = user?.others.id;
+    console.log(accessToken);
+
 
     useEffect(() => {
         const shrinkHeader = () => {
@@ -86,8 +90,9 @@ const Header = () => {
         console.log(res);
     }
 
-    const handleLogout =() => {
-        logoutUser(dispatch, id, navigate, accessToken, axiosJWT);
+    const handleLogout = async() => {
+        console.log("check")
+        await logoutUser(dispatch, navigate, accessToken);
     }
 
     return (

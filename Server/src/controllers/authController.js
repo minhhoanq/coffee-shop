@@ -189,8 +189,22 @@ const authController = {
     },
 
     logOutUser: async(req, res) => {
-        res.clearCookie("refreshToken");
-        // refreshTokens = refreshTokens.filter(token => token !== req.cookies.refreshToken);
+        const cookie = req.cookies;
+
+        if(!cookie || !cookie.refreshToken) {
+            return res.status(401).json('Cookie rỗng!');
+        }
+
+        console.log(cookie);
+        await db.User.update({refreshToken: ''},{
+            where: {refreshToken: cookie.refreshToken}
+        });
+        res.clearCookie("refreshToken", {
+            httpOnly:true,
+            secure:false,
+            path:"/",
+            sameSite:"strict",
+        });
 
         return res.status(200).json("Logged out!")
     },

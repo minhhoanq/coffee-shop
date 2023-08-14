@@ -89,7 +89,7 @@ router.post("/login", authController.loginUser);
 router.post("/refresh", authController.requestRefreshToken);
 
 //Logout
-router.post("/logout", authController.logOutUser);
+router.post("/logout", isAuth.verifyToken, authController.logOutUser);
 
 router.get("/forgotpassword", authController.forgotPassword);
 
