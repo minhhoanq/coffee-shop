@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import createAxios from "../../createInstance";
 import { logoutSuccess } from "../../redux/slice/authSlice";
 import { getToCartItem } from "../../api/productApi";
+import { deleteAllCartItem } from "../../api/cartItemApi";
 
 const headerNav = [
     {
@@ -44,7 +45,6 @@ const Header = () => {
     const accessToken = user?.generateAccessToken;
     const id = user?.others.id;
 
-    console.log(user)
     useEffect(() => {
         const shrinkHeader = () => {
             if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
@@ -79,8 +79,11 @@ const Header = () => {
         notifyListRef.current.classList.toggle('cartShow');
     }
 
-    const handleUser = (e) => {
+    const handleDeleteAllCartItem = async(e) => {
+        e.preventDefault();
 
+        const res = await deleteAllCartItem(accessToken);
+        console.log(res);
     }
 
     const handleLogout =() => {
@@ -114,7 +117,13 @@ const Header = () => {
                             <div className="header__wrapper__options__cart__dot"></div>
     
                             <div className="header__wrapper__options__cart__list" ref={notifyListRef}>
-                                <div className="header__wrapper__options__cart__list__txt">Giỏ hàng của bạn</div>
+                                <div className="header__wrapper__options__cart__list__txt">
+                                    Giỏ hàng của bạn
+
+                                    <button className="header__wrapper__options__cart__list__txt__delete-all" onClick={handleDeleteAllCartItem}>
+                                        Xóa tất cả
+                                    </button>
+                                </div>
     
                                 <ul className="header__wrapper__options__cart__list__ul">
                                     {cart.length !== 0 ? (cart?.map((item, i) => (
@@ -135,7 +144,7 @@ const Header = () => {
                         <div className="header__wrapper__options__profile">
                             {
                                 user ? <>
-                                    <i class="ri-user-follow-line" onClick={handleUser}></i>
+                                    <i class="ri-user-follow-line"></i>
                                     <span style={{cursor: "pointer"}} onClick={handleLogout}>Logout</span>
                                 </> : <i class="ri-user-smile-line"></i>
                             }

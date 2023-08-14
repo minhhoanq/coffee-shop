@@ -11,4 +11,6 @@ router.delete('/', isAuth.verifyToken, cartController.deleteCartItemById);
 //Cart-item
 router.get('/', isAuth.verifyToken, cartController.getAllCartItemById);
 
+router.delete('/delete-all', isAuth.verifyToken, cartController.deletAlleCartItem);
+
 module.exports = router;

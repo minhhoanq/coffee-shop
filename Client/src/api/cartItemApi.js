@@ -34,3 +34,16 @@ export const deleteCartItem = async(accessToken, productSizeId) => {
         return error;
     }
 }
+
+export const deleteAllCartItem = async(accessToken) => {
+    try {
+        const response = await request.delete('/api/v1/cart-item/delete-all', {
+            headers:({
+                token: `Bearer ${accessToken}`
+            }),
+        });
+        return response.data; 
+    } catch (error) {
+        return error;
+    }
+}

@@ -27,6 +27,15 @@ const cartController = {
             res.status(500).json(error);
         }
     },
+
+    deletAlleCartItem: async(req, res) => {
+        try {
+            const response = await cartItemService.deleteAllCartItemService(req.user);
+            res.status(200).json(response);
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
 };
 
 module.exports = cartController;

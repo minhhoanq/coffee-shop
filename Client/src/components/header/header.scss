@@ -134,6 +134,21 @@
                         font-weight: 500;
                         color: #999;
                         padding: 10px 0 10px 10px;
+
+                        @include flex (center, space-between);
+
+
+                        &__delete-all {
+                            cursor: pointer;
+                            margin-right: 40px;
+                            padding: 10px;
+                            height: 25px;
+                            border: 1px solid #ccc;
+                            border-radius: 5px;
+                            @include flex (center, center);
+                            background-color: #fba860;
+                            color: #fff;
+                        }
                     }
 
                     &__ul {

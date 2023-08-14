@@ -143,4 +143,34 @@ const getCartItemByIDService = ({id}) => new Promise(async (resolve, reject) => 
     }
 })
 
-module.exports = { addToCartItemService, deleteCartItemByIDService, getCartItemByIDService};
+const deleteAllCartItemService = (user) => new Promise(async (resolve, reject) => {
+    try {
+        if(!user) {
+            reject({
+                err: 1,
+                mes: 'Vui lòng đăng nhập để sử dụng các chức năng này!',
+            });
+            return;
+        }
+
+        const cart = await db.Cart.findOne({
+            where: { userId: user.id }
+        });
+
+        const response = await db.Cart_Item.destroy({
+            where: {
+                cartId: cart.id
+            }
+        });
+
+        resolve({
+            err: response ? 0 : 1,
+            mes: response ? "Xóa thành công tất cả sản phẩm này trong giỏ hàng." : "Xảy ra lỗi xóa tất cả sản phẩm trong giỏ hàng, hãy thử lại sau vài phút!",
+            productData: response   
+        })
+    } catch (error) {
+        reject(error);
+    }
+});
+
+module.exports = { addToCartItemService, deleteCartItemByIDService, getCartItemByIDService, deleteAllCartItemService};
