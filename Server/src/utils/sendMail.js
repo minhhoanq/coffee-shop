@@ -1,7 +1,7 @@
 "use strict";
 const nodemailer = require("nodemailer");
 
-const sendMail = async({ email, html }) => {
+const sendMail = async({ email, html, subject }) => {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
@@ -19,7 +19,7 @@ const sendMail = async({ email, html }) => {
         const info = await transporter.sendMail({
           from: '"Coffee Shop" <no-reply@coffeeshop.com>', // sender address
           to: email, // list of receivers
-          subject: "Forgot Password ✔", // Subject line
+          subject: subject, // Subject line
           text: "Hello world?", // plain text body
           html: html, // html body
         });

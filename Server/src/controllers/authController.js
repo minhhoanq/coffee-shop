@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const db = require("../models");
 const crypto = require('crypto');
 const sendMail = require("../utils/sendMail");
+const makeToken = require("uniqid");
 dotenv.config();
 
 const authController = {
@@ -33,6 +34,85 @@ const authController = {
     },
 
     //Register
+    // registerUser: async(req, res) => {
+    //     const errors = validationResult(req);
+    //     if(!errors.isEmpty()) {
+    //         return res.status(400)
+    //         .json({ 
+    //           status: "fail", 
+    //           field: errors.array()[0].param,
+    //           msg: errors.array()[0].msg, 
+    //         });
+    //     }
+    //     try {
+    //         const {
+    //             email,
+    //             username, 
+    //             password, 
+    //             confirmPassword,
+    //             firstname,
+    //             lastname,
+    //             image,
+    //             sex,
+    //             roles,
+    //             phone,
+    //             birth,
+    //             address,
+    //             } = req.body;
+    //         const salt = await bcrypt.genSalt(10);
+    //         const hashed = await bcrypt.hash(password, salt);
+
+    //         if(!email || !username || !password) {
+    //             return res.status(400).json('Missing payloads')
+    //         }
+
+    //         const existEmail = await dbUser.User.findOne({where: {email}});
+    //         if(existEmail) {
+    //             return res.status(400).json({
+    //                 status: "fail",
+    //                 field: "email",
+    //                 msg: "Địa chỉ email này đã được dùng để đăng ký tài khoản khác",
+    //             });
+    //         }
+    //         const existUsername = await dbUser.User.findOne({where: {username}});
+    //         if (existUsername) {
+    //             return res.status(400).json({
+    //               status: "fail",
+    //               field: "username",
+    //               msg: "Tên đăng nhập đã tồn tại, vui lòng chọn một tên khác",
+    //             });
+    //         }
+
+    //         if (password !== confirmPassword) {
+    //             return res.status(400).json({
+    //               status: "fail",
+    //               field: "confirmPassword",
+    //               msg: "Mật khẩu nhập lại chưa chính xác",
+    //             });
+    //           }
+
+    //         const newUser = {
+    //             email, 
+    //             username, 
+    //             password: hashed,
+    //             firstname,
+    //             lastname,
+    //             image,
+    //             sex,
+    //             roles,
+    //             phone,
+    //             birth,
+    //             address,
+    //         }
+
+    //         await dbUser.User.create(newUser);
+
+    //         return res.status(200).json({status: "Register successfully", data: newUser});
+    //     } catch (error) {
+    //         return res.status(500).json(error);
+    //     }
+    // },
+
     registerUser: async(req, res) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
@@ -104,7 +184,20 @@ const authController = {
                 address,
             }
 
-            await dbUser.User.create(newUser);
+            // await dbUser.User.create(newUser);
+            const token = makeToken();
+            res.cookie('dataregister', {...newUser, token}, {httpOnly: true, maxAge: 30 * 1000});
+
+            const html = `Xin vui lòng click vào link dưới đây để hoàn tất quá trình đăng ký. Link này sẽ hết hạn sau 15p kể từ bây giờ.
+            <a href=${process.env.URL_SERVER}/api/v1/auth/register/${token}>Click here</a>`
+
+            const data = {
+                email,
+                html,
+                subject: 'Register with email!'
+            }
+    
+            await sendMail(data);
 
             return res.status(200).json({status: "Register successfully", data: newUser});
         } catch (error) {
@@ -227,6 +320,7 @@ const authController = {
         const data = {
             email,
             html,
+            subject: 'Forgot password!'
         }
 
         const rs = await sendMail(data);
