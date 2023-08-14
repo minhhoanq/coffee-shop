@@ -189,24 +189,27 @@ const authController = {
     },
 
     logOutUser: async(req, res) => {
-        const cookie = req.cookies;
+        try {
+            const cookie = req.cookies;
+            console.log(cookie)
+            if(!cookie || !cookie.refreshToken) {
+                return res.status(401).json('Cookie rỗng!');
+            }
 
-        if(!cookie || !cookie.refreshToken) {
-            return res.status(401).json('Cookie rỗng!');
+            await db.User.update({refreshToken: ''},{
+                where: {refreshToken: cookie.refreshToken}
+            });
+            res.clearCookie("refreshToken", {
+                httpOnly:true,
+                secure:false,
+                path:"/",
+                sameSite:"strict",
+            });
+
+            return res.status(200).json("Logged out!")
+        } catch (error) {
+            return res.status(500).json(error);
         }
-
-        console.log(cookie);
-        await db.User.update({refreshToken: ''},{
-            where: {refreshToken: cookie.refreshToken}
-        });
-        res.clearCookie("refreshToken", {
-            httpOnly:true,
-            secure:false,
-            path:"/",
-            sameSite:"strict",
-        });
-
-        return res.status(200).json("Logged out!")
     },
 
     forgotPassword: async(req, res) => {

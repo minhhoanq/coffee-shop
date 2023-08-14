@@ -16,8 +16,8 @@ const Cart = () => {
 
     useEffect(() => {
         const getProductsData = async () => {
-            const cartArr = await getToCartItem(user.generateAccessToken);
-            setProducts(cartArr.productData);
+            const cartArr = await getToCartItem(user?.generateAccessToken);
+            setProducts(cartArr?.productData);
         };
 
         getProductsData();

@@ -41,13 +41,9 @@ const Header = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.login?.currentUser);
     // let axiosJWT = createAxios(user, dispatch, logoutSuccess);
-
-    console.log(user);
     
     const accessToken = user?.generateAccessToken;
     const id = user?.others.id;
-    console.log(accessToken);
-
 
     useEffect(() => {
         const shrinkHeader = () => {
@@ -69,7 +65,7 @@ const Header = () => {
         
         const getDataCart = async () => {
             const cartArr = await getToCartItem(accessToken);
-            setCart(cartArr.productData || []);
+            setCart(cartArr?.productData || []);
         }
         getDataCart();
     },[]);
@@ -91,8 +87,8 @@ const Header = () => {
     }
 
     const handleLogout = async() => {
-        console.log("check")
-        await logoutUser(dispatch, navigate, accessToken);
+        const result = await logoutUser(dispatch, id, navigate, accessToken);
+        console.log(result)
     }
 
     return (

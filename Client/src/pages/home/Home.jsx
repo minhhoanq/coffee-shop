@@ -17,14 +17,14 @@ import Overview from "../../components/overview/Overview";
 import VideoDesc from "../../components/videodesc/VideoDesc";
 
 const Home = () => {
-    const user = useSelector(state => state.auth.login?.currentUser);
-    const navigate = useNavigate();
+    // const user = useSelector(state => state.auth.login?.currentUser);
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-        if(!user) {
-            navigate('/login');
-        }
-    },[]);
+    // useEffect(() => {
+    //     if(!user) {
+    //         navigate('/login');
+    //     }
+    // },[]);
 
     return (
         <div className="home">

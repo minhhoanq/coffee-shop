@@ -8,7 +8,7 @@ const Car_ver = props => {
     const item = props.item;
     // console.log(item);
     const user = useSelector(state => state.auth.login.currentUser);
-    const accessToken = user.generateAccessToken;
+    const accessToken = user?.generateAccessToken;
 
     const handleDeleteCartItem = async() => {
         const response = await deleteCartItem(accessToken, item.productSizeId);

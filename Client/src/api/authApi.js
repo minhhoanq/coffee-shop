@@ -4,7 +4,9 @@ import request from "../utils/request";
 export const loginUSer = async (user, dispatch, navigate) => {
     dispatch(loginStart());
     try {
-        const res = await request.post("/api/v1/auth/login", user);
+        const res = await request.post("/api/v1/auth/login", user, {
+            withCredentials: true,
+        });
         dispatch(loginSuccess(res.data));
         navigate('/');
     } catch (error) {
@@ -37,14 +39,16 @@ export const registerStaff = async (staff, dispatch, navigate) => {
     }
 };
 
-export const logoutUser = async (dispatch, navigate, accessToken) => {
+export const logoutUser = async (dispatch, id, navigate, accessToken) => {
     dispatch(logoutStart());
     try { 
-        await request.post("/api/v1/auth/logout",{}, {
-            headers: { token: `Bearer ${accessToken}` } 
+        const res = await request.post("/api/v1/auth/logout",{id}, {
+            withCredentials: true,
+            headers: { token: `Bearer ${accessToken}` },
         });
         dispatch(logoutSuccess());
         navigate('/login');
+        return res;
     } catch (error) {
         dispatch(logoutFail());
     }
