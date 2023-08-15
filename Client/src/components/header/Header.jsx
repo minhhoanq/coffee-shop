@@ -147,7 +147,10 @@ const Header = () => {
                                 user ? <>
                                     <i class="ri-user-follow-line"></i>
                                     <span style={{cursor: "pointer"}} onClick={handleLogout}>Logout</span>
-                                </> : <i class="ri-user-smile-line"></i>
+                                </> : 
+                                <a href="/login">
+                                    <i class="ri-user-smile-line"></i>
+                                </a>
                             }
                         </div>
                     </div>

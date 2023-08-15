@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const dbUser = require("../models");
 const { validationResult } = require("express-validator");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
@@ -145,7 +144,7 @@ const authController = {
                 return res.status(400).json('Missing payloads')
             }
 
-            const existEmail = await dbUser.User.findOne({where: {email}});
+            const existEmail = await db.User.findOne({where: {email}});
             if(existEmail) {
                 return res.status(400).json({
                     status: "fail",
@@ -153,7 +152,7 @@ const authController = {
                     msg: "Địa chỉ email này đã được dùng để đăng ký tài khoản khác",
                 });
             }
-            const existUsername = await dbUser.User.findOne({where: {username}});
+            const existUsername = await db.User.findOne({where: {username}});
             if (existUsername) {
                 return res.status(400).json({
                   status: "fail",
@@ -185,12 +184,18 @@ const authController = {
             }
 
             // await dbUser.User.create(newUser);
-            const token = makeToken();
-            res.cookie('dataregister', {...newUser, token}, {httpOnly: true, maxAge: 30 * 1000});
+            const accessToken = makeToken();
 
+            // res.cookie('dataregister',, {httpOnly: true, maxAge: 30 * 1000});
+            res.cookie("dataregister", {...newUser, accessToken}, {
+                expires: new Date(Date.now() + 30 * 1000),
+                httpOnly:true,
+                secure:false,
+                path:"/",
+                sameSite:"strict",
+            })
             const html = `Xin vui lòng click vào link dưới đây để hoàn tất quá trình đăng ký. Link này sẽ hết hạn sau 15p kể từ bây giờ.
-            <a href=${process.env.URL_SERVER}/api/v1/auth/register/${token}>Click here</a>`
-
+            <a href=${process.env.URL_SERVER}/api/v1/auth/finalregister/${accessToken}>Click here</a>`
             const data = {
                 email,
                 html,
@@ -199,7 +204,32 @@ const authController = {
     
             await sendMail(data);
 
-            return res.status(200).json({status: "Register successfully", data: newUser});
+            return res.status(200).json({status: "Register successfully", newUser: newUser});
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
+
+    finalRegister: async(req, res) => {
+        try {
+            const cookie = req.cookies;
+            const { token } = req.params;
+            console.log(cookie);
+            console.log(token);
+            if( !cookie || cookie?.dataregister?.accessToken !== token) {
+                // return res.redirect(`${process.env.URL_CLIENT}/finalregister/0`)
+                return res.json('K co cookie')
+            }
+            const {accessToken, ...newUser} = cookie?.dataregister
+            const response = await db.User.create(newUser);
+
+            if(response) {
+                // return res.redirect(`${process.env.URL_CLIENT}/finalregister/1`)
+                res.status(200).json('success')
+            } else {
+                // return res.redirect(`${process.env.URL_CLIENT}/finalregister/0`)
+                res.status(200).json('error')
+            }
         } catch (error) {
             return res.status(500).json(error);
         }
