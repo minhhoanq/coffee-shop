@@ -6,8 +6,6 @@ import Car_ver from "../cart_ver/Cart_ver";
 import { logoutUser } from "../../api/authApi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import createAxios from "../../createInstance";
-import { logoutSuccess } from "../../redux/slice/authSlice";
 import { getToCartItem } from "../../api/productApi";
 import { deleteAllCartItem } from "../../api/cartItemApi";
 
@@ -120,7 +118,7 @@ const Header = () => {
     
                     <div className="header__wrapper__options">
                         <div className="header__wrapper__options__notify">
-                            <i class="ri-heart-line" onClick={toggleHandleNotifyShow} ></i>
+                            <i class="ri-heart-line" onClick={toggleHandleNotifyShow}></i>
 
                             <div className="header__wrapper__options__notify__wrapper" ref={notifyRef}>
                                 <i class="ri-close-line header__wrapper__options__notify__wrapper__close" onClick={toggleHandleNotifyShow}></i>

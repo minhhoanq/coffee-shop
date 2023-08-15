@@ -11,6 +11,7 @@ import DefaultLayoutAdmin from "../components/layout/defaultlayoutAdmin/DefaultL
 import StaffDetail from "../pages/admin/staffdetail/StaffDetail";
 import StaffTrash from "../pages/admin/stafftrash/StaffTrash";
 import FinalRegister from "../pages/finalregister/FinalRegister";
+import ForgotPassword from "../pages/forgotpassword/ForgotPassword";
 
 //Public routes
 const publicRoutes = [
@@ -19,6 +20,7 @@ const publicRoutes = [
     { path: '/shop/:slug', component: DetailProduct},
     { path: '/cart', component: Cart},
     { path: '/login', component: Login, layout: FooterOnly},
+    { path: '/forgot-password', component: ForgotPassword, layout: FooterOnly},
     { path: '/register', component: Register,layout: FooterOnly},
     { path: '/finalregister/:status', component: FinalRegister,layout: FooterOnly},
     { path: '/admin', component: HomeAdmin, layout: DefaultLayoutAdmin},
