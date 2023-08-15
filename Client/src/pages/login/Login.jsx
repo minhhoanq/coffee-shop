@@ -7,14 +7,15 @@ import Button from '../../components/button/Button';
 import googleImg from '../../assets/images/google.png';
 import { loginUSer } from "../../api/authApi";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const location = useLocation();
+    console.log(location)
     const formik = useFormik({
         initialValues: {
             username: "",

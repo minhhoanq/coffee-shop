@@ -22,6 +22,7 @@
     "redux-persist": "^6.0.0",
     "remixicon": "^3.3.0",
     "sass": "^1.63.4",
+    "sweetalert2": "^11.7.22",
     "swiper": "^6.8.4",
     "web-vitals": "^2.1.4",
     "yup": "^1.2.0"

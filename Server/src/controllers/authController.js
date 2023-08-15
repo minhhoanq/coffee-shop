@@ -188,7 +188,7 @@ const authController = {
 
             // res.cookie('dataregister',, {httpOnly: true, maxAge: 30 * 1000});
             res.cookie("dataregister", {...newUser, accessToken}, {
-                expires: new Date(Date.now() + 30 * 1000),
+                expires: new Date(Date.now() + 15 * 60 * 1000),
                 httpOnly:true,
                 secure:false,
                 path:"/",
@@ -214,21 +214,32 @@ const authController = {
         try {
             const cookie = req.cookies;
             const { token } = req.params;
-            console.log(cookie);
-            console.log(token);
             if( !cookie || cookie?.dataregister?.accessToken !== token) {
-                // return res.redirect(`${process.env.URL_CLIENT}/finalregister/0`)
-                return res.json('K co cookie')
+
+                res.clearCookie("dataregister", {
+                    httpOnly:true,
+                    secure:false,
+                    path:"/",
+                    sameSite:"strict",
+                });
+
+                return res.redirect(`${process.env.URL_CLIENT}/finalregister/failed`)
             }
-            const {accessToken, ...newUser} = cookie?.dataregister
+            const {accessToken, ...newUser} = cookie?.dataregister;
+
             const response = await db.User.create(newUser);
 
+            res.clearCookie("dataregister", {
+                httpOnly:true,
+                secure:false,
+                path:"/",
+                sameSite:"strict",
+            });
+            
             if(response) {
-                // return res.redirect(`${process.env.URL_CLIENT}/finalregister/1`)
-                res.status(200).json('success')
+                return res.redirect(`${process.env.URL_CLIENT}/finalregister/success`)
             } else {
-                // return res.redirect(`${process.env.URL_CLIENT}/finalregister/0`)
-                res.status(200).json('error')
+                return res.redirect(`${process.env.URL_CLIENT}/finalregister/failed`)
             }
         } catch (error) {
             return res.status(500).json(error);
@@ -238,7 +249,7 @@ const authController = {
     //Login
     loginUser: async(req, res) => {
         try {
-            const user = await dbUser.User.findOne({where: {username: req.body.username}});
+            const user = await db.User.findOne({where: {username: req.body.username}});
             if(!user) {
                 return res.status(404).json("Wrong username!");
             }

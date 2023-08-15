@@ -10,6 +10,7 @@ import Staff from "../pages/admin/staff/Staff";
 import DefaultLayoutAdmin from "../components/layout/defaultlayoutAdmin/DefaultLayoutAdmin";
 import StaffDetail from "../pages/admin/staffdetail/StaffDetail";
 import StaffTrash from "../pages/admin/stafftrash/StaffTrash";
+import FinalRegister from "../pages/finalregister/FinalRegister";
 
 //Public routes
 const publicRoutes = [
@@ -19,8 +20,9 @@ const publicRoutes = [
     { path: '/cart', component: Cart},
     { path: '/login', component: Login, layout: FooterOnly},
     { path: '/register', component: Register,layout: FooterOnly},
-    { path: '/admin', component: HomeAdmin,layout: DefaultLayoutAdmin},
-    { path: '/admin/staff', component: Staff,layout: DefaultLayoutAdmin},
+    { path: '/finalregister/:status', component: FinalRegister,layout: FooterOnly},
+    { path: '/admin', component: HomeAdmin, layout: DefaultLayoutAdmin},
+    { path: '/admin/staff', component: Staff, layout: DefaultLayoutAdmin},
     { path: '/admin/staff/:id', component: StaffDetail,layout: DefaultLayoutAdmin},
     { path: '/admin/staff/trash', component: StaffTrash,layout: DefaultLayoutAdmin},
 ];

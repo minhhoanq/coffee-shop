@@ -17,7 +17,9 @@ export const loginUSer = async (user, dispatch, navigate) => {
 export const registerUSer = async (user, dispatch, navigate) => {
     dispatch(registerStart());
     try { 
-        await request.post("/api/v1/auth/register", user);
+        await request.post("/api/v1/auth/register", user, {
+            withCredentials: true,
+        });
         dispatch(registerSuccess());
         navigate('/login');
     } catch (error) {
