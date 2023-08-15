@@ -34,6 +34,7 @@ const Header = () => {
 
     const headerRef = useRef(null);
     const navMobileRef = useRef(null);
+    const notifyRef = useRef(null);
     const overLayMobileRef = useRef(null);  
     const notifyListRef = useRef(null);
 
@@ -44,6 +45,8 @@ const Header = () => {
     
     const accessToken = user?.generateAccessToken;
     const id = user?.others.id;
+
+    console.log(user)
 
     useEffect(() => {
         const shrinkHeader = () => {
@@ -73,6 +76,12 @@ const Header = () => {
     const toggleHandleMenuShow = () => {
         navMobileRef.current.classList.toggle('show');
         overLayMobileRef.current.classList.toggle('ovl');
+        console.log('show')
+    }
+
+    const toggleHandleNotifyShow = () => {
+        notifyRef.current.classList.toggle('show');
+        console.log('show')
     }
 
     const handleCart = () => {
@@ -111,11 +120,98 @@ const Header = () => {
     
                     <div className="header__wrapper__options">
                         <div className="header__wrapper__options__notify">
-                            <i class="ri-heart-line" ></i>
+                            <i class="ri-heart-line" onClick={toggleHandleNotifyShow} ></i>
+
+                            <div className="header__wrapper__options__notify__wrapper" ref={notifyRef}>
+                                <i class="ri-close-line header__wrapper__options__notify__wrapper__close" onClick={toggleHandleNotifyShow}></i>
+
+                                <span>Thông báo của bạn</span>
+                                <ul className="header__wrapper__options__notify__wrapper__list">
+                                    <li >
+                                       <ul>
+                                            This Week
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+                                       </ul>
+                                    </li>
+
+                                    <li>
+                                        <ul>
+                                            This Week
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+                                       </ul>
+                                    </li>
+
+                                    <li>
+                                        <ul>
+                                            This Week
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+
+                                            <li>
+                                                Row
+                                            </li>
+                                       </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div className="header__wrapper__options__cart">
                             <i class="ri-shopping-cart-line" onClick={handleCart}></i>
-                            <div className="header__wrapper__options__cart__dot"></div>
+                            <div className="header__wrapper__options__cart__dot">
+
+                            </div>
     
                             <div className="header__wrapper__options__cart__list" ref={notifyListRef}>
                                 <div className="header__wrapper__options__cart__list__txt">
@@ -144,10 +240,18 @@ const Header = () => {
                         </div>
                         <div className="header__wrapper__options__profile">
                             {
-                                user ? <>
-                                    <i class="ri-user-follow-line"></i>
-                                    <span style={{cursor: "pointer"}} onClick={handleLogout}>Logout</span>
-                                </> : 
+                                user ? <div className="header__wrapper__options__profile__wrapper" onClick={handleLogout}>
+                                    {
+                                        user?.others?.image ? 
+                                        <>
+                                            <img 
+                                                className="header__wrapper__options__profile__wrapper__avatar" 
+                                                src={user.others.image} 
+                                                alt="avatar" />
+                                        </> :
+                                        <> <i class="ri-user-follow-line"> </i> </>
+                                    }
+                                </div> : 
                                 <a href="/login">
                                     <i class="ri-user-smile-line"></i>
                                 </a>

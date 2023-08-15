@@ -74,21 +74,56 @@
 
         &__options {
             @include flex (center, space-between);
-            font-size: 1.6rem;
+            font-size: 2rem;
 
             & > * ~ * {
                 margin-left: 40px;
             }
 
             &__notify {
+                i {
+                    cursor: pointer;
+                }
+                
+                &__wrapper {
+                    position: fixed;
+                    top: 0;
+                    right: 0;
+                    width: 30%;
+                    height: 100%;
+                    z-index: 100;
+                    background-color: bisque;
+                    font-size: 1.1rem;
+                    transform: translateX(100%);
+                    transition: all 0.35s cubic-bezier(0.46, 0.01 , 0.32, 1);
+                    padding: 30px 10px 0 10px;
+
+                    // @include flex (center, space-between);
+                    &__close {
+                        position: absolute;
+                        top: 5px;
+                        right: 10px;
+                        font-size: 1.6rem;
+                        cursor: pointer;
+                    }
+
+                    &__list {
+                        height: 100%;
+                        width: 100%;
+                        @include flex(flex-start, flex-start);
+                        flex-direction: column;
+                    }
+
+                    &.show {
+                        transform: translateX(0%);
+                    }
+                }
             }
 
             &__cart {
                 position: relative;
 
-                i{
-                    font-size: 2rem;
-                }
+               
 
                 &__dot {
                     position: absolute;
@@ -183,9 +218,15 @@
             }
 
             &__profile {
-
-                i {
-                    
+                
+                &__wrapper {
+                    @include flex (center, center);
+                    &__avatar {
+                        width: 30px;
+                        height: 100%;
+                        border-radius: 50px;
+                        object-fit: contain;
+                    }
                 }
             }
         }
