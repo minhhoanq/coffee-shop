@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
 import './reset-password.scss';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Button from '../../components/button/Button';
 
 import googleImg from '../../assets/images/google.png';
@@ -10,8 +10,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { resetPasswordUser } from "../../api/authApi";
 
 const ResetPassword = () => {
+
+    const { token } = useParams();
 
     const formik = useFormik({
         initialValues: {
@@ -22,8 +25,9 @@ const ResetPassword = () => {
             password: Yup.string().required("Vui lòng nhập mật khẩu mới."),
             confirmpassword: Yup.string().required("Vui lòng nhập lại mật khẩu mới.").oneOf([Yup.ref("password"),null], "Mật khẩu nhập lại không khớp."),
         }),
-        onSubmit: (values) => {
-            console.log("check");
+        onSubmit: async(values) => {
+            const resetpw = await resetPasswordUser(token, values.password);
+            console.log(resetpw);
         }
     })
 
@@ -37,10 +41,10 @@ const ResetPassword = () => {
                 <i class="ri-rotate-lock-fill"></i>
                 </div>
 
-                <span className="forgot-password__container__wrapper__ques">Sự cố khi đăng nhập ?</span>
+                <span className="forgot-password__container__wrapper__ques">Lâu lâu quên tí thôi mà :3</span>
 
                 <p className="forgot-password__container__wrapper__text">
-                    Nhập email, điện thoại hoặc tên người dùng của bạn và chúng tôi sẽ gửi cho bạn một liên kết để quay lại tài khoản của bạn.
+                    Hãy nhập mật khẩu mà bạn muốn thay đổi, ghi nhớ hoặc ghi chú vào nơi bí mật nhé.
                 </p>
 
                 <form action="" className="forgot-password__container__wrapper__form" onSubmit={formik.handleSubmit}>
