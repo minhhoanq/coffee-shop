@@ -22,11 +22,12 @@ const ResetPassword = () => {
             confirmpassword: "",
         },
         validationSchema: Yup.object({
-            password: Yup.string().required("Vui lòng nhập mật khẩu mới."),
-            confirmpassword: Yup.string().required("Vui lòng nhập lại mật khẩu mới.").oneOf([Yup.ref("password"),null], "Mật khẩu nhập lại không khớp."),
+            password: Yup.string().required("Vui lòng nhập mật khẩu.").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,"Mật khẩu tối thiểu tám ký tự, bao gồm ít nhất một chữ cái, một số và một ký tự đặc biệt."),
+            confirmpassword: Yup.string().required("Vui lòng nhập lại mật khẩu.").oneOf([Yup.ref("password"),null], "Mật khẩu nhập lại không khớp."),
         }),
         onSubmit: async(values) => {
             const resetpw = await resetPasswordUser(token, values.password);
+            //loading...
             console.log(resetpw);
         }
     })
@@ -41,7 +42,7 @@ const ResetPassword = () => {
                 <i class="ri-rotate-lock-fill"></i>
                 </div>
 
-                <span className="forgot-password__container__wrapper__ques">Lâu lâu quên tí thôi mà :3</span>
+                <span className="forgot-password__container__wrapper__ques">Đổi mới gì đó vẫn tốt mà.</span>
 
                 <p className="forgot-password__container__wrapper__text">
                     Hãy nhập mật khẩu mà bạn muốn thay đổi, ghi nhớ hoặc ghi chú vào nơi bí mật nhé.
