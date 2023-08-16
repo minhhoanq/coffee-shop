@@ -168,6 +168,6 @@ router.post("/logout", isAuth.verifyToken, authController.logOutUser);
 
 router.get("/forgotpassword", authController.forgotPassword);
 
-router.post("/reset-password", authController.resetPassword);
+router.post("/reset-password/:token", authController.resetPassword);
 
 module.exports = router;

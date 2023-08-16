@@ -171,7 +171,7 @@ const Register = () => {
                         Đăng ký bằng tài khoản Google
                     </button>
 
-                    <Link className="register__container__wrapper__forgot-pw">Quên mật khẩu?</Link>
+                    <Link to={'/forgot-password'} className="register__container__wrapper__forgot-pw">Quên mật khẩu?</Link>
                 </div>
 
                 <div className="register__container__signin">

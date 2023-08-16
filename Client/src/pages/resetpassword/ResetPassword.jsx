@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import './forgot-password.scss';
+import './reset-password.scss';
 import { Link } from 'react-router-dom';
 import Button from '../../components/button/Button';
 
@@ -8,8 +8,25 @@ import googleImg from '../../assets/images/google.png';
 // import { forgot-passwordUSer } from "../../api/authApi";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
+
+    const formik = useFormik({
+        initialValues: {
+            password: "",
+            confirmpassword: "",
+        },
+        validationSchema: Yup.object({
+            password: Yup.string().required("Vui lòng nhập mật khẩu mới."),
+            confirmpassword: Yup.string().required("Vui lòng nhập lại mật khẩu mới.").oneOf([Yup.ref("password"),null], "Mật khẩu nhập lại không khớp."),
+        }),
+        onSubmit: (values) => {
+            console.log("check");
+        }
+    })
+
     return (
 
         <div className="forgot-password">
@@ -17,7 +34,7 @@ const ForgotPassword = () => {
         <div className="forgot-password__container">
             <div className="forgot-password__container__wrapper">
                 <div className="forgot-password__container__wrapper__logo">
-                    <i class="ri-rotate-lock-line"></i>
+                <i class="ri-rotate-lock-fill"></i>
                 </div>
 
                 <span className="forgot-password__container__wrapper__ques">Sự cố khi đăng nhập ?</span>
@@ -26,20 +43,33 @@ const ForgotPassword = () => {
                     Nhập email, điện thoại hoặc tên người dùng của bạn và chúng tôi sẽ gửi cho bạn một liên kết để quay lại tài khoản của bạn.
                 </p>
 
-                {/* onSubmit={formik.handleSubmit} */}
-                <form action="" className="forgot-password__container__wrapper__form" >
+                <form action="" className="forgot-password__container__wrapper__form" onSubmit={formik.handleSubmit}>
                     <input
-                        type="text"
-                        id="username"
-                        name="username"
+                        type="password"
+                        id="password"
+                        name="password"
                         className="forgot-password__container__wrapper__form__username" 
-                        placeholder="Số điện thoại, tên đăng nhập hoặc email" 
-                        // onChange={formik.handleChange}
-                        // value={formik.values.username}
+                        placeholder="Nhập mật khẩu mới" 
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
                         />
-                    {/* {formik.errors.username && (
-                        <p className="forgot-password__container__wrapper__form__error"> {formik.errors.username} </p>
-                    )} */}
+                    {formik.errors.password && (
+                        <p className="forgot-password__container__wrapper__form__error"> {formik.errors.password} </p>
+                    )}
+
+
+                    <input
+                        type="password"
+                        id="confirmpassword"
+                        name="confirmpassword"
+                        className="forgot-password__container__wrapper__form__username" 
+                        placeholder="Xác nhận mật khẩu" 
+                        onChange={formik.handleChange}
+                        value={formik.values.confirmpassword}
+                        />
+                    {formik.errors.confirmpassword && (
+                        <p className="forgot-password__container__wrapper__form__error"> {formik.errors.confirmpassword} </p>
+                    )}
 
                     <Button type={"submit"} className="forgot-password__container__wrapper__form__btn-forgot-password" >Xác nhận</Button>
                 </form>
@@ -73,4 +103,4 @@ const ForgotPassword = () => {
     )
 }
 
-export default ForgotPassword;
+export default ResetPassword;

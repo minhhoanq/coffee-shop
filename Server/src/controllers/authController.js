@@ -347,7 +347,7 @@ const authController = {
     },
 
     forgotPassword: async(req, res) => {
-        const { email } = req.query;
+        const { email } = req.body;
         if(!email) throw new Error('Chưa có Mail!');
         const user = await db.User.findOne({where: { email }});
         if(!user) throw new Error('Mail này chưa được đăng ký!');
@@ -356,7 +356,7 @@ const authController = {
         await user.save();
 
         const html = `Vui lòng click vào link dưới đây để thay đổi mật khẩu. Link này sẽ hết hạn sau 10 phút kể từ bây giờ. 
-        <a href=${process.env.URL_SERVER}/api/v1/auth/reset-password/${resetToken}>Nhấn vào đây</a>`
+        <a href=${process.env.URL_CLIENT}/api/v1/auth/reset-password/${resetToken}>Nhấn vào đây</a>`
 
         const data = {
             email,

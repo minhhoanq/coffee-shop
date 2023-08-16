@@ -15,7 +15,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location)
+    
     const formik = useFormik({
         initialValues: {
             username: "",
@@ -89,7 +89,7 @@ const Login = () => {
                         Đăng nhập bằng tài khoản Google
                     </button>
 
-                    <Link className="login__container__wrapper__forgot-pw">Quên mật khẩu?</Link>
+                    <Link to={'/forgot-password'} className="login__container__wrapper__forgot-pw">Quên mật khẩu?</Link>
                 </div>
 
                 <div className="login__container__signup">

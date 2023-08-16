@@ -55,3 +55,25 @@ export const logoutUser = async (dispatch, id, navigate, accessToken) => {
         dispatch(logoutFail());
     }
 };
+
+//Forgot Password
+export const forgotPasswordUser = async (data) => {
+    try {
+        const response = await request.post('/api/v1/auth/forgot-password', {data});
+
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+
+//Reset Password
+export const resetPasswordUser = async (token, data) => {
+    try {
+        const response = await request.post(`/api/v1/auth/reset-password/${token}`, {data});
+
+        return response;
+    } catch (error) {
+        return error;
+    }
+}

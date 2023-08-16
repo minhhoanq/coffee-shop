@@ -12,6 +12,7 @@ import StaffDetail from "../pages/admin/staffdetail/StaffDetail";
 import StaffTrash from "../pages/admin/stafftrash/StaffTrash";
 import FinalRegister from "../pages/finalregister/FinalRegister";
 import ForgotPassword from "../pages/forgotpassword/ForgotPassword";
+import ResetPassword from "../pages/resetpassword/ResetPassword";
 
 //Public routes
 const publicRoutes = [
@@ -23,6 +24,7 @@ const publicRoutes = [
     { path: '/forgot-password', component: ForgotPassword, layout: FooterOnly},
     { path: '/register', component: Register,layout: FooterOnly},
     { path: '/finalregister/:status', component: FinalRegister,layout: FooterOnly},
+    { path: '/reset-password/:token', component: ResetPassword,layout: FooterOnly},
     { path: '/admin', component: HomeAdmin, layout: DefaultLayoutAdmin},
     { path: '/admin/staff', component: Staff, layout: DefaultLayoutAdmin},
     { path: '/admin/staff/:id', component: StaffDetail,layout: DefaultLayoutAdmin},
