@@ -8,8 +8,25 @@ import googleImg from '../../assets/images/google.png';
 // import { forgot-passwordUSer } from "../../api/authApi";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { forgotPasswordUser } from "../../api/authApi";
 
 const ForgotPassword = () => {
+
+    const formik = useFormik({
+        initialValues: {
+            email: "",
+        },
+        validationSchema: Yup.object({
+            email: Yup.string().required("Vui lòng nhập email."),
+        }),
+        onSubmit: async(values) => {
+            const forgotpw = await forgotPasswordUser(values.email);
+            console.log(forgotpw);
+        }
+    })
+
     return (
 
         <div className="forgot-password">
@@ -26,20 +43,19 @@ const ForgotPassword = () => {
                     Nhập email, điện thoại hoặc tên người dùng của bạn và chúng tôi sẽ gửi cho bạn một liên kết để quay lại tài khoản của bạn.
                 </p>
 
-                {/* onSubmit={formik.handleSubmit} */}
-                <form action="" className="forgot-password__container__wrapper__form" >
+                <form action="" className="forgot-password__container__wrapper__form" onSubmit={formik.handleSubmit}>
                     <input
-                        type="text"
-                        id="username"
-                        name="username"
+                        type="email"
+                        id="email"
+                        name="email"
                         className="forgot-password__container__wrapper__form__username" 
                         placeholder="Số điện thoại, tên đăng nhập hoặc email" 
-                        // onChange={formik.handleChange}
-                        // value={formik.values.username}
+                        onChange={formik.handleChange}
+                        value={formik.values.email}
                         />
-                    {/* {formik.errors.username && (
-                        <p className="forgot-password__container__wrapper__form__error"> {formik.errors.username} </p>
-                    )} */}
+                    {formik.errors.email && (
+                        <p className="forgot-password__container__wrapper__form__error"> {formik.errors.email} </p>
+                    )}
 
                     <Button type={"submit"} className="forgot-password__container__wrapper__form__btn-forgot-password" >Xác nhận</Button>
                 </form>

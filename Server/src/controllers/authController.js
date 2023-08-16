@@ -347,29 +347,36 @@ const authController = {
     },
 
     forgotPassword: async(req, res) => {
-        const { email } = req.body;
-        if(!email) throw new Error('Chưa có Mail!');
-        const user = await db.User.findOne({where: { email }});
-        if(!user) throw new Error('Mail này chưa được đăng ký!');
-        const resetToken = user.createPasswordChangedToken();
-        console.log("resetToken : " + resetToken);
-        await user.save();
+        try {
+            const { email } = req.body;
+            // console.log("email: ", req.body);
+            if(!email) return res.json('Chưa có Mail!');
+            const user = await db.User.findOne({where: { email }});
+            console.log(user);
+            if(!user) return res.json('Mail này chưa được đăng ký!');
+            const resetToken = user.createPasswordChangedToken();
+            console.log("resetToken : " + resetToken);
+            await user.save();
 
-        const html = `Vui lòng click vào link dưới đây để thay đổi mật khẩu. Link này sẽ hết hạn sau 10 phút kể từ bây giờ. 
-        <a href=${process.env.URL_CLIENT}/api/v1/auth/reset-password/${resetToken}>Nhấn vào đây</a>`
+            const html = `Vui lòng click vào link dưới đây để thay đổi mật khẩu. Link này sẽ hết hạn sau 10 phút kể từ bây giờ. 
+            <a href=${process.env.URL_CLIENT}/reset-password/${resetToken}>Nhấn vào đây</a>`
 
-        const data = {
-            email,
-            html,
-            subject: 'Forgot password!'
+            const data = {
+                email,
+                html,
+                subject: 'Forgot password!'
+            }
+
+            const rs = await sendMail(data);
+
+            return res.status(200).json({
+                success: true,
+                rs,
+                mes: 'Hãy kiểm tra email của bạn.',
+            })
+        } catch (error) {
+            return res.status(500).json(error);
         }
-
-        const rs = await sendMail(data);
-
-        return res.status(200).json({
-            success: true,
-            rs: rs,
-        })
     },
 
     resetPassword: async(req, res) => {

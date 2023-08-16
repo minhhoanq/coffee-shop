@@ -166,7 +166,7 @@ router.post("/refresh", authController.requestRefreshToken);
 //Logout
 router.post("/logout", isAuth.verifyToken, authController.logOutUser);
 
-router.get("/forgotpassword", authController.forgotPassword);
+router.post("/forgot-password", authController.forgotPassword);
 
 router.post("/reset-password/:token", authController.resetPassword);
 

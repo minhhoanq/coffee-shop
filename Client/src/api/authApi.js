@@ -57,9 +57,10 @@ export const logoutUser = async (dispatch, id, navigate, accessToken) => {
 };
 
 //Forgot Password
-export const forgotPasswordUser = async (data) => {
+export const forgotPasswordUser = async (email) => {
     try {
-        const response = await request.post('/api/v1/auth/forgot-password', {data});
+        console.log(email);
+        const response = await request.post('/api/v1/auth/forgot-password', {email});
 
         return response;
     } catch (error) {
@@ -68,9 +69,9 @@ export const forgotPasswordUser = async (data) => {
 }
 
 //Reset Password
-export const resetPasswordUser = async (token, data) => {
+export const resetPasswordUser = async (token, password) => {
     try {
-        const response = await request.post(`/api/v1/auth/reset-password/${token}`, {data});
+        const response = await request.post(`/api/v1/auth/reset-password`, {token, password});
 
         return response;
     } catch (error) {
