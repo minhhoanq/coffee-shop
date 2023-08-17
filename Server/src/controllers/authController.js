@@ -185,24 +185,50 @@ const authController = {
 
             // await dbUser.User.create(newUser);
             const accessToken = makeToken();
+            const emailEdited = btoa(email) + '@' + accessToken;
+
+            const tempUser = await db.User.create({
+                email: emailEdited,
+                username, 
+                password: hashed,
+                firstname,
+                lastname,
+                image,
+                sex,
+                roles,
+                phone,
+                birth,
+                address,
+            })
 
             // res.cookie('dataregister',, {httpOnly: true, maxAge: 30 * 1000});
-            res.cookie("dataregister", {...newUser, accessToken}, {
-                expires: new Date(Date.now() + 15 * 60 * 1000),
-                httpOnly:true,
-                secure:false,
-                path:"/",
-                sameSite:"strict",
-            })
-            const html = `Xin vui lòng click vào link dưới đây để hoàn tất quá trình đăng ký. Link này sẽ hết hạn sau 15p kể từ bây giờ.
-            <a href=${process.env.URL_SERVER}/api/v1/auth/finalregister/${accessToken}>Click here</a>`
-            const data = {
-                email,
-                html,
-                subject: 'Register with email!'
+            // res.cookie("dataregister", {...newUser, accessToken}, {
+            //     expires: new Date(Date.now() + 15 * 60 * 1000),
+            //     httpOnly:true,
+            //     secure:false,
+            //     path:"/",
+            //     sameSite:"strict",
+            // })
+
+            if(tempUser) {
+                const html = `<h2>Code Đăng ký tài khoản:</h2> <br/><blockquote>${accessToken}</blockquote>`
+                const data = {
+                    email,
+                    html,
+                    subject: 'Register with email!'
+                }
+        
+                await sendMail(data);
             }
-    
-            await sendMail(data);
+
+            setTimeout(async()=>{
+                await db.User.destroy({
+                        where: {
+                            email: emailEdited
+                        }
+                    }
+                );
+            },[20 * 1000])            
 
             return res.status(200).json({status: "Register successfully", newUser: newUser});
         } catch (error) {
@@ -212,35 +238,53 @@ const authController = {
 
     finalRegister: async(req, res) => {
         try {
-            const cookie = req.cookies;
-            const { token } = req.params;
-            if( !cookie || cookie?.dataregister?.accessToken !== token) {
-
-                res.clearCookie("dataregister", {
-                    httpOnly:true,
-                    secure:false,
-                    path:"/",
-                    sameSite:"strict",
-                });
-
-                return res.redirect(`${process.env.URL_CLIENT}/finalregister/failed`)
-            }
-            const {accessToken, ...newUser} = cookie?.dataregister;
-
-            const response = await db.User.create(newUser);
-
-            res.clearCookie("dataregister", {
-                httpOnly:true,
-                secure:false,
-                path:"/",
-                sameSite:"strict",
+            // const cookie = req.cookies;
+            const { token } = req.body;
+            console.log(token);
+            const existEmail = db.User.findOne({
+                where: { 
+                    // "dHJhbm1pbmhsb25nMDE5MkBnbWFpbC5jb20=@5mz4udu8lleznkxe"
+                    email: 
+                    {
+                        [Op.like]: `%dHJhbm1pbmhsb25nMDE5MkBnbWFpbC5jb20=@5mz4udu8lleznkxe%`,
+                    }
+                }
             });
-            
-            if(response) {
-                return res.redirect(`${process.env.URL_CLIENT}/finalregister/success`)
+            console.log("cehck findone")
+
+            if(!existEmail) {
+                console.log('check');
             } else {
-                return res.redirect(`${process.env.URL_CLIENT}/finalregister/failed`)
+                console.log('check');
             }
+            // if( !cookie || cookie?.dataregister?.accessToken !== token) {
+
+            //     res.clearCookie("dataregister", {
+            //         httpOnly:true,
+            //         secure:false,
+            //         path:"/",
+            //         sameSite:"strict",
+            //     });
+
+            //     return res.redirect(`${process.env.URL_CLIENT}/finalregister/failed`)
+            // }
+            // const {accessToken, ...newUser} = cookie?.dataregister;
+
+            // const response = await db.User.create(newUser);
+
+            // res.clearCookie("dataregister", {
+            //     httpOnly:true,
+            //     secure:false,
+            //     path:"/",
+            //     sameSite:"strict",
+            // });
+            
+            // if(response) {
+            //     return res.redirect(`${process.env.URL_CLIENT}/finalregister/success`)
+            // } else {
+            //     return res.redirect(`${process.env.URL_CLIENT}/finalregister/failed`)
+            // }
+            return res.status(200).json('')
         } catch (error) {
             return res.status(500).json(error);
         }

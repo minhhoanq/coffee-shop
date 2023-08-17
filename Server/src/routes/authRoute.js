@@ -82,7 +82,7 @@ router.post(
     ],
     authController.registerUser);
 
-router.get(
+router.put(
     "/finalregister/:token", 
     [
         check('firstname')
