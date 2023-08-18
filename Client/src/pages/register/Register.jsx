@@ -13,6 +13,7 @@ import * as Yup from "yup";
 
 const Register = () => {
     const [token, setToken] = useState('');
+    const [mesToken, setMesToken] = useState('');
 
     const dispatch = useDispatch();
     const modalCode = useRef(null);
@@ -44,14 +45,24 @@ const Register = () => {
         }
     });
 
+    const handleChangeToken = (e) => {
+        const inputToken = (e.target.value).trim();
+        setToken(inputToken)
+        setMesToken('');
+    }
+
     const handleSubmitCode = async(e) => {
         e.preventDefault();
-
+        if(token === '') {
+            setMesToken('Không bỏ trống.')
+            return;
+        }
         const submitCode = await finalRegister(token);
 
         console.log(submitCode);
         modalCode.current.classList.remove('show');
         overlay.current.classList.remove('ovl');
+        setToken('')
     }
 
     return (
@@ -64,13 +75,16 @@ const Register = () => {
                     <span>Còn lại ( 12:00 )</span>
                 </div>
                 <div className="register__modal__input">
-                    <input 
-                        className="register__modal__input__content" 
-                        type="text" 
-                        placeholder="Code"
-                        value={token}
-                        onChange={(e) => setToken(e.target.value)}
-                        />
+                    <div className="register__modal__input__wrapper">
+                        <input 
+                            className="register__modal__input__wrapper__content" 
+                            type="text" 
+                            placeholder="Code"
+                            value={token}
+                            onChange={handleChangeToken}
+                            />
+                        <span>{mesToken}</span>
+                    </div>
                     <button 
                         className="register__modal__input__btn"
                         onClick={handleSubmitCode}
