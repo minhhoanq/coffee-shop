@@ -41,7 +41,19 @@ export const registerStaff = async (staff, dispatch, navigate) => {
     }
 };
 
-export const logoutUser = async (dispatch, id, navigate, accessToken) => {
+export const finalRegister = async(token) => {
+    try {
+        const response = await request.put(`api/v1/auth/final-register`, {
+            token: token,
+        });
+
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+
+export const logoutUser = async (dispatch, id, accessToken) => {
     dispatch(logoutStart());
     try { 
         const res = await request.post("/api/v1/auth/logout",{id}, {
@@ -49,7 +61,6 @@ export const logoutUser = async (dispatch, id, navigate, accessToken) => {
             headers: { token: `Bearer ${accessToken}` },
         });
         dispatch(logoutSuccess());
-        navigate('/login');
         return res;
     } catch (error) {
         dispatch(logoutFail());

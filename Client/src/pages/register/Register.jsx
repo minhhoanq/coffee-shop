@@ -1,20 +1,22 @@
-import React from "react"
+import React, { useRef, useState } from "react"
 
 import './register.scss';
 import { Link } from 'react-router-dom';
 import Button from '../../components/button/Button';
 
 import googleImg from '../../assets/images/google.png';
-import { registerUSer } from "../../api/authApi";
+import { finalRegister, registerUSer } from "../../api/authApi";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 
 const Register = () => {
+    const [token, setToken] = useState('');
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const modalCode = useRef(null);
+    const overlay = useRef(null);
 
     const formik = useFormik({
         initialValues: {
@@ -34,22 +36,45 @@ const Register = () => {
             phone: Yup.string().required("Vui lòng nhập số điện thoại.").matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, "Số điện thoại phải là số và tối thiểu 10 kí tự."),
             password: Yup.string().required("Vui lòng nhập mật khẩu.").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,"Mật khẩu tối thiểu tám ký tự, bao gồm ít nhất một chữ cái, một số và một ký tự đặc biệt."),
             confirmPassword: Yup.string().required("Vui lòng nhập lại mật khẩu.").oneOf([Yup.ref("password"),null], "Mật khẩu nhập lại không khớp."),
-        })
-        ,
+        }),
         onSubmit: (values) => {
-            registerUSer(values, dispatch, navigate);
+            registerUSer(values, dispatch);
+            modalCode.current.classList.add('show');
+            overlay.current.classList.add('ovl');
         }
     });
 
+    const handleSubmitCode = async(e) => {
+        e.preventDefault();
+
+        const submitCode = await finalRegister(token);
+
+        console.log(submitCode);
+        modalCode.current.classList.remove('show');
+        overlay.current.classList.remove('ovl');
+    }
+
     return (
         <div className="register">
-            <div className="register__modal">
+            <div className="register__overlay" ref={overlay}></div>
+            <div className="register__modal" ref={modalCode}>
                 <div className="register__modal__txt">
-                    Đây là bước cuối cùng, hãy nhập code đăng ký để tạo tài khoản của bạn.
+                    Đây là bước cuối cùng, hãy kiểm tra mail của bạn và nhập code để tạo tài khoản.
+                    <br/>
+                    <span>Còn lại ( 12:00 )</span>
                 </div>
                 <div className="register__modal__input">
-                    <input className="register__modal__input__content" type="text" placeholder="Code"/>
-                    <button className="register__modal__input__btn">Xác nhận</button>
+                    <input 
+                        className="register__modal__input__content" 
+                        type="text" 
+                        placeholder="Code"
+                        value={token}
+                        onChange={(e) => setToken(e.target.value)}
+                        />
+                    <button 
+                        className="register__modal__input__btn"
+                        onClick={handleSubmitCode}
+                        >Xác nhận</button>
                 </div>
             </div>
             <img className="register__img" src="https://file.hstatic.net/200000351187/file/blog_-_6_cong_thuc_bacxiu_6bdee6c825024cbab10fa0bdab903e8e_1024x1024.png"/>

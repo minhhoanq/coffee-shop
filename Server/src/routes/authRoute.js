@@ -83,7 +83,7 @@ router.post(
     authController.registerUser);
 
 router.put(
-    "/finalregister/:token", 
+    "/final-register", 
     [
         check('firstname')
             .notEmpty()
