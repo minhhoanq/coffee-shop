@@ -6,6 +6,7 @@ const db = require("../models");
 const crypto = require('crypto');
 const sendMail = require("../utils/sendMail");
 const makeToken = require("uniqid");
+const { Op } = require("sequelize");
 dotenv.config();
 
 const authController = {
@@ -225,10 +226,11 @@ const authController = {
                 await db.User.destroy({
                         where: {
                             email: emailEdited
-                        }
+                        },
+                        force: true
                     }
                 );
-            },[20 * 1000])            
+            },[15 * 60 * 1000])            
 
             return res.status(200).json({status: "Register successfully", newUser: newUser});
         } catch (error) {
@@ -241,21 +243,19 @@ const authController = {
             // const cookie = req.cookies;
             const { token } = req.body;
             console.log(token);
-            const existEmail = db.User.findOne({
+            const existEmail = await db.User.findOne({
                 where: { 
-                    // "dHJhbm1pbmhsb25nMDE5MkBnbWFpbC5jb20=@5mz4udu8lleznkxe"
                     email: 
                     {
-                        [Op.like]: `%dHJhbm1pbmhsb25nMDE5MkBnbWFpbC5jb20=@5mz4udu8lleznkxe%`,
-                    }
+                        [Op.endsWith]: `${token}`,
+                    }   
                 }
             });
-            console.log("cehck findone")
+            console.log(existEmail)
 
-            if(!existEmail) {
-                console.log('check');
-            } else {
-                console.log('check');
+            if(existEmail) {
+                existEmail.email = atob(existEmail.email.split('@')[0]);
+                existEmail.save();
             }
             // if( !cookie || cookie?.dataregister?.accessToken !== token) {
 
@@ -284,7 +284,10 @@ const authController = {
             // } else {
             //     return res.redirect(`${process.env.URL_CLIENT}/finalregister/failed`)
             // }
-            return res.status(200).json('')
+            return res.status(200).json({
+                mes: existEmail ? 'Đăng ký thành công!' : 'Xảy ra lỗi, hoặc đã quá thời gian cho phép!',
+                response: existEmail
+            })
         } catch (error) {
             return res.status(500).json(error);
         }
