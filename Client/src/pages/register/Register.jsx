@@ -43,6 +43,15 @@ const Register = () => {
 
     return (
         <div className="register">
+            <div className="register__modal">
+                <div className="register__modal__txt">
+                    Đây là bước cuối cùng, hãy nhập code đăng ký để tạo tài khoản của bạn.
+                </div>
+                <div className="register__modal__input">
+                    <input className="register__modal__input__content" type="text" placeholder="Code"/>
+                    <button className="register__modal__input__btn">Xác nhận</button>
+                </div>
+            </div>
             <img className="register__img" src="https://file.hstatic.net/200000351187/file/blog_-_6_cong_thuc_bacxiu_6bdee6c825024cbab10fa0bdab903e8e_1024x1024.png"/>
             <div className="register__container">
                 <div className="register__container__wrapper">

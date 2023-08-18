@@ -6,6 +6,46 @@
     margin: 20px 0;
     @include flex(center, center);
 
+    &__modal {
+        background-color: #ffdd8f;
+        z-index: 10;
+        width: 40%;
+        height: 20%;
+        position: fixed;
+        @include flex(center, space-evenly);
+        flex-direction: column;
+        padding: 10px 20px;
+
+        &__txt {
+            font-size: 1.2rem;
+        }
+
+        &__input {
+            width: 100%;
+            @include flex(center, space-between);
+
+            &__content {
+                height: 30px;
+                // flex: 2;
+                width: 70%;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                padding: 10px;
+            }
+
+            &__btn {
+                // flex: 1;
+                background-color: #999;
+                height: 30px;
+                width: 25%;
+                border-radius: 5px;
+                @include flex(center, center);
+                padding: 10px;
+                cursor: pointer;
+            }
+        }
+    }
+
     &__img {
         height: 400px;
         width: 600px;
