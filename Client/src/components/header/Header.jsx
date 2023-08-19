@@ -94,7 +94,7 @@ const Header = () => {
     }
 
     const handleLogout = async() => {
-        const result = await logoutUser(dispatch, id, navigate, accessToken);
+        const result = await logoutUser(dispatch, id, accessToken);
         console.log(result)
     }
 

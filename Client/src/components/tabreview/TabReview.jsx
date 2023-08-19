@@ -45,7 +45,7 @@ export const TabReviews = props => {
     const reviews = props.reviews;
     const product = props.product;
     const user = useSelector(state => state.auth.login?.currentUser);
-    const accessToken = user.generateAccessToken;
+    const accessToken = user?.generateAccessToken;
 
     const handleSubmitRating = async(e) => {
 
@@ -78,46 +78,47 @@ export const TabReviews = props => {
                 </div>
             )) : <div>Không có đánh giá nào!</div>}
 
+            {user && 
             <div className="tab-reviews__write">
-                <span className="tab-reviews__write__title">
-                    Leave your experience
-                </span>
+            <span className="tab-reviews__write__title">
+                Leave your experience
+            </span>
 
-                <div className="tab-reviews__write__rating">
-                    {
-                        [...Array(5)].map((item, index) => {
-                            const currentRating = index + 1;
-                            return (
-                                <label>
-                                    <input
-                                        key={index}
-                                        type="radio"
-                                        name="rating"
-                                        value={currentRating}
-                                        onClick={() => setStar(currentRating)}
-                                    />
-                                        <i
-                                            class="ri-star-fill star"
-                                            style={{color: `${currentRating <= (hover || star) ? "#ffc107" : "#999999"}`}}
-                                            onMouseEnter={() => setHover(currentRating)}
-                                            onMouseLeave={() => setHover(null)}
-                                        ></i>
-                                </label>
-                            )
-                        })
-                    }
-                </div>
-
-                <div className="tab-reviews__write__wrapper">
-                    <textarea 
-                        className="tab-reviews__write__wrapper__content" 
-                        onChange={(e) => setComment(e.target.value)} 
-                        placeholder="Hãy cho chúng tôi biết về suy nghĩ của bạn ?"
-                    ></textarea>
-                </div>
-
-                <Button type={'button'} onClick={handleSubmitRating}>Submit</Button>
+            <div className="tab-reviews__write__rating">
+                {
+                    [...Array(5)].map((item, index) => {
+                        const currentRating = index + 1;
+                        return (
+                            <label>
+                                <input
+                                    key={index}
+                                    type="radio"
+                                    name="rating"
+                                    value={currentRating}
+                                    onClick={() => setStar(currentRating)}
+                                />
+                                    <i
+                                        class="ri-star-fill star"
+                                        style={{color: `${currentRating <= (hover || star) ? "#ffc107" : "#999999"}`}}
+                                        onMouseEnter={() => setHover(currentRating)}
+                                        onMouseLeave={() => setHover(null)}
+                                    ></i>
+                            </label>
+                        )
+                    })
+                }
             </div>
+
+            <div className="tab-reviews__write__wrapper">
+                <textarea 
+                    className="tab-reviews__write__wrapper__content" 
+                    onChange={(e) => setComment(e.target.value)} 
+                    placeholder="Hãy cho chúng tôi biết về suy nghĩ của bạn ?"
+                ></textarea>
+            </div>
+
+            <Button type={'button'} onClick={handleSubmitRating}>Submit</Button>
+        </div>}
         </div>
     )
 }
