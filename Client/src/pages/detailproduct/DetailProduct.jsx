@@ -22,7 +22,7 @@ const DetailProduct = () => {
 
     const { slug } = useParams();
     const user = useSelector(state => state.auth.login?.currentUser);
-    const accessToken = user?.generateAccessToken;
+    const accessToken = user?.token;
     // const userId = user?.others.id;
 
     const dispatch = useDispatch();

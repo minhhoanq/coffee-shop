@@ -41,8 +41,8 @@ const Header = () => {
     const user = useSelector(state => state.auth.login?.currentUser);
     // let axiosJWT = createAxios(user, dispatch, logoutSuccess);
     
-    const accessToken = user?.generateAccessToken;
-    const id = user?.others.id;
+    const accessToken = user?.token;
+    const id = user?.dataUser.id;
 
     console.log(user)
 
@@ -95,6 +95,7 @@ const Header = () => {
 
     const handleLogout = async() => {
         const result = await logoutUser(dispatch, id, accessToken);
+        navigate('/login')
         console.log(result)
     }
 

@@ -325,7 +325,13 @@ const authController = {
                 })
                 const { passwordResetExpires, passwordResetToken, password, refreshToken, createdAt, updatedAt, deletedAt, ...others } = user.dataValues;
 
-                return res.status(200).json({others, generateAccessToken});
+                return res.status(200).json(
+                    {
+                        success: true,
+                        dataUser: others, 
+                        token: generateAccessToken
+                    }
+                );
             }
 
         } catch (error) {
