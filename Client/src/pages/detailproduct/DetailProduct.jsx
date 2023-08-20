@@ -21,7 +21,7 @@ const DetailProduct = () => {
     const [ratings, setRatings] = useState([]);
 
     const { slug } = useParams();
-    const user = useSelector(state => state.auth.login?.currentUser);
+    const user = useSelector(state => state.auth?.currentUser);
     const accessToken = user?.token;
     // const userId = user?.others.id;
 

@@ -1,42 +1,47 @@
 import { loginFail, loginStart, loginSuccess, registerFail, registerStart, registerSuccess, logoutFail, logoutStart, logoutSuccess } from "../redux/slice/authSlice";
 import request from "../utils/request";
 
-export const loginUSer = async (user, dispatch, navigate) => {
-    dispatch(loginStart());
-    try {
-        const res = await request.post("/api/v1/auth/login", user, {
-            withCredentials: true,
-        });
-        dispatch(loginSuccess(res.data));
-        navigate('/');
-    } catch (error) {
-        dispatch(loginFail());
-    }
+export const loginUSer = async (user) => {
+    // try {
+    //     console.log("check api")
+    const res = await request.post("/api/v1/auth/login", user, {
+        withCredentials: true,
+    });
+    // dispatch(loginSuccess(res.data));
+    // navigate('/');
+    // console.log("check:" , res);
+    return res;
+    // } catch (error) {
+    //     // dispatch(loginFail());
+    //     console.log('check err api')
+    //     return error;
+    // }
 };
 
 export const registerUSer = async (user, dispatch, navigate) => {
-    dispatch(registerStart());
+    // dispatch(registerStart());
     try { 
-        await request.post("/api/v1/auth/register", user, {
-            withCredentials: true,
-        });
-        dispatch(registerSuccess());
-        navigate('/login');
+        // await request.post("/api/v1/auth/register", user, {
+        //     withCredentials: true,
+        // });
+        // dispatch(registerSuccess());
+        // navigate('/login');
     } catch (error) {
-        dispatch(registerFail());
+        // dispatch(registerFail());
+        return error;
     }
 };
 
 //Register Staff
 export const registerStaff = async (staff, dispatch, navigate) => {
-    dispatch(registerStart());
+    // dispatch(registerStart());
     try { 
         const res = await request.post("/api/v1/auth/register", staff);
-        dispatch(registerSuccess());
-        navigate('/admin/staff');
+        // dispatch(registerSuccess());
+        // navigate('/admin/staff');
         return res;
     } catch (error) {
-        dispatch(registerFail());
+        // dispatch(registerFail());
         return error;
     }
 };
@@ -54,17 +59,17 @@ export const finalRegister = async(token) => {
 }
 
 export const logoutUser = async (dispatch, id, accessToken) => {
-    dispatch(logoutStart());
+    // dispatch(logoutStart());
     console.log(id + accessToken)
     try { 
         const res = await request.post("/api/v1/auth/logout",{id}, {
             withCredentials: true,
             headers: { token: `Bearer ${accessToken}` },
         });
-        dispatch(logoutSuccess());
+        // dispatch(logoutSuccess());
         return res;
     } catch (error) {
-        dispatch(logoutFail());
+        // dispatch(logoutFail());
     }
 };
 

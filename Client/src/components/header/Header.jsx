@@ -38,8 +38,10 @@ const Header = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const user = useSelector(state => state.auth.login?.currentUser);
+    const user = useSelector(state => state.auth?.currentUser);
     // let axiosJWT = createAxios(user, dispatch, logoutSuccess);
+    const isFetching = useSelector(state => state.auth?.isFetching)
+    console.log(isFetching)
     
     const accessToken = user?.token;
     const id = user?.dataUser.id;

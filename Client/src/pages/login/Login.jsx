@@ -6,16 +6,18 @@ import Button from '../../components/button/Button';
 
 import googleImg from '../../assets/images/google.png';
 import { loginUSer } from "../../api/authApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { loginActions } from "../../redux/asyncActions/authActions";
 
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
-    
+    // const location = useLocation();
+    const isFetching = useSelector(state => state.auth.isFetching);
+
     const formik = useFormik({
         initialValues: {
             username: "",
@@ -26,8 +28,11 @@ const Login = () => {
             password: Yup.string().required("Vui lòng nhập mật khẩu."),
         })
         ,
-        onSubmit: (values) => {
-            loginUSer(values, dispatch, navigate);
+        onSubmit: async(values) => {
+            const response = await dispatch(loginActions(values));
+            if(response.meta.requestStatus === 'fulfilled') {
+                navigate('/');
+            }
         }
     })
 

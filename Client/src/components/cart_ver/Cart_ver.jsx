@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const Car_ver = props => {
     const item = props.item;
     // console.log(item);
-    const user = useSelector(state => state.auth.login.currentUser);
+    const user = useSelector(state => state.auth.currentUser);
     const accessToken = user?.token;
 
     const handleDeleteCartItem = async() => {

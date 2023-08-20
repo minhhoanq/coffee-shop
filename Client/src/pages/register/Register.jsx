@@ -6,7 +6,7 @@ import Button from '../../components/button/Button';
 
 import googleImg from '../../assets/images/google.png';
 import { finalRegister, registerUSer } from "../../api/authApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as Yup from "yup";
@@ -16,6 +16,7 @@ const Register = () => {
     const [mesToken, setMesToken] = useState('');
 
     const dispatch = useDispatch();
+    const isFetching = useSelector(state => state.auth.register?.isFetching);
     const modalCode = useRef(null);
     const overlay = useRef(null);
 
@@ -29,17 +30,19 @@ const Register = () => {
             password: "",
             confirmPassword: "",
         },
-        validationSchema: Yup.object({
-            username: Yup.string().required("Vui lòng nhập tên đăng nhập.").min(4, "Vui lòng nhập nhiều hơn 4 ký tự."),
-            firstname: Yup.string().required("Vui lòng nhập họ của bạn."),
-            lastname: Yup.string().required("Vui lòng nhập tên của bạn."),
-            email: Yup.string().required("Vui lòng nhập email của bạn.").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Vui lòng nhập đúng định dạng email."),
-            phone: Yup.string().required("Vui lòng nhập số điện thoại.").matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, "Số điện thoại phải là số và tối thiểu 10 kí tự."),
-            password: Yup.string().required("Vui lòng nhập mật khẩu.").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,"Mật khẩu tối thiểu tám ký tự, bao gồm ít nhất một chữ cái, một số và một ký tự đặc biệt."),
-            confirmPassword: Yup.string().required("Vui lòng nhập lại mật khẩu.").oneOf([Yup.ref("password"),null], "Mật khẩu nhập lại không khớp."),
-        }),
+        // validationSchema: Yup.object({
+        //     username: Yup.string().required("Vui lòng nhập tên đăng nhập.").min(4, "Vui lòng nhập nhiều hơn 4 ký tự."),
+        //     firstname: Yup.string().required("Vui lòng nhập họ của bạn."),
+        //     lastname: Yup.string().required("Vui lòng nhập tên của bạn."),
+        //     email: Yup.string().required("Vui lòng nhập email của bạn.").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Vui lòng nhập đúng định dạng email."),
+        //     phone: Yup.string().required("Vui lòng nhập số điện thoại.").matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, "Số điện thoại phải là số và tối thiểu 10 kí tự."),
+        //     password: Yup.string().required("Vui lòng nhập mật khẩu.").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,"Mật khẩu tối thiểu tám ký tự, bao gồm ít nhất một chữ cái, một số và một ký tự đặc biệt."),
+        //     confirmPassword: Yup.string().required("Vui lòng nhập lại mật khẩu.").oneOf([Yup.ref("password"),null], "Mật khẩu nhập lại không khớp."),
+        // }),
         onSubmit: (values) => {
             registerUSer(values, dispatch);
+            console.log(isFetching);
+
             modalCode.current.classList.add('show');
             overlay.current.classList.add('ovl');
         }

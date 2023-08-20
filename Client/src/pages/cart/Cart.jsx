@@ -12,7 +12,7 @@ import { cartActions } from "../../redux/slice/cartSlice";
 const Cart = () => {
 
     const [products, setProducts] = useState([]);
-    const user = useSelector(state => state.auth.login.currentUser)
+    const user = useSelector(state => state.auth?.currentUser)
 
     useEffect(() => {
         const getProductsData = async () => {
