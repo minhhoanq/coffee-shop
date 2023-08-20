@@ -11,6 +11,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loginActions } from "../../redux/asyncActions/authActions";
+import Swal from "sweetalert2";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -30,8 +31,13 @@ const Login = () => {
         ,
         onSubmit: async(values) => {
             const response = await dispatch(loginActions(values));
-            if(response.meta.requestStatus === 'fulfilled') {
+            const reqStatus = response.meta.requestStatus;
+            console.log(response);
+            if(reqStatus === 'fulfilled') {
                 navigate('/');
+            } else if (reqStatus === 'rejected') {
+                console.log(response.payload.response.data);
+                Swal.fire('Oops!', response.payload.response.data, 'error')
             }
         }
     })
@@ -73,7 +79,15 @@ const Login = () => {
                             <p className="login__container__wrapper__form__error"> {formik.errors.password} </p>
                         )}
 
-                        <Button type={"submit"} className="login__container__wrapper__form__btn-login" >Đăng nhập</Button>
+                        <Button type={"submit"} className="login__container__wrapper__form__btn-login" >
+                            {
+                                isFetching ? (
+                                    <>Vui lòng chờ ...</>
+                                ) : 
+                                <>
+                                Đăng nhập</>
+                            }
+                        </Button>
                     </form>
 
                     <div className="login__container__wrapper__bulkhead">
