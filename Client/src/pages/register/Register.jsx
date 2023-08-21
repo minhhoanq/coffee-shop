@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 
 import './register.scss';
 import { Link } from 'react-router-dom';
@@ -14,11 +14,19 @@ import * as Yup from "yup";
 const Register = () => {
     const [token, setToken] = useState('');
     const [mesToken, setMesToken] = useState('');
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.auth.register?.isFetching);
     const modalCode = useRef(null);
     const overlay = useRef(null);
+    const user = useSelector(state => state.auth?.currentUser);
+
+    useEffect(() => {
+        if(user) {
+            navigate('/');
+        }
+    },[])
 
     const formik = useFormik({
         initialValues: {

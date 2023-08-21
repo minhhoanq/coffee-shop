@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import './login.scss';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import Button from '../../components/button/Button';
 import googleImg from '../../assets/images/google.png';
 import { loginUSer } from "../../api/authApi";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loginActions } from "../../redux/asyncActions/authActions";
@@ -16,8 +16,14 @@ import Swal from "sweetalert2";
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const location = useLocation();
     const isFetching = useSelector(state => state.auth.isFetching);
+    const user = useSelector(state => state.auth.currentUser);
+
+    useEffect(() => {
+        if(user) {
+            navigate('/');
+        }
+    },[])
 
     const formik = useFormik({
         initialValues: {
@@ -37,7 +43,7 @@ const Login = () => {
                 navigate('/');
             } else if (reqStatus === 'rejected') {
                 console.log(response.payload.response.data);
-                Swal.fire('Oops!', response.payload.response.data, 'error')
+                Swal.fire('', response.payload.response.data, 'error')
             }
         }
     })

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getToCartItem } from "../../api/productApi";
 import { deleteAllCartItem } from "../../api/cartItemApi";
+import { loginActions, logoutActions } from "../../redux/asyncActions/authActions";
 
 const headerNav = [
     {
@@ -96,7 +97,10 @@ const Header = () => {
     }
 
     const handleLogout = async() => {
-        const result = await logoutUser(dispatch, id, accessToken);
+        console.log('id: ' + id);
+        console.log('token: ' + accessToken);
+        const valuesLogout = {id, accessToken}
+        const result = await dispatch(logoutActions(valuesLogout));
         navigate('/login')
         console.log(result)
     }

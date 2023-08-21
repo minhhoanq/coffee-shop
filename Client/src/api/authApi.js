@@ -58,19 +58,15 @@ export const finalRegister = async(token) => {
     }
 }
 
-export const logoutUser = async (dispatch, id, accessToken) => {
+export const logoutUser = async(valuesLogout) => {
     // dispatch(logoutStart());
-    console.log(id + accessToken)
-    try { 
-        const res = await request.post("/api/v1/auth/logout",{id}, {
-            withCredentials: true,
-            headers: { token: `Bearer ${accessToken}` },
-        });
-        // dispatch(logoutSuccess());
-        return res;
-    } catch (error) {
-        // dispatch(logoutFail());
-    }
+    const {id ,accessToken} = valuesLogout;
+    const res = await request.post("/api/v1/auth/logout",{id}, {
+        withCredentials: true,
+        headers: { token: `Bearer ${accessToken}` },
+    });
+
+    return res;
 };
 
 //Forgot Password

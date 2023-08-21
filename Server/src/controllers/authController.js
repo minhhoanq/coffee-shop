@@ -298,7 +298,7 @@ const authController = {
         try {
             const user = await db.User.findOne({where: {username: req.body.username}});
             if(!user) {
-                return res.status(404).json("Wrong username!");
+                return res.status(404).json("Tài khoản chưa đưuọc đăng ký!");
             }
 
             const validPassword = await bcrypt.compare(
@@ -307,7 +307,7 @@ const authController = {
             );
 
             if(!validPassword) {
-                return res.status(400).json("Wrong password!")
+                return res.status(400).json("Hãy kiểm tra lại mật khẩu!")
             }
 
             if(user && validPassword) {

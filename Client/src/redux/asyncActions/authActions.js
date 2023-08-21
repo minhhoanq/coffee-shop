@@ -8,7 +8,18 @@ export const loginActions = createAsyncThunk('auth/login', async(data, { rejectW
         console.log("check1")
         const res = await authApi.loginUSer(data);
         console.log(res);
-        // useNavigate('/');
+        return res.data;
+    } catch (err) {
+        console.log(err)
+        return rejectWithValue(err);
+    }
+})
+
+export const logoutActions = createAsyncThunk('auth/logout', async(data, { rejectWithValue }) => {
+    try {
+        console.log("check1")
+        const res = await authApi.logoutUser(data);
+        console.log(res);
         return res.data;
     } catch (err) {
         console.log(err)
