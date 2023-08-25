@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginActions, logoutActions } from "../asyncActions/authActions";
+import { loginActions, logoutActions, registerActions } from "../asyncActions/authActions";
 
 const initialState = {
     currentUser: null,
@@ -61,6 +61,24 @@ const authSlice = createSlice({
         // },
     },
     extraReducers: (builder) => {
+ 
+        //register
+        builder.addCase(registerActions.pending, (state) => {
+            state.isFetching = true;
+            state.error = false;
+        })
+
+        builder.addCase(registerActions.fulfilled, (state) => {
+            state.isFetching = false;
+            state.error = false;
+        })
+
+        builder.addCase(registerActions.rejected, (state) => {
+            state.isFetching = false;
+            state.error = true;
+        })
+
+        //login
         builder.addCase(loginActions.pending, (state) => {
             state.isFetching = true;
             state.error = false;
@@ -80,20 +98,17 @@ const authSlice = createSlice({
 
         //logout
         builder.addCase(logoutActions.pending, (state) => {
-            console.log('check pending');
             state.isFetching = true;
             state.error = false;
         })
 
         builder.addCase(logoutActions.fulfilled, (state, action) => {
-            console.log('check logout fulfilled');
             state.isFetching = false;
             state.currentUser = null;
             state.error = false;
         })
 
         builder.addCase(logoutActions.rejected, (state) => {
-            console.log('check rejected');
             state.isFetching = false;
             state.error = true;
         })

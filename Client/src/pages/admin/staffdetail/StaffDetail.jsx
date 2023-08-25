@@ -3,16 +3,19 @@ import React, { useEffect, useState } from "react";
 import './staff-detail.scss';
 import { getUserById } from "../../../api/userApi";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const StaffDetail = () => {
     const [staff, setStaff] = useState([]);
 
+    const user = useSelector(state => state.auth.currentUser);
+    const accessToken = user?.token;
     const { id } = useParams();
 
     useEffect(() => {
         const getData = async() => {
-            const result = await getUserById(id);
-            setStaff(result.data.usersData);
+            const result = await getUserById(id, accessToken);
+            setStaff(result.usersData);
         };
 
         getData();

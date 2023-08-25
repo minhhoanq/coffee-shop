@@ -18,18 +18,11 @@ export const loginUSer = async (user) => {
     // }
 };
 
-export const registerUSer = async (user, dispatch, navigate) => {
-    // dispatch(registerStart());
-    try { 
-        // await request.post("/api/v1/auth/register", user, {
-        //     withCredentials: true,
-        // });
-        // dispatch(registerSuccess());
-        // navigate('/login');
-    } catch (error) {
-        // dispatch(registerFail());
-        return error;
-    }
+export const registerUSer = async (user) => {
+    const response = await request.post("/api/v1/auth/register", user, {
+        withCredentials: true,
+    });
+    return response;
 };
 
 //Register Staff

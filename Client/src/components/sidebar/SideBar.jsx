@@ -22,7 +22,7 @@ const MORE_ITEMS = [
         icon: <HomeIcon/>,
         iconActive: <HomeIconActive/>,
         title: "Trang chủ",
-        pathname: "/admin",
+        pathname: "/admin/home",
     },
     {
         icon: <StaffIcon/>,

@@ -10,11 +10,14 @@ const Staff = () => {
     const [staff, setStaff] = useState([]);
     const isFetching = useSelector((state) => state.user.softDelete.isFetching);
     const error = useSelector((state) => state.user.error);
+    const user = useSelector(state => state.auth.currentUser);
+    const accessToken = user?.token;
 
     useEffect(() => {
         const getData = async() => {
-            const result = await getAllStaff();
+            const result = await getAllStaff(accessToken);
             setStaff(result.usersData);
+            console.log(result);
         };
 
         getData();

@@ -4,12 +4,15 @@ import { softDeleteStart,
          softDeleteError
         } from "../redux/slice/userSlice";
 
-export const getAllStaff = async () => {
+export const getAllStaff = async (accessToken) => {
     try {
         const res = await request.get('/api/v1/users', {
             params: {
                 roles: 2,
             },
+            headers:({
+                token: `Bearer ${accessToken}`
+            })
         });
         return res.data;
     } catch (error) {
@@ -30,9 +33,13 @@ export const getAllUserSoftDelete = async (roles) => {
     }
 }
 
-export const getUserById = async (id) => {
+export const getUserById = async (id, accessToken) => {
     try {
-        const res = await request.get(`/api/v1/users/${id}`);
+        const res = await request.get(`/api/v1/users/${id}`, {
+            headers:({
+                token: `Bearer ${accessToken}`
+            })
+        });
         return res.data;
     } catch (error) {
         return error;
