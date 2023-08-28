@@ -2,22 +2,26 @@ import React, { useEffect, useState } from "react";
 import './ingredient.scss';
 import { getAllIngredient } from "../../../../api/ingredientApi";
 import useDebounce from "../../../../hooks/useDebounce";
+import Pagination from "../../../../components/pagination/Pagination";
 
 const Ingredient = () => {
     const [ingredient, setIngredient] = useState([]);
-    const [page, setPage] = useState(0);
     const [sort, setSort] = useState('default');
     const [search, setSearch] = useState('');
     const [idOfUnit, setIdOfUnit] = useState(0);
+    const [numPage, setNumPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
+    const numbers = [...Array(totalPage + 1).keys()].slice(1);
 
     const debounceValue = useDebounce(search, 500);
 
-    console.log(debounceValue);
+    console.log(numbers);
 
     useEffect(() => {
         const getApiIngredient = async() => {
             let name = debounceValue;
             let limit = 6;
+            let page = numPage;
             
             let order = [];
             if(sort && sort !== 'default') {
@@ -33,10 +37,16 @@ const Ingredient = () => {
             const response = await getAllIngredient({page, limit, order, name, unitId});
 
             setIngredient(response.data.rows);
+            const quantityPage = Math.ceil((response.data.count || 0) / limit);
+            setTotalPage(quantityPage);
         }
 
         getApiIngredient();
-    },[debounceValue, sort, idOfUnit]);
+    },[debounceValue, sort, idOfUnit, numPage]);
+
+    const handlePagination = (numberPage) => {
+        setNumPage(numberPage);
+    }
 
     return (
         <div className="ingredient">
@@ -97,6 +107,10 @@ const Ingredient = () => {
                     }
                     
                 </table>
+            </div>
+
+            <div className="ingredient__page">
+                <Pagination parentCallback={handlePagination} numbers={numbers}/>
             </div>
         </div>
     );
