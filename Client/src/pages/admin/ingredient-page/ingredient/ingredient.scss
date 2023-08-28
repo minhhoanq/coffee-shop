@@ -9,6 +9,9 @@
         width: 100%;
 
         &__options {
+
+            @include flex (center, space-between);
+
             &__search {
                 width: 35%;
                 height: 100%;
@@ -44,6 +47,18 @@
                     &:hover {
                         cursor: pointer;
                         background-color: #ccc;
+                    }
+                }
+            }
+
+            &__selects {
+                width: 65%;
+                @include flex (center, space-evenly);
+
+                &__filter, &__sort {
+                    select {
+                        height: 30px;
+                        border-radius: 5px;
                     }
                 }
             }

@@ -17,6 +17,25 @@ const Ingredient = () => {
                             <i class="ri-search-line"></i>
                         </button>
                     </div>
+
+                    <div className="ingredient__container__options__selects">
+                        <div className="ingredient__container__options__selects__filter">
+                            <select name="carts" id="carts">
+                                <option value="default">Chọn đơn vị tính</option>
+                                <option value="1">Kilograms</option>
+                                <option value="2">Lít</option>
+                                <option value="3">Cái</option>
+                            </select>
+                        </div>
+
+                        <div className="ingredient__container__options__selects__sort" >
+                            <select name="sort" id="sort">
+                                <option value="default">Sắp xếp số lượng</option>
+                                <option value="asc">Số lượng từ thấp đến cao</option>
+                                <option value="desc">Số lượng từ cao đến thấp</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <table className="ingredient__container__table">
                     <tr>
