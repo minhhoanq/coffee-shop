@@ -1,19 +1,42 @@
 import React, { useEffect, useState } from "react";
 import './ingredient.scss';
 import { getAllIngredient } from "../../../../api/ingredientApi";
+import useDebounce from "../../../../hooks/useDebounce";
 
 const Ingredient = () => {
     const [ingredient, setIngredient] = useState([]);
+    const [page, setPage] = useState(0);
+    const [sort, setSort] = useState('default');
+    const [search, setSearch] = useState('');
+    const [idOfUnit, setIdOfUnit] = useState(0);
+
+    const debounceValue = useDebounce(search, 500);
+
+    console.log(debounceValue);
 
     useEffect(() => {
         const getApiIngredient = async() => {
-            const response = await getAllIngredient();
+            let name = debounceValue;
+            let limit = 6;
+            
+            let order = [];
+            if(sort && sort !== 'default') {
+                order = ['amount', sort];
+            }
 
-            setIngredient(response.data);
+            let unitId = undefined;
+
+            if(idOfUnit) {
+                unitId = idOfUnit;
+            }
+
+            const response = await getAllIngredient({page, limit, order, name, unitId});
+
+            setIngredient(response.data.rows);
         }
 
         getApiIngredient();
-    },[])
+    },[debounceValue, sort, idOfUnit]);
 
     return (
         <div className="ingredient">
@@ -23,7 +46,7 @@ const Ingredient = () => {
                     <div className="ingredient__container__options__search">
                         <fieldset className="ingredient__container__options__search__fielset" id="fielset" disabled={false}>
                             <legend>Tìm kiếm</legend>
-                            <input type="text" name="name" id="name" placeholder="Nhập tên nguyên liệu" />
+                            <input type="text" name="name" id="name" placeholder="Nhập tên nguyên liệu" onChange={(e) => setSearch(e.target.value)}/>
                         </fieldset>
 
                         <button className="ingredient__container__options__search__btn">
@@ -32,20 +55,20 @@ const Ingredient = () => {
                     </div>
 
                     <div className="ingredient__container__options__selects">
+                        <div className="ingredient__container__options__selects__sort" >
+                            <select name="sort" id="sort" onChange={(e) => setSort(e.target.value)}>
+                                <option value="default">Sắp xếp số lượng</option>
+                                <option value="asc">Số lượng từ thấp đến cao</option>
+                                <option value="desc">Số lượng từ cao đến thấp</option>
+                            </select>
+                        </div>
+
                         <div className="ingredient__container__options__selects__filter">
-                            <select name="carts" id="carts">
+                            <select name="carts" id="carts" onChange={(e) => setIdOfUnit(Number(e.target.value))}>
                                 <option value="default">Chọn đơn vị tính</option>
                                 <option value="1">Kilograms</option>
                                 <option value="2">Lít</option>
                                 <option value="3">Cái</option>
-                            </select>
-                        </div>
-
-                        <div className="ingredient__container__options__selects__sort" >
-                            <select name="sort" id="sort">
-                                <option value="default">Sắp xếp số lượng</option>
-                                <option value="asc">Số lượng từ thấp đến cao</option>
-                                <option value="desc">Số lượng từ cao đến thấp</option>
                             </select>
                         </div>
                     </div>
@@ -62,7 +85,7 @@ const Ingredient = () => {
                     {
                         ingredient?.map((item, i) => (
                             <tr key={i}>
-                                <td>{item.id}</td>
+                                <td>{i + 1}</td>
                                 <td>
                                     <img src={item.ingredientImage} alt={item.ingredientName} />
                                 </td>

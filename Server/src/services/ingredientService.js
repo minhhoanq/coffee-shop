@@ -1,9 +1,19 @@
+const { Op } = require("sequelize");
 const db = require('../models');
 
-const getIngredientService = () => new Promise( async(resolve, reject) => {
+const getIngredientService = ({page, limit, order, name, ...query}) => new Promise( async(resolve, reject) => {
     try {
-
-        const response = await db.Ingredient.findAll();
+        const queries = {raw: true, nest: true};
+        const offset = (!page || +page <= 1) ? 0 : (+page - 1);
+        const flimit = +limit || +process.env.LIMIT_PRODUCT;
+        queries.offset = offset * flimit;
+        queries.limit = flimit;
+        if(order) queries.order = [order];
+        if(name) query.ingredientName = { [Op.substring]: name};
+        const response = await db.Ingredient.findAndCountAll({
+            where: query,
+            ...queries,
+        })
 
         resolve({
             err: response ? 0 : 1,
