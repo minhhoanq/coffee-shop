@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './ingredient.scss';
+import { getAllIngredient } from "../../../../api/ingredientApi";
 
 const Ingredient = () => {
+    const [ingredient, setIngredient] = useState([]);
+
+    useEffect(() => {
+        const getApiIngredient = async() => {
+            const response = await getAllIngredient();
+
+            setIngredient(response.data);
+        }
+
+        getApiIngredient();
+    },[])
+
     return (
         <div className="ingredient">
             <h1>Quản lý nguyên liệu</h1>
@@ -45,42 +58,21 @@ const Ingredient = () => {
                         <th>Số lượng tồn</th>
                         <th>Đơn vị tính</th>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdkVrmen8EzBl2BjJS6ZIE55D2q8Ag-imMNkpqjIDzrMjZtfEAp8IesahkIu4ur8eaQnM&usqp=CAU" alt="" />
-                        </td>
-                        <td>Đường đen</td>
-                        <td>20</td>
-                        <td>Kg</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdkVrmen8EzBl2BjJS6ZIE55D2q8Ag-imMNkpqjIDzrMjZtfEAp8IesahkIu4ur8eaQnM&usqp=CAU" alt="" />
-                        </td>
-                        <td>Đường đen</td>
-                        <td>23</td>
-                        <td>Kg</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdkVrmen8EzBl2BjJS6ZIE55D2q8Ag-imMNkpqjIDzrMjZtfEAp8IesahkIu4ur8eaQnM&usqp=CAU" alt="" />
-                        </td>
-                        <td>Đường đen</td>
-                        <td>20</td>
-                        <td>Kg</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdkVrmen8EzBl2BjJS6ZIE55D2q8Ag-imMNkpqjIDzrMjZtfEAp8IesahkIu4ur8eaQnM&usqp=CAU" alt="" />
-                        </td>
-                        <td>Đường đen</td>
-                        <td>23</td>
-                        <td>Kg</td>
-                    </tr>
+
+                    {
+                        ingredient?.map((item, i) => (
+                            <tr key={i}>
+                                <td>{item.id}</td>
+                                <td>
+                                    <img src={item.ingredientImage} alt={item.ingredientName} />
+                                </td>
+                                <td>{item.ingredientName}</td>
+                                <td>{item.amount}</td>
+                                <td>{item.unitId}</td>
+                            </tr>
+                        ))
+                    }
+                    
                 </table>
             </div>
         </div>

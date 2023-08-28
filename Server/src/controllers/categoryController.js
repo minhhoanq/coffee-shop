@@ -1,4 +1,3 @@
-const { response } = require("express");
 const categoryService = require("../services/categoryService");
 
 const categoryController = {
