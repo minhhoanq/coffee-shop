@@ -7,12 +7,12 @@ const CreateIngredient = () => {
         <Modal active={false} id={'modal'}>
             <ModalContent className="ingredient__header__modal">
                  <form className="ingredient__header__modal__form">
-                    <div className="ingredient__header__modal__form__info-basic">
+                    {/* <div className="ingredient__header__modal__form__info-basic">
                         <fieldset className="ingredient__container__options__search__fielset" id="fielset" disabled={false}>
                             <legend>Tìm kiếm</legend>
                             <input type="text" name="name" id="name" placeholder="Nhập tên nguyên liệu" onChange={(e) => setSearch(e.target.value)}/>
                         </fieldset>
-                    </div>
+                    </div> */}
 
                     <div className="ingredient__header__modal__form__info-basic">
                         

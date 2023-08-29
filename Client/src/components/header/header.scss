@@ -221,11 +221,37 @@
                 
                 &__wrapper {
                     @include flex (center, center);
+                    position: relative;
                     &__avatar {
                         width: 30px;
                         height: 100%;
                         border-radius: 50px;
                         object-fit: contain;
+                    }
+
+                    &__menu {
+                        position: absolute;
+                        top: 44px;
+                        right: 0;
+                        background-color: #ccc;
+                        width: 170px;
+                        @include flex (flex-start, center);
+                        flex-direction: column;
+
+                        & > * ~ * {
+                            border-top: 1px solid #000000;
+                        }
+
+                        &__info, &__logout {
+                            height: 35px;
+                            width: 100%;
+                            font-size: 1.2rem;
+                            font-weight: 500;
+                            @include flex (flex-start, center);
+                            flex-direction: column;
+                            background-color: #fba860;
+                            padding: 20px 10px;
+                        }
                     }
                 }
             }

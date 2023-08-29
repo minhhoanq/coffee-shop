@@ -245,7 +245,7 @@ const Header = () => {
                         </div>
                         <div className="header__wrapper__options__profile">
                             {
-                                user ? <div className="header__wrapper__options__profile__wrapper" onClick={handleLogout}>
+                                user ? <div className="header__wrapper__options__profile__wrapper">
                                     {
                                         user?.others?.image ? 
                                         <>
@@ -256,6 +256,10 @@ const Header = () => {
                                         </> :
                                         <> <i class="ri-user-follow-line"> </i> </>
                                     }
+                                    <div className="header__wrapper__options__profile__wrapper__menu">
+                                        <Link className="header__wrapper__options__profile__wrapper__menu__info">Thông tin cá nhân</Link>
+                                        <button className="header__wrapper__options__profile__wrapper__menu__logout" onClick={handleLogout}>Đăng xuất</button>
+                                    </div>
                                 </div> : 
                                 <a href="/login">
                                     <i class="ri-user-smile-line"></i>
