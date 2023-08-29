@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Ingredient.belongsTo(models.Unit, {foreignKey: 'unitId', targetKey: 'id', as: 'unitData'})
     }
   }
   Ingredient.init({

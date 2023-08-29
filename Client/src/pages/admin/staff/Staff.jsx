@@ -16,7 +16,7 @@ const Staff = () => {
     useEffect(() => {
         const getData = async() => {
             const result = await getAllStaff(accessToken);
-            setStaff(result.usersData);
+            setStaff(result?.usersData);
             console.log(result);
         };
 
@@ -51,7 +51,7 @@ const Staff = () => {
                         <i class="ri-user-add-line"></i>
                         <span>Thêm nhân viên</span>
                     </button>
-                    <StaffCreate item={staff[0]}/>
+                    <StaffCreate />
                 </div>
 
                 <div className="staff__list-st">

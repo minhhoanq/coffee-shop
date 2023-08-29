@@ -19,11 +19,11 @@ const Login = () => {
     const isFetching = useSelector(state => state.auth.isFetching);
     const user = useSelector(state => state.auth.currentUser);
 
-    useEffect(() => {
-        if(user) {
-            navigate('/');
-        }
-    },[])
+    // useEffect(() => {
+    //     if(user) {
+    //         navigate('/');
+    //     }
+    // },[])
 
     const formik = useFormik({
         initialValues: {

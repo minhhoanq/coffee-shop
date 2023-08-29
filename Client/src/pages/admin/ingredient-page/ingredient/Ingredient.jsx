@@ -3,6 +3,7 @@ import './ingredient.scss';
 import { getAllIngredient } from "../../../../api/ingredientApi";
 import useDebounce from "../../../../hooks/useDebounce";
 import Pagination from "../../../../components/pagination/Pagination";
+import CreateIngredient from "./CreateIngredient";
 
 const Ingredient = () => {
     const [ingredient, setIngredient] = useState([]);
@@ -48,9 +49,21 @@ const Ingredient = () => {
         setNumPage(numberPage);
     }
 
+    const handleCreateIngredient = (e) => {
+        e.preventDefault();
+        const modal = document.querySelector('#modal');
+        modal.classList.toggle('active');
+    }
+
     return (
         <div className="ingredient">
-            <h1>Quản lý nguyên liệu</h1>
+            <div className="ingredient__header">
+                <h1>Quản lý nguyên liệu</h1>
+                <button className="ingredient__header__btn-create" onClick={handleCreateIngredient}>
+                    Thêm nguyên liệu mới
+                </button>
+                <CreateIngredient/>
+            </div>
             <div className="ingredient__container">
                 <div className="ingredient__container__options">
                     <div className="ingredient__container__options__search">
@@ -100,8 +113,8 @@ const Ingredient = () => {
                                     <img src={item.ingredientImage} alt={item.ingredientName} />
                                 </td>
                                 <td>{item.ingredientName}</td>
-                                <td>{item.amount}</td>
-                                <td>{item.unitId}</td>
+                                <td>{item.amount < 1 ? 'Hết hàng' : item.amount}</td>
+                                <td>{item.unitData.unitName}</td>
                             </tr>
                         ))
                     }

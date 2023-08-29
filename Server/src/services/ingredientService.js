@@ -13,6 +13,13 @@ const getIngredientService = ({page, limit, order, name, ...query}) => new Promi
         const response = await db.Ingredient.findAndCountAll({
             where: query,
             ...queries,
+            include: [
+                {
+                    model: db.Unit,
+                    as: 'unitData',
+                    attribute: ['id', 'unitName']
+                }
+            ]
         })
 
         resolve({
