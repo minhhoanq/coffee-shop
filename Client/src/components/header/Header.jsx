@@ -28,13 +28,34 @@ const headerNav = [
 
 const options = [
     {
-        icon: '',
-        title: 'Tài khoản cá nhân'
+        icon: "ri-account-circle-line",
+        title: 'Tài khoản cá nhân',
+        path: '/profile',
     },
 
     {
-        icon: '',
-        title: 'Ngôn ngữ'
+        icon: 'ri-earth-fill',
+        title: 'Ngôn ngữ',
+        children: {
+            title: 'Ngôn ngữ',
+            data: [
+                {
+                    type: 'language',
+                    title: 'Tiếng Việt',
+                    code: 'vi',
+                },
+                {
+                    type: 'language',
+                    title: 'Tiếng Anh',
+                    code: 'en',
+                },
+            ]
+        }
+    },
+
+    {
+        icon: 'ri-logout-circle-line',
+        title: 'Đăng xuất'
     }
 ]
 
@@ -59,6 +80,17 @@ const Header = () => {
     
     const accessToken = user?.token;
     const id = user?.dataUser.id;
+
+    const HandleMenuChange = (menuItem) => {
+        switch (menuItem.type) {
+            case 'logout':
+                
+                break;
+
+            default:
+                break;
+        }
+    };
 
     console.log(user)
 
@@ -256,31 +288,24 @@ const Header = () => {
                                 </button>
                             </div>
                         </div>
-                        <Menu items={options} onChange={() => {}}>
                             <div className="header__wrapper__options__profile">
-                                {
-                                    user ? <div className="header__wrapper__options__profile__wrapper">
-                                        {
-                                            user?.others?.image ? 
-                                            <>
-                                                <img 
-                                                    className="header__wrapper__options__profile__wrapper__avatar" 
-                                                    src={user.others.image} 
-                                                    alt="avatar" />
-                                            </> :
-                                            <> <i class="ri-user-follow-line"> </i> </>
-                                        }
-                                        {/* <div className="header__wrapper__options__profile__wrapper__menu">
-                                            <Link to={'/profile'} className="header__wrapper__options__profile__wrapper__menu__info">Thông tin cá nhân</Link>
-                                            <button className="header__wrapper__options__profile__wrapper__menu__logout" onClick={handleLogout}>Đăng xuất</button>
-                                        </div> */}
-                                    </div> : 
-                                    <a href="/login">
-                                        <i class="ri-user-smile-line"></i>
-                                    </a>
-                                }
+                                <Menu items={options} onChange={HandleMenuChange}>
+                                    {
+                                        <div className="header__wrapper__options__profile__wrapper">
+                                            {
+                                                user?.others?.image ? 
+                                                <>
+                                                    <img 
+                                                        className="header__wrapper__options__profile__wrapper__avatar" 
+                                                        src={user.others.image} 
+                                                        alt="avatar" />
+                                                </> :
+                                                <> <i class="ri-user-follow-line"> </i> </>
+                                            }
+                                        </div>
+                                    }
+                                </Menu>
                             </div>
-                        </Menu>
                     </div>
     
                     <button className="header__wrapper__mobile"  >

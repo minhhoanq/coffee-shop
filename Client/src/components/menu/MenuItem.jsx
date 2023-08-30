@@ -1,14 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const MenuItem = ({ data, onClick }) => {
-    // const classes = cx('menu-item', {
-    //     not_border_bottom: data.not_border_bottom,
-    //     bulkhead: data.bulkhead,
-    // });
+    console.log(data.path);
     return (
-        <button onClick={onClick}>
-            <span >{data.title}</span>
-        </button>
+        <Link to={data?.path} className="menu__popper__item" onClick={onClick}>
+            <i className={data.icon}></i>
+            <span className="menu__popper__item__title">{data.title}</span>
+        </Link>
     );
 }
 
