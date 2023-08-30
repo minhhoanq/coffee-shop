@@ -16,22 +16,13 @@ import {
     StaffIconActive 
 } from "../../icon/Icons";
 
-const DefaultLayoutAdmin = props => {
-
+const DefaultLayoutUser = props => {
     const MORE_ITEMS = [
         {
             icon: <HomeIcon/>,
             iconActive: <HomeIconActive/>,
-            title: "Tài khoản của tôi",
+            title: "Trang chủ",
             pathname: "/admin/home",
-            opChild: [
-                {
-                    icon: <HomeIcon/>,
-                    iconActive: <HomeIconActive/>,
-                    title: "Tài khoản của tôi",
-                    pathname: "/admin/home",
-            }
-            ]
         },
         {
             icon: <StaffIcon/>,
@@ -76,13 +67,12 @@ const DefaultLayoutAdmin = props => {
             pathname: "/#",
         }
     ]
-
     return (
         <div style={{display: "flex"}}>
-            <SideBar options={MORE_ITEMS}/>
+            <SideBar options={MORE_ITEMS} />
             <div style={{maxWidth: "80%", width: "80%", marginLeft: "20%"}}>{props.children}</div>
         </div>
     )
 }
 
-export default DefaultLayoutAdmin;
+export default DefaultLayoutUser;

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { getToCartItem } from "../../api/productApi";
 import { deleteAllCartItem } from "../../api/cartItemApi";
 import { loginActions, logoutActions } from "../../redux/asyncActions/authActions";
+import Menu from "../menu/Menu";
 
 const headerNav = [
     {
@@ -24,6 +25,18 @@ const headerNav = [
         display: "Cart",
     },
 ];
+
+const options = [
+    {
+        icon: '',
+        title: 'Tài khoản cá nhân'
+    },
+
+    {
+        icon: '',
+        title: 'Ngôn ngữ'
+    }
+]
 
 const Header = () => {
     const { pathname } = useLocation();
@@ -243,29 +256,31 @@ const Header = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className="header__wrapper__options__profile">
-                            {
-                                user ? <div className="header__wrapper__options__profile__wrapper">
-                                    {
-                                        user?.others?.image ? 
-                                        <>
-                                            <img 
-                                                className="header__wrapper__options__profile__wrapper__avatar" 
-                                                src={user.others.image} 
-                                                alt="avatar" />
-                                        </> :
-                                        <> <i class="ri-user-follow-line"> </i> </>
-                                    }
-                                    <div className="header__wrapper__options__profile__wrapper__menu">
-                                        <Link className="header__wrapper__options__profile__wrapper__menu__info">Thông tin cá nhân</Link>
-                                        <button className="header__wrapper__options__profile__wrapper__menu__logout" onClick={handleLogout}>Đăng xuất</button>
-                                    </div>
-                                </div> : 
-                                <a href="/login">
-                                    <i class="ri-user-smile-line"></i>
-                                </a>
-                            }
-                        </div>
+                        <Menu items={options} onChange={() => {}}>
+                            <div className="header__wrapper__options__profile">
+                                {
+                                    user ? <div className="header__wrapper__options__profile__wrapper">
+                                        {
+                                            user?.others?.image ? 
+                                            <>
+                                                <img 
+                                                    className="header__wrapper__options__profile__wrapper__avatar" 
+                                                    src={user.others.image} 
+                                                    alt="avatar" />
+                                            </> :
+                                            <> <i class="ri-user-follow-line"> </i> </>
+                                        }
+                                        {/* <div className="header__wrapper__options__profile__wrapper__menu">
+                                            <Link to={'/profile'} className="header__wrapper__options__profile__wrapper__menu__info">Thông tin cá nhân</Link>
+                                            <button className="header__wrapper__options__profile__wrapper__menu__logout" onClick={handleLogout}>Đăng xuất</button>
+                                        </div> */}
+                                    </div> : 
+                                    <a href="/login">
+                                        <i class="ri-user-smile-line"></i>
+                                    </a>
+                                }
+                            </div>
+                        </Menu>
                     </div>
     
                     <button className="header__wrapper__mobile"  >

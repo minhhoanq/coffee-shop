@@ -14,10 +14,13 @@ import FinalRegister from "../pages/finalregister/FinalRegister";
 import ForgotPassword from "../pages/forgotpassword/ForgotPassword";
 import ResetPassword from "../pages/resetpassword/ResetPassword";
 import Ingredient from "../pages/admin/ingredient-page/ingredient/Ingredient";
+import Profile from "../pages/profile/Profile";
+import DefaultLayoutUser from "../components/layout/defaultlayoutuser/DefaultLayoutUser";
 
 //Public routes
 const publicRoutes = [
     { path: '/', component: Home},
+    { path: '/profile', component: Profile, layout: DefaultLayoutUser},
     { path: '/shop', component: Shop},
     { path: '/shop/:slug', component: DetailProduct},
     { path: '/cart', component: Cart},
