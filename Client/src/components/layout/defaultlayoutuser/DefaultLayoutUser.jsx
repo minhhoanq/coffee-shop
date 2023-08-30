@@ -21,8 +21,27 @@ const DefaultLayoutUser = props => {
         {
             icon: <HomeIcon/>,
             iconActive: <HomeIconActive/>,
-            title: "Trang chủ",
-            pathname: "/admin/home",
+            title: "Tài khoản của tôi",
+            pathname: "",
+            children: {
+                data: [
+                    {
+                        title: 'Hồ sơ',
+                    },
+                    {
+                        title: 'Ngân hàng',
+                    },
+                    {
+                        title: 'Địa chỉ',
+                    },
+                    {
+                        title: 'Đổi mật khẩu',
+                    },
+                    {
+                        title: 'Cài đặt thông báo',
+                    }
+                ]
+            }
         },
         {
             icon: <StaffIcon/>,
@@ -36,36 +55,6 @@ const DefaultLayoutUser = props => {
             title: "Khách hàng",
             pathname: "/admin/customer",
         },
-        {
-            icon: <IngredientIcon/>,
-            iconActive: <IngredientIconActive/>,
-            title: "Nguyên liệu",
-            pathname: "/admin/ingredient",
-        },
-        {
-            icon: <OrderIcon/>,
-            iconActive: <OrderIconActive/>,
-            title: "Đơn đặt hàng",
-            pathname: "/admin/order",
-        },
-        {
-            icon: <ImportOrderIcon/>,
-            iconActive: <ImportOrderIcon/>,
-            title: "Đơn nhập hàng",
-            pathname: "/admin/import-orders",
-        },
-        {
-            icon: <HomeIcon/>,
-            iconActive: <HomeIconActive/>,
-            title: "Quản lý ...",
-            pathname: "/#",
-        },
-        {
-            icon: <HomeIcon/>,
-            iconActive: <HomeIconActive/>,
-            title: "Quản lý ...",
-            pathname: "/#",
-        }
     ]
     return (
         <div style={{display: "flex"}}>
