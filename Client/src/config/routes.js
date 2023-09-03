@@ -15,13 +15,15 @@ import ForgotPassword from "../pages/forgotpassword/ForgotPassword";
 import ResetPassword from "../pages/resetpassword/ResetPassword";
 import Ingredient from "../pages/admin/ingredient-page/ingredient/Ingredient";
 import Profile from "../pages/profile/Profile";
-import Bank from "../pages/bank/Bank";
+import Payment from "../pages/payment/Payment";
 import DefaultLayoutUser from "../components/layout/defaultlayoutuser/DefaultLayoutUser";
 
 //Public routes
 const publicRoutes = [
     { path: '/', component: Home},
-    { path: '/account/:path', component: Profile, layout: DefaultLayoutUser},
+    { path: '/user/account', component: Profile, layout: DefaultLayoutUser},
+    { path: '/user/account/profile', component: Profile, layout: DefaultLayoutUser},
+    { path: '/user/account/payment', component: Payment, layout: DefaultLayoutUser},
     { path: '/shop', component: Shop},
     { path: '/shop/:slug', component: DetailProduct},
     { path: '/cart', component: Cart},

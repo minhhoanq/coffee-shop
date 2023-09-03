@@ -6,12 +6,10 @@ import MenuSidebarItem from "./MenuSideBarItem";
 
 const SideBar = props => {
 
-    console.log(props.options)
-
     return (
         <div className="side-bar">
             <div className="side-bar__logo">
-                <img src="https://adminjs-demo.herokuapp.com/admin/frontend/assets/logo.svg" alt="" />
+                <img src={props.image} alt="avatar" />
             </div>
             <MenuSidebar>
                 { props.options.map((item, i) => (
