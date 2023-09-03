@@ -30,7 +30,7 @@ const options = [
     {
         icon: "ri-account-circle-line",
         title: 'Tài khoản cá nhân',
-        path: '/profile',
+        path: '/account',
     },
 
     {

@@ -6,6 +6,8 @@ import MenuSidebarItem from "./MenuSideBarItem";
 
 const SideBar = props => {
 
+    console.log(props.options)
+
     return (
         <div className="side-bar">
             <div className="side-bar__logo">

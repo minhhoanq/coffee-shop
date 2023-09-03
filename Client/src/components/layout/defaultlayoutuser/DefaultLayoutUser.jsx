@@ -22,23 +22,28 @@ const DefaultLayoutUser = props => {
             icon: <HomeIcon/>,
             iconActive: <HomeIconActive/>,
             title: "Tài khoản của tôi",
-            pathname: "",
+            pathname: "/account/",
             children: {
                 data: [
                     {
                         title: 'Hồ sơ',
+                        pathname: '/account/profile'
                     },
                     {
                         title: 'Ngân hàng',
+                        pathname: '/account/bank'
                     },
                     {
                         title: 'Địa chỉ',
+                        pathname: '/account/address'
                     },
                     {
                         title: 'Đổi mật khẩu',
+                        pathname: '/account/password'
                     },
                     {
                         title: 'Cài đặt thông báo',
+                        pathname: '/account/notifications'
                     }
                 ]
             }
