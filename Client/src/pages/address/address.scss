@@ -1,0 +1,152 @@
+@use '../../scss/' as *;
+
+.address {
+    background-color: #f5f5f5;
+    padding: 40px;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    
+
+    &__header {
+        @include flex(center, space-between);
+        
+        &__title {
+            font-size: 1.6rem;
+            font-weight: 500;
+        }
+
+        &__btn {
+            width: 200px;
+            height: 35px;
+            background-color: $main-color;
+            color: #fff;
+            font-size: 1.2rem;
+            border-radius: 2px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0rem 0.25rem 0.5rem;
+            cursor: pointer;
+            @include flex(center, space-between);
+            padding: 0 25px;
+
+            i {
+                font-size: 1.6rem;
+            }
+
+            &:hover {
+                background-color: rgba(205, 133, 63, 0.9);
+            }
+        }
+    }
+
+    &__wrapper {
+        background-color: #fff;
+        width: 100%;
+        height: 90%;
+        margin-top: 30px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0rem 0.25rem 0.5rem;
+        @include flex(flex-start, flex-start);
+        flex-direction: column;
+        padding: 40px 50px 0;
+        position: relative;
+        border-radius: 5px;
+        overflow: scroll;
+
+        &__text {
+            font-size: 1.4rem;
+        }
+
+        & > * ~ * {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+
+        &__form {
+            width: 100%;
+            padding: 20px 0 0;
+
+            &__inner {
+            @include flex(flex-start, space-between);
+
+                &__list {
+                    
+                    &__item {
+                        &__contact {
+                             @include flex(center, flex-start);
+
+                            &__name {
+                                font-size: 1.2rem;
+                                font-weight: 500;
+                            }
+
+                            &__bulkhead {
+                                margin: 0 10px;
+                                height: 20px;
+                                width: 1px;
+                                background-color: #ccc;
+                            }
+
+                            &__phone {
+                                font-size: 1.1rem
+                            }
+
+                        }
+
+                        &__address {
+                            font-size: 1rem;
+                            font-weight: 500;
+                            color: #999;
+                            margin-top: 10px;
+                        }
+                    }
+                }
+    
+                &__options {
+                    &__update-delete {
+                        height: 20px;
+                        @include flex(center, flex-end);
+
+                        &__update {
+                            margin-right: 20px;
+                            font-size: 1.2rem;
+                            cursor: pointer;
+                            color: $main-color;
+                        }
+
+                        &__delete {
+                            font-size: 1.2rem;
+                            cursor: pointer;
+                            color: $main-color;
+
+                        }
+
+                    }
+
+                    &__default {
+                        height: 35px;
+                        margin-top: 5px;
+                        border: 1px solid #ccc;
+                        padding: 0 5px;
+                        cursor: pointer;
+                        border-radius: 2px;
+
+                        &:hover {
+                            background-color: #d9d9d9;
+                        }
+                    }
+                }
+            }
+
+            &__status {
+                width: 80px;
+                border: 1px solid $main-color;
+                margin-top: 10px;
+                @include flex(center, center);
+                font-weight: 500;
+                color: $main-color;
+            }
+        }
+
+    }
+}

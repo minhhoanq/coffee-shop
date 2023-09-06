@@ -17,6 +17,7 @@ import Ingredient from "../pages/admin/ingredient-page/ingredient/Ingredient";
 import Profile from "../pages/profile/Profile";
 import Payment from "../pages/payment/Payment";
 import DefaultLayoutUser from "../components/layout/defaultlayoutuser/DefaultLayoutUser";
+import Address from "../pages/address/Address";
 
 //Public routes
 const publicRoutes = [
@@ -24,6 +25,7 @@ const publicRoutes = [
     { path: '/user/account', component: Profile, layout: DefaultLayoutUser},
     { path: '/user/account/profile', component: Profile, layout: DefaultLayoutUser},
     { path: '/user/account/payment', component: Payment, layout: DefaultLayoutUser},
+    { path: '/user/account/address', component: Address, layout: DefaultLayoutUser},
     { path: '/shop', component: Shop},
     { path: '/shop/:slug', component: DetailProduct},
     { path: '/cart', component: Cart},
