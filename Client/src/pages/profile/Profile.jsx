@@ -25,7 +25,7 @@ const Profile = () => {
                     </fieldset>
                     <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={false}>
                         <legend>Tên</legend>
-                        <input type="text" name="name" id="name" placeholder="Tên" value={user.dataUser.firstname}/>
+                        <input type="text" name="name" id="name" placeholder="Tên" value={user.dataUser.lastname}/>
                     </fieldset>
 
                     <select className="profile__wrapper__form__fielset" id="sexs" name="sexs" value={`${user.dataUser.sex === 'Nam' ? '1': '2'}`}>

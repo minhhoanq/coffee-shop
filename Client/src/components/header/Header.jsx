@@ -34,8 +34,15 @@ const options = [
     },
 
     {
+        icon: 'ri-file-list-2-line',
+        title: 'Đơn mua',
+        path:'',
+    },
+
+    {
         icon: 'ri-earth-fill',
         title: 'Ngôn ngữ',
+        path:'',
         children: {
             title: 'Ngôn ngữ',
             data: [
