@@ -41,6 +41,16 @@ const userController = {
         }
     },
 
+    updateUserByUser: async(req, res) => {
+        try {
+            const response = await userService.updateUserByUserService(req.body);
+
+            return res.status(200).json(response);
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
+
     //Detele user
     softDeleteUser: async(req, res) => {
         try {

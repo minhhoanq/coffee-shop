@@ -45,7 +45,7 @@ export const TabReviews = props => {
     const reviews = props.reviews;
     const product = props.product;
     const user = useSelector(state => state.auth?.currentUser);
-    const accessToken = user?.generateAccessToken;
+    const accessToken = user?.token;
 
     const handleSubmitRating = async(e) => {
 

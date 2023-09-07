@@ -18,7 +18,7 @@ const Address = () => {
                     Địa chỉ
                 </span>
 
-                <ul className="address__wrapper__form__w">
+                {/* <ul className="address__wrapper__form__w">
                     <li className="address__wrapper__form__w">
                         <div className="address__wrapper__form__w__inner">
                             <div className="address__wrapper__form__w__inner__list">
@@ -198,7 +198,15 @@ const Address = () => {
 
                         <div className="address__wrapper__form__w__status">Mặc định</div>
                     </li>
-                </ul>
+                </ul> */}
+
+                <span className="address__wrapper__no-linked">
+                    <i class="ri-map-pin-line"></i>
+                    Hãy cho chúng tôi biết địa chỉ cá nhân, công ty, ... của bạn.
+                {/* <span className="address__wrapper__no-linked__tips">
+                    Hãy thêm tài khoản ngân hàng để tiện lợi hơn trong việc mua hàng bạn nhé.
+                </span> */}
+            </span>
             </div>
         </div>
     )

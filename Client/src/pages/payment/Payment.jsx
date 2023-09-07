@@ -45,7 +45,7 @@ const Payment = () => {
             </Modal>
         </div>
         <div className="payment__wrapper">
-            <ul className="payment__wrapper__form__w">
+            {/* <ul className="payment__wrapper__form__w">
                 <li className="payment__wrapper__form__w">
                     <div className="payment__wrapper__form__w__inner">
                         <div className="payment__wrapper__form__w__inner__list">
@@ -81,7 +81,15 @@ const Payment = () => {
                         </div>
                     </div>
                 </li>
-            </ul>
+            </ul> */}
+
+            <span className="payment__wrapper__no-linked">
+                Bạn chưa liên kết tài khoản ngân hàng
+                <span className="payment__wrapper__no-linked__tips">
+                    Hãy thêm tài khoản ngân hàng để tiện lợi hơn trong việc mua hàng bạn nhé.
+                </span>
+            </span>
+            
         </div>
     </div>
     )

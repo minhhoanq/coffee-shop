@@ -51,37 +51,13 @@ const DefaultLayoutUser = props => {
         {
             icon: <StaffIcon/>,
             iconActive: <StaffIconActive/>,
-            title: "Nhân viên",
+            title: "Đơn mua",
             path: "/user/abc/xyz",
-            children: {
-                data: [
-                    {
-                        title: 'Hồ sơ',
-                        path: '/user/account/profile'
-                    },
-                    {
-                        title: 'Ngân hàng',
-                        path: '/user/account/payment'
-                    },
-                    {
-                        title: 'Địa chỉ',
-                        path: '/user/account/address'
-                    },
-                    {
-                        title: 'Đổi mật khẩu',
-                        path: '/user/account/password'
-                    },
-                    {
-                        title: 'Cài đặt thông báo',
-                        path: '/user/account/notification'
-                    }
-                ]
-            }
         },
         {
             icon: <CustomerIcon/>,
             iconActive: <CustomerIconActive/>,
-            title: "Khách hàng",
+            title: "Cài đặt",
             path: "/user/bcd/xyc",
         },
     ]

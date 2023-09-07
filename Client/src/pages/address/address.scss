@@ -152,5 +152,15 @@
             }
         }
 
+        &__no-linked {
+            margin: auto;
+            font-size: 1.6rem;
+            @include flex(center, center);
+            flex-direction: column;
+
+            i {
+                font-size: 4rem;
+            }
+        }
     }
 }

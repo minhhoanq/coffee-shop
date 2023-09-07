@@ -90,6 +90,34 @@ const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, rejec
     }
 });
 
+const updateUserByUserService = ( user ) => new Promise( async(resolve, reject) => {
+    const id = user.id;
+    if(!id || Object.keys(user).length === 0) reject("Chưa nhận được id user!");
+    try {
+            const email = user.email;
+            const username = user.username;
+            const password = user.password;
+            const firstname = user.firstname;
+            const lastname = user.lastname;
+            const image = user.image;
+            const sex = user.sex;
+            const phone = user.phone;
+            const birth = user.birth;
+            const address = user.address;
+            //
+            const response = await db.User.update({email, username, password, firstname, lastname, image, sex, phone, birth, address}, {
+                where: {id}
+            });
+        resolve({
+            err: response ? 0 : 1,
+            mes: response ? "Cập nhật thành công!" : "Cập nhật thất bại!",
+            data: response,
+        })
+    } catch (error) {
+        reject(error);
+    }
+}) 
+
 const softDeleteUserbyIdService = ({ id }) => new Promise( async(resolve, reject) => {
     if(!id) reject("Chưa nhận được id user!");
     try {
@@ -148,4 +176,13 @@ const restoreUserByIdService = ({ id }) => new Promise( async(resolve, reject) =
     }
 });
 
-module.exports = { getAllUserService, getAllUserSoftDeteleService, getUserByIdService, updateUserByIdService, softDeleteUserbyIdService, hardDeleteUserbyIdService, restoreUserByIdService };
+module.exports = { 
+    getAllUserService, 
+    getAllUserSoftDeteleService, 
+    getUserByIdService, 
+    updateUserByIdService, 
+    softDeleteUserbyIdService, 
+    hardDeleteUserbyIdService, 
+    restoreUserByIdService,
+    updateUserByUserService
+};
