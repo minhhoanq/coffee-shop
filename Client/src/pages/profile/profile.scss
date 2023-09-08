@@ -28,6 +28,44 @@
         position: relative;
         border-radius: 5px;
 
+        &__btn-edit {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            @include flex(center, center);
+            font-size: 2rem;
+            border: 1px solid #ccc;
+            border-radius: 50px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0rem 0rem 0.5rem;
+            cursor: pointer;
+
+            &__ic-active {
+                display: none;
+            }
+            
+            &:hover {
+                background-color: #ccc;
+            }
+
+            &.active > &__ic-active {
+                display: flex;
+                background-color: #ccc;
+                width: 40px;
+                height: 40px;
+                @include flex(center, center);
+                font-size: 2rem;
+                border: 1px solid #ccc;
+                border-radius: 50px;
+                box-shadow: rgba(0, 0, 0, 0.2) 0rem 0rem 0.5rem;
+            }
+
+            &.active > &__ic {
+                display: none;
+            }
+        }
+
         &__form {
             width: 60%;
             height: 90%;
@@ -61,6 +99,7 @@
             height: 90%;
             @include flex(center, center);
             flex-direction: column;
+            
 
             & > * ~ * {
                 margin-top: 20px;
@@ -81,6 +120,37 @@
                 font-weight: 500;
                 color: #999;
                 width: 200px;
+            }
+
+            &__input {
+                display: none;
+            }
+
+            label {
+                outline: 0;
+                background: #fff;
+                // color: #555;
+                font-size: 1.1rem;
+                font-weight: 500;
+                border: 1px solid rgba(0,0,0,.09);
+                border-radius: 2px;
+                box-shadow: 0 1px 1px 0 rgba(0,0,0,.03);
+                position: relative;
+                overflow: visible;
+                width: 100px;
+                height: 35px;
+                @include flex(center, center);
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #ccc;
+                }
+
+                &.disable {
+                    color: #999;
+                    cursor: no-drop;
+                    background-color: #ccc;
+                }
             }
         }
 

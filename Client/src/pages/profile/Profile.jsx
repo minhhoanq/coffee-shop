@@ -21,17 +21,29 @@ const Profile = () => {
         },
         validationSchema: Yup.object({
             username: Yup.string().required("Vui lòng nhập tên đăng nhập."),
-            // password: Yup.string().required("Vui lòng nhập mật khẩu."),
+            firstname: Yup.string().required("Vui lòng nhập họ của bạn."),
+            lastname: Yup.string().required("Vui lòng nhập tên của bạn."),
+            email: Yup.string().required("Vui lòng nhập email của bạn.").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Vui lòng nhập đúng định dạng email."),
+            phone: Yup.string().required("Vui lòng nhập số điện thoại.").matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, "Số điện thoại phải là số và tối thiểu 10 kí tự."),
         })
         ,
         onSubmit: async(values) => {
             console.log(values)
         }
-    })
+    });
+
+    const handleEditProfile = (e) => {
+        e.preventDefault();
+
+        setEdit(!edit);
+        const btn = document.querySelector('#btn-edit');
+
+        btn.classList.toggle('active');
+    }
     
     return (
         <div className="profile">
-            <span className="profile__title" onClick={() => setEdit(!edit)}>Hồ sơ của tôi</span>
+            <span className="profile__title">Hồ sơ của tôi</span>
             <span className="profile__title-2">Quản lý thông tin hồ sơ để bảo mật tài khoản</span>
 
             <form className="profile__wrapper" onSubmit={formik.handleSubmit}>
@@ -49,8 +61,8 @@ const Profile = () => {
                     </fieldset>
 
                     {formik.errors.username && (
-                            <p className="login__container__wrapper__form__error"> {formik.errors.username} </p>
-                        )}
+                        <p className="login__container__wrapper__form__error"> {formik.errors.username} </p>
+                    )}
                     <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={edit} >
                         <legend>Họ</legend>
                         <input 
@@ -63,6 +75,10 @@ const Profile = () => {
 
                         />
                     </fieldset>
+
+                    {formik.errors.firstname && (
+                        <p className="login__container__wrapper__form__error"> {formik.errors.firstname} </p>
+                    )}
                     <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={edit}>
                         <legend>Tên</legend>
                         <input 
@@ -75,7 +91,9 @@ const Profile = () => {
 
                         />
                     </fieldset>
-
+                    {formik.errors.lastname && (
+                        <p className="login__container__wrapper__form__error"> {formik.errors.lastname} </p>
+                    )}
                     <select 
                         className="profile__wrapper__form__fielset" 
                         id="sex" name="sex" 
@@ -109,7 +127,9 @@ const Profile = () => {
 
                         />
                     </fieldset>
-
+                    {formik.errors.phone && (
+                        <p className="login__container__wrapper__form__error"> {formik.errors.phone} </p>
+                    )}
                     <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={edit}>
                         <legend>Địa chỉ email</legend>
                         <input 
@@ -122,16 +142,36 @@ const Profile = () => {
 
                         />
                     </fieldset>
+                    {formik.errors.email && (
+                        <p className="login__container__wrapper__form__error"> {formik.errors.email} </p>
+                    )}
                 </div>
-
+                
                 <div className="profile__wrapper__img">
                     <img 
                         src={user.dataUser.image} 
                         alt="avatar"
                     />
-                    <input type="file"/>
+                    <input 
+                        id="input-file-img" 
+                        className="profile__wrapper__img__input" 
+                        accept=".jpg,.jpeg,.png" 
+                        type="file" 
+                        disabled={edit}
+                    />
+                    <label for={`input-file-img`} className={`${edit ? 'disable' : ''}`}>Chọn ảnh</label>
                     <span>Dụng lượng file tối đa 1 MB Định dạng:.JPEG, .PNG</span>
                 </div>
+
+                <button
+                    id="btn-edit" 
+                    className="profile__wrapper__btn-edit"
+                    onClick={handleEditProfile}
+                    >
+                    <i class="ri-pencil-line profile__wrapper__btn-edit__ic"></i>
+                    <i class="ri-pencil-fill profile__wrapper__btn-edit__ic-active"></i>
+                </button>
+
                 <button className="profile__wrapper__btn" type="submit">Lưu</button>
             </form>
         </div>
