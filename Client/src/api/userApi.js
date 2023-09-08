@@ -1,4 +1,5 @@
 import request from "../utils/request";
+
 import { softDeleteStart,
          softDeleteSuccess,
          softDeleteError
@@ -46,16 +47,25 @@ export const getUserById = async (id, accessToken) => {
     }
 }
 
+export const getUserProfile = async(id) => {
+    const res = await request.get('/api/v1/users/get_profile', {
+        params: {
+            id,
+        }
+    });
+    return res;
+}
+
 export const softDeleteUserById = async(id, dispatch, navigate) => {
-    dispatch(softDeleteStart());
-    try {
-        const res = await request.delete(`/api/v1/users/${id}`);
-        dispatch(softDeleteSuccess());
-        navigate('/admin/staff')
-        return res;
-    } catch (error) {
-        dispatch(softDeleteError());
-    }
+    // dispatch(softDeleteStart());
+    // try {
+    //     const res = await request.delete(`/api/v1/users/${id}`);
+    //     dispatch(softDeleteSuccess());
+    //     navigate('/admin/staff')
+    //     return res;
+    // } catch (error) {
+    //     dispatch(softDeleteError());
+    // }
 }
 
 export const hardDeleteUserById = async(id) => {
@@ -74,4 +84,15 @@ export const restoreUserById = async(id) => {
     } catch (error) {
         return error;
     }
+}
+
+export const updateUserbyUser = async(accessToken, user) => {
+
+    const res = await request.put('/api/v1/users/update_profile', user , {
+        headers: ({
+            token: `Bearer ${accessToken}`
+        })
+    });
+
+    return res;
 }

@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import './profile.scss';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { updateUserbyUserAction } from "../../redux/asyncActions/userActions";
 
 const Profile = () => {
     const user = useSelector((state) => state.auth?.currentUser);
+    const accessToken = user?.token;
     const [edit, setEdit] = useState(true);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        // const getProfile = await 
+    })
 
     const formik = useFormik({
         initialValues: {
+            id: user.dataUser.id,
             username: user.dataUser.username,
             firstname: user.dataUser.firstname,
             lastname: user.dataUser.lastname,
@@ -28,7 +36,9 @@ const Profile = () => {
         })
         ,
         onSubmit: async(values) => {
-            console.log(values)
+            const data = { accessToken, values};
+            const res = await dispatch(updateUserbyUserAction(data));
+            console.log(res);
         }
     });
 
