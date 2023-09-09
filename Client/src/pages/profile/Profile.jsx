@@ -4,7 +4,7 @@ import './profile.scss';
 import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { updateUserbyUserAction } from "../../redux/asyncActions/userActions";
+import { updateUserbyUserAction } from "../../redux/asyncActions/authActions";
 
 const Profile = () => {
     const user = useSelector((state) => state.auth?.currentUser);

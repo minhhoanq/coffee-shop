@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginActions, logoutActions, registerActions } from "../asyncActions/authActions";
+import { loginActions, logoutActions, registerActions, updateUserbyUserAction } from "../asyncActions/authActions";
 
 const initialState = {
     currentUser: null,
@@ -112,6 +112,24 @@ const authSlice = createSlice({
             state.isFetching = false;
             state.error = true;
         })
+
+        //Update User by User 
+        builder.addCase(updateUserbyUserAction.pending, (state) => {
+            state.isFetching = true;
+            state.error = false;
+        })
+
+        builder.addCase(updateUserbyUserAction.fulfilled, (state, action) => {
+            state.isFetching = false;
+            state.currentUser = action.payload;
+            state.error = false;
+        })
+
+        builder.addCase(updateUserbyUserAction.rejected, (state) => {
+            state.isFetching = false;
+            state.error = true;
+        })
+            
     }
 });
 

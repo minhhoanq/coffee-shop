@@ -1,10 +1,5 @@
 import request from "../utils/request";
 
-import { softDeleteStart,
-         softDeleteSuccess,
-         softDeleteError
-        } from "../redux/slice/userSlice";
-
 export const getAllStaff = async (accessToken) => {
     try {
         const res = await request.get('/api/v1/users', {

@@ -6,6 +6,8 @@ const userController = require("../controllers/userController");
 //Get all user
 router.get("/", isAuth.verifyTokenAndAdminAuth, userController.getAllUser);
 
+router.get("/get_profile", userController.getUserProfile);
+
 //Get all user soft delete
 router.get("/trash", userController.getAllUserSoftDelete);
 
@@ -14,9 +16,9 @@ router.get("/:id", isAuth.verifyToken, userController.getUserById);
 
 //Update User by User
 router.put("/update_profile", isAuth.verifyToken, userController.updateUserByUser);
+
 //Update user by id
 router.put("/:id", userController.updateUser);
-
 
 //Delete user by id (soft delete)
 router.delete("/:id", isAuth.verifyTokenAndAdminAuth, userController.softDeleteUser);

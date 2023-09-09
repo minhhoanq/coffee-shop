@@ -323,7 +323,7 @@ const authController = {
                     path:"/",
                     sameSite:"strict",
                 })
-                const { passwordResetExpires, passwordResetToken, password, refreshToken, createdAt, updatedAt, deletedAt, ...others } = user.dataValues;
+                const { passwordChangedAt, passwordResetExpires, passwordResetToken, password, refreshToken, createdAt, updatedAt, deletedAt, ...others } = user.dataValues;
 
                 return res.status(200).json(
                     {

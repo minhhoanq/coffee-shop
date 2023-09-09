@@ -19,6 +19,40 @@ const getAllUserService = ({roles}) => new Promise( async(resolve, reject) => {
     }
 });
 
+const getUserProfileService = (id) => new Promise( async(resolve, reject) => {
+    console.log(id);
+    if(!id) reject("Chưa nhận được id User");
+    try {
+        const response = await db.User.findOne({
+            where: {
+                id
+            },
+            attributes: 
+                ['id',
+                 'email',
+                 'username', 
+                 'firstname',
+                 'lastname', 
+                 'roles', 
+                 'sex', 
+                 'phone', 
+                 'address', 
+                 'image',
+                 'createdAt',
+                 'updatedAt'
+                ],
+        });
+
+        resolve({
+            err: response ? 0 : 1,
+            mes: response ? 'Lấy thành công hồ sơ người dùng.' : 'Xảy ra lỗi, vui lòng thử lại sau!',
+            data: response
+        })
+    } catch (error) {
+        reject(error)
+    }
+})
+
 const getAllUserSoftDeteleService = ({roles}) => new Promise( async(resolve, reject) => {
     try {
         const response = await db.User.findAll({
@@ -106,12 +140,20 @@ const updateUserByUserService = ( user ) => new Promise( async(resolve, reject) 
             const address = user.address;
             //
             const response = await db.User.update({email, username, password, firstname, lastname, image, sex, phone, birth, address}, {
-                where: {id}
+                where: {id},
             });
+
+            const userData = await db.User.findOne({
+                where: {
+                    id
+                },
+                attributes: ['id', 'email', 'username', 'firstname', 'lastname', 'image', 'roles', 'sex', 'phone', 'birth', 'address'],
+
+            })
         resolve({
             err: response ? 0 : 1,
             mes: response ? "Cập nhật thành công!" : "Cập nhật thất bại!",
-            data: response,
+            data: userData,
         })
     } catch (error) {
         reject(error);
@@ -177,7 +219,8 @@ const restoreUserByIdService = ({ id }) => new Promise( async(resolve, reject) =
 });
 
 module.exports = { 
-    getAllUserService, 
+    getAllUserService,
+    getUserProfileService,
     getAllUserSoftDeteleService, 
     getUserByIdService, 
     updateUserByIdService, 

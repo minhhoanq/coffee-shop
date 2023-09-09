@@ -12,6 +12,16 @@ const userController = {
         }
     },
 
+    getUserProfile: async(req, res) => {
+        try {
+            const response = await userService.getUserProfileService(req.query);
+
+            return res.status(200).json(response);
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
+
     getAllUserSoftDelete: async(req, res) => {
         try {
             const response = await userService.getAllUserSoftDeteleService(req.query);
