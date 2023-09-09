@@ -36,7 +36,8 @@ const getUserProfileService = (user, token) => new Promise( async(resolve, rejec
                  'lastname',
                  'roles', 
                  'sex',
-                 'phone', 
+                 'phone',
+                 'birth', 
                  'address', 
                  'image',
                  'createdAt',
@@ -127,6 +128,7 @@ const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, rejec
 
 const updateUserByUserService = ( user ) => new Promise( async(resolve, reject) => {
     const id = user.id;
+    
     if(!id || Object.keys(user).length === 0) reject("Chưa nhận được id user!");
     try {
             const email = user.email;

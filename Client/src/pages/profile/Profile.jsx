@@ -11,11 +11,8 @@ const Profile = () => {
     const accessToken = user?.token;
     const [edit, setEdit] = useState(true);
     const dispatch = useDispatch();
-    console.log(user)
 
-    // useEffect(() => {
-    //     formik.values.
-    // },[user]);
+    console.log(user)
 
     const formik = useFormik({
         initialValues: {
@@ -27,6 +24,7 @@ const Profile = () => {
             birth: user.dataUser.birth,
             phone: user.dataUser.phone,
             email: user.dataUser.email,
+            image: '',
         },
         validationSchema: Yup.object({
             username: Yup.string().required("Vui lòng nhập tên đăng nhập."),
@@ -38,9 +36,10 @@ const Profile = () => {
         ,
         onSubmit: async(values) => {
             const data = { accessToken, values};
-            await dispatch(updateUserbyUserAction(data));
-            await dispatch(getProfileActions(accessToken));
-            setEdit(true);
+            console.log(data)
+            // await dispatch(updateUserbyUserAction(data));
+            // await dispatch(getProfileActions(accessToken));
+            // setEdit(true);
         }
     });
 
@@ -123,7 +122,6 @@ const Profile = () => {
                             type="date" id="birth" name="birth"
                             onChange={formik.handleChange}
                             value={formik.values.birth}
-
                         />
                     </fieldset>
 
@@ -165,13 +163,16 @@ const Profile = () => {
                         alt="avatar"
                     />
                     <input 
-                        id="input-file-img" 
+                        id="image" 
+                        name="image"
                         className="profile__wrapper__img__input" 
                         accept=".jpg,.jpeg,.png" 
-                        type="file" 
+                        type="file"
                         disabled={edit}
+                        onChange={formik.handleChange}
+                        value={formik.values.image}
                     />
-                    <label for={`input-file-img`} className={`${edit ? 'disable' : ''}`}>Chọn ảnh</label>
+                    <label for={`image`} className={`${edit ? 'disable' : ''}`}>Chọn ảnh</label>
                     <span>Dụng lượng file tối đa 1 MB Định dạng:.JPEG, .PNG</span>
                 </div>
 
