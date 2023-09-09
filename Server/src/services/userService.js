@@ -19,8 +19,9 @@ const getAllUserService = ({roles}) => new Promise( async(resolve, reject) => {
     }
 });
 
-const getUserProfileService = (id) => new Promise( async(resolve, reject) => {
-    console.log(id);
+const getUserProfileService = (user, token) => new Promise( async(resolve, reject) => {
+    const id = user.id;
+    const generateAccessToken = token.split(" ")[1];
     if(!id) reject("Chưa nhận được id User");
     try {
         const response = await db.User.findOne({
@@ -32,9 +33,9 @@ const getUserProfileService = (id) => new Promise( async(resolve, reject) => {
                  'email',
                  'username', 
                  'firstname',
-                 'lastname', 
+                 'lastname',
                  'roles', 
-                 'sex', 
+                 'sex',
                  'phone', 
                  'address', 
                  'image',
@@ -44,9 +45,9 @@ const getUserProfileService = (id) => new Promise( async(resolve, reject) => {
         });
 
         resolve({
-            err: response ? 0 : 1,
-            mes: response ? 'Lấy thành công hồ sơ người dùng.' : 'Xảy ra lỗi, vui lòng thử lại sau!',
-            data: response
+            success: true,
+            dataUser: response, 
+            token: generateAccessToken
         })
     } catch (error) {
         reject(error)
@@ -142,18 +143,10 @@ const updateUserByUserService = ( user ) => new Promise( async(resolve, reject) 
             const response = await db.User.update({email, username, password, firstname, lastname, image, sex, phone, birth, address}, {
                 where: {id},
             });
-
-            const userData = await db.User.findOne({
-                where: {
-                    id
-                },
-                attributes: ['id', 'email', 'username', 'firstname', 'lastname', 'image', 'roles', 'sex', 'phone', 'birth', 'address'],
-
-            })
         resolve({
             err: response ? 0 : 1,
             mes: response ? "Cập nhật thành công!" : "Cập nhật thất bại!",
-            data: userData,
+            data: response,
         })
     } catch (error) {
         reject(error);

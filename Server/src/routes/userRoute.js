@@ -6,7 +6,7 @@ const userController = require("../controllers/userController");
 //Get all user
 router.get("/", isAuth.verifyTokenAndAdminAuth, userController.getAllUser);
 
-router.get("/get_profile", userController.getUserProfile);
+router.get("/get_profile", isAuth.verifyToken, userController.getUserProfile);
 
 //Get all user soft delete
 router.get("/trash", userController.getAllUserSoftDelete);

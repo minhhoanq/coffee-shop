@@ -14,7 +14,7 @@ const userController = {
 
     getUserProfile: async(req, res) => {
         try {
-            const response = await userService.getUserProfileService(req.query);
+            const response = await userService.getUserProfileService(req.user, req.headers.token);
 
             return res.status(200).json(response);
         } catch (error) {

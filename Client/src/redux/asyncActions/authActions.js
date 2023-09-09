@@ -36,6 +36,15 @@ export const logoutActions = createAsyncThunk('auth/logout', async(data, { rejec
     }
 })
 
+export const getProfileActions = createAsyncThunk('user/getProfile', async(data, { rejectWithValue }) => {
+    try {
+        const res = await userApi.getUserProfile(data);
+        return res.data;
+    } catch (error) {
+        return rejectWithValue(error);
+    }
+})
+
 export const updateUserbyUserAction = createAsyncThunk('user/updateUser', async(data, { rejectWithValue }) => {
     try {
         const res = await userApi.updateUserbyUser(data.accessToken, data.values);
