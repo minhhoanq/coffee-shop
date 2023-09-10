@@ -12,8 +12,6 @@ const Profile = () => {
     const [edit, setEdit] = useState(true);
     const dispatch = useDispatch();
 
-    console.log(user)
-
     const formik = useFormik({
         initialValues: {
             id: user.dataUser.id,
@@ -35,11 +33,21 @@ const Profile = () => {
         })
         ,
         onSubmit: async(values) => {
+            // const formData = new FormData();
+            // if(values.image.length > 0) formData.append('image', values.image)
+            // delete values.image
+            
+            // console.log(data);
+            // for(let i of Object.entries(values)) formData.append(i[0], i[1])
             const data = { accessToken, values};
-            console.log(data)
-            // await dispatch(updateUserbyUserAction(data));
-            // await dispatch(getProfileActions(accessToken));
-            // setEdit(true);
+            // const obj = {
+                
+            // }
+            
+            // console.log(accessToken, [...formData])
+            await dispatch(updateUserbyUserAction(data));
+            await dispatch(getProfileActions());
+            setEdit(true);
         }
     });
 
@@ -172,7 +180,7 @@ const Profile = () => {
                         onChange={formik.handleChange}
                         value={formik.values.image}
                     />
-                    <label for={`image`} className={`${edit ? 'disable' : ''}`}>Chọn ảnh</label>
+                    <label htmlFor={`image`} className={`${edit ? 'disable' : ''}`}>Chọn ảnh</label>
                     <span>Dụng lượng file tối đa 1 MB Định dạng:.JPEG, .PNG</span>
                 </div>
 

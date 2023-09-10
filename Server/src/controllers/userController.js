@@ -53,7 +53,7 @@ const userController = {
 
     updateUserByUser: async(req, res) => {
         try {
-            const response = await userService.updateUserByUserService(req.body);
+            const response = await userService.updateUserByUserService(req.body, req.file);
 
             return res.status(200).json(response);
         } catch (error) {

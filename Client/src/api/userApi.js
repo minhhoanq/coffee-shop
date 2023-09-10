@@ -43,12 +43,7 @@ export const getUserById = async (id, accessToken) => {
 }
 
 export const getUserProfile = async(accessToken) => {
-    const res = await request.get('/api/v1/users/get_profile',
-    {
-        headers:({
-            token: `Bearer ${accessToken}`
-        })
-    });
+    const res = await request.get('/api/v1/users/get_profile');
     return res;
 }
 

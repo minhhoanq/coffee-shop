@@ -126,23 +126,15 @@ const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, rejec
     }
 });
 
-const updateUserByUserService = ( user ) => new Promise( async(resolve, reject) => {
+const updateUserByUserService = ( user, avatar ) => new Promise( async(resolve, reject) => {
     const id = user.id;
-    
     if(!id || Object.keys(user).length === 0) reject("Chưa nhận được id user!");
+    const { email, username, password, firstname, lastname, sex, phone, birth, address } = user;
+    const data = { email, username, password, firstname, lastname, sex, phone, birth, address }
+    if(avatar) data.image = avatar.path;
     try {
-            const email = user.email;
-            const username = user.username;
-            const password = user.password;
-            const firstname = user.firstname;
-            const lastname = user.lastname;
-            const image = user.image;
-            const sex = user.sex;
-            const phone = user.phone;
-            const birth = user.birth;
-            const address = user.address;
             //
-            const response = await db.User.update({email, username, password, firstname, lastname, image, sex, phone, birth, address}, {
+            const response = await db.User.update( data, {
                 where: {id},
             });
         resolve({

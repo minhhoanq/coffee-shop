@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const isAuth = require("../middlewares/isAuth");
+const uploader = require("../config/cloudinary.config");
 
 const userController = require("../controllers/userController");
 
@@ -18,7 +19,7 @@ router.get("/:id", isAuth.verifyToken, userController.getUserById);
 router.put("/update_profile", isAuth.verifyToken, userController.updateUserByUser);
 
 //Update user by id
-router.put("/:id", userController.updateUser);
+router.put("/:id", isAuth.verifyToken, uploader.single('image'), userController.updateUser);
 
 //Delete user by id (soft delete)
 router.delete("/:id", isAuth.verifyTokenAndAdminAuth, userController.softDeleteUser);

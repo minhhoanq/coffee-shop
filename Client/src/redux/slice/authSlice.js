@@ -3,6 +3,7 @@ import { getProfileActions, loginActions, logoutActions, registerActions, update
 
 const initialState = {
     currentUser: null,
+    token: null,
     isFetching: false,
     error:false,
 }
@@ -86,7 +87,8 @@ const authSlice = createSlice({
 
         builder.addCase(loginActions.fulfilled, (state, action) => {
             state.isFetching = false;
-            state.currentUser = action.payload;
+            state.currentUser = action.payload.dataUser;
+            state.token = action.payload.token;
             state.error = false;
         })
 
@@ -105,6 +107,7 @@ const authSlice = createSlice({
         builder.addCase(logoutActions.fulfilled, (state, action) => {
             state.isFetching = false;
             state.currentUser = null;
+            state.token = null;
             state.error = false;
         })
 
