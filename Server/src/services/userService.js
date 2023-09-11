@@ -126,8 +126,9 @@ const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, rejec
     }
 });
 
-const updateUserByUserService = ( user, avatar ) => new Promise( async(resolve, reject) => {
-    const id = user.id;
+const updateUserByUserService = ({id},  user, avatar ) => new Promise( async(resolve, reject) => {
+    console.log(id);
+    console.log(user);
     if(!id || Object.keys(user).length === 0) reject("Chưa nhận được id user!");
     const { email, username, password, firstname, lastname, sex, phone, birth, address } = user;
     const data = { email, username, password, firstname, lastname, sex, phone, birth, address }

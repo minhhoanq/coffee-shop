@@ -62,7 +62,6 @@ const authSlice = createSlice({
         // },
     },
     extraReducers: (builder) => {
- 
         //register
         builder.addCase(registerActions.pending, (state) => {
             state.isFetching = true;
@@ -125,7 +124,8 @@ const authSlice = createSlice({
 
         builder.addCase(getProfileActions.fulfilled, (state, action) => {
             state.isFetching = false;
-            state.currentUser = action.payload;
+            state.currentUser = action.payload.dataUser;
+            state.token = action.payload.token;
             state.error = false;
         })
 

@@ -5,8 +5,8 @@ const request = axios.create({
 });
 
 request.interceptors.request.use(function (config) {
-    const token = localStorage.getItem('persist:shop/user');
-    console.log(JSON.parse(token).token)
+    const userLocalstorage = JSON.parse(localStorage.getItem('persist:shop/user'));
+    const token = JSON.parse(userLocalstorage.token);
     config.headers.token =  token ? `Bearer ${token}` : '';
     return config;
 });

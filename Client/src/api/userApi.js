@@ -42,7 +42,7 @@ export const getUserById = async (id, accessToken) => {
     }
 }
 
-export const getUserProfile = async(accessToken) => {
+export const getUserProfile = async() => {
     const res = await request.get('/api/v1/users/get_profile');
     return res;
 }
@@ -77,13 +77,10 @@ export const restoreUserById = async(id) => {
     }
 }
 
-export const updateUserbyUser = async(accessToken, user) => {
-
-    const res = await request.put('/api/v1/users/update_profile', user , {
-        headers: ({
-            token: `Bearer ${accessToken}`
-        })
-    });
+export const updateUserbyUser = async(user) => {
+    const res = await request.put('/api/v1/users/update_profile', user);
 
     return res;
 }
+
+// Tương tác với khách hàng => Đề xuất sản phẩm kích thích nhu cầu mua hàng.

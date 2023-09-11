@@ -8,21 +8,20 @@ import { getProfileActions, updateUserbyUserAction } from "../../redux/asyncActi
 
 const Profile = () => {
     const user = useSelector((state) => state.auth?.currentUser);
-    const accessToken = user?.token;
     const [edit, setEdit] = useState(true);
     const dispatch = useDispatch();
 
     const formik = useFormik({
         initialValues: {
-            id: user.dataUser.id,
-            username: user.dataUser.username,
-            firstname: user.dataUser.firstname,
-            lastname: user.dataUser.lastname,
-            sex: user.dataUser.sex,
-            birth: user.dataUser.birth,
-            phone: user.dataUser.phone,
-            email: user.dataUser.email,
-            image: '',
+            id: user.id,
+            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            sex: user.sex,
+            birth: user.birth,
+            phone: user.phone,
+            email: user.email,
+            image: user.image,
         },
         validationSchema: Yup.object({
             username: Yup.string().required("Vui lòng nhập tên đăng nhập."),
@@ -39,13 +38,18 @@ const Profile = () => {
             
             // console.log(data);
             // for(let i of Object.entries(values)) formData.append(i[0], i[1])
-            const data = { accessToken, values};
             // const obj = {
                 
             // }
+
+            // if(values.image === '') {
+            //     const { image } = values;
+            // }
+            // console.log(orthers);
             
             // console.log(accessToken, [...formData])
-            await dispatch(updateUserbyUserAction(data));
+            // console.log(values);
+            await dispatch(updateUserbyUserAction(values));
             await dispatch(getProfileActions());
             setEdit(true);
         }
@@ -167,7 +171,7 @@ const Profile = () => {
                 
                 <div className="profile__wrapper__img">
                     <img 
-                        src={user.dataUser.image} 
+                        src={user.image} 
                         alt="avatar"
                     />
                     <input 
@@ -178,7 +182,6 @@ const Profile = () => {
                         type="file"
                         disabled={edit}
                         onChange={formik.handleChange}
-                        value={formik.values.image}
                     />
                     <label htmlFor={`image`} className={`${edit ? 'disable' : ''}`}>Chọn ảnh</label>
                     <span>Dụng lượng file tối đa 1 MB Định dạng:.JPEG, .PNG</span>

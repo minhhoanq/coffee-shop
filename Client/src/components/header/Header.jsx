@@ -83,10 +83,10 @@ const Header = () => {
     const user = useSelector(state => state.auth?.currentUser);
     // let axiosJWT = createAxios(user, dispatch, logoutSuccess);
     const isFetching = useSelector(state => state.auth?.isFetching)
-    console.log(isFetching)
-    
+
+    console.log(user)
     const accessToken = user?.token;
-    const id = user?.dataUser.id;
+    const id = user?.id;
 
     const HandleMenuChange = (menuItem) => {
         switch (menuItem.type) {

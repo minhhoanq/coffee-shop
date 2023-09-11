@@ -13,7 +13,7 @@ router.get("/get_profile", isAuth.verifyToken, userController.getUserProfile);
 router.get("/trash", userController.getAllUserSoftDelete);
 
 //Get user by id
-router.get("/:id", isAuth.verifyToken, userController.getUserById);
+router.get("/:id", isAuth.verifyToken, userController.getUserById); 
 
 //Update User by User
 router.put("/update_profile", isAuth.verifyToken, userController.updateUserByUser);

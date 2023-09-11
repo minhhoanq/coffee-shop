@@ -2,20 +2,10 @@ import { loginFail, loginStart, loginSuccess, registerFail, registerStart, regis
 import request from "../utils/request";
 
 export const loginUSer = async (user) => {
-    // try {
-    //     console.log("check api")
     const res = await request.post("/api/v1/auth/login", user, {
         withCredentials: true,
     });
-    // dispatch(loginSuccess(res.data));
-    // navigate('/');
-    // console.log("check:" , res);
     return res;
-    // } catch (error) {
-    //     // dispatch(loginFail());
-    //     console.log('check err api')
-    //     return error;
-    // }
 };
 
 export const registerUSer = async (user) => {

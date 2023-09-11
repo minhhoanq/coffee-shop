@@ -23,7 +23,6 @@ const authPersistConfig = {
 
 const store = configureStore({
     reducer: {
-
         cart: cartSlice,
         product: productSlice,
         auth: persistReducer(authPersistConfig, authSlice)
