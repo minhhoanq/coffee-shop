@@ -2,58 +2,105 @@ import React, { useEffect, useState } from "react";
 
 import './profile.scss';
 import { useSelector, useDispatch } from "react-redux";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import { getProfileActions, updateUserbyUserAction } from "../../redux/asyncActions/authActions";
+import { useForm } from "react-hook-form";
+import { current } from "@reduxjs/toolkit";
 
 const Profile = () => {
     const user = useSelector((state) => state.auth?.currentUser);
     const [edit, setEdit] = useState(true);
     const dispatch = useDispatch();
-
-    const formik = useFormik({
-        initialValues: {
+    const [imageUser, setImageUser] = useState();
+    
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm({
+        defaultValues: {
             id: user.id,
             username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
-            sex: user.sex,
+            sex: user.sex ? '1' : '2',
             birth: user.birth,
             phone: user.phone,
             email: user.email,
             image: user.image,
-        },
-        validationSchema: Yup.object({
-            username: Yup.string().required("Vui lòng nhập tên đăng nhập."),
-            firstname: Yup.string().required("Vui lòng nhập họ của bạn."),
-            lastname: Yup.string().required("Vui lòng nhập tên của bạn."),
-            email: Yup.string().required("Vui lòng nhập email của bạn.").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Vui lòng nhập đúng định dạng email."),
-            phone: Yup.string().required("Vui lòng nhập số điện thoại.").matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, "Số điện thoại phải là số và tối thiểu 10 kí tự."),
+        }
+    });
+    
+    useEffect(() => {
+        reset({
+            id: user.id,
+            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            sex: user.sex ? '1' : '2',
+            birth: user.birth,
+            phone: user.phone,
+            email: user.email,
+            image: user.image,
         })
-        ,
-        onSubmit: async(values) => {
-            // const formData = new FormData();
-            // if(values.image.length > 0) formData.append('image', values.image)
-            // delete values.image
-            
-            // console.log(data);
-            // for(let i of Object.entries(values)) formData.append(i[0], i[1])
-            // const obj = {
-                
-            // }
+    },[current])
 
-            // if(values.image === '') {
-            //     const { image } = values;
-            // }
-            // console.log(orthers);
-            
-            // console.log(accessToken, [...formData])
-            // console.log(values);
-            await dispatch(updateUserbyUserAction(values));
+
+    // function readFileAsync(e) {
+    //     return new Promise((resolve, reject) => {
+    //       // const file = e.target.files[0];
+    //       // if (!file) {
+    //       //   return;
+    //       // }
+    //       const reader = new FileReader();
+    
+    //       reader.onload = () => {
+    //         generateFromImage(reader.result, 700, 700, 0.9, (imgdata) => {
+    //           resolve({
+    //             id: uuid(),
+    //             // url: `data:${file.type};base64,${btoa(reader.result)}`,
+    //             url: imgdata,
+    //             type: "image"
+    //           });
+    //         });
+    //       };
+    
+    //       reader.onerror = reject;
+    
+    //       // reader.readAsBinaryString(e);
+    //       reader.readAsDataURL(e);
+    //     });
+    //   }
+
+    //   async function uploadimg(e) {
+    //     const file = e.target.files[0];
+    //     if (file) {
+    //       console.log("e---image", e.target.files);
+    //       const read = await readFileAsync(file);
+    //       setImage([...image, read]);
+    //       // setFiles([...files, file]);
+    
+    //       const value = [...files, file];
+    //       setFiles(value);
+    //       setValue("images", value);
+    //     }
+    //   }
+
+    const handleSubmitInfo = async(data) => {
+        console.log(data);
+        const formData = new FormData();
+        if(data.image.length > 0) formData.append('image', data.image[0])
+        delete data.image
+        
+        for(let i of Object.entries(data)) formData.append(i[0], i[1])
+
+        const updateProfile = await dispatch(updateUserbyUserAction(formData));
+
+        if(updateProfile.meta.requestStatus === 'fulfilled') {
             await dispatch(getProfileActions());
             setEdit(true);
         }
-    });
+    }
 
     const handleEditProfile = (e) => {
         e.preventDefault();
@@ -69,23 +116,24 @@ const Profile = () => {
             <span className="profile__title">Hồ sơ của tôi</span>
             <span className="profile__title-2">Quản lý thông tin hồ sơ để bảo mật tài khoản</span>
 
-            <form className="profile__wrapper" onSubmit={formik.handleSubmit}>
+            <form className="profile__wrapper" onSubmit={handleSubmit(handleSubmitInfo)}>
                 <div className="profile__wrapper__form" >
-                    <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={edit}>
+                    <fieldset className="profile__wrapper__form__fielset" id="fielset" >
                         <legend>Tên đăng nhập</legend>
                         <input 
                             type="text" 
                             name="username" 
                             id="username" 
                             placeholder="Tên đăng nhập" 
-                            value={formik.values.username}
-                            onChange={formik.handleChange}
+                            {...register("username")}
+                            errors={errors}
+                            validate={
+                                {
+                                    required: 'Không bỏ trống'
+                                }
+                            }
                         />
                     </fieldset>
-
-                    {formik.errors.username && (
-                        <p className="login__container__wrapper__form__error"> {formik.errors.username} </p>
-                    )}
                     <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={edit} >
                         <legend>Họ</legend>
                         <input 
@@ -93,35 +141,25 @@ const Profile = () => {
                             name="firstname" 
                             id="firstname" 
                             placeholder="Họ" 
-                            onChange={formik.handleChange}
-                            value={formik.values.firstname}
-
+                            {...register("firstname")}
                         />
                     </fieldset>
 
-                    {formik.errors.firstname && (
-                        <p className="login__container__wrapper__form__error"> {formik.errors.firstname} </p>
-                    )}
                     <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={edit}>
                         <legend>Tên</legend>
                         <input 
                             type="text"
                             name="lastname" 
                             id="lastname" 
-                            placeholder="Tên" 
-                            onChange={formik.handleChange}
-                            value={formik.values.lastname}
-
+                            {...register("lastname")}
+                            placeholder="Tên"
                         />
                     </fieldset>
-                    {formik.errors.lastname && (
-                        <p className="login__container__wrapper__form__error"> {formik.errors.lastname} </p>
-                    )}
+
                     <select 
                         className="profile__wrapper__form__fielset" 
                         id="sex" name="sex" 
-                        value={formik.values.sex === "Nam" ? '1' : '2'}
-                        onChange={formik.handleChange}
+                        {...register("sex")}
                         disabled={edit}
                         >
                         <option value="1">Nam</option>
@@ -132,8 +170,7 @@ const Profile = () => {
                         <legend>Ngày sinh</legend>
                         <input 
                             type="date" id="birth" name="birth"
-                            onChange={formik.handleChange}
-                            value={formik.values.birth}
+                            {...register("birth")}
                         />
                     </fieldset>
 
@@ -144,14 +181,11 @@ const Profile = () => {
                             name="phone" 
                             id="phone"
                             placeholder="Số điện thoại" 
-                            onChange={formik.handleChange}
-                            value={formik.values.phone}
+                            {...register("phone")}
 
                         />
                     </fieldset>
-                    {formik.errors.phone && (
-                        <p className="login__container__wrapper__form__error"> {formik.errors.phone} </p>
-                    )}
+
                     <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={edit}>
                         <legend>Địa chỉ email</legend>
                         <input 
@@ -159,29 +193,27 @@ const Profile = () => {
                             name="email" 
                             id="email" 
                             placeholder="Địa chỉ email" 
-                            onChange={formik.handleChange}
-                            value={formik.values.email}
-
+                            {...register("email")}
                         />
                     </fieldset>
-                    {formik.errors.email && (
-                        <p className="login__container__wrapper__form__error"> {formik.errors.email} </p>
-                    )}
+
                 </div>
                 
                 <div className="profile__wrapper__img">
                     <img 
-                        src={user.image} 
+                        src={user.image}
                         alt="avatar"
                     />
                     <input 
                         id="image" 
                         name="image"
-                        className="profile__wrapper__img__input" 
-                        accept=".jpg,.jpeg,.png" 
+                        className="profile__wrapper__img__input"
                         type="file"
                         disabled={edit}
-                        onChange={formik.handleChange}
+                        {...register('image')}
+                        // onChange={(e) => {
+                        //     uploadimg(e);
+                        // }}
                     />
                     <label htmlFor={`image`} className={`${edit ? 'disable' : ''}`}>Chọn ảnh</label>
                     <span>Dụng lượng file tối đa 1 MB Định dạng:.JPEG, .PNG</span>

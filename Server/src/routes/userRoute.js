@@ -16,10 +16,10 @@ router.get("/trash", userController.getAllUserSoftDelete);
 router.get("/:id", isAuth.verifyToken, userController.getUserById); 
 
 //Update User by User
-router.put("/update_profile", isAuth.verifyToken, userController.updateUserByUser);
+router.put("/update_profile", isAuth.verifyToken, uploader.single('image'), userController.updateUserByUser);
 
 //Update user by id
-router.put("/:id", isAuth.verifyToken, uploader.single('image'), userController.updateUser);
+router.put("/:id", isAuth.verifyToken, userController.updateUser);
 
 //Delete user by id (soft delete)
 router.delete("/:id", isAuth.verifyTokenAndAdminAuth, userController.softDeleteUser);
