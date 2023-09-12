@@ -9,6 +9,8 @@ router.get("/", isAuth.verifyTokenAndAdminAuth, userController.getAllUser);
 
 router.get("/get_profile", isAuth.verifyToken, userController.getUserProfile);
 
+router.get("/address/get_user_address_list", isAuth.verifyToken, userController.getUserAddressList);
+
 //Get all user soft delete
 router.get("/trash", userController.getAllUserSoftDelete);
 

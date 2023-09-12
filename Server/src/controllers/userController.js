@@ -22,6 +22,15 @@ const userController = {
         }
     },
 
+    getUserAddressList: async(req, res) => {
+        try {
+            const response = await userService.getUserAddressListService(req.user);
+            return res.status(200).json(response);
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
+
     getAllUserSoftDelete: async(req, res) => {
         try {
             const response = await userService.getAllUserSoftDeteleService(req.query);

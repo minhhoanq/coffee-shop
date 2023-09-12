@@ -55,6 +55,34 @@ const getUserProfileService = (user, token) => new Promise( async(resolve, rejec
     }
 })
 
+const getUserAddressListService = (user) => new Promise( async(resolve, reject) => {
+    const id = user.id;
+    console.log(id)
+    if(!id) reject("Chưa nhận được id User");
+    try {
+        const user_addresses = await db.User_Addresses.findAll({
+            where: {
+                userid: id,
+            },
+            include: [
+                {
+                    model: db.Address,
+                    as: 'addressData',
+                    attributes: ['id', 'address', 'createdAt', 'createdAt'],
+                }
+            ]
+        });
+
+        resolve({
+            err: user_addresses ? 0 : 1,
+            mes: user_addresses ? 'Lấy danh sách địa chỉ thành công.' : 'Lỗi, hãy thử lại sau!',
+            data: user_addresses
+        })
+    } catch (error) {
+        reject(error)
+    }
+})
+
 const getAllUserSoftDeteleService = ({roles}) => new Promise( async(resolve, reject) => {
     try {
         const response = await db.User.findAll({
@@ -213,6 +241,7 @@ const restoreUserByIdService = ({ id }) => new Promise( async(resolve, reject) =
 module.exports = { 
     getAllUserService,
     getUserProfileService,
+    getUserAddressListService,
     getAllUserSoftDeteleService, 
     getUserByIdService, 
     updateUserByIdService, 

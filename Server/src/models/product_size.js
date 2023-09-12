@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       Product_Size.hasOne(models.Size, {foreignKey: 'id', sourceKey: 'sizeId',as: 'sizeData'})
       //
       // Product_Size.belongsToMany(models.Cart, {through: models.Cart_Item, foreignKey: 'id', targetKey: 'id', as: 'cartData'});
+      
     }
   }
   Product_Size.init({
