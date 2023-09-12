@@ -5,17 +5,32 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProfileActions, updateUserbyUserAction } from "../../redux/asyncActions/authActions";
 import { useForm } from "react-hook-form";
 import { current } from "@reduxjs/toolkit";
+import Swal from "sweetalert2";
+// import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
     const user = useSelector((state) => state.auth?.currentUser);
     const [edit, setEdit] = useState(true);
     const dispatch = useDispatch();
     const [imageUser, setImageUser] = useState();
+    // const navigate = useNavigate();
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
     
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isDirty },
         reset,
     } = useForm({
         defaultValues: {
@@ -42,49 +57,8 @@ const Profile = () => {
             phone: user.phone,
             email: user.email,
             image: user.image,
-        })
+        });
     },[current])
-
-
-    // function readFileAsync(e) {
-    //     return new Promise((resolve, reject) => {
-    //       // const file = e.target.files[0];
-    //       // if (!file) {
-    //       //   return;
-    //       // }
-    //       const reader = new FileReader();
-    
-    //       reader.onload = () => {
-    //         generateFromImage(reader.result, 700, 700, 0.9, (imgdata) => {
-    //           resolve({
-    //             id: uuid(),
-    //             // url: `data:${file.type};base64,${btoa(reader.result)}`,
-    //             url: imgdata,
-    //             type: "image"
-    //           });
-    //         });
-    //       };
-    
-    //       reader.onerror = reject;
-    
-    //       // reader.readAsBinaryString(e);
-    //       reader.readAsDataURL(e);
-    //     });
-    //   }
-
-    //   async function uploadimg(e) {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //       console.log("e---image", e.target.files);
-    //       const read = await readFileAsync(file);
-    //       setImage([...image, read]);
-    //       // setFiles([...files, file]);
-    
-    //       const value = [...files, file];
-    //       setFiles(value);
-    //       setValue("images", value);
-    //     }
-    //   }
 
     const handleSubmitInfo = async(data) => {
         console.log(data);
@@ -95,10 +69,28 @@ const Profile = () => {
         for(let i of Object.entries(data)) formData.append(i[0], i[1])
 
         const updateProfile = await dispatch(updateUserbyUserAction(formData));
+        console.log(updateProfile);
 
         if(updateProfile.meta.requestStatus === 'fulfilled') {
             await dispatch(getProfileActions());
             setEdit(true);
+              
+            Toast.fire({
+                icon: 'success',
+                title: updateProfile.payload.data.mes,
+            })
+            
+        }
+
+        if(updateProfile.meta.requestStatus === 'rejected') {
+            // await dispatch(getProfileActions());
+            setEdit(true);
+              
+            Toast.fire({
+                icon: 'error',
+                title: 'Lỗi! Vui lòng thử lại sau.',
+            })
+            
         }
     }
 
@@ -110,6 +102,12 @@ const Profile = () => {
 
         btn.classList.toggle('active');
     }
+
+    // username: Yup.string().required("Vui lòng nhập tên đăng nhập.").min(4, "Vui lòng nhập nhiều hơn 4 ký tự."),
+    // firstname: Yup.string().required("Vui lòng nhập họ của bạn."),
+    // lastname: Yup.string().required("Vui lòng nhập tên của bạn."),
+    // email: Yup.string().required("Vui lòng nhập email của bạn.").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Vui lòng nhập đúng định dạng email."),
+    // phone: Yup.string().required("Vui lòng nhập số điện thoại.").matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, "Số điện thoại phải là số và tối thiểu 10 kí tự."),
     
     return (
         <div className="profile">
@@ -118,22 +116,28 @@ const Profile = () => {
 
             <form className="profile__wrapper" onSubmit={handleSubmit(handleSubmitInfo)}>
                 <div className="profile__wrapper__form" >
-                    <fieldset className="profile__wrapper__form__fielset" id="fielset" >
+                    <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={edit} >
                         <legend>Tên đăng nhập</legend>
                         <input 
                             type="text" 
                             name="username" 
                             id="username" 
                             placeholder="Tên đăng nhập" 
-                            {...register("username")}
-                            errors={errors}
-                            validate={
-                                {
-                                    required: 'Không bỏ trống'
-                                }
+                            {...register("username", 
+                                    {
+                                        required: 'Vui lòng nhập tên đăng nhập.',
+                                        minLength: {
+                                            value: 4,
+                                            message: 'Vui lòng nhập nhiều hơn 4 ký tự.'
+                                        }
+                                    }
+                                )
                             }
+                            errors={errors}
                         />
                     </fieldset>
+                    <span className="profile__wrapper__form__mess">{errors?.username && errors.username.message}</span>
+                    
                     <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={edit} >
                         <legend>Họ</legend>
                         <input 
@@ -141,9 +145,16 @@ const Profile = () => {
                             name="firstname" 
                             id="firstname" 
                             placeholder="Họ" 
-                            {...register("firstname")}
+                            {...register("firstname", 
+                                    {
+                                        required: 'Vui lòng nhập họ của bạn.'
+                                    }
+                                )
+                            }
+                            errors={errors}
                         />
                     </fieldset>
+                    <span className="profile__wrapper__form__mess">{errors?.firstname && errors.firstname.message}</span>
 
                     <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={edit}>
                         <legend>Tên</legend>
@@ -151,10 +162,17 @@ const Profile = () => {
                             type="text"
                             name="lastname" 
                             id="lastname" 
-                            {...register("lastname")}
                             placeholder="Tên"
+                            {...register("lastname", 
+                                    {
+                                        required: 'Vui lòng nhập tên của bạn.'
+                                    }
+                                )
+                            }
+                            errors={errors}
                         />
                     </fieldset>
+                    <span className="profile__wrapper__form__mess">{errors?.lastname && errors.lastname.message}</span>
 
                     <select 
                         className="profile__wrapper__form__fielset" 
@@ -181,10 +199,21 @@ const Profile = () => {
                             name="phone" 
                             id="phone"
                             placeholder="Số điện thoại" 
-                            {...register("phone")}
+                            {...register("phone", 
+                                    {
+                                        required: 'Vui lòng nhập số điện thoại.',
+                                        pattern: {
+                                            value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
+                                            message: 'Số điện thoại phải là số và tối thiểu 10 kí tự.'
+                                        }
+                                    }
+                                )
+                            }
+                            errors={errors}
 
                         />
                     </fieldset>
+                    <span className="profile__wrapper__form__mess">{errors?.phone && errors.phone.message}</span>
 
                     <fieldset className="profile__wrapper__form__fielset" id="fielset" disabled={edit}>
                         <legend>Địa chỉ email</legend>
@@ -193,11 +222,22 @@ const Profile = () => {
                             name="email" 
                             id="email" 
                             placeholder="Địa chỉ email" 
-                            {...register("email")}
+                            {...register("email", 
+                                    {
+                                        required: 'Vui lòng nhập email.',
+                                        pattern: {
+                                            value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                            message: 'Chưa đúng định dạng email.'
+                                        }
+                                    }
+                                )
+                            }
+                            errors={errors}
                         />
                     </fieldset>
 
                 </div>
+                <span className="profile__wrapper__form__mess">{errors?.email && errors.email.message}</span>
                 
                 <div className="profile__wrapper__img">
                     <img 
@@ -228,7 +268,7 @@ const Profile = () => {
                     <i class="ri-pencil-fill profile__wrapper__btn-edit__ic-active"></i>
                 </button>
 
-                <button className="profile__wrapper__btn" type="submit">Lưu</button>
+                <button className="profile__wrapper__btn" type="submit" disabled={!isDirty} hidden={!isDirty}>Lưu</button>
             </form>
         </div>
     )

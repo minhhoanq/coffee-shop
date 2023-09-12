@@ -122,7 +122,10 @@ const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, rejec
             data: response,
         })
     } catch (error) {
-        reject(error);
+        reject({
+            err: 1,
+            mes: 'Xảy ra lỗi, hãy thử lại sau!'
+        });
     }
 });
 
