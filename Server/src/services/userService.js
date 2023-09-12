@@ -83,6 +83,19 @@ const getUserAddressListService = (user) => new Promise( async(resolve, reject) 
     }
 })
 
+//create_user_address
+//set_default_address
+//update_user_address
+//delete_user_address
+
+// const createUserAddressList = () => new Promise(async(resolve, reject) => {
+//     try {
+//         const createAddress = await db.Address.
+//     } catch (error) {
+//         reject(error);
+//     }
+// })
+
 const getAllUserSoftDeteleService = ({roles}) => new Promise( async(resolve, reject) => {
     try {
         const response = await db.User.findAll({
