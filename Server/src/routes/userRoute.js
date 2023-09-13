@@ -11,6 +11,8 @@ router.get("/get_profile", isAuth.verifyToken, userController.getUserProfile);
 
 router.get("/address/get_user_address_list", isAuth.verifyToken, userController.getUserAddressList);
 
+router.post("/address/create_user_address", isAuth.verifyToken, userController.createUserAddress);
+
 //Get all user soft delete
 router.get("/trash", userController.getAllUserSoftDelete);
 

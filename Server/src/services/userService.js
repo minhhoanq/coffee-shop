@@ -68,7 +68,7 @@ const getUserAddressListService = (user) => new Promise( async(resolve, reject) 
                 {
                     model: db.Address,
                     as: 'addressData',
-                    attributes: ['id', 'address', 'createdAt', 'createdAt'],
+                    attributes: ['id','country', 'city', 'city_province', 'district', 'address', 'createdAt', 'createdAt'],
                 }
             ]
         });
@@ -88,13 +88,38 @@ const getUserAddressListService = (user) => new Promise( async(resolve, reject) 
 //update_user_address
 //delete_user_address
 
-// const createUserAddressList = () => new Promise(async(resolve, reject) => {
-//     try {
-//         const createAddress = await db.Address.
-//     } catch (error) {
-//         reject(error);
-//     }
-// })
+const createUserAddressListService = (addressData) => new Promise(async(resolve, reject) => {
+    try {
+        const { country, city, city_province, district, address} = addressData;
+
+        const [createAddress, created] = await db.Address.findOrCreate({
+            where: {
+                country: country,
+                city: city,
+                city_province: city_province,
+                district: district,
+                address: address,
+            },
+            defaults: {
+                country: country,
+                city: city,
+                city_province: city_province,
+                district: district,
+                address: address,
+            }
+        })
+
+        if(!created) reject('Bạn đã thêm địa chỉ này trước đó!')
+
+        resolve({
+            err: createAddress ? 0 :1,
+            mes: createAddress ? "" : '',
+            data: createAddress
+        })
+    } catch (error) {
+        reject(error);
+    }
+})
 
 const getAllUserSoftDeteleService = ({roles}) => new Promise( async(resolve, reject) => {
     try {
@@ -255,6 +280,7 @@ module.exports = {
     getAllUserService,
     getUserProfileService,
     getUserAddressListService,
+    createUserAddressListService,
     getAllUserSoftDeteleService, 
     getUserByIdService, 
     updateUserByIdService, 

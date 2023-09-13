@@ -9,7 +9,31 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      country: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      city: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      city_province: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      district: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       address: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      address_instruction: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      postal_code: {
         type: Sequelize.STRING,
         allowNull: false,
       },
