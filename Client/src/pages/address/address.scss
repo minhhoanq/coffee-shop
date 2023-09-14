@@ -8,8 +8,6 @@
     display: flex;
     flex-direction: column;
 
-    
-
     &__header {
         @include flex(center, space-between);
         
@@ -37,6 +35,11 @@
             &:hover {
                 background-color: rgba(205, 133, 63, 0.9);
             }
+        }
+
+        &__modal {
+            width: 500px;
+            height: 550px;
         }
     }
 
@@ -164,3 +167,4 @@
         }
     }
 }
+
