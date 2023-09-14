@@ -52,6 +52,16 @@ const userController = {
         }
     },
 
+    deleteUserAddress: async(req, res) => {
+        try {
+            const response = await userService.deleteUserAddress(req.user, req.body);
+
+            return res.status(200).json(response);
+        } catch (error) {
+            return res.status(500).json(error)    
+        }
+    },
+
     getAllUserSoftDelete: async(req, res) => {
         try {
             const response = await userService.getAllUserSoftDeteleService(req.query);

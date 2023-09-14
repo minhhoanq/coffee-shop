@@ -15,6 +15,8 @@ router.post("/address/create_user_address", isAuth.verifyToken, userController.c
 
 router.put("/address/update_user_address", isAuth.verifyToken, userController.updateUserAddress);
 
+router.delete("/address/delete_user_address", isAuth.verifyToken, userController.deleteUserAddress);
+
 //Get all user soft delete
 router.get("/trash", userController.getAllUserSoftDelete);
 

@@ -161,6 +161,30 @@ const updateUserAddressService = (user, addressData) => new Promise(async(resolv
     }
 })
 
+//Delete User Address
+
+const deleteUserAddress = (user, addressData) => new Promise(async(resolve, reject) => {
+    try {
+        const userid = user.id;
+        const { addressid } = addressData;
+
+        const deleteUserAddress = await db.Address.destroy({
+            where: {
+                userid: userid,
+                id: addressid
+            }
+        });
+
+        resolve({
+            err: deleteUserAddress ? 0 : 1,
+            mes: deleteUserAddress ? 'Xóa địa chỉ thành công.' : 'Lỗi, hãy thử lại sau!',
+            data: deleteUserAddress
+        })
+    } catch (error) {
+        reject(error);
+    }
+})
+
 const getAllUserSoftDeteleService = ({roles}) => new Promise( async(resolve, reject) => {
     try {
         const response = await db.User.findAll({
@@ -319,6 +343,7 @@ module.exports = {
     getUserAddressListService,
     createUserAddressListService,
     updateUserAddressService,
+    deleteUserAddress,
     getAllUserSoftDeteleService, 
     getUserByIdService, 
     updateUserByIdService, 
