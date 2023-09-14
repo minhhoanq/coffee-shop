@@ -47,6 +47,11 @@ export const getUserProfile = async() => {
     return res;
 }
 
+export const getUserAddressList = async() => {
+    const res = await request.get('/api/v1/users/address/get_user_address_list');
+    return res.data;
+}
+
 export const softDeleteUserById = async(id, dispatch, navigate) => {
     // dispatch(softDeleteStart());
     // try {

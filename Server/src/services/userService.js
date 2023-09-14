@@ -57,7 +57,6 @@ const getUserProfileService = (user, token) => new Promise( async(resolve, rejec
 
 const getUserAddressListService = (user) => new Promise( async(resolve, reject) => {
     const id = user.id;
-    console.log(id)
     if(!id) reject("Chưa nhận được id User");
     try {
         const user_addresses = await db.Address.findAll({
