@@ -23,7 +23,9 @@ module.exports = (sequelize, DataTypes) => {
 
       //User with Product M:N => Rating
       User.belongsToMany(models.Product, {through: models.Rating, foreignKey: 'userId', targetKey: 'id', as: 'productData'});
-      User.belongsToMany(models.Address, {through: models.User_Addresses, foreignKey: 'userid', targetKey: 'id', as: 'userData'});
+    
+      User.hasMany(models.Address);
+
     }
   }
   User.init({

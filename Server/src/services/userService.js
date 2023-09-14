@@ -60,15 +60,18 @@ const getUserAddressListService = (user) => new Promise( async(resolve, reject) 
     console.log(id)
     if(!id) reject("Chưa nhận được id User");
     try {
-        const user_addresses = await db.User_Addresses.findAll({
+        const user_addresses = await db.Address.findAll({
             where: {
                 userid: id,
             },
             include: [
                 {
-                    model: db.Address,
-                    as: 'addressData',
-                    attributes: ['id','country', 'city', 'city_province', 'district', 'address', 'createdAt', 'createdAt'],
+                    model: db.User,
+                    as: 'userData',
+                    attributes: ['id',
+                                'username',
+                                'firstname',
+                                'lastname'],
                 }
             ]
         });
@@ -88,12 +91,14 @@ const getUserAddressListService = (user) => new Promise( async(resolve, reject) 
 //update_user_address
 //delete_user_address
 
-const createUserAddressListService = (addressData) => new Promise(async(resolve, reject) => {
+const createUserAddressListService = (user, addressData) => new Promise(async(resolve, reject) => {
     try {
-        const { country, city, city_province, district, address} = addressData;
+        const { country, city, city_province, district, address, address_instruction, postal_code} = addressData;
+        const userId = user.id;
 
         const [createAddress, created] = await db.Address.findOrCreate({
             where: {
+                userid: userId,
                 country: country,
                 city: city,
                 city_province: city_province,
@@ -101,23 +106,58 @@ const createUserAddressListService = (addressData) => new Promise(async(resolve,
                 address: address,
             },
             defaults: {
+                userId: userId,
                 country: country,
                 city: city,
                 city_province: city_province,
                 district: district,
                 address: address,
+                address_instruction: address_instruction,
+                postal_code: postal_code,
             }
         })
-
-        if(!created) reject('Bạn đã thêm địa chỉ này trước đó!')
-
+        
         resolve({
-            err: createAddress ? 0 :1,
-            mes: createAddress ? "" : '',
+            err: createAddress ? 0 : 1,
+            mes: createAddress ? 'Thêm địa chỉ mới thành công.' : 'Lỗi, hãy thử lại sau!',
             data: createAddress
         })
     } catch (error) {
         reject(error);
+    }
+});
+
+//Update User Address
+
+const updateUserAddressService = (user, addressData) => new Promise(async(resolve, reject) => {
+    try {
+        const {id, country, city, city_province, district, address, address_instruction, postal_code} = addressData;
+        const userid = user.id;
+
+        const updateUserAddress = db.Address.update(
+            {
+                country: country,
+                city: city, 
+                city_province: city_province, 
+                district: district, 
+                address: address, 
+                address_instruction: address_instruction, 
+                postal_code: postal_code
+            }, {
+                where: {
+                    userid: userid,
+                    id: id,
+                }
+            }
+        )
+
+        resolve({
+            err: updateUserAddress ? 0 : 1,
+            mes: updateUserAddress ? 'Cập nhật địa chỉ thành công.' : 'Lỗi, hãy thử lại sau!',
+            data: updateUserAddress
+        })
+    } catch (error) {
+        reject(error)
     }
 })
 
@@ -196,9 +236,6 @@ const updateUserByIdService = ({ user, id }) => new Promise(async(resolve, rejec
 });
 
 const updateUserByUserService = ({id},  user, avatar ) => new Promise( async(resolve, reject) => {
-    console.log(id);
-    console.log(user);
-    console.log(avatar);
     if(!id || Object.keys(user).length === 0) reject("Chưa nhận được id user!");
     const { email, username, password, firstname, lastname, sex, phone, birth, address } = user;
     const data = { email, username, password, firstname, lastname, sex, phone, birth, address }
@@ -281,6 +318,7 @@ module.exports = {
     getUserProfileService,
     getUserAddressListService,
     createUserAddressListService,
+    updateUserAddressService,
     getAllUserSoftDeteleService, 
     getUserByIdService, 
     updateUserByIdService, 

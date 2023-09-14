@@ -13,6 +13,8 @@ router.get("/address/get_user_address_list", isAuth.verifyToken, userController.
 
 router.post("/address/create_user_address", isAuth.verifyToken, userController.createUserAddress);
 
+router.put("/address/update_user_address", isAuth.verifyToken, userController.updateUserAddress);
+
 //Get all user soft delete
 router.get("/trash", userController.getAllUserSoftDelete);
 

@@ -31,6 +31,27 @@ const userController = {
         }
     },
 
+    
+    createUserAddress: async(req, res) => {
+        try {
+            const response = await userService.createUserAddressListService(req.user, req.body);
+
+            return res.status(200).json(response);
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
+
+    updateUserAddress: async(req, res) => {
+        try {
+            const response = await userService.updateUserAddressService(req.user, req.body);
+
+            return res.status(200).json(response)
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    },
+
     getAllUserSoftDelete: async(req, res) => {
         try {
             const response = await userService.getAllUserSoftDeteleService(req.query);
@@ -101,16 +122,6 @@ const userController = {
             return res.status(500).json(error);
         }
     },
-
-    createUserAddress: async(req, res) => {
-        try {
-            const response = await userService.createUserAddressListService(req.body);
-
-            return res.status(200).json(response);
-        } catch (error) {
-            return res.status(500).json(error);
-        }
-    }
 }
 
 module.exports = userController;

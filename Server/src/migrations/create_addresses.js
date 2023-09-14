@@ -9,6 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userid: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       country: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -31,11 +35,11 @@ module.exports = {
       },
       address_instruction: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       postal_code: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
