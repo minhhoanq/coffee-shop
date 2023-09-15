@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Modal, { ModalContent } from '../../components/modal/Modal';
 import axios from "axios";
 
 const CreateAddress = () => {
+    const [province, setProvince] = useState();
+    const [district, setDistrict] = useState();
+    const [ward, setWard] = useState();
 
     const host = "https://provinces.open-api.vn/api/";
 
@@ -13,8 +16,6 @@ const CreateAddress = () => {
                 renderData(response.data, "province");
             });
     }
-
-    getProvinceApi(host);
     
     var callApiDistrict = (api) => {
         return axios.get(api)
@@ -29,13 +30,16 @@ const CreateAddress = () => {
             });
     }
     
+    useEffect(() => {
+        getProvinceApi(host);
+    },[])
 
     var renderData = (array, select) => {
-        let row = `<option disable value="">Chọn ${
+        let row = `<option disabled value="">Chọn ${
             select === 'province' ? 'Tỉnh/Thành Phố' : 
             select === 'district' ? 'Quận/Huyện' : 
             'Phường/Xã'}</option>`;
-        console.log(select);
+
         array.forEach(element => {
             row += `<option value="${element.code}">${element.name}</option>`
         });
@@ -43,17 +47,23 @@ const CreateAddress = () => {
     }
 
     const onChangeProvince = (e) => {
-        callApiDistrict(host + "p/" + document.querySelector("#province").value + "?depth=2");
+        const provinceEl =  document.querySelector("#province");
+        callApiDistrict(host + "p/" + provinceEl.value + "?depth=2");
+        setProvince(provinceEl.value)
     }
 
     const onChangeDistrict = (e) => {
-        callApiWard(host + "d/" + document.querySelector("#district").value + "?depth=2");
+        const districtEl =  document.querySelector("#district");
+        callApiWard(host + "d/" + districtEl.value + "?depth=2");
+        setDistrict(districtEl.value)
     }
 
     const onChangeWard = (e) => {
-        // callApiWard(host + "w/" + document.querySelector("#ward").value + "?depth=2");
+        const wardEl =  document.querySelector("#ward");
+        setWard(wardEl.value)
     }
 
+    console.log(province + ' / ' + district + ' / ' + ward);
 
     return (
         <Modal id={'modal'} >
