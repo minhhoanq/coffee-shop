@@ -17,6 +17,8 @@ router.put("/address/update_user_address", isAuth.verifyToken, userController.up
 
 router.delete("/address/delete_user_address", isAuth.verifyToken, userController.deleteUserAddress);
 
+router.put("/address/set_default_address", isAuth.verifyToken, userController.setDefaultUserAddress);
+
 //Get all user soft delete
 router.get("/trash", userController.getAllUserSoftDelete);
 

@@ -95,6 +95,18 @@ const createUserAddressListService = (user, addressData) => new Promise(async(re
         const { country, city, city_province, district, address, address_instruction, postal_code} = addressData;
         const userId = user.id;
 
+        const { count, rows} = await db.Address.findAndCountAll({
+            where: {
+                userid: userId
+            }
+        })
+
+        let is_delivery_address = false;
+
+        if(count < 1) {
+            is_delivery_address = true;
+        }
+
         const [createAddress, created] = await db.Address.findOrCreate({
             where: {
                 userid: userId,
@@ -113,6 +125,7 @@ const createUserAddressListService = (user, addressData) => new Promise(async(re
                 address: address,
                 address_instruction: address_instruction,
                 postal_code: postal_code,
+                is_delivery_address: is_delivery_address
             }
         })
         
@@ -162,7 +175,7 @@ const updateUserAddressService = (user, addressData) => new Promise(async(resolv
 
 //Delete User Address
 
-const deleteUserAddress = (user, addressData) => new Promise(async(resolve, reject) => {
+const deleteUserAddressService = (user, addressData) => new Promise(async(resolve, reject) => {
     try {
         const userid = user.id;
         const { addressid } = addressData;
@@ -170,7 +183,8 @@ const deleteUserAddress = (user, addressData) => new Promise(async(resolve, reje
         const deleteUserAddress = await db.Address.destroy({
             where: {
                 userid: userid,
-                id: addressid
+                id: addressid,
+                is_delivery_address: false
             }
         });
 
@@ -181,6 +195,44 @@ const deleteUserAddress = (user, addressData) => new Promise(async(resolve, reje
         })
     } catch (error) {
         reject(error);
+    }
+})
+
+//dc1: 0
+//dc2: 1
+//dc3: 0
+
+const setDefaultAddressService = (user, addressData) => new Promise(async(resolve, reject) => {
+    try {
+        const { id } = addressData;
+        const userid = user.id;
+        const is_delivery_address_prev = await db.Address.update(
+            {
+                is_delivery_address: false,
+            }, {
+                where: {
+                    userid: userid
+                }
+            }
+        )
+
+        const is_delivery_address_next = await db.Address.update(
+            {
+                is_delivery_address: true,
+            }, {
+                where: {
+                    id: id,
+                    userid: userid,
+                }
+            }
+        )
+
+        resolve({
+            err: is_delivery_address_prev && is_delivery_address_next ? 0 : 1,
+            mes: is_delivery_address_prev && is_delivery_address_next ? "Thành công!" : "Lỗi! Hãy thử lại sau.",
+        })
+    } catch (error) {
+        reject(error)
     }
 })
 
@@ -342,7 +394,8 @@ module.exports = {
     getUserAddressListService,
     createUserAddressListService,
     updateUserAddressService,
-    deleteUserAddress,
+    deleteUserAddressService,
+    setDefaultAddressService,
     getAllUserSoftDeteleService, 
     getUserByIdService, 
     updateUserByIdService, 

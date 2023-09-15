@@ -54,11 +54,21 @@ const userController = {
 
     deleteUserAddress: async(req, res) => {
         try {
-            const response = await userService.deleteUserAddress(req.user, req.body);
+            const response = await userService.deleteUserAddressService(req.user, req.body);
 
             return res.status(200).json(response);
         } catch (error) {
             return res.status(500).json(error)    
+        }
+    },
+
+    setDefaultUserAddress: async(req, res) => {
+        try {
+            const response = await userService.setDefaultAddressService(req.user, req.body);
+
+            return res.status(200).json(response);
+        } catch (error) {
+            return res.status(500).json(error);
         }
     },
 
