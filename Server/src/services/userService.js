@@ -63,6 +63,7 @@ const getUserAddressListService = (user) => new Promise( async(resolve, reject) 
             where: {
                 userid: id,
             },
+            order: [ [ 'is_delivery_address', 'DESC' ] ],
             include: [
                 {
                     model: db.User,

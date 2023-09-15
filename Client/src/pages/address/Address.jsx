@@ -69,11 +69,15 @@ const Address = () => {
                                                         >
                                                             Cập nhật
                                                         </button>
-                                                        <button
-                                                            className="address__wrapper__form__w__inner__options__update-delete__delete"
-                                                        >
-                                                            Xóa
-                                                        </button>
+                                                        {
+                                                            !item.is_delivery_address && (
+                                                                <button
+                                                                    className="address__wrapper__form__w__inner__options__update-delete__delete"
+                                                                >
+                                                                    Xóa
+                                                                </button>
+                                                            )
+                                                        }
                                                     </div>
         
                                                     <button
@@ -84,7 +88,9 @@ const Address = () => {
                                                 </div>
                                             </div>
         
-                                            <div className="address__wrapper__form__w__status">Mặc định</div>
+                                            {item.is_delivery_address && (
+                                                <div className="address__wrapper__form__w__status">Mặc định</div>
+                                            )}
                                         </li>
                                     ))
                                 }

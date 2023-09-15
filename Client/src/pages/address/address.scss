@@ -39,7 +39,120 @@
 
         &__modal {
             width: 500px;
-            height: 550px;
+            height: 530px;
+
+            &__wrapper {
+                width: 100%;
+
+                &__options {
+                    width: 100%;
+                    margin-top: 10px;
+
+                    @include flex(flex-start, center);
+                    flex-direction: column;
+
+                    label {
+                        font-size: 1rem;
+                    }
+
+                    select {
+                        width: 100%;
+                        height: 35px;
+                        outline: none;
+                        border: 1px solid #ccc;
+                        border-radius: 2px;
+                        padding: 0 5px;
+                    }
+                }
+
+                &__input-address {
+                    width: 100%;
+                    height: 35px;
+                    outline: none;
+                    border: 1px solid #ccc;
+                    padding: 0 5px;
+                    border-radius: 2px;
+                }
+
+                &__default-address {
+                    @include flex(center, flex-start);
+                    margin-top: 10px;
+
+                    label {
+                        font-size: 1rem;
+                        margin-left: 10px;
+                        color: #666;
+                    }
+                }
+
+                &__address-type {
+
+                    label {
+                        font-size: 1.2rem;
+                        font-weight: 500;
+                    }
+
+                    &__btn {
+                        @include flex (center, flex-start);
+                        &__home, &__office {
+                            margin-top: 5px;
+                            width: 100px;
+                            height: 50px;
+                            @include flex(center, center);
+                            border-radius: 5px;
+                            cursor: pointer;
+                        }
+
+                        &__home {
+                            border: 1px solid rgb(0 148 182);
+                        }
+
+                        &__office {
+                            border: 1px solid rgb(255 102 73);
+                        }
+
+                        & > * ~ * {
+                            margin-left: 10px;
+                        }
+                    }
+                }
+
+                &__choose {
+                    width: 100%;
+                    @include flex(center, flex-end);
+                    margin-top: 40px;
+
+                    &__cancel {
+                        margin-right: 10px;
+                        font-size: 1.2rem;
+                        width: 130px;
+                        height: 35px;
+                        color: #999;
+                        font-weight: 500;
+                        cursor: pointer;
+                        border-radius: 2px;
+
+                        &:hover {
+                            background-color: #dddddd;
+                        }
+                        
+                    }
+
+                    &__submit {
+                        width: 130px;
+                        height: 35px;
+                        background-color: $main-color;
+                        color: #fff;
+                        font-weight: 500;
+                        cursor: pointer;
+                        border-radius: 2px;
+
+                        &:hover {
+                            background-color: rgba(205, 133, 63, 0.9);
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -114,7 +227,6 @@
                             @include flex(center, flex-end);
     
                             &__update {
-                                margin-right: 20px;
                                 font-size: 1.2rem;
                                 cursor: pointer;
                                 color: $main-color;
@@ -124,7 +236,7 @@
                                 font-size: 1.2rem;
                                 cursor: pointer;
                                 color: $main-color;
-    
+                                margin-left: 20px;
                             }
     
                         }
