@@ -56,7 +56,7 @@ const Address = () => {
                                                                 {item.address}
                                                             </span>
                                                             <p className="address__wrapper__form__w__inner__list__item__address__more">
-                                                                {item.district}, {item.city_province}, {item.city}
+                                                                {item.ward}, {item.district}, {item.city_province}
                                                             </p>
                                                         </div>
                                                     </div>

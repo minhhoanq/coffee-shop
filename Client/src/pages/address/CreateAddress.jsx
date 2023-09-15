@@ -1,8 +1,60 @@
 import React from "react";
 
 import Modal, { ModalContent } from '../../components/modal/Modal';
+import axios from "axios";
 
 const CreateAddress = () => {
+
+    const host = "https://provinces.open-api.vn/api/";
+
+    const getProvinceApi = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data, "province");
+            });
+    }
+
+    getProvinceApi(host);
+    
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.districts, "district");
+            });
+    }
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.wards, "ward");
+            });
+    }
+    
+
+    var renderData = (array, select) => {
+        let row = `<option disable value="">Chọn ${
+            select === 'province' ? 'Tỉnh/Thành Phố' : 
+            select === 'district' ? 'Quận/Huyện' : 
+            'Phường/Xã'}</option>`;
+        console.log(select);
+        array.forEach(element => {
+            row += `<option value="${element.code}">${element.name}</option>`
+        });
+        document.querySelector("#" + select).innerHTML = row
+    }
+
+    const onChangeProvince = (e) => {
+        callApiDistrict(host + "p/" + document.querySelector("#province").value + "?depth=2");
+    }
+
+    const onChangeDistrict = (e) => {
+        callApiWard(host + "d/" + document.querySelector("#district").value + "?depth=2");
+    }
+
+    const onChangeWard = (e) => {
+        // callApiWard(host + "w/" + document.querySelector("#ward").value + "?depth=2");
+    }
+
+
     return (
         <Modal id={'modal'} >
             <ModalContent className={'address__header__modal'}>
@@ -13,31 +65,22 @@ const CreateAddress = () => {
                 <form className="address__header__modal__wrapper">
                     <div className="address__header__modal__wrapper__options">
                         <label>Tỉnh/Thành phố</label>
-                        <select name="citys" id="citys">
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
+                        <select name="" id="province" onChange={onChangeProvince}>
+                            <option value="">Chọn Tỉnh/Thành Phố</option>
                         </select>
                     </div>
 
                     <div className="address__header__modal__wrapper__options">
                         <label>Quận/Huyện</label>
-                        <select name="citys" id="citys">
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
+                        <select name="" id="district" onChange={onChangeDistrict}>
+                            <option  value="">Chọn Quận/Huyện</option>
                         </select>
                     </div>
 
                     <div className="address__header__modal__wrapper__options">
                         <label>Phường/Xã</label>
-                        <select name="citys" id="citys">
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
+                        <select name="" id="ward" onChange={onChangeWard}>
+                            <option   value="">Chọn Phường/Xã</option>
                         </select>
                     </div>
 
