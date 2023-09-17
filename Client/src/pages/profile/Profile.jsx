@@ -12,7 +12,6 @@ const Profile = () => {
     const user = useSelector((state) => state.auth?.currentUser);
     const [edit, setEdit] = useState(true);
     const dispatch = useDispatch();
-    const [imageUser, setImageUser] = useState();
     // const navigate = useNavigate();
 
     const Toast = Swal.mixin({

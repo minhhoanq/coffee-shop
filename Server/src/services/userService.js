@@ -93,7 +93,7 @@ const getUserAddressListService = (user) => new Promise( async(resolve, reject) 
 
 const createUserAddressListService = (user, addressData) => new Promise(async(resolve, reject) => {
     try {
-        const { country, city, city_province, district, address, address_instruction, postal_code} = addressData;
+        const { country = "Việt Nam", city_province, district, ward, address, postal_code, address_instruction, is_delivery_address} = addressData;
         const userId = user.id;
 
         const { count, rows} = await db.Address.findAndCountAll({
@@ -101,8 +101,6 @@ const createUserAddressListService = (user, addressData) => new Promise(async(re
                 userid: userId
             }
         })
-
-        let is_delivery_address = false;
 
         if(count < 1) {
             is_delivery_address = true;
@@ -112,17 +110,17 @@ const createUserAddressListService = (user, addressData) => new Promise(async(re
             where: {
                 userid: userId,
                 country: country,
-                city: city,
                 city_province: city_province,
                 district: district,
+                ward: ward,
                 address: address,
             },
             defaults: {
                 userId: userId,
                 country: country,
-                city: city,
                 city_province: city_province,
                 district: district,
+                ward: ward,
                 address: address,
                 address_instruction: address_instruction,
                 postal_code: postal_code,
@@ -205,8 +203,9 @@ const deleteUserAddressService = (user, addressData) => new Promise(async(resolv
 
 const setDefaultAddressService = (user, addressData) => new Promise(async(resolve, reject) => {
     try {
-        const { id } = addressData;
         const userid = user.id;
+        const { id } = addressData;
+        console.log("id", id)
         const is_delivery_address_prev = await db.Address.update(
             {
                 is_delivery_address: false,

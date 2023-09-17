@@ -52,6 +52,17 @@ export const getUserAddressList = async() => {
     return res.data;
 }
 
+export const setDefaultAddress = async(value) => {
+    console.log(value)
+    const res = await request.put('/api/v1/users/address/set_default_address', value);
+    return res;
+}
+
+export const createUserAddress = async(data) => {
+    const res = await request.post('/api/v1/users/address/create_user_address', data);
+    return res.data;
+}
+
 export const softDeleteUserById = async(id, dispatch, navigate) => {
     // dispatch(softDeleteStart());
     // try {

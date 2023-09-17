@@ -64,6 +64,7 @@ const userController = {
 
     setDefaultUserAddress: async(req, res) => {
         try {
+            console.log("req", req.body)
             const response = await userService.setDefaultAddressService(req.user, req.body);
 
             return res.status(200).json(response);
