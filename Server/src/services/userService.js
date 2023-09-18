@@ -197,10 +197,6 @@ const deleteUserAddressService = (user, addressData) => new Promise(async(resolv
     }
 })
 
-//dc1: 0
-//dc2: 1
-//dc3: 0
-
 const setDefaultAddressService = (user, addressData) => new Promise(async(resolve, reject) => {
     try {
         const userid = user.id;

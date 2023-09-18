@@ -53,7 +53,6 @@ export const getUserAddressList = async() => {
 }
 
 export const setDefaultAddress = async(value) => {
-    console.log(value)
     const res = await request.put('/api/v1/users/address/set_default_address', value);
     return res;
 }

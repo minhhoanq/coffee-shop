@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import './address.scss';
 import * as userApi from '../../api/userApi';
 import CreateAddress from "./CreateAddress";
+import AddressOptions from "./AddressOptions";
 
 const Address = () => {
     const [address, setAddress] = useState();
@@ -42,7 +43,7 @@ const Address = () => {
                         <ul className="address__wrapper__form__w">
                                 {
                                     address.map((item, i) => (
-                                        <li className="address__wrapper__form__w">
+                                        <li className="address__wrapper__form__w" key={i}>
                                             <div className="address__wrapper__form__w__inner">
                                                 <div className="address__wrapper__form__w__inner__list">
                                                     <div className="address__wrapper__form__w__inner__list__item">
@@ -61,31 +62,8 @@ const Address = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-        
-                                                <div className="address__wrapper__form__w__inner__options">
-                                                    <div className="address__wrapper__form__w__inner__options__update-delete">
-                                                        <button 
-                                                            className="address__wrapper__form__w__inner__options__update-delete__update"
-                                                        >
-                                                            Cập nhật
-                                                        </button>
-                                                        {
-                                                            !item.is_delivery_address && (
-                                                                <button
-                                                                    className="address__wrapper__form__w__inner__options__update-delete__delete"
-                                                                >
-                                                                    Xóa
-                                                                </button>
-                                                            )
-                                                        }
-                                                    </div>
-        
-                                                    <button
-                                                        className="address__wrapper__form__w__inner__options__default"
-                                                    >
-                                                        Đặt làm địa chỉ mặc định
-                                                    </button>
-                                                </div>
+
+                                                <AddressOptions item={item}/>
                                             </div>
         
                                             {item.is_delivery_address && (
