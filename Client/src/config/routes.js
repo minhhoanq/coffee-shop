@@ -18,6 +18,7 @@ import Profile from "../pages/profile/Profile";
 import Payment from "../pages/payment/Payment";
 import DefaultLayoutUser from "../components/layout/defaultlayoutuser/DefaultLayoutUser";
 import Address from "../pages/address/Address";
+import LoginPage from "../pages/LoginPage";
 
 //Public routes
 const publicRoutes = [
@@ -29,7 +30,7 @@ const publicRoutes = [
     { path: '/shop', component: Shop},
     { path: '/shop/:slug', component: DetailProduct},
     { path: '/cart', component: Cart},
-    { path: '/login', component: Login, layout: FooterOnly},
+    { path: '/login', component: LoginPage, layout: null},
     { path: '/forgot-password', component: ForgotPassword, layout: FooterOnly},
     { path: '/register', component: Register,layout: FooterOnly},
     { path: '/finalregister/:status', component: FinalRegister,layout: FooterOnly},

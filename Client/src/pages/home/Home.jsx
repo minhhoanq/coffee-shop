@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react"
 import './home.scss';
 
 import ProductSlide from "../../components/productSlide/ProductSlide";
-import Helmet from "../../components/helmet/Helmet";
 import ProductList from "../../components/productlist/ProductList";
 
 import products from '../../assets/data/products';
