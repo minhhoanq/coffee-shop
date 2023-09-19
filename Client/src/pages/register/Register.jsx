@@ -4,7 +4,7 @@ import './register.scss';
 import { Link } from 'react-router-dom';
 import Button from '../../components/button/Button';
 
-import googleImg from '../../assets/images/google.png';
+import googleImg from '../../assets/image/google.png';
 import { finalRegister, registerUSer } from "../../api/authApi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

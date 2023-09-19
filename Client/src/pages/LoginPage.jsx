@@ -4,6 +4,7 @@ import { Box, Stack, TextField, Button, FormGroup, FormControlLabel, Checkbox, T
 import bgLogin from '../assets/images/backgroundLogin.jpg';
 import logo from '../assets/images/logo.jpg';
 import { Link, useNavigate } from "react-router-dom";
+import Animate from "../components/common/Animate";
 
 
 const LoginPage = () => {
@@ -81,7 +82,9 @@ const LoginPage = () => {
                     <Box sx={{
                         textAlign: "center", p: 5
                     }}>
-                        <img src={logo} alt='logo' height={60}/>
+                        <Animate type="fade" delay={0.5}>
+                            <img src={logo} alt='logo' height={60}/>
+                        </Animate>
                     </Box>
                     {/* Logo */}
 
@@ -97,25 +100,27 @@ const LoginPage = () => {
                         justifyContent: "center",
                         ":-webkit-scrollbar": { display: "none"}
                     }}>
-                        <Box component={"form"} maxWidth={400} width={"100%"} onSubmit={onSignin}>
-                            <Stack spacing={3}>
-                                <TextField label="username" fullWidth/>
-                                <TextField label="password" type="password" fullWidth/>
-                                <Button type="submit" size="lagre" variant="contained" color="success">
-                                    sign in
-                                </Button>
-                                <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
-                                    <FormGroup>
-                                        <FormControlLabel control={<Checkbox/>} label="Ghi nhớ mật khẩu?"/>
-                                    </FormGroup>
-                                    <Typography color={"error"} fontWeight={"bold"} >
-                                        <Link to='#'>
-                                            Quên mật khẩu?
-                                        </Link>
-                                    </Typography>
+                        <Animate type="fade" sx={{maxWidth: 400, width: "100%"}}>
+                            <Box component={"form"} maxWidth={400} width={"100%"} onSubmit={onSignin}>
+                                <Stack spacing={3}>
+                                    <TextField label="username" fullWidth/>
+                                    <TextField label="password" type="password" fullWidth/>
+                                    <Button type="submit" size="lagre" variant="contained" color="success">
+                                        sign in
+                                    </Button>
+                                    <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                                        <FormGroup>
+                                            <FormControlLabel control={<Checkbox/>} label="Ghi nhớ mật khẩu?"/>
+                                        </FormGroup>
+                                        <Typography color={"error"} fontWeight={"bold"} >
+                                            <Link to='#'>
+                                                Quên mật khẩu?
+                                            </Link>
+                                        </Typography>
+                                    </Stack>
                                 </Stack>
-                            </Stack>
-                        </Box>
+                            </Box>
+                        </Animate>
                     </Box>
                     {/* Form */}
 
@@ -123,18 +128,20 @@ const LoginPage = () => {
                     <Box sx={{
                         textAlign: "center", p: 5, zIndex: 2
                     }}>
-                        <Typography
-                            display={"inline"}
-                            fontWeight={"bold"}
-                            sx={{
-                                "& > a": { color: colors.red[900], ml: "5px"}
-                            }}
-                        >
-                            Bạn chưa có tài khoản - 
-                            <Link to={'#'}>
-                                Đăng ký ngay
-                            </Link>
-                        </Typography>
+                        <Animate type="fade" delay={1}>
+                            <Typography
+                                display={"inline"}
+                                fontWeight={"bold"}
+                                sx={{
+                                    "& > a": { color: colors.red[900], ml: "5px"}
+                                }}
+                            >
+                                Bạn chưa có tài khoản - 
+                                <Link to={'#'}>
+                                    Đăng ký ngay
+                                </Link>
+                            </Typography>
+                        </Animate>
                     </Box>
                     {/* Footer */}
 

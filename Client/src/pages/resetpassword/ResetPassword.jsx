@@ -4,7 +4,7 @@ import './reset-password.scss';
 import { Link, useParams } from 'react-router-dom';
 import Button from '../../components/button/Button';
 
-import googleImg from '../../assets/images/google.png';
+import googleImg from '../../assets/image/google.png';
 // import { forgot-passwordUSer } from "../../api/authApi";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";

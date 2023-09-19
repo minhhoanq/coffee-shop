@@ -19,6 +19,8 @@ import Payment from "../pages/payment/Payment";
 import DefaultLayoutUser from "../components/layout/defaultlayoutuser/DefaultLayoutUser";
 import Address from "../pages/address/Address";
 import LoginPage from "../pages/LoginPage";
+import DashboardPage from "../pages/DashboardPage";
+import MainLayout from "../components/layout/MainLayout";
 
 //Public routes
 const publicRoutes = [
@@ -40,6 +42,9 @@ const publicRoutes = [
     { path: '/admin/staff/:id', component: StaffDetail,layout: DefaultLayoutAdmin},
     { path: '/admin/staff/trash', component: StaffTrash,layout: DefaultLayoutAdmin},
     { path: '/admin/ingredient', component: Ingredient,layout: DefaultLayoutAdmin},
+
+    //test
+    { path: '/dashboard', component: DashboardPage, layout: MainLayout}
 ];
 
 const privateRoutes = [];

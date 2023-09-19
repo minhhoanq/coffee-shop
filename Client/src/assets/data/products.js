@@ -1,32 +1,32 @@
-import productImg01 from "../images/double-sofa-01.png";
-import productImg02 from "../images/double-sofa-02.png";
-import productImg03 from "../images/double-sofa-03.png";
+import productImg01 from "../image/double-sofa-01.png";
+import productImg02 from "../image/double-sofa-02.png";
+import productImg03 from "../image/double-sofa-03.png";
 
-import productImg04 from "../images/single-sofa-01.jpg";
-import productImg05 from "../images/single-sofa-02.jpg";
-import productImg06 from "../images/single-sofa-03.jpg";
-import productImg007 from "../images/single-sofa-04.png";
+import productImg04 from "../image/single-sofa-01.jpg";
+import productImg05 from "../image/single-sofa-02.jpg";
+import productImg06 from "../image/single-sofa-03.jpg";
+import productImg007 from "../image/single-sofa-04.png";
 
-import productImg07 from "../images/arm-chair-01.jpg";
-import productImg08 from "../images/arm-chair-02.jpg";
-import productImg09 from "../images/arm-chair-03.jpg";
-import productImg10 from "../images/arm-chair-01.jpg";
+import productImg07 from "../image/arm-chair-01.jpg";
+import productImg08 from "../image/arm-chair-02.jpg";
+import productImg09 from "../image/arm-chair-03.jpg";
+import productImg10 from "../image/arm-chair-01.jpg";
 
-import productImg13 from "../images/phone-01.jpg";
-import productImg14 from "../images/phone-02.jpg";
-import productImg15 from "../images/phone-03.png";
-import productImg16 from "../images/phone-04.jpg";
-import productImg17 from "../images/phone-05.jpg";
-import productImg18 from "../images/phone-06.jpg";
+import productImg13 from "../image/phone-01.jpg";
+import productImg14 from "../image/phone-02.jpg";
+import productImg15 from "../image/phone-03.png";
+import productImg16 from "../image/phone-04.jpg";
+import productImg17 from "../image/phone-05.jpg";
+import productImg18 from "../image/phone-06.jpg";
 
-import productImg19 from "../images/watch-01.jpg";
-import productImg20 from "../images/watch-02.jpg";
-import productImg21 from "../images/watch-03.jpg";
-import productImg22 from "../images/watch-04.jpg";
+import productImg19 from "../image/watch-01.jpg";
+import productImg20 from "../image/watch-02.jpg";
+import productImg21 from "../image/watch-03.jpg";
+import productImg22 from "../image/watch-04.jpg";
 
-import productImg23 from "../images/wireless-01.png";
+import productImg23 from "../image/wireless-01.png";
 
-import productImg25 from "../images/wireless-03.png";
+import productImg25 from "../image/wireless-03.png";
 
 const products = [
   {
