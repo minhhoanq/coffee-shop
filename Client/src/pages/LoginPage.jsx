@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { Box, Stack, TextField, Button, FormGroup, FormControlLabel, Checkbox, Typography, colors, CircularProgress, circularProgressClasses } from '@mui/material';
 import bgLogin from '../assets/images/backgroundLogin.jpg';
+import logoGoogle from '../assets/images/google.png';
 import logo from '../assets/images/logo.jpg';
 import { Link, useNavigate } from "react-router-dom";
 import Animate from "../components/common/Animate";
@@ -48,102 +49,164 @@ const LoginPage = () => {
                 sx={
                     {
                         position:"absolute",
-                        right:"0",
+                        left:"0",
                         height:"100%",
-                        width:"70%",
-                        backgroundPosition:"center",
-                        backgroundSize:"contain",
-                        backgroundRepeat:"no-repeat",
-                        backgroundImage: `url(${bgLogin})`,
+                        width: isLoggedIn ? "60%" : { xl: "60%", lg: "60%", md: "50%", xs: "0%"},
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        // backgroundPosition:"center",
+                        // backgroundSize:"contain",
+                        // backgroundRepeat:"no-repeat",
+                        // backgroundImage: `url(${bgLogin})`,
                     }
                 }
-            />
+            >
+                <img src={bgLogin}
+                    height= {"60%"}
+                    style={{
+                        objectFit: "contain"
+                    }}
+                />
+            </Box>
             {/* background box */}
             
             {/* Login form */}
             <Box sx={{
                 position:"absolute",
-                left:0,
+                display:"flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                right:0,
                 height:"100%",
-                width: isLoggedIn ? "100%" : { xl: "30%", lg: "30%", md: "50%", xs: "100%"},
+                width: isLoggedIn ? "100%" : { xl: "30%", lg: "40%", md: "50%", xs: "100%"},
                 transition: "all 1s ease-in-out",
-                bgcolor: colors.common.white
+                bgcolor: colors.common.white,
+                
             }}>
                 <Box sx={{
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-between",
+                    justifyContent: "space-around",
                     opacity: isLoggedIn ? 0 : 1,
                     transition: "all 0.3s ease-in-out",
-                    height: "100%",
-                    ":-webkit-scrollbar": { display: "none"}
+                    height: "80%",
+                    width:" 80%",
+                    ":-webkit-scrollbar": { display: "none"},
+                    p: 3,
+                    boxSizing: "border-box",
+                    border: "1px solid #ccc",
                 }}>
                     {/* Logo */}
-                    <Box sx={{
-                        textAlign: "center", p: 5
+                    <Box
+                    sx={{
+                        textAlign: "center",
+                        p: 5,
+                        pt: 0,
+                        pb: 0
                     }}>
                         <Animate type="fade" delay={0.5}>
-                            <img src={logo} alt='logo' height={60}/>
+                            <img src={logo} alt='logo' height={100}/>
                         </Animate>
                     </Box>
                     {/* Logo */}
 
                     {/* Form */}
-                    <Box sx={{
-                        position:"absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        ":-webkit-scrollbar": { display: "none"}
-                    }}>
-                        <Animate type="fade" sx={{maxWidth: 400, width: "100%"}}>
-                            <Box component={"form"} maxWidth={400} width={"100%"} onSubmit={onSignin}>
-                                <Stack spacing={3}>
-                                    <TextField label="username" fullWidth/>
-                                    <TextField label="password" type="password" fullWidth/>
-                                    <Button type="submit" size="lagre" variant="contained" color="success">
-                                        sign in
-                                    </Button>
-                                    <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
-                                        <FormGroup>
-                                            <FormControlLabel control={<Checkbox/>} label="Ghi nhớ mật khẩu?"/>
-                                        </FormGroup>
-                                        <Typography color={"error"} fontWeight={"bold"} >
-                                            <Link to='#'>
-                                                Quên mật khẩu?
-                                            </Link>
-                                        </Typography>
-                                    </Stack>
-                                </Stack>
-                            </Box>
-                        </Animate>
-                    </Box>
-                    {/* Form */}
+                    <Animate type="fade" sx={{ width: "100%"}}>
+                        <Box sx={{
+                            width: "100%",
+                            // height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            ":-webkit-scrollbar": { display: "none"}
+                        }}>
+                            
+                                <Box component={"form"} maxWidth={400} width={"100%"} onSubmit={onSignin} >
+                                    <Stack spacing={3}>
+                                        <TextField label="Tên đăng nhập" fullWidth
+                                            inputProps={{
+                                                style: {
+                                                    height: "50px",
+                                                    padding: '0 10px',
+                                                }
+                                            }}
+                                            sx={{
+                                                bgcolor: colors.grey[200]
+                                            }}
+                                            />
+                                        <TextField label="Mật khẩu" type="password" fullWidth
+                                            inputProps={{
+                                                style: {
+                                                    height: "50px",
+                                                    padding: '0 10px',
+                                                }
+                                            }}  
+                                            sx={{
+                                                bgcolor: colors.grey[200]
+                                            }}/>
+                                        <Button type="submit" size="lagre" variant="contained" 
+                                        sx={{
+                                            bgcolor:colors.brown[500],
+                                            "&:hover" : {
+                                                bgcolor: colors.brown[400]
+                                            }
+                                        }}>
+                                            Đăng nhập
+                                        </Button>
+                                        <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                                            <FormGroup>
+                                                <FormControlLabel control={<Checkbox/>} label="Ghi nhớ mật khẩu?"/>
+                                            </FormGroup>
+                                            <Typography color={"error"} fontWeight={"bold"} >
+                                                <Link to='#'>
+                                                    Quên mật khẩu?
+                                                </Link>
+                                            </Typography>
+                                        </Stack>
 
-                    {/* Footer */}
-                    <Box sx={{
-                        textAlign: "center", p: 5, zIndex: 2
-                    }}>
-                        <Animate type="fade" delay={1}>
-                            <Typography
-                                display={"inline"}
-                                fontWeight={"bold"}
-                                sx={{
-                                    "& > a": { color: colors.red[900], ml: "5px"}
-                                }}
-                            >
-                                Bạn chưa có tài khoản - 
-                                <Link to={'#'}>
-                                    Đăng ký ngay
-                                </Link>
-                            </Typography>
-                        </Animate>
-                    </Box>
-                    {/* Footer */}
+                                        <Stack spacing={1} direction={"row"} sx={{
+                                            width: "100%",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                        }}>
+                                            <img src={logoGoogle} height={20}/>
+                                            <Link style={{
+                                                fontSize: "1.1rem",
+                                                fontWeight: "500"
+                                            }}>
+                                                Đăng nhập bằng Google
+                                            </Link>
+                                        </Stack>
+                                    </Stack>
+                                </Box>
+                        </Box>
+
+                         {/* Footer */}
+                        <Box sx={{
+                            textAlign: "center", p: 2, zIndex: 2,
+                            mt: "20px"
+                        }}>
+                            <Animate type="fade" delay={1}>
+                                <Typography
+                                    display={"inline"}
+                                    fontWeight={"bold"}
+                                    sx={{
+                                        "& > a": { color: colors.red[900], ml: "5px"}
+                                    }}
+                                >
+                                    Bạn chưa có tài khoản - 
+                                    <Link to={'#'}>
+                                        Đăng ký ngay
+                                    </Link>
+                                </Typography>
+                            </Animate>
+                        </Box>
+                        {/* Footer */}
+                    </Animate>
+                    {/* Form */}
 
                     {/* Loading */}
                     {onRequest && (

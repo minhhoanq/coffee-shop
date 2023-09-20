@@ -67,7 +67,7 @@ const investmentMenus = [
 const Sidebar = ({ sidebarWidth }) => {
     const activeState = "profile"
 
-    const container = window !== undefined ? () => window.document.body : undefined;
+    // const container = window !== undefined ? () => window.document.body : undefined;
 
     const MenuItem = (props) => {
         return (
@@ -123,7 +123,7 @@ const Sidebar = ({ sidebarWidth }) => {
             </Box>
             {/* Logo */}
 
-            <Animate>
+            <Animate sx={{ flexGrow: 1 }}>
                 <Paper
                     elevation={0}
                     square
