@@ -1,5 +1,5 @@
-import Home from "../pages/home/Home";
-import Shop from '../pages/shop/Shop';
+import Home from "../pages/Home";
+import Shop from '../pages/Shop';
 import Cart from '../pages/cart/Cart';
 import Login from '../pages/login/Login';
 import Register from '../pages/register/Register';
@@ -24,7 +24,7 @@ import MainLayout from "../components/layout/MainLayout";
 
 //Public routes
 const publicRoutes = [
-    { path: '/', component: Home},
+    { path: '/', component: Home, layout: null},
     { path: '/user/account', component: Profile, layout: DefaultLayoutUser},
     { path: '/user/account/profile', component: Profile, layout: DefaultLayoutUser},
     { path: '/user/account/payment', component: Payment, layout: DefaultLayoutUser},
