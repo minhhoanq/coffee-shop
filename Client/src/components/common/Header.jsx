@@ -1,4 +1,4 @@
-import { Box, Stack, colors, Typography, IconButton, AppBar, Toolbar, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
+import { Box, Stack, colors, Typography, IconButton, AppBar, Toolbar, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, Tooltip } from "@mui/material"
 import { Link } from "react-router-dom";
 
 import logo from '../../assets/images/logo.jpg';
@@ -12,6 +12,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import Animate from "./Animate";
 import { useState } from "react";
+import MenuAccount from "./MenuAccount";
 
 const navBars = [
     {
@@ -58,8 +59,9 @@ const navBarsRight = [
 ]
 
 const Header = () => {
-
     const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const openMenuRight = Boolean(anchorEl);
 
     const MenuItem = (props) => {
         return (
@@ -101,6 +103,11 @@ const Header = () => {
     const handleOpenNavbar = () => {
         setOpen(!open);
     }
+
+    const handleShowMenu = (e) => {
+        setAnchorEl(e.currentTarget);
+    }
+    console.log(anchorEl?.ariaLabel)
 
     return (
         <Box 
@@ -250,13 +257,38 @@ const Header = () => {
                         sx={{
                             display:{ xl: "flex", lg: "flex", md: "flex", sm: "flex", xs: "none"},
                             justifyContent:"flex-end",
-                            alignItems:"center"
+                            alignItems:"center",
                         }}
                     >
                         {navBarsRight.map((item, index) => (
-                            <IconButton aria-label="notifycation" color="inherit">
-                                {item.icon}
-                            </IconButton>
+                            <>
+                                <Tooltip
+                                    title={item.title}
+                                >
+                                    <IconButton 
+                                        key={index} 
+                                        aria-label={item.state} 
+                                        color="inherit" 
+                                        onClick={handleShowMenu}
+                                        aria-controls={openMenuRight ? item.state : undefined}
+                                        aria-haspopup="true"
+                                        aria-expanded={openMenuRight ? "true" : undefined}
+                                        >
+                                        {item.icon}
+                                    </IconButton>
+                                </Tooltip>
+                                {anchorEl?.ariaLabel === item.state && openMenuRight === true ? (
+                                    <MenuAccount
+                                        anchorEl={anchorEl}
+                                        id={item.state}
+                                        onClose={() => setAnchorEl(null)}
+                                        onClick={() => setAnchorEl(null)}
+                                        open={openMenuRight}
+                                        item={item}
+                                    />
+                                    // <Box>BBB</Box>
+                                ) : null}
+                            </>
                         ))}
                     </Stack>
                 </Stack>
