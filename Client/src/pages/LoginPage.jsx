@@ -31,7 +31,7 @@ const LoginPage = () => {
         }, 2100);
 
         setTimeout(() => {
-            navigate('/dashboard')
+            navigate('/')
         }, 3300);
     }
 

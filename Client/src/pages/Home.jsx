@@ -4,6 +4,11 @@ import bgHome from '../assets/images/bgHome.jpeg';
 import logo from '../assets/images/logo.jpg';
 import { Link } from "react-router-dom";
 
+import FacebookIcon from '@mui/icons-material/Facebook';
+import EmailIcon from '@mui/icons-material/Email';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import InstagramIcon from '@mui/icons-material/Instagram';
+
 const options = [
     {
         title: "MENU",
@@ -20,6 +25,32 @@ const options = [
     {
         title: "INFO",
         state: "info",
+    },
+]
+
+const contacts = [
+    {
+        icon: <FacebookIcon/>,
+        state: "facebook",
+        pathname: 'https://www.facebook.com/minhoanq'
+    },
+
+    {
+        icon: <EmailIcon/>,
+        state: "mail",
+        pathname: '',
+    },
+
+    {
+        icon: <GitHubIcon/>,
+        state: "github",
+        pathname: 'https://github.com/minhhoanq',
+    },
+
+    {
+        icon: <InstagramIcon/>,
+        state: "instagram",
+        pathanme: '',
     },
 ]
 
@@ -44,7 +75,11 @@ const Home = () => {
                 alignItems: "center",
                 flexDirection: "column"
             }}>
+                {/* Logo */}
                 <img src={logo} alt="logo" height={80} style={{ marginTop: "20px"}}/>
+                {/* Logo */}
+
+                {/* Text */}
                 <Typography 
                     variant="h5" 
                     fontFamily= 'Roboto'
@@ -53,6 +88,7 @@ const Home = () => {
                         fontSize: { xl: "2rem", lg: "2rem", md: "1.8rem", xs: "1.6rem"}
                     }}
                     >C O F F E E & T E A</Typography>
+                {/* Text */}
             </Box>
 
             <Box sx={{
@@ -97,6 +133,23 @@ const Home = () => {
                     ))}
                 </Stack>
             </Box>
+
+            <Stack
+                direction={"row"}
+                position={"absolute"}
+                bottom={0}
+                width={"100%"}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                mb={2}
+            >
+                {contacts.map((item, index) => (
+                    <Link to={item.pathname} key={index} style={{ color: "#fff",  width:"35px"}}>
+                        {item.icon}
+                    </Link>
+                ))}
+            </Stack>
         </Box>
     )
 }
