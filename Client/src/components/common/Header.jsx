@@ -1,4 +1,4 @@
-import { Box, Stack, colors, Typography, IconButton } from "@mui/material"
+import { Box, Stack, colors, Typography, IconButton, AppBar, Toolbar, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 import { Link } from "react-router-dom";
 
 import logo from '../../assets/images/logo.jpg';
@@ -6,6 +6,12 @@ import logo from '../../assets/images/logo.jpg';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import MenuIcon from '@mui/icons-material/Menu';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
+import Animate from "./Animate";
+import { useState } from "react";
 
 const navBars = [
     {
@@ -30,7 +36,72 @@ const navBars = [
     }
 ]
 
+const navBarsRight = [
+    {
+        title: "NOTIFICATION",
+        state: "notification",
+        icon: <FavoriteBorderIcon/>,
+        pathname: "/"
+    },
+    {
+        title: "CART",
+        state: "cart",
+        icon: <ShoppingCartOutlinedIcon/>,
+        pathname: "/"
+    },
+    {
+        title: "PROFILE",
+        state: "profile",
+        icon: <AccountCircleOutlinedIcon/>,
+        pathname: "/"
+    }
+]
+
 const Header = () => {
+
+    const [open, setOpen] = useState(false);
+
+    const MenuItem = (props) => {
+        return (
+            <ListItem key={props.index} disableGutters disablePadding sx={{ py: 0.5}}>
+                <ListItemButton
+                    sx={{
+                        height: "35px",
+                        borderRadius: "10px",
+                        bgcolor: props.isActive ? colors.green[600] : "",
+                        color: props.isActive ? colors.common.white : "",
+                        "&:hover": {
+                            bgcolor: props.isActive ? colors.green[600] : "",
+                            color: props.isActive ? colors.common.white : "",
+                        },
+                    }}
+                >
+                    {/* <ListItemIcon sx={{
+                        minWidth: "40px",
+                        color: props.isActive ? colors.common.white : "",
+                    }}>
+                        {props.item.icon}
+                    </ListItemIcon> */}
+
+                    <ListItemText
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center"
+                    }}
+                    primary={
+                        <Typography fontWeight={600}>
+                            {props.item.title}
+                        </Typography>
+                    }/>
+                </ListItemButton>
+            </ListItem>
+        )
+    }
+
+    const handleOpenNavbar = () => {
+        setOpen(!open);
+    }
+
     return (
         <Box 
             width={"100%"} 
@@ -50,18 +121,26 @@ const Header = () => {
                 mb={2}
             >  
                 <Stack direction={"row"} 
-                    display={"flex"}
-                    justifyContent={"space-between"}
-                    alignItems={"center"}
+
+                    sx={{
+                        display:"flex",
+                        justifyContent:{ xl: "center", lg: "center", md: "center", xs: "flex-start"},
+                        alignItems:"center",
+                    }}
                 >
                     <Stack 
                         direction={"row"} 
-                        flex={1} 
                         flexWrap={"wrap"}
                         sx={{
-                            display: { xl: "flex", lg: "flex", md: "flex", sm: "flex", xs: "none"}
+                            flex: { xl: "1", lg: "1", md: "1", sm: "1", xs: "0"},
+                            display: "flex",
                         }}
                     >
+                        <Box 
+                            sx={{
+                                display: { xl: "flex", lg: "flex", md: "flex", sm: "flex", xs: "none"},
+                            }}
+                        >
                         {navBars.map((item, index) => (
                             <Link 
                                 to={item.pathname} 
@@ -71,51 +150,114 @@ const Header = () => {
                                     fontWeight: "600", 
                                     fontFamily: "Arial",
                                     padding: "0 10px",
-                                    
                                 }}>
                                 {item.title}
                             </Link>
                         ))}
+                        </Box>
+
+                        <Toolbar variant="dense" sx={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            display: { xl: "none", lg: "none", md: "none", sm: "none", xs: "block"}
+                        }}
+                        >
+                            <IconButton onClick={handleOpenNavbar} edge="start" color="inherit" aria-label="menu" size="large" sx={{ mr: 2 }}>
+                            <MenuIcon fontSize="large"/>
+                            </IconButton>
+                        </Toolbar>
+
+                        <Drawer
+                            sx={{
+                                '& .MuiDrawer-paper': {
+                                    width: "80%",
+                                    boxSizing: 'border-box',
+                                  },
+                            }}
+                            open={open}
+                        >
+                            <Box
+                                sx={{
+                                    width: "100%",
+                                    display: "flex",
+                                    justifyContent: "flex-end",
+                                    alignItems: "center"
+                                }}
+                            >
+                                <IconButton onClick={() => setOpen(!open)}
+                                    size="small"
+                                    sx={{
+                                        width: "50px",
+                                        height: "50px",
+                                    }}
+                                >
+                                    <ArrowBackIosIcon fontSize="small"/>
+                                </IconButton>
+                            </Box>
+                            {
+                                navBars.map((item, index) => (
+                                    <Link to={item.pathname} key={index}>
+                                        <MenuItem
+                                            item={item}
+                                        />
+                                    </Link>
+                                ))
+                            }
+
+                            {
+                                navBarsRight.map((item, index) => (
+                                    <Link to={item.pathname} key={index}>
+                                        <MenuItem
+                                            item={item}
+                                        />
+                                    </Link>
+                                ))
+                            }
+                        </Drawer>
                     </Stack>
 
-                    <Box sx={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "column",
-                        flex: 1
-                    }}>
-                        {/* Logo */}
-                        <img src={logo} alt="logo" height={60}/>
-                        {/* Logo */}
+                    {/* <Animate type="fade" delay={0.5}> */}
+                        <Box 
+                            flex={1}   
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                        }}>
+                            {/* Logo */}
+                            <img src={logo} alt="logo" height={60}/>
+                            {/* Logo */}
 
-                        {/* Text */}
-                        <Typography 
-                            // variant="h7" 
-                            fontFamily= 'Roboto'
-                            sx={{
-                                fontSize: { xl: "1.8rem", lg: "1.6rem", md: "1.6rem", xs: "1.4rem"},
-                                
-                            }}
-                            >C O F F E E & T E A</Typography>
-                        {/* Text */}
-                    </Box>
+                            {/* Text */}
+                            <Typography 
+                                // variant="h7" 
+                                fontFamily= 'Roboto'
+                                sx={{
+                                    fontSize: { xl: "1.8rem", lg: "1.6rem", md: "1.6rem", xs: "1.4rem"},
+                                }}
+                                >C O F F E E & T E A</Typography>
+                            {/* Text */}
+                        </Box>
+                    {/* </Animate> */}
 
-                    <Stack spacing={2} flex={1} direction={"row"}
-                        display={"flex"}
-                        justifyContent={"flex-end"}
-                        alignItems={"center"}
+                    <Stack 
+                        spacing={1} 
+                        direction={"row"}
+                        flex={1} 
+                        sx={{
+                            display:{ xl: "flex", lg: "flex", md: "flex", sm: "flex", xs: "none"},
+                            justifyContent:"flex-end",
+                            alignItems:"center"
+                        }}
                     >
-                        <IconButton aria-label="notifycation" color="inherit">
-                            <FavoriteBorderIcon />
-                        </IconButton>
-                        <IconButton aria-label="cart" color="inherit">
-                            <ShoppingCartOutlinedIcon />
-                        </IconButton>
-                        <IconButton aria-label="info" color="inherit">
-                            <AccountCircleOutlinedIcon />
-                        </IconButton>
+                        {navBarsRight.map((item, index) => (
+                            <IconButton aria-label="notifycation" color="inherit">
+                                {item.icon}
+                            </IconButton>
+                        ))}
                     </Stack>
                 </Stack>
             </Box>
