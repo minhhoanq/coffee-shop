@@ -21,6 +21,7 @@ import Address from "../pages/address/Address";
 import LoginPage from "../pages/LoginPage";
 import DashboardPage from "../pages/DashboardPage";
 import MainLayout from "../components/layout/MainLayout";
+import Menu from "../pages/Menu";
 
 //Public routes
 const publicRoutes = [
@@ -29,6 +30,7 @@ const publicRoutes = [
     { path: '/user/account/profile', component: Profile, layout: DefaultLayoutUser},
     { path: '/user/account/payment', component: Payment, layout: DefaultLayoutUser},
     { path: '/user/account/address', component: Address, layout: DefaultLayoutUser},
+    { path: '/menu', component: Menu},
     { path: '/shop', component: Shop},
     { path: '/shop/:slug', component: DetailProduct},
     { path: '/cart', component: Cart},

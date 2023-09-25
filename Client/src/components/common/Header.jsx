@@ -111,7 +111,7 @@ const Header = () => {
 
     return (
         <Box 
-            width={"100%"} 
+            width={"100%"}
             display={"flex"}
             justifyContent={"center"}
             alignItems={"center"}
@@ -121,8 +121,8 @@ const Header = () => {
         >
             <Box 
                 maxWidth={"1000px"} 
-                width={"100%"} 
-                // height={"65px"}
+                width={"80%"} 
+                height={"auto"}
                 // border={"1px solid #ccc"}
                 mt={2}
                 mb={2}

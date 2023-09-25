@@ -9,10 +9,10 @@ const DefaultLayout = props => {
     return (
         <div>
             <Header />
-            {/* <div>
-                <div>{props.children}</div>
-                <Footer />
-            </div> */}
+            <div>
+                <div style={{marginTop: "123px"}}>{props.children}</div>
+                {/* <Footer /> */}
+            </div>
         </div>
     )
 }
