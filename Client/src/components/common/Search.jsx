@@ -91,6 +91,7 @@ const Seach = () => {
     return (
         <Box
             pt={5}
+            pb={5}
             sx={{
                 display: "flex",
                 justifyContent: "space-between",

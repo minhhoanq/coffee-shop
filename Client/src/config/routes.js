@@ -1,5 +1,5 @@
 import Home from "../pages/Home";
-import Shop from '../pages/Shop';
+import Shop from '../pages/shop/Shop';
 import Cart from '../pages/cart/Cart';
 import Login from '../pages/login/Login';
 import Register from '../pages/register/Register';
