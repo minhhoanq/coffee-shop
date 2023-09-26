@@ -13,7 +13,7 @@ const ItemCardHorizontal = () => {
                 </Box>
 
                 <Stack justifyContent={"space-between"} height={"100%"}>
-                    <Typography fontWeight={"600"} variant="h6">
+                    <Typography fontWeight={"500"} variant="h6">
                         Bạc xỉu
                     </Typography>
                     <Typography>
@@ -26,7 +26,7 @@ const ItemCardHorizontal = () => {
                         }}>
                             <RemoveIcon fontSize="small"/>
                         </IconButton>
-                        <Typography>
+                        <Typography fontSize={"1.2rem"}>
                             1
                         </Typography>
                         <IconButton size="small" sx={{
@@ -39,7 +39,7 @@ const ItemCardHorizontal = () => {
                 </Stack>
             </Stack>
             <Stack justifyContent={"space-between"} >
-                <Typography fontSize={"1.4rem"}>
+                <Typography fontSize={"1.2rem"}>
                     $12
                 </Typography>
 
