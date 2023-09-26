@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 //import './defaultlayout.scss';
-import Footer from "../../footer/Footer";
+import Footer from "../../common/Footer";
 import Header from "../../common/Header";
 import Header2 from "../../common/Header2";
 
@@ -37,7 +37,7 @@ const DefaultLayout = props => {
             }
             <div>
                 <div>{props.children}</div>
-                {/* <Footer /> */}
+                <Footer />
             </div>
         </div>
     )
