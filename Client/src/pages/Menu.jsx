@@ -18,7 +18,7 @@ const Menu = () => {
                 </Grid>
 
                 <Grid item xs={10}>
-                    <Grid container justifyContent="flex-start" spacing={6.5}>
+                    <Grid container justifyContent="flex-start" spacing={6}>
                         <Grid item lg={3} md={4} sm={6} xs={12} ><ItemCard/></Grid>
                         <Grid item lg={3} md={4} sm={6} xs={12} ><ItemCard/></Grid>
                         <Grid item lg={3} md={4} sm={6} xs={12} ><ItemCard/></Grid>

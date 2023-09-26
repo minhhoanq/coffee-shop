@@ -70,7 +70,7 @@ const MenuAccount = props => {
         <>
             {props.id === "profile" ? (
                 <MenuProfile props={props}/>
-            ):<>Check</>}
+            ):<></>}
         </>
     )
 }

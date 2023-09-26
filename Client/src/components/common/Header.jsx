@@ -115,9 +115,9 @@ const Header = () => {
             display={"flex"}
             justifyContent={"center"}
             alignItems={"center"}
-            position={"fixed"}
-            top={0}
-            right={0}
+            // position={"fixed"}
+            // top={0}
+            // right={0}
         >
             <Box 
                 maxWidth={"1000px"} 
@@ -287,7 +287,7 @@ const Header = () => {
                                         item={item}
                                     />
                                     // <Box>BBB</Box>
-                                ) : null}
+                                ) : <></>}
                             </>
                         ))}
                     </Stack>
