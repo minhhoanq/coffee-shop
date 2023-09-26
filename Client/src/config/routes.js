@@ -1,6 +1,7 @@
 import Home from "../pages/Home";
 import Shop from '../pages/shop/Shop';
-import Cart from '../pages/cart/Cart';
+// import Cart from '../pages/cart/Cart';
+import Cart from '../pages/Cart';
 import Login from '../pages/login/Login';
 import Register from '../pages/register/Register';
 import FooterOnly from '../components/layout/footeronly/FooterOnly';
