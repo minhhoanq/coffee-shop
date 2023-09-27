@@ -6,33 +6,59 @@ import logoGoogle from '../assets/images/google.png';
 import logo from '../assets/images/logo.jpg';
 import { Link, useNavigate } from "react-router-dom";
 import Animate from "../components/common/Animate";
-
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { loginActions } from "../redux/asyncActions/authActions";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [onRequest, setOnReqest] = useState(false);
+    const [onRequest, setOnRequest] = useState(false);
     const [logginProgress, setLogginProgress] = useState(false);
+    const isFetching = useSelector(state => state.auth.isFetching);
 
-    const onSignin = (e) => {
-        e.preventDefault();
-        setOnReqest(true);
+    
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isDirty },
+        reset,
+    } = useForm({
+        defaultValues: {
+            username: "",
+            password: "",
+        }
+    });
 
-        const interval = setInterval(() => {
-            setLogginProgress(prev => prev + 100 / 40)
-        }, 50);
+    const onSignin = async(data) => {
+        // e.preventDefault();
+        // setOnRequest(true);
 
-        setTimeout(() => {
-            clearInterval(interval)
-        }, 2000);
+        // const interval = setInterval(() => {
+        //     setLogginProgress(true)
+        // }, 50);
+
+        // setTimeout(() => {
+        //     clearInterval(interval)
+        // }, 2000);
         
-        setTimeout(() => {
+        // setTimeout(() => {
+        //     navigate('/')
+        // }, 3300);
+        const response = await dispatch(loginActions(data));
+        const reqStatus = response.meta.requestStatus;
+        console.log(response);
+        if(reqStatus === 'fulfilled' && isFetching === false) {
             setIsLoggedIn(true);
-        }, 2100);
-
-        setTimeout(() => {
-            navigate('/')
-        }, 3300);
+            setTimeout(() => {
+                navigate('/')
+            }, 1000)
+        } else if (reqStatus === 'rejected') {
+            setOnRequest(false)
+            Swal.fire('', response.payload.response.data, 'error')
+        }
     }
 
     return (
@@ -123,29 +149,60 @@ const LoginPage = () => {
                             ":-webkit-scrollbar": { display: "none"}
                         }}>
                             
-                                <Box component={"form"} maxWidth={400} width={"100%"} onSubmit={onSignin} >
-                                    <Stack spacing={3}>
-                                        <TextField label="Tên đăng nhập" fullWidth
-                                            inputProps={{
-                                                style: {
-                                                    height: "50px",
-                                                    padding: '0 10px',
+                                <Box component={"form"} maxWidth={400} width={"100%"} onSubmit={handleSubmit(onSignin)} >
+                                    <Stack spacing={2}>
+                                        <Stack spacing={1}>
+                                            <TextField label="Username" fullWidth
+                                                name="username" 
+                                                id="username" 
+                                                inputProps={{
+                                                    style: {
+                                                        height: "50px",
+                                                        padding: '0 10px',
+                                                    }
+                                                }}
+                                                sx={{
+                                                    bgcolor: colors.grey[200]
+                                                }}
+                                                {...register("username", 
+                                                        {
+                                                            required: 'Vui lòng nhập tên đăng nhập.',
+                                                            minLength: {
+                                                                value: 4,
+                                                                message: 'Vui lòng nhập nhiều hơn 4 ký tự.'
+                                                            }
+                                                        }
+                                                    )
                                                 }
-                                            }}
-                                            sx={{
-                                                bgcolor: colors.grey[200]
-                                            }}
-                                            />
-                                        <TextField label="Mật khẩu" type="password" fullWidth
-                                            inputProps={{
-                                                style: {
-                                                    height: "50px",
-                                                    padding: '0 10px',
+                                                />
+                                            <Typography color={"error"}>{errors?.username && errors.username.message}</Typography>
+                                        </Stack>
+                                        <Stack spacing={1}>
+                                            <TextField label="Mật khẩu" type="password" fullWidth
+                                                name="password" 
+                                                id="password"
+                                                inputProps={{
+                                                    style: {
+                                                        height: "50px",
+                                                        padding: '0 10px',
+                                                    }
+                                                }} 
+                                                sx={{
+                                                    bgcolor: colors.grey[200]
+                                                }}
+                                                {...register("password", 
+                                                        {
+                                                            required: 'Vui lòng nhập mật khẩu.',
+                                                            minLength: {
+                                                                value: 4,
+                                                                message: 'Vui lòng nhập nhiều hơn 4 ký tự.'
+                                                            }
+                                                        }
+                                                    )
                                                 }
-                                            }}  
-                                            sx={{
-                                                bgcolor: colors.grey[200]
-                                            }}/>
+                                                />
+                                            <Typography color={"error"}>{errors?.password && errors.password.message}</Typography>
+                                        </Stack>
                                         <Button type="submit" size="lagre" variant="contained" 
                                         sx={{
                                             bgcolor:colors.brown[500],
@@ -209,7 +266,7 @@ const LoginPage = () => {
                     {/* Form */}
 
                     {/* Loading */}
-                    {onRequest && (
+                    {isFetching && (
                         <Stack
                             alignItems={"center"}
                             justifyContent={"center"}
@@ -224,12 +281,8 @@ const LoginPage = () => {
                             }}
                         >
                             <Box position={"relative"}>
-                                <CircularProgress
-                                    variant="determinate"
-                                    sx={{ color: colors.grey[200]}}
-                                    value={1}
-                                />
-                                <CircularProgress
+                                <CircularProgress />
+                                {/* <CircularProgress
                                     variant="determinate"
                                     disableShrink
                                     value={logginProgress}
@@ -240,9 +293,9 @@ const LoginPage = () => {
                                         },
                                         position: "absolute",
                                         left: 0,
-                                        color: colors.green[600]
+                                        color: colors.brown[600]
                                     }}
-                                />
+                                /> */}
                             </Box>
                         </Stack>
                     )}
