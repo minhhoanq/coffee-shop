@@ -1,6 +1,8 @@
 import { Box, Button, Grid, Stack, Typography } from '@mui/material'
 import ItemCardHorizontal from '../components/common/ItemCarHorizontal';
-import Summary from '../components/common/Summary';
+import AddressGetIt from '../components/common/AddressGetIt';
+import AddATip from '../components/common/AddATip';
+import EstimatedOrder from '../components/common/EstimatedOrder';
 
 const Cart = () => {
     return (
@@ -14,14 +16,13 @@ const Cart = () => {
                 <Typography variant='h4' fontWeight={"600"}>
                     Your cart
                 </Typography>
-                <Grid item container xs={12} justifyContent={"space-between"} mt={4}>
-                    <Grid item xs={7}>
+                <Grid item container xs={12} justifyContent={"space-between"} mt={4} spacing={2}
+                >
+                    <Grid item lg={7} xs={12}>
                         <Typography fontWeight={"600"} fontSize={"0.9rem"} color={"GrayText"}>
                             YOUR ORDER (1 ITEM)
                         </Typography>
                         <Stack spacing={2} mt={2}>
-                            <ItemCardHorizontal/>
-                            <ItemCardHorizontal/>
                             <ItemCardHorizontal/>
                         </Stack>
                         <Button variant='outlined' fullWidth size='large'
@@ -40,8 +41,22 @@ const Cart = () => {
                         </Button>
                     </Grid>
 
-                    <Grid item xs={4}>
-                        <Summary/>
+                    <Grid item lg={4} xs={12}>
+                        <Stack spacing={4}>
+                            <AddressGetIt/>
+                            <Box
+                            sx={{
+                                width: "100%",
+                                borderTop: "1px solid #ccc"
+                            }}/>
+                            <AddATip/>
+                            <Box
+                            sx={{
+                                width: "100%",
+                                borderTop: "1px solid #ccc"
+                            }}/>
+                            <EstimatedOrder/>
+                        </Stack>
                     </Grid>
                 </Grid>
             </Grid>
