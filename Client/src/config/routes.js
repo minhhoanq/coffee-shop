@@ -5,7 +5,7 @@ import Cart from '../pages/Cart';
 import Login from '../pages/login/Login';
 import Register from '../pages/register/Register';
 import FooterOnly from '../components/layout/footeronly/FooterOnly';
-import DetailProduct from "../pages/detailproduct/DetailProduct";
+// import DetailProduct from "../pages/detailproduct/DetailProduct";
 import ProductDetail from "../pages/ProductDetail";
 import HomeAdmin from "../pages/admin/home/HomeAdmin";
 import Staff from "../pages/admin/staff/Staff";

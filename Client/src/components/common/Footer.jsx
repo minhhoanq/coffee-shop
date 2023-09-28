@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, Typography } from "@mui/material"
+import { Box, Grid, IconButton, Stack, Typography } from "@mui/material"
 
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -9,34 +9,54 @@ const Footer = () => {
         <Box 
             height={"8rem"}
         >
-            <Stack
-            height={"100%"}
+            <Grid
+                container
+                height={"100%"}
                 justifyContent={"space-around"} 
                 alignItems={"center"}
                 direction={"row"}
             >
-                <Typography variant="h5" fontWeight={"600"}>
-                    Coffee house
-                </Typography>
+                <Grid xs={8} container >
+                    <Grid xs={4} item>
+                        <Typography variant="h5" fontWeight={"600"}>
+                            Coffee house
+                        </Typography>
+                    </Grid>
 
-                <Typography>
-                    @2023
-                </Typography>
+                    <Grid xs={4} item>
+                        <Typography 
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center"
+                            }}
+                        >
+                            @2023
+                        </Typography>
+                    </Grid>
 
-                <Stack direction={"row"}>
-                    <IconButton aria-label="facebook">
-                        <FacebookIcon />
-                    </IconButton>
+                    <Grid xs={4} item>
+                        <Stack direction={"row"} 
+                            sx={{
+                                display: "flex",
+                                justifyContent: "flex-end"
+                            }}
+                        >
+                            <IconButton aria-label="facebook">
+                                <FacebookIcon />
+                            </IconButton>
 
-                    <IconButton aria-label="github">
-                        <GitHubIcon />
-                    </IconButton>
+                            <IconButton aria-label="github">
+                                <GitHubIcon />
+                            </IconButton>
 
-                    <IconButton aria-label="gmail">
-                        <EmailIcon />
-                    </IconButton>
-                </Stack>
-            </Stack>
+                            <IconButton aria-label="gmail" 
+                            >
+                                <EmailIcon />
+                            </IconButton>
+                        </Stack>
+                    </Grid>
+                </Grid>
+            </Grid>
         </Box>
     )
 }
