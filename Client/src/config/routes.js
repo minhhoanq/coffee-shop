@@ -6,6 +6,7 @@ import Login from '../pages/login/Login';
 import Register from '../pages/register/Register';
 import FooterOnly from '../components/layout/footeronly/FooterOnly';
 import DetailProduct from "../pages/detailproduct/DetailProduct";
+import ProductDetail from "../pages/ProductDetail";
 import HomeAdmin from "../pages/admin/home/HomeAdmin";
 import Staff from "../pages/admin/staff/Staff";
 import DefaultLayoutAdmin from "../components/layout/defaultlayoutAdmin/DefaultLayoutAdmin";
@@ -33,7 +34,8 @@ const publicRoutes = [
     { path: '/user/account/address', component: Address, layout: DefaultLayoutUser},
     { path: '/menu', component: Menu},
     { path: '/shop', component: Shop},
-    { path: '/shop/:slug', component: DetailProduct},
+    // { path: '/shop/test', component: DetailProduct},
+    { path: '/shop/:slug', component: ProductDetail},
     { path: '/cart', component: Cart},
     { path: '/login', component: LoginPage, layout: null},
     { path: '/signin', component: Login, layout: null},
