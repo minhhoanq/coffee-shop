@@ -3,13 +3,13 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
-const ItemCardHorizontal = () => {
+const ItemCardHorizontal = props => {
 
     return (
         <Stack direction={"row"} justifyContent={"space-between"} height={"80px"}>
             <Stack direction={"row"} spacing={4} height={"100%"}>
                 <Box height={"100%"}>
-                    <img src="https://inlysugiare.vn/wp-content/uploads/2020/05/ly-ca-phe-bac-xiu-da.jpg" alt="" height={"100%"}/>
+                    <img src="https://inlysugiare.vn/wp-content/uploads/2020/05/ly-ca-phe-bac-xiu-da.jpg" alt="" height={`${props.heightImg ? props.heightImg : "100%"}`}/>
                 </Box>
 
                 <Stack justifyContent={"space-between"} height={"100%"}>

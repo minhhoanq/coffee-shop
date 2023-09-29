@@ -286,7 +286,6 @@ const Header = () => {
                                         open={openMenuRight}
                                         item={item}
                                     />
-                                    // <Box>BBB</Box>
                                 ) : <></>}
                             </>
                         ))}

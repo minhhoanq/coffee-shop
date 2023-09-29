@@ -3,6 +3,7 @@ import { Menu, MenuItem, ListItemIcon, Divider } from "@mui/material"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
+import MenuCart from './MenuCart'
 
 const MenuAccount = props => {
 
@@ -44,23 +45,23 @@ const MenuAccount = props => {
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
             <MenuItem onClick={props.props.onClose}>
-            <ListItemIcon>
-                <AccountCircleIcon /> 
-            </ListItemIcon>
-            {props.props.item.title}
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={props.props.onClose}>
-            <ListItemIcon>
-                <SettingsIcon fontSize="small" />
-            </ListItemIcon>
-                SETTINGS
-            </MenuItem>
-            <MenuItem onClick={props.props.onClose}>
-            <ListItemIcon>
-                <LogoutIcon fontSize="small" />
-            </ListItemIcon>
-            LOGOUT
+                <ListItemIcon>
+                    <AccountCircleIcon /> 
+                </ListItemIcon>
+                {props.props.item.title}
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={props.props.onClose}>
+                <ListItemIcon>
+                    <SettingsIcon fontSize="small" />
+                </ListItemIcon>
+                    SETTINGS
+                </MenuItem>
+                <MenuItem onClick={props.props.onClose}>
+                <ListItemIcon>
+                    <LogoutIcon fontSize="small" />
+                </ListItemIcon>
+                LOGOUT
             </MenuItem>
         </Menu>
         )
@@ -70,7 +71,7 @@ const MenuAccount = props => {
         <>
             {props.id === "profile" ? (
                 <MenuProfile props={props}/>
-            ):<></>}
+            ) : props.id === "cart" ? <MenuCart props={props}/> : <></>}
         </>
     )
 }

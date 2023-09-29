@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography, colors } from "@mui/material";
 
 const EstimatedOrder = () =>  {
     return (
@@ -67,10 +67,12 @@ const EstimatedOrder = () =>  {
                 </Typography>
             </Stack>
 
-            <Button size="large" sx={{
-                bgcolor:"#bb955e",
+            <Button variant="contained" size="large" sx={{
                 color: "#fff",
-                borderRadius: 0
+                bgcolor: colors.brown[500],
+                    "&:hover" : {
+                        bgcolor: colors.brown[400]
+                    }
             }}>
                 Countinue to payment
             </Button>
