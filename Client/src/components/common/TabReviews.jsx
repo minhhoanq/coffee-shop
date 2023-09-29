@@ -11,7 +11,10 @@ const TabReviews = () => {
     return (
         <Grid xs={8}>
             <Stack direction={"row"} spacing={1} mb={2}>
-                <Typography variant="h5" fontWeight={"600"} onClick={() => setTab("Desc")}
+                <Typography 
+                    variant="h5" 
+                    fontWeight={"600"} 
+                    onClick={() => setTab("Desc")}
                     sx={{
                         cursor: "pointer"
                     }}
