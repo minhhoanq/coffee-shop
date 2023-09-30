@@ -3,7 +3,7 @@ import Shop from '../pages/shop/Shop';
 // import Cart from '../pages/cart/Cart';
 import Cart from '../pages/Cart';
 import Login from '../pages/login/Login';
-import Register from '../pages/register/Register';
+import Register from '../pages/Register';
 import FooterOnly from '../components/layout/footeronly/FooterOnly';
 // import DetailProduct from "../pages/detailproduct/DetailProduct";
 import ProductDetail from "../pages/ProductDetail";
@@ -40,7 +40,7 @@ const publicRoutes = [
     { path: '/login', component: LoginPage, layout: null},
     { path: '/signin', component: Login, layout: null},
     { path: '/forgot-password', component: ForgotPassword, layout: FooterOnly},
-    { path: '/register', component: Register,layout: FooterOnly},
+    { path: '/register', component: Register, layout: null},
     { path: '/finalregister/:status', component: FinalRegister,layout: FooterOnly},
     { path: '/reset-password/:token', component: ResetPassword,layout: FooterOnly},
     { path: '/admin/home', component: HomeAdmin, layout: DefaultLayoutAdmin},

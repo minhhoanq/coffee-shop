@@ -24,11 +24,11 @@ const Register = () => {
     const overlay = useRef(null);
     const user = useSelector(state => state.auth?.currentUser);
 
-    useEffect(() => {
-        if(user) {
-            navigate('/');
-        }
-    },[])
+    // useEffect(() => {
+    //     if(user) {
+    //         navigate('/');
+    //     }
+    // },[])
 
     const formik = useFormik({
         initialValues: {
