@@ -15,8 +15,6 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [onRequest, setOnRequest] = useState(false);
-    const [logginProgress, setLogginProgress] = useState(false);
     const isFetching = useSelector(state => state.auth.isFetching);
 
     
@@ -56,7 +54,6 @@ const LoginPage = () => {
                 navigate('/')
             }, 1000)
         } else if (reqStatus === 'rejected') {
-            setOnRequest(false)
             Swal.fire('', response.payload.response.data, 'error')
         }
     }

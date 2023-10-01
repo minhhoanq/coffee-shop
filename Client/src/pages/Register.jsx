@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Box, Stack, TextField, Button, FormGroup, FormControlLabel, Checkbox, Typography, colors, CircularProgress, circularProgressClasses } from '@mui/material';
+import { Box, Stack, TextField, Button, FormGroup, FormControlLabel, Checkbox, Typography, colors, CircularProgress, Modal } from '@mui/material';
 import bgLogin from '../assets/images/backgroundLogin.jpg';
 import logoGoogle from '../assets/images/google.png';
 import logo from '../assets/images/logo.jpg';
@@ -8,17 +8,16 @@ import { Link, useNavigate } from "react-router-dom";
 import Animate from "../components/common/Animate";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { loginActions } from "../redux/asyncActions/authActions";
+import { loginActions, registerActions } from "../redux/asyncActions/authActions";
 import Swal from "sweetalert2";
+import ModalCodeRegistration from '../components/common/ModalCodeRegistration'
 
 const Register = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [onRequest, setOnRequest] = useState(false);
-    const [logginProgress, setLogginProgress] = useState(false);
+    const [modalCode, setModalCode] = useState(false);
     const isFetching = useSelector(state => state.auth.isFetching);
-
     
     const {
         register,
@@ -28,43 +27,33 @@ const Register = () => {
     } = useForm({
         defaultValues: {
             username: "",
-            fname: "",
-            lname: "",
+            firstname: "",
+            lastname: "",
             phone: "",
             email: "",
             password: "",
-            cfPassword: "",
+            confirmPassword: "",
         }
     });
 
     const onSignin = async(data) => {
-        // e.preventDefault();
-        // setOnRequest(true);
-
-        // const interval = setInterval(() => {
-        //     setLogginProgress(true)
-        // }, 50);
-
-        // setTimeout(() => {
-        //     clearInterval(interval)
-        // }, 2000);
-        
-        // setTimeout(() => {
-        //     navigate('/')
-        // }, 3300);
-        const response = await dispatch(loginActions(data));
+        const response = await dispatch(registerActions(data));
         const reqStatus = response.meta.requestStatus;
         console.log(response);
-        if(reqStatus === 'fulfilled' && isFetching === false) {
-            setIsLoggedIn(true);
-            setTimeout(() => {
-                navigate('/')
-            }, 1000)
+        if(reqStatus === 'fulfilled') {
+            // setIsLoggedIn(true);
+            // setTimeout(() => {
+            //     navigate('/')
+            // }, 1000)
+            setModalCode(true)
+
         } else if (reqStatus === 'rejected') {
-            setOnRequest(false)
-            Swal.fire('', response.payload.response.data, 'error')
+            console.log(response.payload.response.data.msg);
+            Swal.fire('', response.payload.response.data.msg, 'error')
         }
+        // setModalCode(true)
     }
+
 
     return (
         <Box
@@ -75,6 +64,11 @@ const Register = () => {
                 {"::-webkit-scrollbar": { display: "none" }}
             }
         >
+            <ModalCodeRegistration
+                open={modalCode}
+                close={(close) => setModalCode(close)}
+                isLoggedIn={(isLoggedIn) => setIsLoggedIn(isLoggedIn)}
+            />
             {/* background box */}
             <Box
                 sx={
@@ -184,8 +178,8 @@ const Register = () => {
                                         <Stack spacing={1} direction={"row"} justifyContent={"space-between"}>
                                             <Stack flex={1}>
                                                 <TextField label="First Name" type="text" fullWidth
-                                                    name="fname" 
-                                                    id="fname"
+                                                    name="firstname" 
+                                                    id="firstname"
                                                     size="large"
                                                 inputProps={{
                                                     style: {
@@ -196,20 +190,20 @@ const Register = () => {
                                                     sx={{
                                                         bgcolor: colors.grey[200]
                                                     }}
-                                                    {...register("fname", 
+                                                    {...register("firstname", 
                                                             {
                                                                 required: 'Please enter your first name.',
                                                             }
                                                         )
                                                     }
                                                     />
-                                                <Typography color={"error"}>{errors?.fname && errors.fname.message}</Typography>
+                                                <Typography color={"error"}>{errors?.firstname && errors.firstname.message}</Typography>
                                             </Stack>
 
                                             <Stack flex={1}>
                                                 <TextField label="Last Name" type="text" fullWidth
-                                                    name="lname" 
-                                                    id="lname"
+                                                    name="lastname" 
+                                                    id="lastname"
                                                     size="large"
                                                 inputProps={{
                                                     style: {
@@ -220,14 +214,14 @@ const Register = () => {
                                                     sx={{
                                                         bgcolor: colors.grey[200]
                                                     }}
-                                                    {...register("lname", 
+                                                    {...register("lastname", 
                                                             {
                                                                 required: 'Please enter your last name.',
                                                             }
                                                         )
                                                     }
                                                     />
-                                                <Typography color={"error"}>{errors?.lname && errors.lname.message}</Typography>
+                                                <Typography color={"error"}>{errors?.lastname && errors.lastname.message}</Typography>
                                             </Stack>
                                         </Stack>
 
@@ -314,8 +308,8 @@ const Register = () => {
                                         </Stack>
                                         <Stack >
                                             <TextField label="Confirm Password" type="password" fullWidth
-                                                name="cfPassword" 
-                                                id="cfPassword"
+                                                name="confirmPassword" 
+                                                id="confirmPassword"
                                                 size="large"
                                                 inputProps={{
                                                     style: {
@@ -326,7 +320,7 @@ const Register = () => {
                                                 sx={{
                                                     bgcolor: colors.grey[200]
                                                 }}
-                                                {...register("cfPassword", 
+                                                {...register("confirmPassword", 
                                                         {
                                                             required: 'Please confirm password',
                                                             
@@ -334,7 +328,7 @@ const Register = () => {
                                                     )
                                                 }
                                                 />
-                                            <Typography color={"error"}>{errors?.cfPassword && errors.cfPassword.message}</Typography>
+                                            <Typography color={"error"}>{errors?.confirmPassword && errors.confirmPassword.message}</Typography>
                                         </Stack>
                                         <Button type="submit" size="lagre" variant="contained" 
                                         sx={{
