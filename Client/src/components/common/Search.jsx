@@ -7,36 +7,36 @@ import { useEffect, useState, memo } from "react";
 const categories = [
     {
         title: "Coffee",
-        state: "coffee",
-    },
-    {
-        title: "Tea",
-        state: "tea",
+        state: "1",
     },
     {
         title: "Milk Tea",
-        state: "milktea",
+        state: "2",
+    },
+    {
+        title: "Tea",
+        state: "3",
     },
     {
         title: "Cake",
-        state: "cake",
+        state: "4",
     },
 ]
 
 const prices = [
     {
         title: "Decrease",
-        state: "decrease"
+        state: "DESC"
     },
     {
         title: "Ascending",
-        state: "ascending"
+        state: "ASC"
     }
 ]
 
 const filterOptions = createFilterOptions({
     matchFrom: "start",
-    stringify: (option) => option.title
+    stringify: (option) => option.title,
 })
 
 const Seach = props => {
@@ -132,6 +132,7 @@ const Seach = props => {
                     id="filter-category"
                     options={categories}
                     getOptionLabel={(option) => option.title}
+                    onChange={(e, value) => props.category(value?.state ? value.state : "0")}
                     filterOptions={filterOptions}
                     sx={{
                         width: { xl: "200px", lg: "200px", md: "200px", sm: "200px", xs: "60%"},
@@ -146,6 +147,7 @@ const Seach = props => {
                     options={prices}
                     getOptionLabel={(option) => option.title}
                     filterOptions={filterOptions}
+                    onChange={(e, value) => props.sort(value?.state ? value.state : 'default')}
                     sx={{
                         width: { xl: "150px", lg: "150px", md: "150px", sm: "150px", xs: "40%"},
                         outline: "none"

@@ -6,8 +6,6 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 const ItemCard = props => {
     const item = props.item;
 
-    console.log(item)
-
     return (
         <MPaper
             height={"100%"}
