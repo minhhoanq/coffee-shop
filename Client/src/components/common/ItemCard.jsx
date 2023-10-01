@@ -3,7 +3,11 @@ import { Box, Button, IconButton, ListItemIcon, Rating, Stack, Typography } from
 import MPaper from "./MPaper";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
-const ItemCard = () => {
+const ItemCard = props => {
+    const item = props.item;
+
+    console.log(item)
+
     return (
         <MPaper
             height={"100%"}
@@ -18,24 +22,24 @@ const ItemCard = () => {
                         top: 0,
                         height: "100%",
                         width: "100%",
-                        objectFit: "contain",
+                        objectFit: "cover",
                         borderRadius: 0,
                     }
                 }}  
             >
-                <img src="https://inlysugiare.vn/wp-content/uploads/2020/05/ly-ca-phe-bac-xiu-da.jpg" alt=""/>
+                <img src={item.productImg} alt=""/>
             </Box>
 
             <Stack spacing={1} mt={1}>
                 <Typography fontSize={"1.2rem"}>
-                    $12
+                    ${item.price}
                 </Typography>
                 <Stack>
                     <Typography fontSize={"1.4rem"} fontWeight={"500"}>
-                        Bạc xỉu
+                        {item.productName}
                     </Typography>
                     <Typography fontSize={"1.2rem"} color={"GrayText"}>
-                        Category: Cafe
+                        Category: {item.categoryData.categoryName}
                     </Typography>
                 </Stack>
                 <Stack spacing={1} direction={"row"}>

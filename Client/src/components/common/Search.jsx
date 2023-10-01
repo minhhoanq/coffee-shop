@@ -1,6 +1,8 @@
 import { Autocomplete, Box, TextField, createFilterOptions, Stack, InputBase } from "@mui/material"
 
 import SearchIcon from '@mui/icons-material/Search';
+import useDebounce from "../../hooks/useDebounce";
+import { useEffect, useState, memo } from "react";
 
 const categories = [
     {
@@ -14,7 +16,11 @@ const categories = [
     {
         title: "Milk Tea",
         state: "milktea",
-    }
+    },
+    {
+        title: "Cake",
+        state: "cake",
+    },
 ]
 
 const prices = [
@@ -33,7 +39,7 @@ const filterOptions = createFilterOptions({
     stringify: (option) => option.title
 })
 
-const Seach = () => {
+const Seach = props => {
 
     const SeachWrapper = props => {
         return (
@@ -69,6 +75,20 @@ const Seach = () => {
     }
 
     const SearchInput = props => {
+        const [search, setSearch] = useState('')
+
+        const debounceValue = useDebounce(search, 800);
+
+        console.log("re-render")
+
+        const onChangeSearch = (e) => {
+            setSearch(e.target.value);
+        }
+
+        useEffect(() => {
+            props.search(debounceValue)
+        },[debounceValue])
+
         return (
             <InputBase
                 sx={{
@@ -80,10 +100,9 @@ const Seach = () => {
                         p: 0,
                         fontSize: "1rem"
                     },
-
-                    // display: { xl: "block", lg: "block", md: "block", sm: "block", xs: "none"}
                 }}
                 placeholder={props.placeholder}
+                onChange={onChangeSearch}
             />
         )
     }
@@ -143,10 +162,11 @@ const Seach = () => {
 
                 <SearchInput
                     placeholder={"Search"}
+                    search={props.search}
                 />
             </SeachWrapper>
         </Box>
     )
 }
 
-export default Seach;
+export default memo(Seach);

@@ -12,7 +12,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 const options = [
     {
         title: "MENU",
-        state: "shop",
+        state: "menu",
     },
     {
         title: "CART",
