@@ -1,4 +1,4 @@
-import { Box, Grid, Pagination } from "@mui/material";
+import { Box, Grid, Pagination, Typography } from "@mui/material";
 import Banner from "../components/common/Banner";
 import Seach from "../components/common/Search";
 import ItemCard from "../components/common/ItemCard";
@@ -77,6 +77,21 @@ const Menu = () => {
                 </Grid>
 
                 <Grid item xs={10}>
+                    <Box
+                        sx={{
+                            height: "200px",
+                            border: "1px solid #ccc"
+                        }}
+                    >
+                        Làm thông minh ở đây
+                    </Box>
+                </Grid>
+
+                <Grid item xs={10}>
+                    <Typography variant="h5" mt={2}>
+                        Còn nhiều lựa chọn khác
+                    </Typography>
+                    <br/>
                     <Grid container justifyContent="flex-start" spacing={6}>
                         {products.map((item, index) => (
                             <Grid key={index} item lg={3} md={4} sm={6} xs={12} ><ItemCard item={item}/></Grid>
