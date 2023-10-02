@@ -23,7 +23,7 @@ const navBars = [
     {
         title: "MENU",
         state: "Menu",
-        pathname: "/Menu"
+        pathname: "/menu"
     },
     {
         title: "CART",

@@ -18,8 +18,6 @@ const InputRating = () => {
                 />
 
                 <TextareaAutosize
-                    // aria-label="minimum height" 
-                    // minRows={4}
                     placeholder="Min rows 4" 
                     style={{
                         outline: "none",
@@ -28,10 +26,13 @@ const InputRating = () => {
                     }}
                 />
 
-                <Button sx={{
+                <Button variant="contained" sx={{
                     width: "20%",
                     bgcolor: colors.brown[500],
-                    color: colors.common.white
+                    color: colors.common.white,
+                    "&:hover": {
+                        bgcolor: colors.brown[400],
+                    }
                 }}>
                     Submit
                 </Button>

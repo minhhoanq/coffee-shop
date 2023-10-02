@@ -2,7 +2,11 @@ import { Box, IconButton, Stack, Typography, colors } from "@mui/material"
 import StarIcon from '@mui/icons-material/Star';
 import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 
-const UserReview = () => {
+const UserReview = props => {
+    const userRating = props.item;
+
+    console.log(userRating)
+
     return(
         <Box>
             <Stack direction={"row"} alignItems={"center"}>
@@ -12,7 +16,7 @@ const UserReview = () => {
                     padding: 2
                 }}>
                     <Typography variant="h6" fontWeight={"600"}>
-                        Name
+                        {userRating.userData?.username}
                     </Typography>
                     <Typography sx={{
                         display: "flex",
@@ -20,14 +24,14 @@ const UserReview = () => {
                         fontSize: "1.2rem",
                         color: colors.amber[600]
                     }}>
-                        4
+                        {userRating?.star}
                         <StarIcon fontSize="small" sx={{
                             marginLeft: "5px",
                             color: colors.amber[600]
                         }}/>
                     </Typography>
                     <Typography>
-                        Review of user for this product Review of user for this product   Review of user for this product Review of user for this product Review of user for this product Review of user for this product Review of user for this product Review of user for this product Review of user for this product Review of user for this product Review of user for this product Review of user for this product
+                        {userRating?.comment}
                     </Typography>
                 </Stack>
 

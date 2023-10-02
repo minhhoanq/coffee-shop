@@ -5,8 +5,35 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TabReviews from "../components/common/TabReviews";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getAllRatingsProduct, getProductDetailBySlug } from "../api/productApi";
 
 const ProductDetail = () => {
+    const [products, setProducts] = useState([]);
+    const [ratings, setRatings] = useState([]);
+
+    const { slug } = useParams();
+
+    const getDataBySlug = async() => {
+        const result = await getProductDetailBySlug(slug);
+
+        setProducts(result.dataDetailProduct);
+        // setPrice(result.dataDetailProduct[0]?.productData.price);
+    }
+
+    const getRatingsProductData = async() => {
+        const result = await getAllRatingsProduct(slug);
+        setRatings(result.ratingsData)
+    }
+
+    useEffect(() => {
+        getDataBySlug();
+        getRatingsProductData();
+    },[]);
+
+    console.log(products[0]?.id)
+
     return (
         <Box>
             <Banner/>
@@ -23,7 +50,14 @@ const ProductDetail = () => {
                     }}>
                         <Grid xs={6} sx={{
                         }}>
-                            <img src="https://inlysugiare.vn/wp-content/uploads/2020/05/ly-ca-phe-bac-xiu-da.jpg" alt="" height={"100%"}/>
+                            <img 
+                                src={`${products[0]?.productData.productImg}`} 
+                                alt="" 
+                                height={"100%"}
+                                style={{
+                                    objectFit: "cover"
+                                }}
+                                />
                         </Grid>
 
                         <Grid xs={6} width={"100%"}>
@@ -42,7 +76,7 @@ const ProductDetail = () => {
                                         fontSize: { xl: "2rem", lg: "2rem", md: "1.6rem", xs: "1.4rem"},
                                         fontWeight: "600"
                                     }}>
-                                        Bạc xỉu
+                                        {products[0]?.productData.productName}
                                     </Typography>
 
                                     <Stack spacing={1} direction={"row"}>
@@ -55,7 +89,7 @@ const ProductDetail = () => {
                                         fontSize: { xl: "2.2rem", lg: "2.2rem", md: "1.8rem", xs: "1.6rem"},
                                         fontWeight: "600"
                                     }}>
-                                        $12
+                                        ${products[0]?.productData.price}
                                     </Typography>
 
                                     <Stack width={"100%"} direction={"row"} spacing={2} sx={{
@@ -111,7 +145,7 @@ const ProductDetail = () => {
                                     />
 
                                     <Typography>
-                                        Category: Coffee
+                                        Category: {products[0]?.productData.categoryData.categoryName}
                                     </Typography>
 
                                     <Box
@@ -147,7 +181,7 @@ const ProductDetail = () => {
                     </Grid>
                 </Grid>
                 
-                <TabReviews/>
+                <TabReviews item={products[0]?.productData} ratings={ratings}/>
                
             </Grid>
         </Box>

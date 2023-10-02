@@ -69,7 +69,9 @@ const Header2 = () => {
             >
                 {navBars.map((item, index) => (
                     <Grid item height={"100%"} key={index} alignItems={"center"}>
-                        <Link style={{
+                        <Link
+                        to={item.pathname}
+                        style={{
                             height: "4rem",
                             fontWeight: "600"
                         }}>
@@ -80,7 +82,9 @@ const Header2 = () => {
 
                 {navBarsRight.map((item, index) => (
                     <Grid item height={"100%"} key={index} alignItems={"center"}>
-                        <Link style={{
+                        <Link
+                        to={item.pathname}
+                        style={{
                             height: "4rem",
                             fontWeight: "600"
                         }}>

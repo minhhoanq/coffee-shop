@@ -1,11 +1,17 @@
-import { Box } from "@mui/material"
+import { Box, Stack } from "@mui/material"
 import UserReview from "./UserReview";
 import InputRating from "./InputRating";
 
-const Reviews = () => {
+const Reviews = props => {
+    const ratings = props.ratings;
+
     return (
         <Box ml={4}>
-            <UserReview/>
+            <Stack spacing={1}>
+                {ratings.map((item, index) => (
+                    <UserReview key={index} item={item}/>
+                ))}
+            </Stack>
             <InputRating/>
         </Box>
     )

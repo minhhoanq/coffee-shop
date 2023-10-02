@@ -2,7 +2,7 @@ import { Autocomplete, Box, TextField, createFilterOptions, Stack, InputBase } f
 
 import SearchIcon from '@mui/icons-material/Search';
 import useDebounce from "../../hooks/useDebounce";
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState, memo, useCallback } from "react";
 
 const categories = [
     {
@@ -81,9 +81,9 @@ const Seach = props => {
 
         console.log("re-render")
 
-        const onChangeSearch = (e) => {
+        const onChangeSearch = useCallback((e) => {
             setSearch(e.target.value);
-        }
+        })
 
         useEffect(() => {
             props.search(debounceValue)
@@ -106,6 +106,8 @@ const Seach = props => {
             />
         )
     }
+
+    console.log("re-render")
 
     return (
         <Box

@@ -3,10 +3,13 @@ import { useState } from "react";
 import DescriptionProduct from "./DescriptionProduct";
 import Reviews from "./Reviews";
 
-const TabReviews = () => {
+const TabReviews = props => {
     const [tab, setTab] = useState('Desc');
 
-    console.log(tab)
+    const {item, ratings} = props;
+
+    console.log(item)
+    console.log(ratings)
 
     return (
         <Grid xs={8}>
@@ -34,12 +37,12 @@ const TabReviews = () => {
                 >
                     Reviews 
                     <Typography marginLeft={1}>
-                        (4)
+                        ({ratings.length})
                     </Typography>
                 </Typography>
             </Stack>
 
-            {tab === 'Desc' ? <DescriptionProduct/> : <Reviews/>}
+            {tab === 'Desc' ? <DescriptionProduct item={item}/> : <Reviews ratings={ratings}/>}
         </Grid>
     )
 }
