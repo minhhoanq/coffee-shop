@@ -199,6 +199,8 @@ const ratingProductService = (user, { slug }, body) => new Promise(async(resolve
         }
 
         resolve({
+            err: ratingProduct ? 0 : 1,
+            mes: ratingProduct ? "Cảm ơn bạn đã để lại trải nghiệm của mình." : "Lỗi, hãy thử lại sau!",
             ratingProduct: ratingProduct
         })
     } catch (error) {

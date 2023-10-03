@@ -4,6 +4,7 @@ import InputRating from "./InputRating";
 
 const Reviews = props => {
     const ratings = props.ratings;
+    const item = props.item;
 
     return (
         <Box ml={4}>
@@ -12,7 +13,7 @@ const Reviews = props => {
                     <UserReview key={index} item={item}/>
                 ))}
             </Stack>
-            <InputRating/>
+            <InputRating item={item} />
         </Box>
     )
 }

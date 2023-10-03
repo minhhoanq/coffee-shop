@@ -5,8 +5,6 @@ import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 const UserReview = props => {
     const userRating = props.item;
 
-    console.log(userRating)
-
     return(
         <Box>
             <Stack direction={"row"} alignItems={"center"}>

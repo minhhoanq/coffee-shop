@@ -1,6 +1,30 @@
 import { Box, Button, Rating, Stack, TextareaAutosize, Typography, colors } from "@mui/material"
+import { useSelector } from "react-redux";
+import { createRatingProduct } from "../../api/ratingApi";
+import { useState } from "react";
+import Swal from "sweetalert2";
 
-const InputRating = () => {
+
+const InputRating = props => {
+    const [star, setStar] = useState(0);
+    const [comment, setComment] = useState('');
+    // const user = useSelector(state => state.auth?.currentUser);
+
+    const item = props.item;
+
+    const handleSubmitRating = async() => {
+        const data = {
+            star,
+            comment
+        }
+        const submitRating = await createRatingProduct(item.slug, star, comment)
+        console.log(submitRating)
+        if(submitRating.data.err) {
+            Swal.fire('', submitRating.data.mes, 'error')
+        } else {
+            Swal.fire('', submitRating.data.mes, 'success')
+        }
+    }
 
     return (
         <Box mt={4}>
@@ -9,12 +33,13 @@ const InputRating = () => {
                     Leave your experience
                 </Typography>
 
-                <Rating name="half-rating-read" defaultValue={0} precision={0.5} size="large"
+                <Rating name="half-rating-read" defaultValue={0} precision={1} size="large"
                     sx={{
                         "& .MuiRating-icon": {
                             width: '4.5rem'
                         }
-                    }}  
+                    }} 
+                    onChange={(e, value) => setStar(value)} 
                 />
 
                 <TextareaAutosize
@@ -24,6 +49,7 @@ const InputRating = () => {
                         padding: "10px 20px",
                         height: "150px"
                     }}
+                    onChange={(e) => setComment(e.target.value)}
                 />
 
                 <Button variant="contained" sx={{
@@ -33,7 +59,9 @@ const InputRating = () => {
                     "&:hover": {
                         bgcolor: colors.brown[400],
                     }
-                }}>
+                }}
+                onClick={handleSubmitRating}
+                >
                     Submit
                 </Button>
             </Stack>

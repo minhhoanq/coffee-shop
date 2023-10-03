@@ -42,7 +42,7 @@ const TabReviews = props => {
                 </Typography>
             </Stack>
 
-            {tab === 'Desc' ? <DescriptionProduct item={item}/> : <Reviews ratings={ratings}/>}
+            {tab === 'Desc' ? <DescriptionProduct item={item}/> : <Reviews item={item} ratings={ratings}/>}
         </Grid>
     )
 }
