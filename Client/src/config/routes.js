@@ -16,7 +16,7 @@ import FinalRegister from "../pages/finalregister/FinalRegister";
 import ForgotPassword from "../pages/forgotpassword/ForgotPassword";
 import ResetPassword from "../pages/resetpassword/ResetPassword";
 import Ingredient from "../pages/admin/ingredient-page/ingredient/Ingredient";
-import Profile from "../pages/profile/Profile";
+import Profile from "../pages/Profile";
 import Payment from "../pages/payment/Payment";
 import DefaultLayoutUser from "../components/layout/defaultlayoutuser/DefaultLayoutUser";
 import Address from "../pages/address/Address";
@@ -28,10 +28,10 @@ import Menu from "../pages/Menu";
 //Public routes
 const publicRoutes = [
     { path: '/', component: Home, layout: null},
-    { path: '/user/account', component: Profile, layout: DefaultLayoutUser},
-    { path: '/user/account/profile', component: Profile, layout: DefaultLayoutUser},
-    { path: '/user/account/payment', component: Payment, layout: DefaultLayoutUser},
-    { path: '/user/account/address', component: Address, layout: DefaultLayoutUser},
+    { path: '/user/account', component: Profile},
+    // { path: '/user/account/profile', component: Profile, layout: DefaultLayoutUser},
+    // { path: '/user/account/payment', component: Payment, layout: DefaultLayoutUser},
+    // { path: '/user/account/address', component: Address, layout: DefaultLayoutUser},
     { path: '/menu', component: Menu},
     { path: '/shop', component: Shop},
     // { path: '/shop/test', component: DetailProduct},
