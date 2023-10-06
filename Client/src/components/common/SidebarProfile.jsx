@@ -82,7 +82,8 @@ const SidebarProfile = () => {
         <Box sx={{
             height: '83vh',
             maxWidth: "250px",
-            borderRight: "1px solid #ccc"
+            borderRight: "1px solid #ccc",
+            bgcolor: "#fff"
         }}>
             <Box width={"100%"}
                 p={4}

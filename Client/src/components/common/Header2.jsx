@@ -41,7 +41,7 @@ const navBarsRight = [
         title: "PROFILE",
         state: "profile",
         // icon: <AccountCircleOutlinedIcon/>,
-        pathname: "/"
+        pathname: "/user/account"
     }
 ]
 

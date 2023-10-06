@@ -1,4 +1,4 @@
-import { Box, Stack, colors, Typography, IconButton, AppBar, Toolbar, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, Tooltip } from "@mui/material"
+import { Box, Stack, colors, Typography, IconButton, Toolbar, Drawer, ListItem, ListItemButton, ListItemText, Tooltip } from "@mui/material"
 import { Link } from "react-router-dom";
 
 import logo from '../../assets/images/logo.jpg';
@@ -54,7 +54,7 @@ const navBarsRight = [
         title: "PROFILE",
         state: "profile",
         icon: <AccountCircleOutlinedIcon/>,
-        pathname: "/"
+        pathname: "/user/account"
     }
 ]
 

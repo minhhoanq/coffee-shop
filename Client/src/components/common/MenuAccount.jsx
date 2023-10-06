@@ -4,6 +4,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MenuCart from './MenuCart'
+import { Link } from "react-router-dom";
 
 const MenuAccount = props => {
 
@@ -44,20 +45,33 @@ const MenuAccount = props => {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
-            <MenuItem onClick={props.props.onClose}>
-                <ListItemIcon>
-                    <AccountCircleIcon /> 
-                </ListItemIcon>
-                {props.props.item.title}
+            <Link to={props.props.item.pathname}
+                style={{
+                    cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        textDecoration: "none",
+                        color: "rgba(0, 0, 0, 0.8)",
+                        "&:hover" : {
+                            color: "#000"
+                        }
+                }}
+            >
+                <MenuItem>
+                    <ListItemIcon>
+                        <AccountCircleIcon /> 
+                    </ListItemIcon>
+                        {props.props.item.title}
                 </MenuItem>
+            </Link>
                 <Divider />
-                <MenuItem onClick={props.props.onClose}>
+            <MenuItem onClick={props.props.onClose}>
                 <ListItemIcon>
                     <SettingsIcon fontSize="small" />
                 </ListItemIcon>
-                    SETTINGS
-                </MenuItem>
-                <MenuItem onClick={props.props.onClose}>
+                SETTINGS
+            </MenuItem>
+            <MenuItem onClick={props.props.onClose}>
                 <ListItemIcon>
                     <LogoutIcon fontSize="small" />
                 </ListItemIcon>

@@ -1,4 +1,5 @@
-import { Button, Link, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 

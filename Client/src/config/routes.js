@@ -17,6 +17,7 @@ import ForgotPassword from "../pages/forgotpassword/ForgotPassword";
 import ResetPassword from "../pages/resetpassword/ResetPassword";
 import Ingredient from "../pages/admin/ingredient-page/ingredient/Ingredient";
 import Profile from "../pages/Profile";
+import Profile2 from "../pages/profile/Profile";
 import Payment from "../pages/payment/Payment";
 import DefaultLayoutUser from "../components/layout/defaultlayoutuser/DefaultLayoutUser";
 import Address from "../pages/address/Address";
@@ -29,7 +30,7 @@ import Menu from "../pages/Menu";
 const publicRoutes = [
     { path: '/', component: Home, layout: null},
     { path: '/user/account', component: Profile},
-    // { path: '/user/account/profile', component: Profile, layout: DefaultLayoutUser},
+    { path: '/user/account/profile', component: Profile2, layout: DefaultLayoutUser},
     // { path: '/user/account/payment', component: Payment, layout: DefaultLayoutUser},
     // { path: '/user/account/address', component: Address, layout: DefaultLayoutUser},
     { path: '/menu', component: Menu},
