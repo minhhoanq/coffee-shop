@@ -8,6 +8,7 @@
     "@mui/icons-material": "^5.14.9",
     "@mui/material": "^5.14.10",
     "@mui/styled-engine-sc": "^5.14.10",
+    "@mui/x-date-pickers": "^6.16.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

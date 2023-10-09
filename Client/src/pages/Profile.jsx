@@ -2,13 +2,15 @@ import { Box, Grid } from "@mui/material";
 import SidebarProfile from "../components/common/SidebarProfile";
 import { useLocation } from "react-router-dom";
 import Personal from "./Personal";
+import Address from "./Address";
 // import Address from "./Address";
 
 const Profile = () => {
 
     const path = useLocation();
     const first = '/user/account/';
-    let temp = <Personal/>;
+    // let temp = <Personal/>;
+    let temp = <Address/>;
     
 
     // if(path.pathname === `${first}`) {
@@ -30,16 +32,11 @@ const Profile = () => {
             display:"flex",
             justifyContent:"center",
             alignItems:"center",
-            bgcolor: "#ccc",
         }}
         >
-            <Grid container xs={8} width={"100%"} 
-                sx={{
-                    boxShadow: "rgba(0, 0, 0, 0.2) 0rem 0.25rem 0.5rem",
-                    bgcolor:"#fff"
-                }}
+            <Grid container xs={8} width={"100%"}
             >
-                <Grid item xs={3}>
+                <Grid item xs={3} >
                     <SidebarProfile/>
                 </Grid>
 

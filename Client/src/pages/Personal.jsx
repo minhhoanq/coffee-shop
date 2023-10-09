@@ -1,7 +1,27 @@
-import { Box, IconButton, Stack, Typography, colors } from "@mui/material"
+import { Autocomplete, Box, Stack, TextField, createFilterOptions, Typography, colors, Button } from "@mui/material"
 import { useSelector } from "react-redux";
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+
+const sexs = [
+    {
+        title: "Male",
+        state: "1"
+    },
+    {
+        title: "Female",
+        state: "2"
+    },
+    {
+        title: "Orthers",
+        state: "3"
+    }
+]
+
+const filterOptions = createFilterOptions({
+    matchFrom: "start",
+    stringify: (option) => option.title,
+})
 
 const Personal = () => {
     const user = useSelector(state => state.auth.currentUser);
@@ -22,7 +42,10 @@ const Personal = () => {
                         bottom: 0,
                         right: 0,
                         borderRadius: "50px",
-                        backgroundColor: colors.brown[500]
+                        backgroundColor: "#fff",
+                        border: "1px solid #ccc",
+                        boxShadow: "rgba(0, 0, 0, 0.2) 0rem 0rem 0.5rem",
+
                     }}>
                         <Box height={"25px"} width={"25px"}
                             sx={{
@@ -44,7 +67,76 @@ const Personal = () => {
                         borderTop: "1px solid #ccc"
                     }}
                 >
-                    
+                    <Stack spacing={1} mt={2}>
+                        <TextField
+                            label="Username"
+
+                        />
+
+                        <TextField
+                            label="First name"
+                            
+                        />
+
+                        <TextField
+                            label="Last name"
+                            
+                        />
+
+                        <Stack spacing={1} direction={"row"} width={"100%"}>
+                            <Autocomplete
+                                id="sex"
+                                options={sexs}
+                                getOptionLabel={(option) => option.title}
+                                filterOptions={filterOptions}
+                                // onChange={(e, value) => props.sort(value?.state ? value.state : 'default')}
+                                sx={{
+                                    width: "50%",
+                                    outline: "none"
+                                }}
+                                // size="small"
+                                renderInput={(params) => <TextField {...params} label="Sex" />}
+                            />
+
+                            {/* <DatePicker
+                            mask="mm"
+                            value={new Date()}
+                            onChange={console.log}
+                            renderInput={(props) => (
+                                <TextField {...props} helperText="invalid mask" />
+                            )}
+                            /> */}
+                            <input type="date" style={{
+                                border: "1px solid #ccc",
+                                borderRadius: "4px",
+                                width: "50%",
+                                padding: "10px"
+                            }}/>
+                        </Stack>
+
+                        <TextField
+                            label="Phone"
+                            fullWidth
+                        />
+                        <TextField
+                            label="Email"
+                        />
+                    </Stack>
+
+                    <Box mt={4} fullWidth sx={{
+                        display: "flex",
+                        justifyContent: "flex-end"
+                    }}>
+                        <Button variant="contained" sx={{
+                            width: "200px",
+                            bgcolor: colors.brown[500],
+                            "&:hover" : {
+                                bgcolor: colors.brown[400]
+                            }
+                        }}>
+                            Submit
+                        </Button>
+                    </Box>
                 </Box>
             </Stack>
         </Box>

@@ -48,7 +48,7 @@ const SidebarProfile = () => {
         const childrenOption = option.childrens;
         const [open, setOpen] = useState(true)
         return (
-            <Box width={"100%"}>
+            <Box width={"100%"} >
                 <ListItem onClick={() => setOpen(!open)}>
                     <ListItemButton>
                         <ListItemIcon>
@@ -83,7 +83,7 @@ const SidebarProfile = () => {
             height: '83vh',
             maxWidth: "250px",
             borderRight: "1px solid #ccc",
-            bgcolor: "#fff"
+            bgcolor: "#fff",
         }}>
             <Box width={"100%"}
                 p={4}
@@ -94,7 +94,8 @@ const SidebarProfile = () => {
                 }}
             >
                 <img src={user.image} height={100} width={100} style={{
-                    borderRadius: "50px"
+                    borderRadius: "50px",
+                    objectFit: "cover"
                 }}/>
             </Box>
             <Stack>
