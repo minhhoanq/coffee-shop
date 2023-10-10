@@ -1,31 +1,88 @@
 import { Autocomplete, Box, Button, IconButton, Modal, Stack, TextField, Typography, colors, createFilterOptions } from "@mui/material";
+import axios from "axios";
+import { createUserAddress, setDefaultAddress } from "../../api/userApi";
 
 import ClearIcon from '@mui/icons-material/Clear';
+import { Controller, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 
-const sexs = [
-    {
-        title: "Male",
-        state: "1"
-    },
-    {
-        title: "Female",
-        state: "2"
-    },
-    {
-        title: "Orthers",
-        state: "3"
-    }
-]
 
 const filterOptions = createFilterOptions({
     matchFrom: "start",
-    stringify: (option) => option.title,
+    stringify: (option) => option.name,
+    
 })
 
 const ModalAddAddress = props => {
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
+
+    const {
+        control,
+        handleSubmit
+    } = useForm()
+
+    const host = "https://provinces.open-api.vn/api/";
+
+    const getProvinceApi = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                setProvinces(response.data);
+            });
+    }
+    
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                setDistricts(response.data.districts);
+            });
+    }
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                setWards(response.data.wards);
+            });
+    }
+    
+    useEffect(() => {
+        getProvinceApi(host);
+    },[])
+
+    // var renderData = (array, select) => {
+    //     let row = `<option disabled value="">Chọn ${
+    //         select === 'city_province' ? 'Tỉnh/Thành Phố' : 
+    //         select === 'district' ? 'Quận/Huyện' : 
+    //         'Phường/Xã'}</option>`;
+
+    //     array.forEach(element => {
+    //         row += `<option id="option" value="${element.code}">${element.name}</option>`
+    //     });
+    //     document.querySelector("#" + select).innerHTML = row
+    // }
+
+    const handleSubmitAddAddress = async(data) => {
+        const dataRq = {
+            city_province: data.city_province.name,
+            district: data.district.name,
+            ward: data.ward.name,
+            address: data.address,
+            is_delivery_address: data.is_delivery_address,
+        }
+
+        const response = await createUserAddress(dataRq);
+        console.log(response.data.id);
+        if(data.is_delivery_address) {
+            const value = {
+                id: response.data.id
+            };
+            const re = await setDefaultAddress(value);
+            console.log(re);
+        }
+    }
 
     const handleCloseModal = () => {
-        props.close(false)
+        props.close(false);
     }
 
     return (
@@ -60,57 +117,106 @@ const ModalAddAddress = props => {
                     </IconButton>
                 </Box>
 
-               <Stack spacing={2}>
+               <form onSubmit={handleSubmit(handleSubmitAddAddress)}>
+               <Stack spacing={2} >
                     <Typography variant="h5">
                         Add new address
                     </Typography>
 
-                    <Autocomplete
-                        id="province"
-                        options={sexs}
-                        getOptionLabel={(option) => option.title}
-                        filterOptions={filterOptions}
-                        // onChange={(e, value) => props.sort(value?.state ? value.state : 'default')}
-                        sx={{
-                            width: "100%",
-                            outline: "none"
-                        }}
-                        // size="small"
-                        renderInput={(params) => <TextField {...params} label="Province/City" />}
+                    <Controller
+                        control={control}
+                        name="city_province"
+
+                        render={({ field: {onChange, value} }) =>  (
+                            <Autocomplete
+                                id="city_province"
+                                options={provinces}
+                                getOptionLabel={(option) => option.name}
+                                filterOptions={filterOptions}
+                                onChange={(event, values) => {
+                                    onChange(values)
+                                    callApiDistrict(host + "p/" + values.code  + "?depth=2");
+                                }}
+                                // {...register("city_province")} 
+                                sx={{
+                                    width: "100%",
+                                    outline: "none"
+                                }}
+                                // size="small"
+                                renderInput={(params) => <TextField {...params} label="Province/City" onChange={onChange}/>}
+                            />
+                        )}
                     />
 
-                    <Autocomplete
-                        id="province"
-                        options={sexs}
-                        getOptionLabel={(option) => option.title}
-                        filterOptions={filterOptions}
-                        // onChange={(e, value) => props.sort(value?.state ? value.state : 'default')}
-                        sx={{
-                            width: "100%",
-                            outline: "none"
-                        }}
-                        // size="small"
-                        renderInput={(params) => <TextField {...params} label="District" />}
+                    <Controller
+                        control={control}
+                        name="district"
+
+                        render={({ field: {onChange, value} }) =>  (
+                            <Autocomplete
+                                id="district"
+                                options={districts}
+                                getOptionLabel={(option) => option.name}
+                                filterOptions={filterOptions}
+                                onChange={(event, values) => {
+                                    onChange(values)
+                                    callApiWard(host + "d/" + values.code + "?depth=2");
+                                }}
+                                sx={{
+                                    width: "100%",
+                                    outline: "none"
+                                }}
+                                // size="small"
+                                renderInput={(params) => <TextField {...params} label="District" onChange={onChange}/>}
+                            />
+                        )}
                     />
 
-                    <Autocomplete
-                        id="province"
-                        options={sexs}
-                        getOptionLabel={(option) => option.title}
-                        filterOptions={filterOptions}
-                        // onChange={(e, value) => props.sort(value?.state ? value.state : 'default')}
-                        sx={{
-                            width: "100%",
-                            outline: "none"
-                        }}
-                        // size="small"
-                        renderInput={(params) => <TextField {...params} label="Ward" />}
+                    <Controller
+                        control={control}
+                        name="ward"
+
+                        render={({ field: {onChange, value} }) => (
+                            <Autocomplete
+                                id="ward"
+                                options={wards}
+                                getOptionLabel={(option) => option.name}
+                                filterOptions={filterOptions}
+                                onChange={(event, values) => {
+                                    onChange(values)
+                                }}
+                                sx={{
+                                    width: "100%",
+                                    outline: "none"
+                                }}
+                                // size="small"
+                                renderInput={(params) => <TextField {...params} label="Ward" onChange={onChange}/>}
+                            />
+                        )}
                     />
 
-                    <TextField label="Street"/>
+                    <Controller
+                        control={control}
+                        name= "address"
+                        render={({ field: {onChange, value} }) => (
+                            <TextField 
+                                id="address"    
+                                label="Address" 
+                                onChange={onChange}
+                            />
+                        )}
+                    />
                     
                     <Stack direction={"row"} spacing={1}>
-                        <input type="checkbox"/>
+                        <Controller
+                            control={control}
+                            name="is_delivery_address"
+                            render={({ field: {onChange, value}}) => (
+                                <input type="checkbox"
+                                    onChange={onChange}
+                                />
+                            )}
+                        />
 
                         <Typography>Set Address Default</Typography>
                     </Stack>
@@ -174,11 +280,16 @@ const ModalAddAddress = props => {
                                     backgroundColor: colors.brown[400]
                                 }
                             }}
+                            type="submit"
+                            // onSubmit={handleSubmit(handleSubmitAddAddress)}
                         >
                             Submit
                         </Button>
                     </Stack>
                </Box>
+               
+
+               </form>
             </Stack>
         </Modal>
     )

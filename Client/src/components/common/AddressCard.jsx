@@ -15,8 +15,10 @@ const AddressCard = props => {
     })
 
     return (
-        <Box >
-            <Stack direction={"row"} justifyContent={"space-between"}>
+        <Box sx={{
+            borderTop: "1px solid #ccc",
+        }}>
+            <Stack direction={"row"} justifyContent={"space-between"} mt={"10px"} >
                 <Stack spacing={1}>
                     <Stack direction={"row"} alignItems={"center"}>
                         <Typography variant="h6">
@@ -24,7 +26,7 @@ const AddressCard = props => {
                         </Typography>
 
                         <div style={{
-                            height: "100%",
+                            height: "60%",
                             width: "1px",
                             borderLeft: "1px solid #ccc",
                             margin: "0 10px"
