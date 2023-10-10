@@ -1,10 +1,24 @@
 import { Box, Button, Stack, Typography, colors } from "@mui/material"
 import AddressCard from "../components/common/AddressCard";
 import ModalAddAddress from "../components/common/ModalAddAddress";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import NoneItem from "../components/common/NoneItem";
+import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
+import { getUserAddressList } from "../api/userApi";
+
 
 const Address = () => {
-    const [openModalAddAddress, setModalAddAddress] = useState(false)
+    const [openModalAddAddress, setModalAddAddress] = useState(false);
+    const [address, setAddress] = useState([]);
+
+    useEffect(() => {
+        const getAddressList = async() => {
+            const response = await getUserAddressList();
+            setAddress(response.data);
+        }
+
+        getAddressList();
+    },[])
 
     const hanldeShowAddAddress = () => {
         setModalAddAddress(!openModalAddAddress)
@@ -35,16 +49,18 @@ const Address = () => {
                     </Button>
                 </Stack>
 
-                <Stack spacing={2} maxHeight={"500px"}
+                <Stack height={"500px"} spacing={2} maxHeight={"500px"}
                     sx={{
                         overflowY: "scroll"
                     }}
                 >
-                    <AddressCard/>
-                    <AddressCard/>
-                    <AddressCard/>
-                    <AddressCard/>
-                    <AddressCard/>
+                    {address.length > 0 ? (
+                        address.map((item, index) => (
+                            <AddressCard item={item} key={index}/>
+                        ))
+                    ):
+                    <NoneItem title={"You haven't linked the address"} icon={<AddLocationAltIcon fontSize="large"/>}/>
+                    }
                 </Stack>
             </Stack>
         </Box>

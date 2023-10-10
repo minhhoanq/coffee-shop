@@ -90,7 +90,7 @@ const ModalAddAddress = props => {
                             outline: "none"
                         }}
                         // size="small"
-                        renderInput={(params) => <TextField {...params} label="Province/City" />}
+                        renderInput={(params) => <TextField {...params} label="District" />}
                     />
 
                     <Autocomplete
@@ -104,10 +104,10 @@ const ModalAddAddress = props => {
                             outline: "none"
                         }}
                         // size="small"
-                        renderInput={(params) => <TextField {...params} label="Province/City" />}
+                        renderInput={(params) => <TextField {...params} label="Ward" />}
                     />
 
-                    <TextField label="Street/Ward"/>
+                    <TextField label="Street"/>
                     
                     <Stack direction={"row"} spacing={1}>
                         <input type="checkbox"/>

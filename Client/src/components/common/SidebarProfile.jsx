@@ -1,4 +1,4 @@
-import { Box, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material"
+import { Box, Button, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material"
 
 import PersonIcon from '@mui/icons-material/Person';
 import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 // import WarehouseIcon from '@mui/icons-material/Warehouse';
 // import PostAddIcon from '@mui/icons-material/PostAdd';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 const menus = [
     {
@@ -80,11 +81,23 @@ const SidebarProfile = () => {
 
     return (
         <Box sx={{
-            height: '83vh',
-            maxWidth: "250px",
+            height: '100vh',
+            // maxWidth: "250px",
             borderRight: "1px solid #ccc",
             bgcolor: "#fff",
+            position: "relative"
         }}>
+            <Button sx={{
+                position: "absolute",
+                top: 10,
+                left: 10
+            }}>
+                <KeyboardBackspaceIcon fontSize="large"
+                    sx={{
+                        color: "#000"
+                    }}
+                />
+            </Button>
             <Box width={"100%"}
                 p={4}
                 sx={{

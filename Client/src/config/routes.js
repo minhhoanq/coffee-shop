@@ -20,19 +20,21 @@ import Profile from "../pages/Profile";
 import Profile2 from "../pages/profile/Profile";
 import Payment from "../pages/payment/Payment";
 import DefaultLayoutUser from "../components/layout/defaultlayoutuser/DefaultLayoutUser";
-import Address from "../pages/address/Address";
+import Address from "../pages/Address";
 import LoginPage from "../pages/LoginPage";
 import DashboardPage from "../pages/DashboardPage";
 import MainLayout from "../components/layout/MainLayout";
 import Menu from "../pages/Menu";
+import DefaultProfileLayout from "../components/layout/DefaultProfileLayout";
+import Personal from "../pages/Personal";
 
 //Public routes
 const publicRoutes = [
     { path: '/', component: Home, layout: null},
-    { path: '/user/account', component: Profile},
-    { path: '/user/account/profile', component: Profile2, layout: DefaultLayoutUser},
-    { path: '/user/account/payment', component: Payment, layout: DefaultLayoutUser},
-    { path: '/user/account/address', component: Address, layout: DefaultLayoutUser},
+    { path: '/user/account/profile', component: Personal, layout: DefaultProfileLayout},
+    // { path: '/user/account/profile', component: Profile2, layout: DefaultLayoutUser},
+    { path: '/user/account/payment', component: Payment, layout: DefaultProfileLayout},
+    { path: '/user/account/address', component: Address, layout: DefaultProfileLayout},
     { path: '/menu', component: Menu},
     { path: '/shop', component: Shop},
     // { path: '/shop/test', component: DetailProduct},

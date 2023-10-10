@@ -1,13 +1,26 @@
 import { Box, Button, Stack, Typography, colors } from "@mui/material"
+import { useCallback } from "react";
+import { setDefaultAddress } from "../../api/userApi";
 
-const AddressCard = () => {
+const AddressCard = props => {
+    const item = props.item;
+
+    const handleSetDefaultAddress = useCallback(async() => {
+        const id = item.id;
+        const data = {
+            id
+        }
+        const response = await setDefaultAddress(data);
+        console.log(response)
+    })
+
     return (
         <Box >
             <Stack direction={"row"} justifyContent={"space-between"}>
                 <Stack spacing={1}>
                     <Stack direction={"row"} alignItems={"center"}>
                         <Typography variant="h6">
-                            Tran Minh Hoang
+                            {item.userData.firstname + " " + item.userData.lastname}
                         </Typography>
 
                         <div style={{
@@ -23,24 +36,26 @@ const AddressCard = () => {
                     </Stack>
 
                     <Typography color={"#999"}>
-                        Số 12, Phố Nghĩa
+                        {item.address}
                     </Typography>
 
                     <Typography color={"#999"}>
-                        Phường Nghĩa Đô, Quận Cầu Giấy, Hà Nội
+                        {item.ward}, {item.district}, {item.city_province}
                     </Typography>
 
-                    <Box sx={{
-                        border: `1px solid ${colors.brown[400]}`,
-                        width: "70px",
-                        padding: "2px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        color: colors.brown[400]
-                    }}>
-                        Default
-                    </Box>
+                    {item.is_delivery_address === true && (
+                        <Box sx={{
+                            border: `1px solid ${colors.brown[400]}`,
+                            width: "70px",
+                            padding: "2px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            color: colors.brown[400]
+                        }}>
+                            Default
+                        </Box>
+                    )}
                 </Stack>
 
                 <Stack>
@@ -62,6 +77,7 @@ const AddressCard = () => {
                                 backgroundColor: colors.brown[100],
                             }
                         }}
+                        onClick={handleSetDefaultAddress}
                     >
                         Set Default Address
                     </Button>

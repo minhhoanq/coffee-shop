@@ -27,7 +27,7 @@ const Personal = () => {
     const user = useSelector(state => state.auth.currentUser);
 
     return (
-        <Box pl={2} pr={2}>
+        <Box pl={2} pr={2} flex={1}>
             <Stack>
                 <Box height={"100px"} width={"100px"} mt={2} 
                     sx={{
