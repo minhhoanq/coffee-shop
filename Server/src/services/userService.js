@@ -96,15 +96,20 @@ const createUserAddressListService = (user, addressData) => new Promise(async(re
         const { country = "Việt Nam", city_province, district, ward, address, postal_code, address_instruction, is_delivery_address} = addressData;
         const userId = user.id;
 
-        const { count, rows} = await db.Address.findAndCountAll({
+        const { count, rows } = await db.Address.findAndCountAll({
             where: {
                 userid: userId
             }
         })
+        
 
-        if(count < 1) {
-            is_delivery_address = true;
+        if(count === 0) {
+            addressData.is_delivery_address = true;
+            console.log("count : " + count);
         }
+
+        // console.log("count : " + count);
+        
 
         const [createAddress, created] = await db.Address.findOrCreate({
             where: {
@@ -124,9 +129,11 @@ const createUserAddressListService = (user, addressData) => new Promise(async(re
                 address: address,
                 address_instruction: address_instruction,
                 postal_code: postal_code,
-                is_delivery_address: is_delivery_address
+                is_delivery_address: addressData.is_delivery_address
             }
         })
+
+
         
         resolve({
             err: createAddress ? 0 : 1,

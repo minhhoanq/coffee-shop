@@ -12,9 +12,10 @@ const DefaultProfileLayout = props => {
         >
             <Grid container xs={12} width={"100%"}
             sx={{
-                display:"flex",
-                justifyContent:"center",
-                alignItems:"center",}}
+                // display:"flex",
+                // justifyContent:"center",
+                // alignItems:"center",
+            }}
             >
                 <Grid item xs={3} >
                     <SidebarProfile/>

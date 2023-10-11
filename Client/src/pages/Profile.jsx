@@ -41,7 +41,7 @@ const Profile = () => {
                 </Grid>
 
                 <Grid item xs={9}>
-                    <Box width={"100%"} height={"100%"} >
+                    <Box width={"100%"} height={"100%"}>
                         <Page/>
                     </Box>
                 </Grid>

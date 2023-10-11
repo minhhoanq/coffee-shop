@@ -5,7 +5,7 @@ import { createUserAddress, setDefaultAddress } from "../../api/userApi";
 import ClearIcon from '@mui/icons-material/Clear';
 import { Controller, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-
+import Swal from "sweetalert2";
 
 const filterOptions = createFilterOptions({
     matchFrom: "start",
@@ -71,13 +71,17 @@ const ModalAddAddress = props => {
         }
 
         const response = await createUserAddress(dataRq);
-        console.log(response.data.id);
+        console.log(response);
         if(data.is_delivery_address) {
             const value = {
                 id: response.data.id
             };
             const re = await setDefaultAddress(value);
             console.log(re);
+        }
+        if(response.err === 0) {
+            Swal.fire('', response.mes, 'success');
+            props.close(false)
         }
     }
 
