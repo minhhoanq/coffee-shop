@@ -94,6 +94,17 @@ const productController = {
     uploadImageProduct: async(req, res) => {
         console.log(req.file);
         return res.json('Upload Thành công!')
+    },
+
+    // Recommended System Controller
+    recommendSystemController: async(req, res) => {
+        try {
+            const response = await productService.recommendSystemService()
+
+            return res.status(200).json(response)
+        } catch (error) {
+            return res.status(500).json(error);
+        }
     }
 }
 

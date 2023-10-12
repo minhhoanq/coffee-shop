@@ -3,6 +3,11 @@ const productController = require("../controllers/productController");
 const isAuth = require("../middlewares/isAuth");
 const uploader = require("../config/cloudinary.config")
 
+
+/// Recommend System
+
+router.get('/recommended-system', isAuth.verifyToken, productController.recommendSystemController)
+
 //Get product detail
 router.get('/:slug', productController.getProductDetail);
 

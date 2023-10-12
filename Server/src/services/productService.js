@@ -279,6 +279,22 @@ const deleteRatingProductService = (user, { slug }) => new Promise( async(resolv
     }
 })
 
+//RecommendSystemService
+const recommendSystemService = () => new Promise(async(resolve, reject) => {
+    try {
+
+        const ratings = await db.Rating.findAll();
+
+        resolve({
+            err: "err",
+            mes: "mes",
+            data: ratings
+        })
+    } catch (error) {
+        reject(error)
+    }
+})
+
 module.exports = { 
     getProductsService, 
     getProductDetailService, 
@@ -287,4 +303,5 @@ module.exports = {
     ratingProductService, 
     getAllRatingsProductService,
     deleteRatingProductService,
+    recommendSystemService
 };
