@@ -284,11 +284,38 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
     try {
 
         const ratings = await db.Rating.findAll();
+        const arrRating = [];
+        ratings.forEach(element => {
+            arrRating.push(element.dataValues)
+        });
 
-        resolve({
+        const products = await db.Product.findAll();
+        const arrProduct = [];
+        products.forEach(element => {
+            arrProduct.push(element.dataValues)
+        });
+
+        const users = await db.User.findAll();
+        const arrUser = [];
+        users.forEach(element => {
+            arrUser.push(element.dataValues)
+        });
+
+        var numbers = [];
+ 
+        // Lặp theo hàng
+        for (var i = 0; i < arrProduct.length; i++){
+            numbers[i] = [];
+            // Lặp theo cột, số cộ từ 0 -> số lượng phần tử của hàng i
+            for (var j = 0; j < arrUser.length; j++){
+                numbers[i][j] = 1;
+            }
+        }
+
+        resolve({   
             err: "err",
             mes: "mes",
-            data: ratings
+            data: numbers
         })
     } catch (error) {
         reject(error)
