@@ -1,6 +1,7 @@
 const db = require("../models");
 const { Op } = require("sequelize");
 const slugtify = require('slugify');
+const similarity = require( 'compute-cosine-similarity' );
 
 //Pagination, filter, sort
 const getProductsService = ({page, limit, order, name, ...query}) => new Promise(async (resolve, reject) => {
@@ -282,12 +283,13 @@ const deleteRatingProductService = (user, { slug }) => new Promise( async(resolv
 //RecommendSystemService
 const recommendSystemService = () => new Promise(async(resolve, reject) => {
     try {
-
         const ratings = await db.Rating.findAll();
         const arrRating = [];
         ratings.forEach(element => {
             arrRating.push(element.dataValues)
         });
+
+        // console.log(arrRating.length)
 
         const products = await db.Product.findAll();
         const arrProduct = [];
@@ -302,20 +304,74 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         });
 
         var numbers = [];
- 
+        
         // Lặp theo hàng
         for (var i = 0; i < arrProduct.length; i++){
             numbers[i] = [];
             // Lặp theo cột, số cộ từ 0 -> số lượng phần tử của hàng i
             for (var j = 0; j < arrUser.length; j++){
-                numbers[i][j] = 1;
+                numbers[i][j] = undefined;
+                for(var k = 0; k < arrRating.length; k++) {
+                    if(arrRating[k].productId == arrProduct[i].id && arrRating[k].userId == arrUser[j].id) {
+                        numbers[i][j] = arrRating[k].star;
+                        // console.log(numbers[i][j])
+                    }
+                }
             }
         }
+
+        const normalization = numbers;
+
+        for(let i = 0; i < numbers[0].length; i++) {
+            //sum of user rated items
+            let sum = 0;
+            //average of user rated items
+            let average = 0;
+            //Quantity items is rated by user
+            let count = 0;
+            for(let j = 0; j < numbers.length; j++) {
+                if(numbers[j][i] != undefined){
+                    sum += Number(numbers[j][i]);
+                    count++
+                }
+            }
+            average = sum / count;
+            // console.log(average)
+            // Data Normalization
+            for(let k = 0; k < numbers.length; k++) {
+                if(numbers[k][i] != undefined){
+                    normalization[k][i] = numbers[k][i] - average.toFixed(2)
+                } else {
+                    normalization[k][i] = 0
+                }
+            }
+        }
+
+        const array = [];
+        for(let i = 0; i < normalization[0].length; i++) {
+            array[i] = []
+            for(let j = 0; j < 5; j++) {
+                array[i][j] = normalization[j][i]
+            }
+        }
+
+        const similar_users = [];
+
+        // const s = similarity(normalization[0], normalization[1])
+        for(let i = 0; i < array.length - 1; i++) {
+            similar_users[i] = []
+            for(let j = 0; j < array.length; j++) {
+                similar_users[i][j] = similarity(array[i], array[j])
+            }
+        }
+        
+        // const products_of_user_picked = similar_users[0];
+        // const users_s = similar_users.
 
         resolve({   
             err: "err",
             mes: "mes",
-            data: numbers
+            data: users_s
         })
     } catch (error) {
         reject(error)
