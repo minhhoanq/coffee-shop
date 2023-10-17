@@ -364,20 +364,48 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
                 similar_users[i][j] = similarity(array[i], array[j]);
             }
         }
+
+        const array2 = [];
+        array.splice(5, 1);
         
         // delete similar_users[0]
         // const products_of_user_picked = similar_users.splice(5, 1);
+        similar_users[5].splice(5, 1)
+        const similar_user_picked = similar_users[5];
 
-        // const sortSimilarUser = products_of_user_picked[0].sort((a, b) => (b - a));
+        for(let i = 0; i < array[0].length; i++) {
+            array2[i] = []
+            for(let j = 0; j < 6; j++) {
+                array2[i][j] = array[j][i]
+            }
+        }
+        
+        array2.splice(1, 2);
+
+        // const sortSimilarUser = similar_user_picked.sort((a, b) => (b - a));
 
         // const product_diff = array.filter(e => (
 
         // ))
+        const item_score = [];
+        for(let i = 0; i < array2.length; i++) {
+            let count = 0;
+            let total = 0;
+            const movie_rating = array2[i]
+            for(let j = 0; j < similar_user_picked.length; j++) {
+                const score = similar_user_picked[j] * movie_rating[j];
+                total += score;
+                count++
+            }
+            item_score[i] = total / count
+        }
 
-        resolve({   
+        resolve({
             err: "err",
             mes: "mes",
-            data: similar_users
+            data: array2,
+            data1: similar_user_picked,
+            data2: item_score
         })
     } catch (error) {
         reject(error)
