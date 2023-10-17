@@ -313,7 +313,7 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
                 numbers[i][j] = undefined;
                 for(var k = 0; k < arrRating.length; k++) {
                     if(arrRating[k].productId == arrProduct[i].id && arrRating[k].userId == arrUser[j].id) {
-                        numbers[i][j] = arrRating[k].star;
+                        numbers[arrProduct[i].id - 1][arrUser[j].id - 1] = arrRating[k].star;
                         // console.log(numbers[i][j])
                     }
                 }
@@ -357,21 +357,27 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
 
         const similar_users = [];
 
-        // const s = similarity(normalization[0], normalization[1])
-        for(let i = 0; i < array.length - 1; i++) {
+        const s = similarity(normalization[0], normalization[1])
+        for(let i = 0; i < array.length; i++) {
             similar_users[i] = []
             for(let j = 0; j < array.length; j++) {
-                similar_users[i][j] = similarity(array[i], array[j])
+                similar_users[i][j] = similarity(array[i], array[j]);
             }
         }
         
-        // const products_of_user_picked = similar_users[0];
-        // const users_s = similar_users.
+        // delete similar_users[0]
+        // const products_of_user_picked = similar_users.splice(5, 1);
+
+        // const sortSimilarUser = products_of_user_picked[0].sort((a, b) => (b - a));
+
+        // const product_diff = array.filter(e => (
+
+        // ))
 
         resolve({   
             err: "err",
             mes: "mes",
-            data: users_s
+            data: similar_users
         })
     } catch (error) {
         reject(error)
