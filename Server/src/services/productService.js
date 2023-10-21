@@ -472,7 +472,7 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
             }
         }
 
-        const user_picked = similar_users.splice(3, 1);
+        const user_picked = similar_users.splice(6, 1);
 
         const score_items = [];
         for (let i = 0; i < arrP.length; i++) {
@@ -485,16 +485,33 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
                 total += score
                 count++;
             }
-            console.log(total + " | " + score);
             score_items[i] = total / count;
+        }
+
+        const recommend = []
+        for (let i = 0; i < products.length; i++) {
+            recommend.push({id: products[i], score_item: score_items[i]})
+        }
+
+        score_items.sort((a, b) => b - a);
+
+        const productsRecommend = [];
+        for (let i = 0; i < score_items.length; i++) {
+            for (let j = 0; j < recommend.length; j++) {
+                if(score_items[i] == recommend[j].score_item && score_items[i] > 0) {
+                    productsRecommend.push(await db.Product.findByPk(recommend[j].id))
+                }
+            }
         }
 
         resolve({
             err: "err",
             mes: "mes",
             user_picked: user_picked,
-            users: arrP,
-            score_items: score_items
+            // users: arrP,
+            // score_items: score_items,
+            // products: recommend,
+            productsRecommend: productsRecommend
         })
     } catch (error) {
         reject(error)
