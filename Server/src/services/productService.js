@@ -284,6 +284,7 @@ const deleteRatingProductService = (user, { slug }) => new Promise( async(resolv
 const recommendSystemService = () => new Promise(async(resolve, reject) => {
     try {
         const ratingData = await db.Rating.findAll();
+        // const ratings = await db.Rating.findAll();
         // const arrRating = [];
         // ratings.forEach(element => {
         //     arrRating.push(element.dataValues)
@@ -307,7 +308,7 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
 
 
         
-        // Lặp theo hàng
+        // // Lặp theo hàng
         // for (var i = 0; i < arrProduct.length; i++){
         //     numbers[i] = [];
         //     // Lặp theo cột, số cộ từ 0 -> số lượng phần tử của hàng i
@@ -359,7 +360,7 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
 
         // const similar_users = [];
 
-        // const s = similarity(normalization[0], normalization[1])
+        // // const s = similarity(normalization[0], normalization[1])
         // for(let i = 0; i < array.length; i++) {
         //     similar_users[i] = []
         //     for(let j = 0; j < array.length; j++) {
@@ -436,26 +437,64 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
             // console.log(sum + " | " + count);
             user_product.forEach(e => {
                 if(e[0] == i) {
-                    e[2] = e[2] - (sum / count);
+                    e[2] = (e[2] - (sum / count).toFixed(2));
                 }
             })
         }
         
         const arr = [];
         for(let i = 0; i < users.length; i++) {
-            arr[i] = [];
-            ratings.forEach(e => {
-                if(e[0] == i) {
-                    arr[i] = e[2]
-                }
-            })
+            arr[i] = [0];
+            for (let j = 0; j < products.length; j++) {
+                arr[i][j] = 0;
+                ratings.forEach(e => {
+                    if(e[0] == i && e[1] == j) {
+                        arr[i][j] = e[2];
+                    }
+                })
+            }
+        }
+
+        const similar_users = [];
+
+        for(let i = 0; i < arr.length; i++) {
+            similar_users[i] = [1];
+            for(let j = 0; j < arr.length; j++) {
+                similar_users[i][j] = similarity(arr[i], arr[j]);
+            }
+        }
+
+        const arrP = [];
+        for (let i = 0; i < products.length; i++) {
+            arrP[i] = []
+            for (let j = 0; j < users.length; j++) {
+                    arrP[i][j] = arr[j][i]
+            }
+        }
+
+        const user_picked = similar_users.splice(3, 1);
+
+        const score_items = [];
+        for (let i = 0; i < arrP.length; i++) {
+            let score = 0;
+            let count = 0;
+            let total = 0;
+            const movie_rating = arrP[i]
+            for (let j = 0; j < user_picked[0].length; j++) {
+                score = movie_rating[j] * user_picked[0][j]
+                total += score
+                count++;
+            }
+            console.log(total + " | " + score);
+            score_items[i] = total / count;
         }
 
         resolve({
             err: "err",
             mes: "mes",
-            ratings: ratings[0][1],
-            users: arr
+            user_picked: user_picked,
+            users: arrP,
+            score_items: score_items
         })
     } catch (error) {
         reject(error)
