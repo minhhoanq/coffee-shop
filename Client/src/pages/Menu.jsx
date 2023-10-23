@@ -5,10 +5,15 @@ import ItemCard from "../components/common/ItemCard";
 import { useCallback, useEffect, useState } from "react";
 import { getProductsAction } from "../redux/asyncActions/productActions";
 import { useSelector, useDispatch } from "react-redux";
+import ItemCardHorizontal from "../components/common/ItemCarHorizontal";
+import RecommendItemCard from "../components/common/RecommendItemCard";
+import { getAllProductRecommend } from "../api/productApi";
 // import useDebounce from "../hooks/useDebounce";
 
 const Menu = () => {
     const [products, setProducts] = useState([]);
+    const [productsRecommed, setProductsRecommed] = useState([]);
+
     const [searchValue, setSearchValue] = useState("");
     const [sort, setSort] = useState('default');
     const [category, setCategory] = useState();
@@ -19,6 +24,11 @@ const Menu = () => {
     const dispatch = useDispatch();
     const pending = useSelector(state => state.product.isPending);
     const error = useSelector(state => state.product.isError);
+
+    const getDataRecommed = async () => {
+        const result = await getAllProductRecommend();
+        setProductsRecommed(result.productsRecommend);
+    }
 
     useEffect(() => {
         const getData = async() => {
@@ -46,6 +56,10 @@ const Menu = () => {
         }
         getData();
     },[searchValue, sort, category, numPage]);
+
+    useEffect(() => {
+        getDataRecommed();
+    },[])
 
     const handleSearch = useCallback((search) => {
         setSearchValue(search ? search : searchValue)
@@ -77,19 +91,21 @@ const Menu = () => {
                 </Grid>
 
                 <Grid item xs={10}>
-                    <Box
-                        sx={{
-                            height: "200px",
-                            border: "1px solid #ccc"
-                        }}
-                    >
-                        Làm thông minh ở đây
-                    </Box>
+                    <Typography variant="h5" fontWeight={500}>
+                        Recommeded Product
+                    </Typography>
+                    <Grid container spacing={1} mt={2}>
+                        { productsRecommed.map((item, index) => (
+                            <Grid item lg={4} md={4} sm={6} xs={12}>
+                                <RecommendItemCard item={item} key={index}/>
+                            </Grid>
+                        ))}
+                    </Grid>
                 </Grid>
 
                 <Grid item xs={10}>
                     <Typography variant="h5" mt={2}>
-                        Còn nhiều lựa chọn khác
+                        There are many other options
                     </Typography>
                     <br/>
                     <Grid container justifyContent="flex-start" spacing={6}>

@@ -280,128 +280,55 @@ const deleteRatingProductService = (user, { slug }) => new Promise( async(resolv
     }
 })
 
+
+// ===================================================================================== //
+
+//
+const createUserProductMatrix = (ratings, users) => {
+    const user_product = ratings;
+
+    //Create User Product Matrix
+    for (let i = 0; i < users.length; i++) {
+        let sum = 0;
+        let count = 0;
+        ratings.filter(e => {
+            if(e[0] == i) {
+                sum += Number(e[2]);
+                count++;
+            }
+        })
+        // console.log(sum + " | " + count);
+        user_product.forEach(e => {
+            if(e[0] == i) {
+                e[2] = (e[2] - (sum / count).toFixed(2));
+            }
+        })
+    }
+
+    return user_product;
+}
+
+//
+const CVUserProduct2Dimensional = (user_product, users, products) => {
+    const array = [];
+    for(let i = 0; i < users.length; i++) {
+        array[i] = [0];
+        for (let j = 0; j < products.length; j++) {
+            array[i][j] = 0;
+            user_product.forEach(e => {
+                if(e[0] == i && e[1] == j) {
+                    array[i][j] = e[2];
+                }
+            })
+        }
+    }
+    return array;
+}
+
 //RecommendSystemService
 const recommendSystemService = () => new Promise(async(resolve, reject) => {
     try {
         const ratingData = await db.Rating.findAll();
-        // const ratings = await db.Rating.findAll();
-        // const arrRating = [];
-        // ratings.forEach(element => {
-        //     arrRating.push(element.dataValues)
-        // });
-
-        // console.log(arrRating.length)
-
-        // const products = await db.Product.findAll();
-        // const arrProduct = [];
-        // products.forEach(element => {
-        //     arrProduct.push(element.dataValues)
-        // });
-
-        // const users = await db.User.findAll();
-        // const arrUser = [];
-        // users.forEach(element => {
-        //     arrUser.push(element.dataValues)
-        // });
-
-        // var numbers = [];
-
-
-        
-        // // Lặp theo hàng
-        // for (var i = 0; i < arrProduct.length; i++){
-        //     numbers[i] = [];
-        //     // Lặp theo cột, số cộ từ 0 -> số lượng phần tử của hàng i
-        //     for (var j = 0; j < arrUser.length; j++){
-        //         numbers[i][j] = undefined;
-        //         for(var k = 0; k < arrRating.length; k++) {
-        //             if(arrRating[k].productId == arrProduct[i].id && arrRating[k].userId == arrUser[j].id) {
-        //                 numbers[arrProduct[i].id - 1][arrUser[j].id - 1] = arrRating[k].star;
-        //                 // console.log(numbers[i][j])
-        //             }
-        //         }
-        //     }
-        // }
-
-        // const normalization = numbers;
-
-        // for(let i = 0; i < numbers[0].length; i++) {
-        //     //sum of user rated items
-        //     let sum = 0;
-        //     //average of user rated items
-        //     let average = 0;
-        //     //Quantity items is rated by user
-        //     let count = 0;
-        //     for(let j = 0; j < numbers.length; j++) {
-        //         if(numbers[j][i] != undefined){
-        //             sum += Number(numbers[j][i]);
-        //             count++
-        //         }
-        //     }
-        //     average = sum / count;
-        //     // console.log(average)
-        //     // Data Normalization
-        //     for(let k = 0; k < numbers.length; k++) {
-        //         if(numbers[k][i] != undefined){
-        //             normalization[k][i] = numbers[k][i] - average.toFixed(2)
-        //         } else {
-        //             normalization[k][i] = 0
-        //         }
-        //     }
-        // }
-
-        // const array = [];
-        // for(let i = 0; i < normalization[0].length; i++) {
-        //     array[i] = []
-        //     for(let j = 0; j < 5; j++) {
-        //         array[i][j] = normalization[j][i]
-        //     }
-        // }
-
-        // const similar_users = [];
-
-        // // const s = similarity(normalization[0], normalization[1])
-        // for(let i = 0; i < array.length; i++) {
-        //     similar_users[i] = []
-        //     for(let j = 0; j < array.length; j++) {
-        //         similar_users[i][j] = similarity(array[i], array[j]);
-        //     }
-        // }
-
-        // const array2 = [];
-        // array.splice(5, 1);
-        
-        // // delete similar_users[0]
-        // // const products_of_user_picked = similar_users.splice(5, 1);
-        // similar_users[5].splice(5, 1)
-        // const similar_user_picked = similar_users[5];
-
-        // for(let i = 0; i < array[0].length; i++) {
-        //     array2[i] = []
-        //     for(let j = 0; j < 6; j++) {
-        //         array2[i][j] = array[j][i]
-        //     }
-        // }
-        
-        // array2.splice(1, 2);
-
-        // // const sortSimilarUser = similar_user_picked.sort((a, b) => (b - a));
-
-        // // const product_diff = array.filter(e => (
-
-        // // ))
-        // const item_score = [];
-        // for(let i = 0; i < array2.length; i++) {
-        //     let count = 0;
-        //     let total = 0;
-        //     const movie_rating = array2[i]
-        //     for(let j = 0; j < similar_user_picked.length; j++) {
-        //         const score = similar_user_picked[j] * movie_rating[j];
-        //         total += score;
-        //         count++
-        //     }
-        //     item_score[i] = total / count
-        // }
 
         const users = [];
         const products = [];
@@ -423,44 +350,46 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
             ratings.push([users.indexOf(user), products.indexOf(product), rating]);
         });
 
-        const user_product = ratings;
-
-        for (let i = 0; i < users.length; i++) {
-            let sum = 0;
-            let count = 0;
-            ratings.filter(e => {
-                if(e[0] == i) {
-                    sum += Number(e[2]);
-                    count++;
-                }
-            })
-            // console.log(sum + " | " + count);
-            user_product.forEach(e => {
-                if(e[0] == i) {
-                    e[2] = (e[2] - (sum / count).toFixed(2));
-                }
-            })
-        }
+        // const user_product = ratings;
+        const user_product = createUserProductMatrix(ratings, users);
+        // for (let i = 0; i < users.length; i++) {
+        //     let sum = 0;
+        //     let count = 0;
+        //     ratings.filter(e => {
+        //         if(e[0] == i) {
+        //             sum += Number(e[2]);
+        //             count++;
+        //         }
+        //     })
+        //     // console.log(sum + " | " + count);
+        //     user_product.forEach(e => {
+        //         if(e[0] == i) {
+        //             e[2] = (e[2] - (sum / count).toFixed(2));
+        //         }
+        //     })
+        // }
         
-        const arr = [];
-        for(let i = 0; i < users.length; i++) {
-            arr[i] = [0];
-            for (let j = 0; j < products.length; j++) {
-                arr[i][j] = 0;
-                ratings.forEach(e => {
-                    if(e[0] == i && e[1] == j) {
-                        arr[i][j] = e[2];
-                    }
-                })
-            }
-        }
+        // const arr = [];
+        // for(let i = 0; i < users.length; i++) {
+        //     arr[i] = [0];
+        //     for (let j = 0; j < products.length; j++) {
+        //         arr[i][j] = 0;
+        //         user_product.forEach(e => {
+        //             if(e[0] == i && e[1] == j) {
+        //                 arr[i][j] = e[2];
+        //             }
+        //         })
+        //     }
+        // }
+
+        const user_product_2d = CVUserProduct2Dimensional(user_product, users, products);
 
         const similar_users = [];
 
-        for(let i = 0; i < arr.length; i++) {
+        for(let i = 0; i < user_product_2d.length; i++) {
             similar_users[i] = [1];
-            for(let j = 0; j < arr.length; j++) {
-                similar_users[i][j] = similarity(arr[i], arr[j]);
+            for(let j = 0; j < user_product_2d.length; j++) {
+                similar_users[i][j] = similarity(user_product_2d[i], user_product_2d[j]);
             }
         }
 
@@ -468,11 +397,11 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         for (let i = 0; i < products.length; i++) {
             arrP[i] = []
             for (let j = 0; j < users.length; j++) {
-                    arrP[i][j] = arr[j][i]
+                    arrP[i][j] = user_product_2d[j][i]
             }
         }
 
-        const user_picked = similar_users.splice(6, 1);
+        const user_picked = similar_users.splice(2, 1);
 
         const score_items = [];
         for (let i = 0; i < arrP.length; i++) {
@@ -507,11 +436,13 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         resolve({
             err: "err",
             mes: "mes",
-            user_picked: user_picked,
-            // users: arrP,
+            // user_picked: user_picked,
+            // users: user_product,
+            arr: user_product_2d,
+            // ratings: ratings,
             // score_items: score_items,
             // products: recommend,
-            productsRecommend: productsRecommend
+            // productsRecommend: productsRecommend
         })
     } catch (error) {
         reject(error)

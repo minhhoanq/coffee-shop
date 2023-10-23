@@ -67,3 +67,8 @@ export const getAllRatingsProduct = async (slug) => {
         return error;
     }
 }
+
+export const getAllProductRecommend = async () => {
+    const res = await request.get('/api/v1/product/recommended-system')
+    return res.data;
+}
