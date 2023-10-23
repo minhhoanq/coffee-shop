@@ -325,6 +325,51 @@ const CVUserProduct2Dimensional = (user_product, users, products) => {
     return array;
 }
 
+const createSimilarUsersMatrix = (user_product_2d, products, users) => {
+    const similar_users = [];
+
+    for(let i = 0; i < user_product_2d.length; i++) {
+        similar_users[i] = [1];
+        for(let j = 0; j < user_product_2d.length; j++) {
+            similar_users[i][j] = similarity(user_product_2d[i], user_product_2d[j]);
+        }
+    }
+
+    return similar_users;
+}
+
+const inverseMatrix = (arr, users, products) => {
+    const array = [];
+    for (let i = 0; i < products.length; i++) {
+        array[i] = []
+        for (let j = 0; j < users.length; j++) {
+                array[i][j] = arr[j][i]
+        }
+    }
+
+    return array;
+}
+
+const scoreItems = (user_product_2dx, user_picked) => {
+    const score_items = [];
+    user_picked[0].splice(5, 1);
+    // console.log(user_picked[0])
+    for (let i = 0; i < user_product_2dx.length; i++) {
+        let score = 0;
+        let count = 0;
+        let total = 0;
+        const movie_rating = user_product_2dx[i];
+        for (let j = 0; j < user_picked[0].length; j++) {
+            score = movie_rating[j] * user_picked[0][j];
+            total += score;
+            count++;
+        }
+        score_items[i] = total / count;
+    }
+
+    return score_items;
+}
+
 //RecommendSystemService
 const recommendSystemService = () => new Promise(async(resolve, reject) => {
     try {
@@ -350,74 +395,47 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
             ratings.push([users.indexOf(user), products.indexOf(product), rating]);
         });
 
-        // const user_product = ratings;
+        //create user-product matrix
         const user_product = createUserProductMatrix(ratings, users);
-        // for (let i = 0; i < users.length; i++) {
-        //     let sum = 0;
-        //     let count = 0;
-        //     ratings.filter(e => {
-        //         if(e[0] == i) {
-        //             sum += Number(e[2]);
-        //             count++;
-        //         }
-        //     })
-        //     // console.log(sum + " | " + count);
-        //     user_product.forEach(e => {
-        //         if(e[0] == i) {
-        //             e[2] = (e[2] - (sum / count).toFixed(2));
-        //         }
-        //     })
-        // }
-        
-        // const arr = [];
-        // for(let i = 0; i < users.length; i++) {
-        //     arr[i] = [0];
-        //     for (let j = 0; j < products.length; j++) {
-        //         arr[i][j] = 0;
-        //         user_product.forEach(e => {
-        //             if(e[0] == i && e[1] == j) {
-        //                 arr[i][j] = e[2];
-        //             }
-        //         })
-        //     }
-        // }
 
+        //convert user-product matrix to 2 dimensional
         const user_product_2d = CVUserProduct2Dimensional(user_product, users, products);
 
-        const similar_users = [];
+        //create similar users matrix
+        const similar_users = createSimilarUsersMatrix(user_product_2d, products, users);
 
-        for(let i = 0; i < user_product_2d.length; i++) {
-            similar_users[i] = [1];
-            for(let j = 0; j < user_product_2d.length; j++) {
-                similar_users[i][j] = similarity(user_product_2d[i], user_product_2d[j]);
+        //inverse matrix, use similarity lib
+        const user_product_2dx = inverseMatrix(user_product_2d, users, products);
+
+        //Movies that similar users watched. Remove movies that none of the similar users have watched
+
+        //remove products user picked rated and bought.
+        let i = 0;
+        user_product_2d[5].forEach((e, index) => {
+            
+            if(e != 0) {
+                console.log(index + ":" + i)
+                user_product_2dx.splice(index - i, 1);
+                i++;
             }
-        }
+        })
+        // 0 1 2 3 4
+        // 1 2 3 4
+        // 2 3 4
+        // 
 
-        const arrP = [];
-        for (let i = 0; i < products.length; i++) {
-            arrP[i] = []
-            for (let j = 0; j < users.length; j++) {
-                    arrP[i][j] = user_product_2d[j][i]
-            }
-        }
+        // const arrtemp = user_product_2d.filter(e => (
 
-        const user_picked = similar_users.splice(2, 1);
+        // ))
 
-        const score_items = [];
-        for (let i = 0; i < arrP.length; i++) {
-            let score = 0;
-            let count = 0;
-            let total = 0;
-            const movie_rating = arrP[i]
-            for (let j = 0; j < user_picked[0].length; j++) {
-                score = movie_rating[j] * user_picked[0][j]
-                total += score
-                count++;
-            }
-            score_items[i] = total / count;
-        }
+        //get user is picked
+        // const user = user.id;
+        const user_picked = similar_users.splice(5, 1);
 
-        const recommend = []
+        //prepare score for items with similar users and user picked
+        const score_items = scoreItems(user_product_2dx, user_picked)
+
+        const recommend = [];
         for (let i = 0; i < products.length; i++) {
             recommend.push({id: products[i], score_item: score_items[i]})
         }
@@ -436,13 +454,13 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         resolve({
             err: "err",
             mes: "mes",
-            // user_picked: user_picked,
+            user_picked: products,
             // users: user_product,
-            arr: user_product_2d,
+            arr: user_product_2dx,
             // ratings: ratings,
             // score_items: score_items,
             // products: recommend,
-            // productsRecommend: productsRecommend
+            productsRecommend: productsRecommend
         })
     } catch (error) {
         reject(error)
