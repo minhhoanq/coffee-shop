@@ -1,3 +1,5 @@
+import React, { useCallback } from "react";
+
 import { Box, Button, Grid, IconButton, Rating, Stack, Typography, colors } from "@mui/material";
 import Banner from "../components/common/Banner";
 import AddIcon from '@mui/icons-material/Add';
@@ -8,10 +10,16 @@ import TabReviews from "../components/common/TabReviews";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getAllRatingsProduct, getProductDetailBySlug } from "../api/productApi";
+import { useForm } from "react-hook-form";
 
 const ProductDetail = () => {
     const [products, setProducts] = useState([]);
     const [ratings, setRatings] = useState([]);
+    const [productSizeId, setProductSizeId] = useState(products[0]?.id);
+    const [quantity, setQuantity] = useState(1);
+    const [price, setPrice] = useState(products[0]?.productData.price);
+    const [note, setNote] = useState("");
+    const [size, setSize] = useState("S");
 
     const { slug } = useParams();
 
@@ -19,7 +27,8 @@ const ProductDetail = () => {
         const result = await getProductDetailBySlug(slug);
 
         setProducts(result.dataDetailProduct);
-        // setPrice(result.dataDetailProduct[0]?.productData.price);
+        setPrice(result.dataDetailProduct[0]?.productData.price);
+        setProductSizeId(result.dataDetailProduct[0]?.id);
     }
 
     const getRatingsProductData = async() => {
@@ -32,7 +41,47 @@ const ProductDetail = () => {
         getRatingsProductData();
     },[]);
 
-    console.log(products[0]?.id)
+    const handleMinusQty = useCallback((e) => {
+        const priceRoot = products[0]?.productData.price;
+        let qty = quantity;
+        if(quantity > 1) {
+            qty--;
+            setQuantity(qty);
+        }
+        setPrice(priceRoot * qty);
+    })
+
+    const handlePlusQty = useCallback((e) => {
+        const priceRoot = products[0]?.productData.price;
+        let qty = quantity;
+        if(quantity < 20) {
+            qty++;
+            setQuantity(qty);
+        }
+        setPrice(priceRoot * qty);
+    });
+
+    const handleChooseSize = useCallback((e) => {
+        const sizeId = e.target.id;
+        const priceRoot = products[0]?.productData.price;
+        if(sizeId === 'size-s') {
+            setSize("S");
+            setPrice(priceRoot * quantity)
+        } else if (sizeId === 'size-m') {
+            setSize("M");
+            setPrice((priceRoot * quantity) + (5 * quantity))
+        } else {
+            setSize('L');
+            setPrice((priceRoot * quantity) + (10 * quantity))
+        }
+    })
+
+    console.log({
+        productSizeId: 1,
+        size: size,
+        quantity: quantity,
+        price: price
+    })
 
     return (
         <Box>
@@ -89,51 +138,80 @@ const ProductDetail = () => {
                                         fontSize: { xl: "2.2rem", lg: "2.2rem", md: "1.8rem", xs: "1.6rem"},
                                         fontWeight: "600"
                                     }}>
-                                        ${products[0]?.productData.price}
+                                        ${price}
                                     </Typography>
 
                                     <Stack width={"100%"} direction={"row"} spacing={2} sx={{
                                         // display:"flex",
                                     }}>
-                                        <Button variant="text" sx={{
-                                            fontSize: "1rem",
-                                            // bgcolor: colors.brown[500],
-                                            color: colors.brown[500],
-                                            border: "1px solid #795548",
-                                            borderRadius: 0,
-                                            width: "50%"
-                                        }}>S</Button>
-                                        <Button sx={{
-                                            fontSize: "1rem",
-                                            // bgcolor: colors.brown[500],
-                                            color: colors.brown[500],
-                                            border: "1px solid #795548",
-                                            borderRadius: 0,
-                                            width: "50%"
-                                        }}>M</Button>
-                                        <Button variant="text" sx={{
-                                            fontSize: "1rem",
-                                            color: colors.brown[500],
-                                            border: "1px solid #795548",
-                                            borderRadius: 0,
-                                            width: "50%",
-                                        }}>L</Button>
+                                        <Button id="size-s" variant="text" sx={{
+                                                fontSize: "1rem",
+                                                border: "1px solid #795548",
+                                                borderRadius: 0,
+                                                width: "50%",
+                                                bgcolor: `${size === 'S' && colors.brown[500]}`,
+                                                color: `${size === 'S' ? colors.common.white : colors.brown[500]}`,
+                                                "&:hover": {
+                                                    bgcolor: `${size === 'S' ? colors.brown[500] : colors.brown[100]}`,
+                                                    color: `${size === 'S' && colors.common.white}`,
+                                                }
+                                            }}
+                                            onClick={handleChooseSize}
+                                        >
+                                            S
+                                        </Button>
+                                        <Button id="size-m"  sx={{
+                                                fontSize: "1rem",
+                                                border: "1px solid #795548",
+                                                borderRadius: 0,
+                                                width: "50%",
+                                                bgcolor: `${size === 'M' && colors.brown[500]}`,
+                                                color: `${size === 'M' ? colors.common.white : colors.brown[500]}`,
+                                                "&:hover": {
+                                                    bgcolor: `${size === 'M' ? colors.brown[500] : colors.brown[100]}`,
+                                                    color: `${size === 'M' && colors.common.white}`,
+                                                }
+                                            }}
+                                            onClick={handleChooseSize}
+                                        >
+                                            M
+                                        </Button>
+                                        <Button id="size-l"  variant="text" sx={{
+                                                fontSize: "1rem",
+                                                border: "1px solid #795548",
+                                                borderRadius: 0,
+                                                width: "50%",
+                                                bgcolor: `${size === 'L' && colors.brown[500]}`,
+                                                color: `${size === 'L' ? colors.common.white : colors.brown[500]}`,
+                                                "&:hover": {
+                                                    bgcolor: `${size === 'L' ? colors.brown[500] : colors.brown[100]}`,
+                                                    color: `${size === 'L' && colors.common.white}`,
+                                                }
+                                            }}
+                                            onClick={handleChooseSize}
+                                        >
+                                            L
+                                        </Button>
                                     </Stack>
 
                                     <Stack direction={"row"} alignItems={"center"} spacing={2}>
                                         <IconButton size="small" sx={{
                                             border: "1px solid #ccc",
                                             borderRadius: 2
-                                        }}>
+                                            }}
+                                            onClick={handleMinusQty}
+                                        >
                                             <RemoveIcon fontSize="small"/>
                                         </IconButton>
                                         <Typography fontSize={"1.2rem"}>
-                                            1
+                                            {quantity}
                                         </Typography>
                                         <IconButton size="small" sx={{
                                             border: "1px solid #ccc",
                                             borderRadius: 2
-                                        }}>
+                                            }}
+                                            onClick={handlePlusQty}
+                                        >
                                             <AddIcon fontSize="small"/>
                                         </IconButton>
                                     </Stack>
@@ -172,7 +250,10 @@ const ProductDetail = () => {
                                 </Stack>
                                 <Button variant="contained" sx={{
                                             bgcolor: colors.brown[500],
-                                            borderRadius: 0
+                                            borderRadius: 0,
+                                            "&:hover" : {
+                                                bgcolor: colors.brown[400]
+                                            }
                                         }}>
                                             ADD TO CART
                                 </Button>

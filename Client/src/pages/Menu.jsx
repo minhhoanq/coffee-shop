@@ -91,7 +91,7 @@ const Menu = () => {
                 </Grid>
 
                 <Grid item xs={10}>
-                    <Typography variant="h5" fontWeight={500}>
+                    <Typography variant="h5" fontWeight={600}>
                         Recommeded Product
                     </Typography>
                     <Grid container spacing={1} mt={2}>
@@ -104,7 +104,7 @@ const Menu = () => {
                 </Grid>
 
                 <Grid item xs={10}>
-                    <Typography variant="h5" mt={2}>
+                    <Typography variant="h5" mt={2} fontWeight={600}>
                         There are many other options
                     </Typography>
                     <br/>

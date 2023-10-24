@@ -157,6 +157,10 @@ const Header = () => {
                                     fontWeight: "600", 
                                     fontFamily: "Arial",
                                     padding: "0 10px",
+                                    color: "rgba(0, 0, 0)",
+                                    // "&:hover" : {
+                                    //     color: "rgba(0, 0, 0, 0.1)"
+                                    // },
                                 }}>
                                 {item.title}
                             </Link>

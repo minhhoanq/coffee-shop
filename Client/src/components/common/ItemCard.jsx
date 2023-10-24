@@ -12,54 +12,64 @@ const ItemCard = props => {
                 height={"100%"}
                 // width={"100%"}
             >
-                <Link to={`/shop/${item.slug}`}>
-                <Box
-                    sx={{
-                        pt: "100%",
-                        position: "relative",
-                        "& img": {
-                            position: "absolute",
-                            top: 0,
-                            height: "100%",
-                            width: "100%",
-                            objectFit: "cover",
-                            borderRadius: 0,
-                        }
-                    }}  
-                >
-                    <img src={item.productImg} alt=""/>
-                </Box>
-
-                <Stack spacing={1} mt={1}>
-                    <Typography fontSize={"1.2rem"}>
-                        ${item.price}
-                    </Typography>
-                    <Stack>
-                        <Typography fontSize={"1.4rem"} fontWeight={"500"}>
-                            {item.productName}
-                        </Typography>
-                        <Typography fontSize={"1.2rem"} color={"GrayText"}>
-                            Category: {item.categoryData.categoryName}
-                        </Typography>
-                    </Stack>
-                    <Stack spacing={1} direction={"row"}>
-                        <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
-                        <Typography>
-                            (4)
-                        </Typography>
-                    </Stack>
-
-                    <Button variant="outlined" size="large" sx={{
-                        color: "#000",
-                        outline: "#000",
-                        borderRadius: "50px"
-                    }}
-                    startIcon={<AddShoppingCartIcon/>}
+                <a href={`/shop/${item.slug}`} style={{ 
+                        color: "rgba(0, 0, 0, 0.8)",
+                        "&:hover" : {
+                            color: "#000"
+                        },
+                }}>
+                    <Box
+                        sx={{
+                            pt: "100%",
+                            position: "relative",
+                            "& img": {
+                                position: "absolute",
+                                top: 0,
+                                height: "100%",
+                                width: "100%",
+                                objectFit: "cover",
+                                borderRadius: 0,
+                            }
+                        }}  
                     >
-                        Add to cart
-                    </Button>
-                </Stack>
-                </Link>
+                        <img src={item.productImg} alt="" style={{
+                            borderRadius: "10px",
+                            "&:hover" : {
+                                color: "#000"
+                            }
+                        }}/>
+                    </Box>
+
+                    <Stack spacing={1} mt={1}>
+                        <Typography fontSize={"1.2rem"}>
+                            ${item.price}
+                        </Typography>
+                        <Stack>
+                            <Typography fontSize={"1.4rem"} fontWeight={"500"}>
+                                {item.productName}
+                            </Typography>
+                            <Typography fontSize={"1.2rem"} color={"GrayText"}>
+                                Category: {item.categoryData.categoryName}
+                            </Typography>
+                        </Stack>
+                        <Stack spacing={1} direction={"row"}>
+                            <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+                            <Typography>
+                                (4)
+                            </Typography>
+                        </Stack>
+
+                        <Button variant="outlined" size="large" sx={{
+                            color: "#000",
+                            outline: "#000",
+                            borderRadius: "50px"
+                        }}
+                        startIcon={<AddShoppingCartIcon/>}
+                        >
+                            Add to cart
+                        </Button>
+                    </Stack>
+                </a>
             </MPaper>
     )
 }

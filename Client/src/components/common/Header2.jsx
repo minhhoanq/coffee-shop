@@ -73,7 +73,8 @@ const Header2 = () => {
                         to={item.pathname}
                         style={{
                             height: "4rem",
-                            fontWeight: "600"
+                            fontWeight: "600",
+                            color: "rgba(0, 0, 0, 0.8)"
                         }}>
                             {item.title}
                         </Link>
@@ -86,7 +87,8 @@ const Header2 = () => {
                         to={item.pathname}
                         style={{
                             height: "4rem",
-                            fontWeight: "600"
+                            fontWeight: "600",
+                            color: "rgba(0, 0, 0, 0.8)"
                         }}>
                             {item.title}
                         </Link>
