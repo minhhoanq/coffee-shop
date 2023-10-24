@@ -96,7 +96,8 @@ const deleteCartItemByIDService = (user, body) => new Promise(async (resolve, re
     }
 });
 
-const getCartItemByIDService = ({id}) => new Promise(async (resolve, reject) => {
+const getCartItemByIDService = (user) => new Promise(async (resolve, reject) => {
+    const id = user.id;
     try {
 
         const cart = await db.Cart.findOne({

@@ -4,7 +4,21 @@ import AddressGetIt from '../components/common/AddressGetIt';
 import AddATip from '../components/common/AddATip';
 import EstimatedOrder from '../components/common/EstimatedOrder';
 
+import { getAllCartItem } from "../api/cartItemApi";
+import { useEffect, useState } from "react";
+
 const Cart = () => {
+    const [cartItems, setCartItems] = useState([])
+
+    const getData = async() => {
+        const result = await getAllCartItem();
+        setCartItems(result.productData);
+    }
+
+    useEffect(() => {
+        getData();
+    },[]);
+
     return (
         <Box 
             display={"flex"}
@@ -22,8 +36,14 @@ const Cart = () => {
                         <Typography fontWeight={"600"} fontSize={"0.9rem"} color={"GrayText"}>
                             YOUR ORDER (1 ITEM)
                         </Typography>
-                        <Stack spacing={2} mt={2}>
-                            <ItemCardHorizontal/>
+                        <Stack spacing={2} mt={2}
+                            sx={{
+                                maxHeight: "400px",
+                                overflowY: "auto"
+                            }}>
+                            {cartItems.map((item, index) => (
+                                <ItemCardHorizontal item={item} key={index}/>
+                            ))}
                         </Stack>
                         <Button variant='outlined' fullWidth size='large'
                             sx={{

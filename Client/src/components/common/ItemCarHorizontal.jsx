@@ -4,12 +4,15 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const ItemCardHorizontal = props => {
+    const item = props.item;
+
+    console.log(item)
 
     return (
         <Stack direction={"row"} justifyContent={"space-between"} height={"80px"}>
             <Stack direction={"row"} spacing={4} height={"100%"}>
                 <Box height={"100%"}>
-                    <img src="https://inlysugiare.vn/wp-content/uploads/2020/05/ly-ca-phe-bac-xiu-da.jpg" alt="" height={`${props.heightImg ? props.heightImg : "100%"}`}/>
+                    <img src={item?.productSizeData.productData.productImg} alt="" height={`${props.heightImg ? props.heightImg : "100%"}`}/>
                 </Box>
 
                 <Stack justifyContent={"space-between"} height={"100%"}>
@@ -27,7 +30,7 @@ const ItemCardHorizontal = props => {
                             <RemoveIcon fontSize="small"/>
                         </IconButton>
                         <Typography fontSize={"1.2rem"}>
-                            1
+                            {item?.quantity}
                         </Typography>
                         <IconButton size="small" sx={{
                             border: "1px solid #ccc",
@@ -40,7 +43,7 @@ const ItemCardHorizontal = props => {
             </Stack>
             <Stack justifyContent={"space-between"} >
                 <Typography fontSize={"1.2rem"}>
-                    $12
+                    ${item?.price}
                 </Typography>
 
                 <IconButton>

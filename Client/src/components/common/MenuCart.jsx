@@ -1,8 +1,21 @@
 import { Box, Button, Menu, Stack, Typography, colors } from "@mui/material";
 
 import ItemCartHorizontal from './ItemCarHorizontal';
+import { getAllCartItem } from "../../api/cartItemApi";
+import { useEffect, useState } from "react";
 
 const MenuCart = props => {
+    const [cartItems, setCartItems] = useState([])
+
+    const getData = async() => {
+        const result = await getAllCartItem();
+        setCartItems(result.productData);
+    }
+
+    useEffect(() => {
+        getData();
+    },[])
+
     return(
         <Menu
             anchorEl={props.props.anchorEl}
@@ -54,7 +67,9 @@ const MenuCart = props => {
                             overflowY: "auto"
                         }}
                     >
-                        <ItemCartHorizontal heightImg={"70%"}/>
+                        {cartItems.map((item, index) => (
+                            <ItemCartHorizontal heightImg={"70%"} item={item} key={index}/>
+                        ))}
                     </Stack>
 
                     <Button variant="contained" sx={{

@@ -11,11 +11,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getAllRatingsProduct, getProductDetailBySlug } from "../api/productApi";
 import { useForm } from "react-hook-form";
+import { createCartItem } from "../api/cartItemApi";
+import Swal from "sweetalert2";
 
 const ProductDetail = () => {
     const [products, setProducts] = useState([]);
     const [ratings, setRatings] = useState([]);
-    const [productSizeId, setProductSizeId] = useState(products[0]?.id);
+    // const [productSizeId, setProductSizeId] = useState(products[0]?.id);
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(products[0]?.productData.price);
     const [note, setNote] = useState("");
@@ -28,7 +30,7 @@ const ProductDetail = () => {
 
         setProducts(result.dataDetailProduct);
         setPrice(result.dataDetailProduct[0]?.productData.price);
-        setProductSizeId(result.dataDetailProduct[0]?.id);
+        // setProductSizeId(result.dataDetailProduct[0]?.id);
     }
 
     const getRatingsProductData = async() => {
@@ -41,6 +43,8 @@ const ProductDetail = () => {
         getRatingsProductData();
     },[]);
 
+    console.log(products)
+
     const handleMinusQty = useCallback((e) => {
         const priceRoot = products[0]?.productData.price;
         let qty = quantity;
@@ -48,7 +52,13 @@ const ProductDetail = () => {
             qty--;
             setQuantity(qty);
         }
-        setPrice(priceRoot * qty);
+        if(size === "S") {
+            setPrice(priceRoot * qty);
+        } else if (size === 'M') {
+            setPrice((priceRoot * qty) + (5 * qty));
+        } else {
+            setPrice((priceRoot * qty) + (10 * qty));
+        }
     })
 
     const handlePlusQty = useCallback((e) => {
@@ -58,16 +68,22 @@ const ProductDetail = () => {
             qty++;
             setQuantity(qty);
         }
-        setPrice(priceRoot * qty);
+        if(size === "S") {
+            setPrice(priceRoot * qty);
+        } else if (size === 'M') {
+            setPrice((priceRoot * qty) + (5 * qty));
+        } else {
+            setPrice((priceRoot * qty) + (10 * qty));
+        }
     });
 
     const handleChooseSize = useCallback((e) => {
         const sizeId = e.target.id;
         const priceRoot = products[0]?.productData.price;
-        if(sizeId === 'size-s') {
+        if(sizeId === 'size-S') {
             setSize("S");
             setPrice(priceRoot * quantity)
-        } else if (sizeId === 'size-m') {
+        } else if (sizeId === 'size-M') {
             setSize("M");
             setPrice((priceRoot * quantity) + (5 * quantity))
         } else {
@@ -82,6 +98,23 @@ const ProductDetail = () => {
         quantity: quantity,
         price: price
     })
+
+    const submitAddToCart = async() => {
+        const product_size = products.filter(e => e.sizeData.sizeName === size);
+        const data = {
+            productSizeId: product_size[0]?.id,
+            quantity: quantity,
+            price: price,
+            note: note
+        }
+
+        const addToCart = await createCartItem(data);
+        if(addToCart.err === 0) {
+            Swal.fire('', addToCart.mes, 'success');
+        } else if (addToCart.err === 1) {
+            Swal.fire('', addToCart.mes, 'error');
+        }
+    }
 
     return (
         <Box>
@@ -144,7 +177,25 @@ const ProductDetail = () => {
                                     <Stack width={"100%"} direction={"row"} spacing={2} sx={{
                                         // display:"flex",
                                     }}>
-                                        <Button id="size-s" variant="text" sx={{
+                                        {products.map((item, index) => (
+                                            <Button id={`size-${item.sizeData.sizeName}`} variant="text" sx={{
+                                                fontSize: "1rem",
+                                                border: "1px solid #795548",
+                                                borderRadius: 0,
+                                                width: "50%",
+                                                bgcolor: `${size === `${item.sizeData.sizeName}` && colors.brown[500]}`,
+                                                color: `${size === `${item.sizeData.sizeName}` ? colors.common.white : colors.brown[500]}`,
+                                                "&:hover": {
+                                                    bgcolor: `${size === `${item.sizeData.sizeName}` ? colors.brown[500] : colors.brown[100]}`,
+                                                    color: `${size === `${item.sizeData.sizeName}` && colors.common.white}`,
+                                                }
+                                            }}
+                                            onClick={handleChooseSize}
+                                        >
+                                            {item.sizeData.sizeName}
+                                        </Button>
+                                        ))}
+                                        {/* <Button id="size-s" variant="text" sx={{
                                                 fontSize: "1rem",
                                                 border: "1px solid #795548",
                                                 borderRadius: 0,
@@ -191,7 +242,7 @@ const ProductDetail = () => {
                                             onClick={handleChooseSize}
                                         >
                                             L
-                                        </Button>
+                                        </Button> */}
                                     </Stack>
 
                                     <Stack direction={"row"} alignItems={"center"} spacing={2}>
@@ -254,7 +305,9 @@ const ProductDetail = () => {
                                             "&:hover" : {
                                                 bgcolor: colors.brown[400]
                                             }
-                                        }}>
+                                        }}
+                                        onClick={submitAddToCart}
+                                        >
                                             ADD TO CART
                                 </Button>
                             </Stack>
