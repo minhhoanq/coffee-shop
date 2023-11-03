@@ -409,10 +409,9 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
 
         //Movies that similar users watched. Remove movies that none of the similar users have watched
 
-        //remove products user picked rated and bought.
+        //remove products user picked rated.
         let i = 0;
         user_product_2d[5].forEach((e, index) => {
-            
             if(e != 0) {
                 console.log(index + ":" + i)
                 user_product_2dx.splice(index - i, 1);
@@ -424,13 +423,47 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         // 2 3 4
         // 
 
+        //remove products user bought
+        const cartId = await db.Cart.findOne({
+            where: {
+                userId: 1
+            }
+        });
+
+        const cartItem = await db.Cart_Item.findAll({
+            where: {
+                cartId: cartId.id
+            }
+        });
+
+        const productIdUser = [];
+        for(let i = 0; i < cartItem.length; i++) {
+            const data = await db.Product_Size.findOne({
+                where: {
+                    id: cartItem[i].productSizeId
+                }
+            })
+            productIdUser.push(data);
+        }
+
+        const productDataUser = [];
+        for (let i = 0; i < productIdUser.length; i++) {
+            const data = await db.Product.findOne({
+                where: {
+                    id: productIdUser[i].productId
+                }
+            });
+
+            productDataUser.push(data);
+        }
+
         // const arrtemp = user_product_2d.filter(e => (
 
         // ))
 
         //get user is picked
         // const user = user.id;
-        const user_picked = similar_users.splice(5, 1);
+        const user_picked = similar_users.splice(2, 1);
 
         //prepare score for items with similar users and user picked
         const score_items = scoreItems(user_product_2dx, user_picked)
@@ -454,9 +487,10 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         resolve({
             err: "err",
             mes: "mes",
-            user_picked: products,
+            test: productDataUser,
+            // user_picked: products,
             // users: user_product,
-            arr: user_product_2dx,
+            // arr: user_product_2dx,
             // ratings: ratings,
             // score_items: score_items,
             // products: recommend,

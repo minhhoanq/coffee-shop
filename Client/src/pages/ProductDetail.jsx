@@ -21,16 +21,19 @@ const ProductDetail = () => {
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(products[0]?.productData.price);
     const [note, setNote] = useState("");
-    const [size, setSize] = useState("S");
+    const [size, setSize] = useState("");
 
     const { slug } = useParams();
 
     const getDataBySlug = async() => {
         const result = await getProductDetailBySlug(slug);
-
+        console.log(result)
         setProducts(result.dataDetailProduct);
-        setPrice(result.dataDetailProduct[0]?.productData.price);
         // setProductSizeId(result.dataDetailProduct[0]?.id);
+        const sizeRoot = result.dataDetailProduct[0]?.sizeData.sizeName;
+        setSize(sizeRoot);
+        let priceRoot = result.dataDetailProduct[0]?.productData.price;
+        setPrice(sizeRoot === 'S' ? priceRoot : sizeRoot === 'M' ? priceRoot + 5 : priceRoot + 10);
     }
 
     const getRatingsProductData = async() => {
@@ -43,7 +46,6 @@ const ProductDetail = () => {
         getRatingsProductData();
     },[]);
 
-    console.log(products)
 
     const handleMinusQty = useCallback((e) => {
         const priceRoot = products[0]?.productData.price;
@@ -137,7 +139,8 @@ const ProductDetail = () => {
                                 alt="" 
                                 height={"100%"}
                                 style={{
-                                    objectFit: "cover"
+                                    objectFit: "cover",
+                                    borderRadius: "2px"
                                 }}
                                 />
                         </Grid>

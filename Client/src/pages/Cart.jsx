@@ -51,7 +51,7 @@ const Cart = () => {
                                 borderRadius:"0px",
                                 color: "black",
                                 border: "1px solid #000",
-                                "&:hover" : {
+                                "&:hover": {
                                     border: "1px solid #000",
                                     bgcolor: "rgba(0, 0, 0, 0.09)"
                                 }

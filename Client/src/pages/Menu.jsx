@@ -40,7 +40,7 @@ const Menu = () => {
             } else {
                 order = undefined;
             }
-            const limit = 7;
+            const limit = 12;
 
             let categoryId = undefined;
 
