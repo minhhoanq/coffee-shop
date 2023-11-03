@@ -409,20 +409,6 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
 
         //Movies that similar users watched. Remove movies that none of the similar users have watched
 
-        //remove products user picked rated.
-        let i = 0;
-        user_product_2d[5].forEach((e, index) => {
-            if(e != 0) {
-                console.log(index + ":" + i)
-                user_product_2dx.splice(index - i, 1);
-                i++;
-            }
-        })
-        // 0 1 2 3 4
-        // 1 2 3 4
-        // 2 3 4
-        // 
-
         //remove products user bought
         const cartId = await db.Cart.findOne({
             where: {
@@ -437,13 +423,32 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         });
 
         const productIdUser = [];
+        const arr = [];
         for(let i = 0; i < cartItem.length; i++) {
             const data = await db.Product_Size.findOne({
                 where: {
                     id: cartItem[i].productSizeId
                 }
             })
-            productIdUser.push(data);
+
+            if(arr.length > 0) {
+                let check = false;
+                arr.forEach(e => {
+                    if(e !== data.productId) {
+                        check = true
+                    } else {
+                        check = false
+                    }
+                })
+                arr.push(data.productId);
+
+                if(check) {
+                    productIdUser.push(data);
+                }
+            } else {
+                productIdUser.push(data);
+                arr.push(data.productId);
+            }
         }
 
         const productDataUser = [];
@@ -457,13 +462,26 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
             productDataUser.push(data);
         }
 
+        //remove products user picked rated.
+        let i = 0;
+        user_product_2d[1].forEach((e, index) => {
+            if(e != 0) {
+                user_product_2dx.splice(index - i, 1);
+                i++;
+            }
+        })
+        // 0 1 2 3 4
+        // 1 2 3 4
+        // 2 3 4
+        // 
+
         // const arrtemp = user_product_2d.filter(e => (
 
         // ))
 
         //get user is picked
         // const user = user.id;
-        const user_picked = similar_users.splice(2, 1);
+        const user_picked = similar_users.splice(1, 1);
 
         //prepare score for items with similar users and user picked
         const score_items = scoreItems(user_product_2dx, user_picked)
@@ -490,7 +508,7 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
             test: productDataUser,
             // user_picked: products,
             // users: user_product,
-            // arr: user_product_2dx,
+            arr: user_product_2dx,
             // ratings: ratings,
             // score_items: score_items,
             // products: recommend,
