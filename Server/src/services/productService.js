@@ -327,14 +327,12 @@ const CVUserProduct2Dimensional = (user_product, users, products) => {
 
 const createSimilarUsersMatrix = (user_product_2d, products, users) => {
     const similar_users = [];
-
     for(let i = 0; i < user_product_2d.length; i++) {
         similar_users[i] = [1];
         for(let j = 0; j < user_product_2d.length; j++) {
             similar_users[i][j] = similarity(user_product_2d[i], user_product_2d[j]);
         }
     }
-
     return similar_users;
 }
 
@@ -352,8 +350,8 @@ const inverseMatrix = (arr, users, products) => {
 
 const scoreItems = (user_product_2dx, user_picked) => {
     const score_items = [];
-    user_picked[0].splice(5, 1);
-    // console.log(user_picked[0])
+    user_picked[0].splice(4, 1);
+    console.log(user_picked[0])
     for (let i = 0; i < user_product_2dx.length; i++) {
         let score = 0;
         let count = 0;
@@ -376,7 +374,8 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         const ratingData = await db.Rating.findAll();
 
         const users = [];
-        const products = [];
+        // const products = [];
+        const products = ["1", "2","3", "4", "5"];
         const ratings = [];
 
         ratingData.forEach(element => {
@@ -388,12 +387,14 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
                 users.push(user);
             }
 
-            if (!products.includes(product)) {
-                products.push(product);
-            }
+            // if (!products.includes(product)) {
+            //     products.push(product);
+            // }
 
             ratings.push([users.indexOf(user), products.indexOf(product), rating]);
         });
+
+        // products = ["1", "2", "3", "4"];
 
         //create user-product matrix
         const user_product = createUserProductMatrix(ratings, users);
@@ -463,11 +464,13 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         }
 
         //remove products user picked rated.
-        let i = 0;
-        user_product_2d[1].forEach((e, index) => {
+        user_product_2d[4].forEach((e, index) => {
+            console.log(e)
             if(e != 0) {
-                user_product_2dx.splice(index - i, 1);
-                i++;
+                // user_product_2dx.splice(index - i, 1);
+                for (let j = 0; j < users.length; j++) {
+                    delete user_product_2dx[index][j];
+                }
             }
         })
         // 0 1 2 3 4
@@ -481,7 +484,7 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
 
         //get user is picked
         // const user = user.id;
-        const user_picked = similar_users.splice(1, 1);
+        const user_picked = similar_users.splice(4, 1);
 
         //prepare score for items with similar users and user picked
         const score_items = scoreItems(user_product_2dx, user_picked)
@@ -505,13 +508,13 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         resolve({
             err: "err",
             mes: "mes",
-            test: productDataUser,
-            // user_picked: products,
-            // users: user_product,
+            // test: productDataUser[1].id,
+            user_picked: products,
+            users: user_product_2d,
             arr: user_product_2dx,
             // ratings: ratings,
             // score_items: score_items,
-            // products: recommend,
+            products: recommend,
             productsRecommend: productsRecommend
         })
     } catch (error) {
