@@ -348,10 +348,10 @@ const inverseMatrix = (arr, users, products) => {
     return array;
 }
 
-const scoreItems = (user_product_2dx, user_picked) => {
+const scoreItems = (user_product_2dx, user_picked, userIdIndex) => {
     const score_items = [];
-    user_picked[0].splice(4, 1);
-    console.log(user_picked[0])
+    user_picked[0].splice(userIdIndex, 1);
+    // console.log(user_picked[0])
     for (let i = 0; i < user_product_2dx.length; i++) {
         let score = 0;
         let count = 0;
@@ -369,13 +369,14 @@ const scoreItems = (user_product_2dx, user_picked) => {
 }
 
 //RecommendSystemService
-const recommendSystemService = () => new Promise(async(resolve, reject) => {
+const recommendSystemService = (user) => new Promise(async(resolve, reject) => {
     try {
         const ratingData = await db.Rating.findAll();
 
+        const userId = user.id;
+        const userIdIndex = user.id - 1;
         const users = [];
-        // const products = [];
-        const products = ["1", "2","3", "4", "5"];
+        const products = [];
         const ratings = [];
 
         ratingData.forEach(element => {
@@ -387,14 +388,12 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
                 users.push(user);
             }
 
-            // if (!products.includes(product)) {
-            //     products.push(product);
-            // }
+            if (!products.includes(product)) {
+                products.push(product);
+            }
 
             ratings.push([users.indexOf(user), products.indexOf(product), rating]);
         });
-
-        // products = ["1", "2", "3", "4"];
 
         //create user-product matrix
         const user_product = createUserProductMatrix(ratings, users);
@@ -413,7 +412,7 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         //remove products user bought
         const cartId = await db.Cart.findOne({
             where: {
-                userId: 1
+                userId: userId
             }
         });
 
@@ -431,7 +430,6 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
                     id: cartItem[i].productSizeId
                 }
             })
-
             if(arr.length > 0) {
                 let check = false;
                 arr.forEach(e => {
@@ -464,7 +462,7 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         }
 
         //remove products user picked rated.
-        user_product_2d[4].forEach((e, index) => {
+        user_product_2d[userIdIndex ].forEach((e, index) => {
             console.log(e)
             if(e != 0) {
                 // user_product_2dx.splice(index - i, 1);
@@ -473,21 +471,13 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
                 }
             }
         })
-        // 0 1 2 3 4
-        // 1 2 3 4
-        // 2 3 4
-        // 
-
-        // const arrtemp = user_product_2d.filter(e => (
-
-        // ))
-
+        
         //get user is picked
         // const user = user.id;
-        const user_picked = similar_users.splice(4, 1);
+        const user_picked = similar_users.splice(userIdIndex, 1);
 
         //prepare score for items with similar users and user picked
-        const score_items = scoreItems(user_product_2dx, user_picked)
+        const score_items = scoreItems(user_product_2dx, user_picked, userIdIndex);
 
         const recommend = [];
         for (let i = 0; i < products.length; i++) {
@@ -508,13 +498,6 @@ const recommendSystemService = () => new Promise(async(resolve, reject) => {
         resolve({
             err: "err",
             mes: "mes",
-            // test: productDataUser[1].id,
-            user_picked: products,
-            users: user_product_2d,
-            arr: user_product_2dx,
-            // ratings: ratings,
-            // score_items: score_items,
-            products: recommend,
             productsRecommend: productsRecommend
         })
     } catch (error) {

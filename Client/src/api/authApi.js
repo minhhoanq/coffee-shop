@@ -41,12 +41,10 @@ export const finalRegister = async(token) => {
     }
 }
 
-export const logoutUser = async(valuesLogout) => {
-    // dispatch(logoutStart());
-    const {id ,accessToken} = valuesLogout;
+export const logoutUser = async(id) => {
+    // console.log(id)
     const res = await request.post("/api/v1/auth/logout",{id}, {
         withCredentials: true,
-        headers: { token: `Bearer ${accessToken}` },
     });
 
     return res;

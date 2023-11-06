@@ -4,9 +4,44 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MenuCart from './MenuCart'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutActions } from "../../redux/asyncActions/authActions";
+import Swal from "sweetalert2";
 
 const MenuAccount = props => {
+    const user = useSelector(state => state.auth.currentUser);
+    const dispatch = useDispatch();
+    const isFetching = useSelector(state => state.auth.isFetching);
+    const navigate = useNavigate();
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+
+    const handleLogout = useCallback( async() => {
+        const logout = await dispatch(logoutActions(user.id));
+        console.log(logout);
+        const reqStatus = logout.meta.requestStatus;
+        if(reqStatus === 'fulfilled' && isFetching === false) {
+            // Swal.fire('', logout.payload, 'success', 2000);
+            Toast.fire({ icon: "success", title: logout.payload})
+            setTimeout(() => {
+                navigate("/login");
+            }, 2000);
+        } else if (reqStatus === 'rejected') {
+            Swal.fire('', logout.payload, 'error')
+        }
+    })
 
     const MenuProfile = props => {
         return(
@@ -71,12 +106,26 @@ const MenuAccount = props => {
                 </ListItemIcon>
                 SETTINGS
             </MenuItem>
-            <MenuItem onClick={props.props.onClose}>
-                <ListItemIcon>
-                    <LogoutIcon fontSize="small" />
-                </ListItemIcon>
-                LOGOUT
-            </MenuItem>
+            <Link
+                style={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    textDecoration: "none",
+                    color: "rgba(0, 0, 0, 0.8)",
+                    "&:hover" : {
+                        color: "#000"
+                    }
+                }}
+                onClick={handleLogout}
+            >
+                <MenuItem onClick={props.props.onClose}>
+                    <ListItemIcon>
+                        <LogoutIcon fontSize="small" />
+                    </ListItemIcon>
+                    LOGOUT
+                </MenuItem>
+            </Link>
         </Menu>
         )
     }

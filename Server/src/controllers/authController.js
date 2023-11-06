@@ -378,7 +378,7 @@ const authController = {
     logOutUser: async(req, res) => {
         try {
             const cookie = req.cookies;
-            console.log(cookie)
+            // console.log(cookie)
             if(!cookie || !cookie.refreshToken) {
                 return res.status(401).json('Cookie rỗng!');
             }

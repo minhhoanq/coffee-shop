@@ -31,23 +31,9 @@ const LoginPage = () => {
     });
 
     const onSignin = async(data) => {
-        // e.preventDefault();
-        // setOnRequest(true);
-
-        // const interval = setInterval(() => {
-        //     setLogginProgress(true)
-        // }, 50);
-
-        // setTimeout(() => {
-        //     clearInterval(interval)
-        // }, 2000);
-        
-        // setTimeout(() => {
-        //     navigate('/')
-        // }, 3300);
         const response = await dispatch(loginActions(data));
         const reqStatus = response.meta.requestStatus;
-        console.log(response);
+        // console.log(response);
         if(reqStatus === 'fulfilled' && isFetching === false) {
             setIsLoggedIn(true);
             setTimeout(() => {

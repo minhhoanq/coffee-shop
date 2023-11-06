@@ -99,7 +99,7 @@ const productController = {
     // Recommended System Controller
     recommendSystemController: async(req, res) => {
         try {
-            const response = await productService.recommendSystemService()
+            const response = await productService.recommendSystemService(req.user);
 
             return res.status(200).json(response)
         } catch (error) {

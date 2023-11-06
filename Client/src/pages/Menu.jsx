@@ -10,6 +10,44 @@ import RecommendItemCard from "../components/common/RecommendItemCard";
 import { getAllProductRecommend } from "../api/productApi";
 // import useDebounce from "../hooks/useDebounce";
 
+const data = [
+    {
+        slug: "cappuccino-viennese",
+        productName: "Cappuccino Viennese",
+        productImg: "https://bepos.io/wp-content/uploads/2022/12/cac-loai-thuc-uong-ca-phe-13.jpg"
+    },
+    {
+        slug: "milk-coffee",
+        productName: "Milk Coffee",
+        productImg: "https://www.cukcuk.vn/wp-content/uploads/2020/04/d1c4de9359726303979fb06d463ac218.jpg"
+    },
+    {
+        slug: "tra-trai-cay-nhiet-doi",
+        productName: "Trà trái cây nhiệt đới",
+        productImg: "https://bepbanhtiny.com/wp-content/uploads/2023/04/cach-lam-tra-trai-cay-nhiet-doi.jpg"
+    },
+    {
+        slug: "tra-vai-lai",
+        productName: "Trà Vải Lài",
+        productImg: "https://teashop.vn/wp-content/uploads/2020/12/tra-vai-la-gi.jpg"
+    },
+    {
+        slug: "tra-sua-oren-cake-cream",
+        productName: "Trà sữa Oreo Cake Cream",
+        productImg: "https://www.cukcuk.vn/wp-content/uploads/2022/06/tra-sua-Oreo-Cake-Cream.jpg"
+    },
+    {
+        slug: "cappuccino-viennese",
+        productName: "Cappuccino Viennese",
+        productImg: "https://bepos.io/wp-content/uploads/2022/12/cac-loai-thuc-uong-ca-phe-13.jpg"
+    },
+    {
+        slug: "the-salted-coffee",
+        productName: "The Salted Coffee",
+        productImg: "https://bepos.io/wp-content/uploads/2022/12/cac-thuc-uong-ca-phe-37.jpeg"
+    },
+]
+
 const Menu = () => {
     const [products, setProducts] = useState([]);
     const [productsRecommed, setProductsRecommed] = useState([]);
@@ -24,6 +62,13 @@ const Menu = () => {
     const dispatch = useDispatch();
     const pending = useSelector(state => state.product.isPending);
     const error = useSelector(state => state.product.isError);
+    const user = useSelector(state => state.auth.currentUser);
+
+    // if(user) {
+
+    // }
+
+    console.log(user)
 
     const getDataRecommed = async () => {
         const result = await getAllProductRecommend();
@@ -58,8 +103,10 @@ const Menu = () => {
     },[searchValue, sort, category, numPage]);
 
     useEffect(() => {
-        getDataRecommed();
-    },[])
+        if(user) {
+            getDataRecommed();
+        }
+    },[user])
 
     const handleSearch = useCallback((search) => {
         setSearchValue(search ? search : searchValue)
@@ -95,10 +142,21 @@ const Menu = () => {
                         Recommeded Product
                     </Typography>
                     <Grid container spacing={1} mt={2}>
-                        { productsRecommed.map((item, index) => (
-                            <Grid item lg={4} md={4} sm={6} xs={12}>
-                                <RecommendItemCard item={item} key={index}/>
-                            </Grid>
+                        {data.map((item, index) => (
+                            <>
+                                {/* <Grid item lg={4} md={4} sm={6} xs={12}>
+                                    <RecommendItemCard item={item} key={index}/>
+                                </Grid><Grid item lg={4} md={4} sm={6} xs={12}>
+                                    <RecommendItemCard item={item} key={index}/>
+                                </Grid><Grid item lg={4} md={4} sm={6} xs={12}>
+                                    <RecommendItemCard item={item} key={index}/>
+                                </Grid><Grid item lg={4} md={4} sm={6} xs={12}>
+                                    <RecommendItemCard item={item} key={index}/>
+                                </Grid> */}
+                                <Grid item lg={4} md={4} sm={6} xs={12}>
+                                    <RecommendItemCard item={item} key={index}/>
+                                </Grid>
+                            </>
                         ))}
                     </Grid>
                 </Grid>

@@ -5,17 +5,16 @@ const uploader = require("../config/cloudinary.config")
 
 
 /// Recommend System
-
 router.get('/recommended-system', isAuth.verifyToken, productController.recommendSystemController)
-
-//Get product detail
-router.get('/:slug', productController.getProductDetail);
 
 //Get product by categoryid
 router.get('/category', productController.getProductByCategory);
 
 //Get all products
 router.get('/', productController.getProducts);
+
+//Get product detail
+router.get('/:slug', productController.getProductDetail);
 
 router.post('/create', productController.createProduct);
 
