@@ -8,21 +8,23 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TabReviews from "../components/common/TabReviews";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getAllRatingsProduct, getProductDetailBySlug } from "../api/productApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { getProductDetailBySlug } from "../api/productApi";
 import { useForm } from "react-hook-form";
 import { createCartItem } from "../api/cartItemApi";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 const ProductDetail = () => {
     const [products, setProducts] = useState([]);
-    const [ratings, setRatings] = useState([]);
     // const [productSizeId, setProductSizeId] = useState(products[0]?.id);
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(products[0]?.productData.price);
     const [note, setNote] = useState("");
     const [size, setSize] = useState("");
 
+    const user = useSelector(state => state.auth.currentUser);
+    const navigate = useNavigate();
     const { slug } = useParams();
 
     const getDataBySlug = async() => {
@@ -36,14 +38,8 @@ const ProductDetail = () => {
         setPrice(sizeRoot === 'S' ? priceRoot : sizeRoot === 'M' ? priceRoot + 5 : priceRoot + 10);
     }
 
-    const getRatingsProductData = async() => {
-        const result = await getAllRatingsProduct(slug);
-        setRatings(result.ratingsData)
-    }
-
     useEffect(() => {
         getDataBySlug();
-        getRatingsProductData();
     },[]);
 
 
@@ -94,27 +90,37 @@ const ProductDetail = () => {
         }
     })
 
-    console.log({
-        productSizeId: 1,
-        size: size,
-        quantity: quantity,
-        price: price
-    })
+    // console.log({
+    //     productSizeId: 1,
+    //     size: size,
+    //     quantity: quantity,
+    //     price: price
+    // })
 
     const submitAddToCart = async() => {
-        const product_size = products.filter(e => e.sizeData.sizeName === size);
-        const data = {
-            productSizeId: product_size[0]?.id,
-            quantity: quantity,
-            price: price,
-            note: note
-        }
+        if(user) {
+            const product_size = products.filter(e => e.sizeData.sizeName === size);
+            const data = {
+                productSizeId: product_size[0]?.id,
+                quantity: quantity,
+                price: price,
+                note: note
+            }
 
-        const addToCart = await createCartItem(data);
-        if(addToCart.err === 0) {
-            Swal.fire('', addToCart.mes, 'success');
-        } else if (addToCart.err === 1) {
-            Swal.fire('', addToCart.mes, 'error');
+            const addToCart = await createCartItem(data);
+            if(addToCart.err === 0) {
+                Swal.fire('', addToCart.mes, 'success').then(() => {
+                    window.location.reload(true);                
+                });
+            } else if (addToCart.err === 1) {
+                Swal.fire('', addToCart.mes, 'error');
+            }
+        } else {
+            Swal.fire({title: "Vui lòng đăng nhập!", icon: "warning"}).then((results) => {
+                if(results.isConfirmed) {
+                    navigate("/login");
+                }
+            });
         }
     }
 
@@ -181,7 +187,7 @@ const ProductDetail = () => {
                                         // display:"flex",
                                     }}>
                                         {products.map((item, index) => (
-                                            <Button id={`size-${item.sizeData.sizeName}`} variant="text" sx={{
+                                            <Button key={index} id={`size-${item.sizeData.sizeName}`} variant="text" sx={{
                                                 fontSize: "1rem",
                                                 border: "1px solid #795548",
                                                 borderRadius: 0,
@@ -193,59 +199,11 @@ const ProductDetail = () => {
                                                     color: `${size === `${item.sizeData.sizeName}` && colors.common.white}`,
                                                 }
                                             }}
-                                            onClick={handleChooseSize}
-                                        >
-                                            {item.sizeData.sizeName}
-                                        </Button>
+                                                onClick={handleChooseSize}
+                                            >
+                                                {item.sizeData.sizeName}
+                                            </Button>
                                         ))}
-                                        {/* <Button id="size-s" variant="text" sx={{
-                                                fontSize: "1rem",
-                                                border: "1px solid #795548",
-                                                borderRadius: 0,
-                                                width: "50%",
-                                                bgcolor: `${size === 'S' && colors.brown[500]}`,
-                                                color: `${size === 'S' ? colors.common.white : colors.brown[500]}`,
-                                                "&:hover": {
-                                                    bgcolor: `${size === 'S' ? colors.brown[500] : colors.brown[100]}`,
-                                                    color: `${size === 'S' && colors.common.white}`,
-                                                }
-                                            }}
-                                            onClick={handleChooseSize}
-                                        >
-                                            S
-                                        </Button>
-                                        <Button id="size-m"  sx={{
-                                                fontSize: "1rem",
-                                                border: "1px solid #795548",
-                                                borderRadius: 0,
-                                                width: "50%",
-                                                bgcolor: `${size === 'M' && colors.brown[500]}`,
-                                                color: `${size === 'M' ? colors.common.white : colors.brown[500]}`,
-                                                "&:hover": {
-                                                    bgcolor: `${size === 'M' ? colors.brown[500] : colors.brown[100]}`,
-                                                    color: `${size === 'M' && colors.common.white}`,
-                                                }
-                                            }}
-                                            onClick={handleChooseSize}
-                                        >
-                                            M
-                                        </Button>
-                                        <Button id="size-l"  variant="text" sx={{
-                                                fontSize: "1rem",
-                                                border: "1px solid #795548",
-                                                borderRadius: 0,
-                                                width: "50%",
-                                                bgcolor: `${size === 'L' && colors.brown[500]}`,
-                                                color: `${size === 'L' ? colors.common.white : colors.brown[500]}`,
-                                                "&:hover": {
-                                                    bgcolor: `${size === 'L' ? colors.brown[500] : colors.brown[100]}`,
-                                                    color: `${size === 'L' && colors.common.white}`,
-                                                }
-                                            }}
-                                            onClick={handleChooseSize}
-                                        >
-                                            L
-                                        </Button> */}
                                     </Stack>
 
                                     <Stack direction={"row"} alignItems={"center"} spacing={2}>
@@ -318,7 +276,7 @@ const ProductDetail = () => {
                     </Grid>
                 </Grid>
                 
-                <TabReviews item={products[0]?.productData} ratings={ratings}/>
+                <TabReviews item={products[0]?.productData}/>
                
             </Grid>
         </Box>

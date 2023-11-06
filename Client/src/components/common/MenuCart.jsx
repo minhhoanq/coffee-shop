@@ -3,9 +3,12 @@ import { Box, Button, Menu, Stack, Typography, colors } from "@mui/material";
 import ItemCartHorizontal from './ItemCarHorizontal';
 import { getAllCartItem } from "../../api/cartItemApi";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import cartEmpty from "../../assets/images/cart-empty.png"
 
 const MenuCart = props => {
     const [cartItems, setCartItems] = useState([])
+    const user = useSelector(state => state.auth.currentUser);
 
     const getData = async() => {
         const result = await getAllCartItem();
@@ -13,8 +16,10 @@ const MenuCart = props => {
     }
 
     useEffect(() => {
-        getData();
-    },[])
+        if(user) {
+            getData();
+        }
+    },[user])
 
     return(
         <Menu
@@ -58,7 +63,7 @@ const MenuCart = props => {
             }}>
                 <Stack spacing={2}>
                     <Typography variant="h6" fontWeight={600}>
-                        Your Cart ( 2 )
+                        Your Cart ( {cartItems.length} )
                     </Typography>
                     
                     <Stack
@@ -67,9 +72,19 @@ const MenuCart = props => {
                             overflowY: "auto"
                         }}
                     >
-                        {cartItems.map((item, index) => (
-                            <ItemCartHorizontal heightImg={"70%"} item={item} key={index}/>
-                        ))}
+                        {cartItems.length > 0 ? 
+                            cartItems.map((item, index) => (
+                                <ItemCartHorizontal heightImg={"70%"} item={item} key={index}/>
+                            )) :
+                            <Box sx={{
+                                display: "flex",
+                                justifyContent: "center"
+                            }}>
+                                <img src={cartEmpty} style={{
+                                    height: "200px"
+                                }}/>
+                            </Box>
+                        }
                     </Stack>
 
                     <Button variant="contained" sx={{

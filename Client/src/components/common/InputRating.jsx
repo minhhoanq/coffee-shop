@@ -3,26 +3,33 @@ import { useSelector } from "react-redux";
 import { createRatingProduct } from "../../api/ratingApi";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
 const InputRating = props => {
     const [star, setStar] = useState(0);
     const [comment, setComment] = useState('');
-    // const user = useSelector(state => state.auth?.currentUser);
+    const user = useSelector(state => state.auth?.currentUser);
+    const navigate = useNavigate();
 
-    const item = props.item;
+    const slug = props.slug;
 
     const handleSubmitRating = async() => {
-        const data = {
-            star,
-            comment
-        }
-        const submitRating = await createRatingProduct(item.slug, star, comment)
-        console.log(submitRating)
-        if(submitRating.data.err) {
-            Swal.fire('', submitRating.data.mes, 'error')
+        if(user) {
+            const submitRating = await createRatingProduct(slug, star, comment)
+            console.log(submitRating);
+            if(submitRating.data.err) {
+                Swal.fire('', submitRating.data.mes, 'error')
+            } else {
+                Swal.fire('', submitRating.data.mes, 'success');
+                props.loaded();
+            }
         } else {
-            Swal.fire('', submitRating.data.mes, 'success')
+            Swal.fire({title: "Vui lòng đăng nhập!", icon: "warning"}).then((results) => {
+                if(results.isConfirmed) {
+                    navigate("/login");
+                }
+            });
         }
     }
 

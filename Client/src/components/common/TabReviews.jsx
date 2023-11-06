@@ -5,11 +5,8 @@ import Reviews from "./Reviews";
 
 const TabReviews = props => {
     const [tab, setTab] = useState('Desc');
-
-    const {item, ratings} = props;
-
-    console.log(item)
-    console.log(ratings)
+    const [qtyRating, setQtyRating] = useState(0);
+    const {item} = props;
 
     return (
         <Grid xs={8}>
@@ -37,12 +34,12 @@ const TabReviews = props => {
                 >
                     Reviews 
                     <Typography marginLeft={1}>
-                        ({ratings.length})
+                        {/* ({qtyRating}) */}
                     </Typography>
                 </Typography>
             </Stack>
 
-            {tab === 'Desc' ? <DescriptionProduct item={item}/> : <Reviews item={item} ratings={ratings}/>}
+            {tab === 'Desc' ? <DescriptionProduct item={item}/> : <Reviews qtyRate={(qty) => setQtyRating(qty)}/>}
         </Grid>
     )
 }

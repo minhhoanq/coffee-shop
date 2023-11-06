@@ -6,9 +6,12 @@ import EstimatedOrder from '../components/common/EstimatedOrder';
 
 import { getAllCartItem } from "../api/cartItemApi";
 import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
+import cartEmpty from '../assets/images/cart-empty.png'
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([])
+    const user = useSelector(state => state.auth.currentUser);
 
     const getData = async() => {
         const result = await getAllCartItem();
@@ -16,8 +19,10 @@ const Cart = () => {
     }
 
     useEffect(() => {
-        getData();
-    },[]);
+        if(user){
+            getData();
+        }
+    },[user]);
 
     return (
         <Box 
@@ -41,9 +46,17 @@ const Cart = () => {
                                 maxHeight: "400px",
                                 overflowY: "auto"
                             }}>
-                            {cartItems.map((item, index) => (
-                                <ItemCardHorizontal item={item} key={index}/>
-                            ))}
+                            {cartItems.length > 0 ? 
+                                cartItems.map((item, index) => (
+                                    <ItemCardHorizontal item={item} key={index}/>
+                                )) :
+                                <Box sx={{
+                                    display: "flex",
+                                    justifyContent: "center"
+                                }}>
+                                    <img src={cartEmpty}/>
+                                </Box>
+                            }
                         </Stack>
                         <Button variant='outlined' fullWidth size='large'
                             sx={{

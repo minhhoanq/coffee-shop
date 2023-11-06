@@ -17,7 +17,7 @@ const ItemCardHorizontal = props => {
 
                 <Stack justifyContent={"space-between"} height={"100%"}>
                     <Typography fontWeight={"500"} variant="h6">
-                        Bạc xỉu
+                        {item?.productSizeData.productData.productName}
                     </Typography>
                     <Typography>
                         Categories: Cafe

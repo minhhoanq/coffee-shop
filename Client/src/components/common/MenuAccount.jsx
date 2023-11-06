@@ -28,61 +28,94 @@ const MenuAccount = props => {
         }
     });
 
-    const handleLogout = useCallback( async() => {
+    const handleLogout = useCallback(async() => {
         const logout = await dispatch(logoutActions(user.id));
         console.log(logout);
         const reqStatus = logout.meta.requestStatus;
         if(reqStatus === 'fulfilled' && isFetching === false) {
-            // Swal.fire('', logout.payload, 'success', 2000);
             Toast.fire({ icon: "success", title: logout.payload})
             setTimeout(() => {
                 navigate("/login");
             }, 2000);
         } else if (reqStatus === 'rejected') {
-            Swal.fire('', logout.payload, 'error')
+            Toast.fire({ icon: "error", title: logout.payload})
         }
     })
 
     const MenuProfile = props => {
         return(
             <Menu
-            anchorEl={props.props.anchorEl}
-            id={props.props.id}
-            open={props.props.open}
-            onClose={props.props.onClose}
-            onClick={props.props.onClick}
-            PaperProps={{
-                elevation: 0,
-                sx: {
-                overflow: "visible",
-                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                mt: 1,
-                "& .AccountCircleIcon-root": {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1
-                },
-                "&:before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: "background.paper",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0
+                anchorEl={props.props.anchorEl}
+                id={props.props.id}
+                open={props.props.open}
+                onClose={props.props.onClose}
+                onClick={props.props.onClick}
+                PaperProps={{
+                    elevation: 0,
+                    sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 1,
+                    "& .AccountCircleIcon-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1
+                    },
+                    "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0
+                    }
                 }
-            }
-            }}
-            transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-        >
-            <Link to={props.props.item.pathname}
-                style={{
-                    cursor: "pointer",
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+                {user && 
+                <>
+                    <Link to={props.props.item.pathname}
+                        style={{
+                            cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                textDecoration: "none",
+                                color: "rgba(0, 0, 0, 0.8)",
+                                "&:hover" : {
+                                    color: "#000"
+                                }
+                        }}
+                    >
+                        <MenuItem sx={{
+                            width: "100%"
+                        }}>
+                            <ListItemIcon>
+                                <AccountCircleIcon /> 
+                            </ListItemIcon>
+                                {props.props.item.title}
+                        </MenuItem>
+                    </Link>
+                    <Divider />
+                </>
+                }
+                <MenuItem onClick={props.props.onClose} sx={{
+                        width: "100%"
+                    }}>
+                    <ListItemIcon>
+                        <SettingsIcon fontSize="small" />
+                    </ListItemIcon>
+                    SETTINGS
+                </MenuItem>
+                {user ? <Link
+                    style={{
+                        cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
                         textDecoration: "none",
@@ -90,43 +123,41 @@ const MenuAccount = props => {
                         "&:hover" : {
                             color: "#000"
                         }
-                }}
-            >
-                <MenuItem>
-                    <ListItemIcon>
-                        <AccountCircleIcon /> 
-                    </ListItemIcon>
-                        {props.props.item.title}
-                </MenuItem>
-            </Link>
-                <Divider />
-            <MenuItem onClick={props.props.onClose}>
-                <ListItemIcon>
-                    <SettingsIcon fontSize="small" />
-                </ListItemIcon>
-                SETTINGS
-            </MenuItem>
-            <Link
-                style={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    textDecoration: "none",
-                    color: "rgba(0, 0, 0, 0.8)",
-                    "&:hover" : {
-                        color: "#000"
-                    }
-                }}
-                onClick={handleLogout}
-            >
-                <MenuItem onClick={props.props.onClose}>
-                    <ListItemIcon>
-                        <LogoutIcon fontSize="small" />
-                    </ListItemIcon>
-                    LOGOUT
-                </MenuItem>
-            </Link>
-        </Menu>
+                    }}
+                    onClick={handleLogout}
+                >
+                    <MenuItem onClick={props.props.onClose} sx={{
+                        width: "100%"
+                    }}>
+                        <ListItemIcon>
+                            <LogoutIcon fontSize="small" />
+                        </ListItemIcon>
+                        LOGOUT
+                    </MenuItem>
+                </Link> : 
+                <Link to={"/login"}
+                    style={{
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        textDecoration: "none",
+                        color: "rgba(0, 0, 0, 0.8)",
+                        "&:hover" : {
+                            color: "#000"
+                        }
+                    }}
+                >
+                    <MenuItem onClick={props.props.onClose} sx={{
+                        width: "100%"
+                    }}>
+                        <ListItemIcon>
+                            <LogoutIcon fontSize="small" />
+                        </ListItemIcon>
+                        LOGIN
+                    </MenuItem>
+                </Link>
+                }
+            </Menu>
         )
     }
 

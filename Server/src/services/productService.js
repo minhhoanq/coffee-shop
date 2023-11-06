@@ -166,8 +166,9 @@ const ratingProductService = (user, { slug }, body) => new Promise(async(resolve
         const {star, comment} = body;
 
         if(!userId || !star) {
-            reject({
-                err: "Vui lòng đánh giá sản phẩm trước!",
+            resolve({
+                err: 1,
+                mes: "Hãy chấm điểm cho sản phẩm!",
             });
             return;
         }
