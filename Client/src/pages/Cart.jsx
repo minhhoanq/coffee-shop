@@ -8,6 +8,7 @@ import { getAllCartItem } from "../api/cartItemApi";
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import cartEmpty from '../assets/images/cart-empty.png'
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([])
@@ -70,7 +71,20 @@ const Cart = () => {
                                 }
                             }}
                         >
-                            Add more items
+                            <Link to={"/menu"}
+                                style={{
+                                    cursor: "pointer",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    textDecoration: "none",
+                                    color: "rgba(0, 0, 0, 0.8)",
+                                    "&:hover" : {
+                                        color: "#000"
+                                    }
+                                }}
+                            >
+                                Add more items
+                            </Link>
                         </Button>
                     </Grid>
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const RecommendItemCard = props => {
     const item = props.item;
-    console.log(item)
+    // console.log(item)
     return (
         <Box padding={"10px"} sx={{
             border: "1px solid #ccc",

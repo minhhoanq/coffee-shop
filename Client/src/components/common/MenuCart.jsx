@@ -5,10 +5,12 @@ import { getAllCartItem } from "../../api/cartItemApi";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import cartEmpty from "../../assets/images/cart-empty.png"
+import { Link } from "react-router-dom";
 
 const MenuCart = props => {
-    const [cartItems, setCartItems] = useState([])
+    const [cartItems, setCartItems] = useState([]);
     const user = useSelector(state => state.auth.currentUser);
+    const [checkDelete, setCheckDelete] = useState(false);
 
     const getData = async() => {
         const result = await getAllCartItem();
@@ -18,8 +20,9 @@ const MenuCart = props => {
     useEffect(() => {
         if(user) {
             getData();
+            setCheckDelete(false);
         }
-    },[user])
+    },[user, checkDelete])
 
     return(
         <Menu
@@ -27,7 +30,6 @@ const MenuCart = props => {
             id={props.props.id}
             open={props.props.open}
             onClose={props.props.onClose}
-            onClick={props.props.onClick}
             PaperProps={{
                 elevation: 0,
                 sx: {
@@ -66,7 +68,7 @@ const MenuCart = props => {
                         Your Cart ( {cartItems.length} )
                     </Typography>
                     
-                    <Stack
+                    <Stack spacing={2}
                         sx={{
                             maxHeight: "250px",
                             overflowY: "auto"
@@ -74,7 +76,15 @@ const MenuCart = props => {
                     >
                         {cartItems.length > 0 ? 
                             cartItems.map((item, index) => (
-                                <ItemCartHorizontal heightImg={"70%"} item={item} key={index}/>
+                                <>
+                                    <ItemCartHorizontal delete={() => setCheckDelete(true)} heightImg={"80%"} item={item} key={index}/>
+                                    {cartItems.length > 1 && 
+                                    <Box sx={{
+                                        height: "1px",
+                                        width: "100%",
+                                        borderTop: "1px solid #ccc"
+                                    }}/>}
+                                </>
                             )) :
                             <Box sx={{
                                 display: "flex",
@@ -93,7 +103,20 @@ const MenuCart = props => {
                             bgcolor: colors.brown[400]
                         }
                     }}>
-                        Continue to cart
+                        <Link to={"/cart"}
+                            style={{
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                textDecoration: "none",
+                                color: "#fff",
+                                "&:hover" : {
+                                    color: "#fff"
+                                }
+                            }}
+                        >
+                            Continue to cart
+                        </Link>
                     </Button>
                 </Stack>
             </Box>

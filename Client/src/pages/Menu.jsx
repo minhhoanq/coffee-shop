@@ -64,12 +64,6 @@ const Menu = () => {
     const error = useSelector(state => state.product.isError);
     const user = useSelector(state => state.auth.currentUser);
 
-    // if(user) {
-
-    // }
-
-    console.log(user)
-
     const getDataRecommed = async () => {
         const result = await getAllProductRecommend();
         setProductsRecommed(result.productsRecommend);
@@ -142,17 +136,8 @@ const Menu = () => {
                         Recommeded Product
                     </Typography>
                     <Grid container spacing={1} mt={2}>
-                        {data.map((item, index) => (
+                        {productsRecommed.map((item, index) => (
                             <>
-                                {/* <Grid item lg={4} md={4} sm={6} xs={12}>
-                                    <RecommendItemCard item={item} key={index}/>
-                                </Grid><Grid item lg={4} md={4} sm={6} xs={12}>
-                                    <RecommendItemCard item={item} key={index}/>
-                                </Grid><Grid item lg={4} md={4} sm={6} xs={12}>
-                                    <RecommendItemCard item={item} key={index}/>
-                                </Grid><Grid item lg={4} md={4} sm={6} xs={12}>
-                                    <RecommendItemCard item={item} key={index}/>
-                                </Grid> */}
                                 <Grid item lg={4} md={4} sm={6} xs={12}>
                                     <RecommendItemCard item={item} key={index}/>
                                 </Grid>

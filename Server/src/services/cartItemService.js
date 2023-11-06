@@ -59,6 +59,7 @@ const addToCartItemService = (user,{ productSizeId, quantity, price, note}) => n
 
 const deleteCartItemByIDService = (user, body) => new Promise(async (resolve, reject) => {
     try {
+        console.log(body)
         if(!user) {
             reject({
                 err: 1,
