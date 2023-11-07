@@ -14,14 +14,9 @@ export const createRatingProduct = async(slug, star, comment) => {
     }
 }
 
-export const deleteRatingProduct = async(accessToken, slug) => {
+export const deleteRatingProduct = async(slug) => {
     try {
-        const response = await request.delete(`/api/v1/product/ratings/${slug}`,{
-                headers: {
-                    token: `Bearer ${accessToken}`
-                }
-            }
-        )
+        const response = await request.delete(`/api/v1/product/ratings/${slug}`)
         return response;
     } catch (error) {
         return error;

@@ -71,13 +71,13 @@ const ModalAddAddress = props => {
         }
 
         const response = await createUserAddress(dataRq);
-        console.log(response);
+        // console.log(response);
         if(data.is_delivery_address) {
             const value = {
                 id: response.data.id
             };
             const re = await setDefaultAddress(value);
-            console.log(re);
+            // console.log(re);
         }
         if(response.err === 0) {
             Swal.fire('', response.mes, 'success');

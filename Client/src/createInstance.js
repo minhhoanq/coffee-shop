@@ -4,11 +4,9 @@ import requestt from "./utils/request";
 
 const refreshToken = async() => {
     try {
-        console.log("check1");
         const req = await requestt.post("/v1/auth/refresh", {
             withCredentials: true
         });
-        console.log("check2");
         return req.data;
     } catch (error) {
         console.log(error);

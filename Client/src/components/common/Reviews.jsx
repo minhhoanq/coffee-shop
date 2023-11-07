@@ -25,7 +25,7 @@ const Reviews = props => {
         <Box ml={4}>
             <Stack spacing={1}>
                 {ratings.map((item, index) => (
-                    <UserReview key={index} item={item}/>
+                    <UserReview key={index} item={item} loaded={() => setLoad(!load)}/>
                 ))}
             </Stack>
             <InputRating slug={slug} loaded={() => setLoad(!load)}/>

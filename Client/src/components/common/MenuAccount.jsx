@@ -30,7 +30,7 @@ const MenuAccount = props => {
 
     const handleLogout = useCallback(async() => {
         const logout = await dispatch(logoutActions(user.id));
-        console.log(logout);
+        // console.log(logout);
         const reqStatus = logout.meta.requestStatus;
         if(reqStatus === 'fulfilled' && isFetching === false) {
             Toast.fire({ icon: "success", title: logout.payload})

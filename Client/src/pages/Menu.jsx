@@ -60,14 +60,14 @@ const Menu = () => {
     // const numbers = [...Array(totalPage + 1).keys()].slice(1);
 
     const dispatch = useDispatch();
-    const pending = useSelector(state => state.product.isPending);
-    const error = useSelector(state => state.product.isError);
     const user = useSelector(state => state.auth.currentUser);
 
     const getDataRecommed = async () => {
         const result = await getAllProductRecommend();
         setProductsRecommed(result.productsRecommend);
     }
+
+    // console.log(searchValue)
 
     useEffect(() => {
         const getData = async() => {
@@ -102,9 +102,10 @@ const Menu = () => {
         }
     },[user])
 
+
     const handleSearch = useCallback((search) => {
         setSearchValue(search ? search : searchValue)
-    }, []);
+    });
 
     const handleSort = useCallback((data) => {
         setSort(data ? data : sort)

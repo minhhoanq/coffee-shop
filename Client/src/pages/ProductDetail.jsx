@@ -29,7 +29,7 @@ const ProductDetail = () => {
 
     const getDataBySlug = async() => {
         const result = await getProductDetailBySlug(slug);
-        console.log(result)
+        // console.log(result)
         setProducts(result.dataDetailProduct);
         // setProductSizeId(result.dataDetailProduct[0]?.id);
         const sizeRoot = result.dataDetailProduct[0]?.sizeData.sizeName;

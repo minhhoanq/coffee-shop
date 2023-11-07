@@ -17,7 +17,7 @@ const InputRating = props => {
     const handleSubmitRating = async() => {
         if(user) {
             const submitRating = await createRatingProduct(slug, star, comment)
-            console.log(submitRating);
+            // console.log(submitRating);
             if(submitRating.data.err) {
                 Swal.fire('', submitRating.data.mes, 'error')
             } else {

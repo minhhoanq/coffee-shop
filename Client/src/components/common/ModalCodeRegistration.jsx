@@ -14,7 +14,7 @@ const ModalCodeRegistration = props => {
         if(token === "" || token === undefined) setToken("")
         else {
             const submitCode = await finalRegister(token);
-            console.log(submitCode);
+            // console.log(submitCode);
             props.close(false)
             setToken('');
             Swal.fire('', submitCode.data.mes, 'success')

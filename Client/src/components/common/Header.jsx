@@ -107,7 +107,7 @@ const Header = () => {
     const handleShowMenu = (e) => {
         setAnchorEl(e.currentTarget);
     }
-    console.log(anchorEl?.ariaLabel)
+    // console.log(anchorEl?.ariaLabel)
 
     return (
         <Box 

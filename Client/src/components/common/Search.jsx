@@ -77,16 +77,18 @@ const Seach = props => {
     const SearchInput = props => {
         const [search, setSearch] = useState('')
 
-        const debounceValue = useDebounce(search, 800);
-
-        console.log("re-render")
-
+        
         const onChangeSearch = useCallback((e) => {
             setSearch(e.target.value);
         })
+        
+        const debounceValue = useDebounce(search, 800);
+
+        // console.log(search)
+        // console.log(debounceValue)
 
         useEffect(() => {
-            props.search(debounceValue)
+            props.search(debounceValue);
         },[debounceValue])
 
         return (
@@ -106,8 +108,6 @@ const Seach = props => {
             />
         )
     }
-
-    console.log("re-render")
 
     return (
         <Box

@@ -11,7 +11,7 @@ const AddressCard = props => {
             id
         }
         const response = await setDefaultAddress(data);
-        console.log(response)
+        // console.log(response)
     })
 
     return (

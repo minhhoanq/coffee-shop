@@ -84,7 +84,7 @@ const Header = () => {
     // let axiosJWT = createAxios(user, dispatch, logoutSuccess);
     const isFetching = useSelector(state => state.auth?.isFetching)
 
-    console.log(user)
+    // console.log(user)
     const accessToken = user?.token;
     const id = user?.id;
 
@@ -99,7 +99,7 @@ const Header = () => {
         }
     };
 
-    console.log(user)
+    // console.log(user)
 
     useEffect(() => {
         const shrinkHeader = () => {
@@ -129,12 +129,12 @@ const Header = () => {
     const toggleHandleMenuShow = () => {
         navMobileRef.current.classList.toggle('show');
         overLayMobileRef.current.classList.toggle('ovl');
-        console.log('show')
+        // console.log('show')
     }
 
     const toggleHandleNotifyShow = () => {
         notifyRef.current.classList.toggle('show');
-        console.log('show')
+        // console.log('show')
     }
 
     const handleCart = () => {
@@ -145,16 +145,16 @@ const Header = () => {
         e.preventDefault();
 
         const res = await deleteAllCartItem(accessToken);
-        console.log(res);
+        // console.log(res);
     }
 
     const handleLogout = async() => {
-        console.log('id: ' + id);
-        console.log('token: ' + accessToken);
+        // console.log('id: ' + id);
+        // console.log('token: ' + accessToken);
         const valuesLogout = {id, accessToken}
         const result = await dispatch(logoutActions(valuesLogout));
         navigate('/login')
-        console.log(result)
+        // console.log(result)
     }
 
     return (
