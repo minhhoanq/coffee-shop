@@ -12,12 +12,12 @@ const ItemCardHorizontal = props => {
         const productSizeId = item?.productSizeData.id;
         const deleteItemToCart = await deleteCartItem(productSizeId);
         props.delete();
-    })    
+    })
 
     return (
         <Stack direction={"row"} justifyContent={"space-between"} height={"60px"}>
             <Stack direction={"row"} spacing={4} height={"100%"} >
-                <Box height={"100%"} sx={{
+                <Box height={"100%"} width={"70px"} sx={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center"
@@ -32,12 +32,20 @@ const ItemCardHorizontal = props => {
                     <Typography>
                         Categories: Cafe
                     </Typography>
+                    <Typography>
+                        Size: {item?.productSizeData.sizeData.sizeName}
+                    </Typography>
                 </Stack>
             </Stack>
-            <Stack justifyContent={"center"} >
-                <Typography fontSize={"1.2rem"}>
-                    ${item?.price}
-                </Typography>
+            <Stack justifyContent={"center"} alignItems={"flex-end"}>
+                <Stack direction={"row"}>
+                    <Typography fontSize={"1.2rem"} mr={"10px"}>
+                        x{item?.quantity}
+                    </Typography>
+                    <Typography fontSize={"1.2rem"}>
+                        ${item?.price}
+                    </Typography>
+                </Stack>
 
                 <IconButton onClick={handleDeleteProduct}>
                     <DeleteOutlineOutlinedIcon/>

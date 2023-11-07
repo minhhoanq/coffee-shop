@@ -380,37 +380,6 @@ const recommendSystemService = (user) => new Promise(async(resolve, reject) => {
         const products = [];
         const ratings = [];
 
-        ratingData.forEach(element => {
-            const user = element.userId;
-            const product = element.productId;
-            const rating = element.star;
-
-            if (!users.includes(user)) {
-                users.push(user);
-            }
-
-            if (!products.includes(product)) {
-                products.push(product);
-            }
-
-            ratings.push([users.indexOf(user), products.indexOf(product), rating]);
-        });
-
-        //create user-product matrix
-        const user_product = createUserProductMatrix(ratings, users);
-
-        //convert user-product matrix to 2 dimensional
-        const user_product_2d = CVUserProduct2Dimensional(user_product, users, products);
-
-        //create similar users matrix
-        const similar_users = createSimilarUsersMatrix(user_product_2d, products, users);
-
-        //inverse matrix, use similarity lib
-        const user_product_2dx = inverseMatrix(user_product_2d, users, products);
-
-        //Movies that similar users watched. Remove movies that none of the similar users have watched
-
-        //remove products user bought
         const cartId = await db.Cart.findOne({
             where: {
                 userId: userId
@@ -462,9 +431,56 @@ const recommendSystemService = (user) => new Promise(async(resolve, reject) => {
             productDataUser.push(data);
         }
 
+        ratingData.forEach(element => {
+            const user = element.userId;
+            const product = element.productId;
+            const rating = element.star;
+
+            if (!users.includes(user)) {
+                users.push(user);
+            }
+
+            if (!products.includes(product)) {
+                products.push(product);
+            }
+
+            ratings.push([users.indexOf(user), products.indexOf(product), rating]);
+        });
+
+        // let index = 0;
+        // const length = products.length;
+        // for (let i = 0; i < length; i++) {
+        //     for (let j = 0; j < productDataUser.length; j++) {
+        //         if(Number(products[i]) === Number(productDataUser[j].id)) {
+        //             products.splice(i - index, 1);
+        //             // delete products[i];
+        //             index++
+        //             console.log(products[i] + " | " + productDataUser[j].id)
+        //         }
+        //     }
+        // }
+        // console.log(products[0])
+
+        //create user-product matrix
+        const user_product = createUserProductMatrix(ratings, users);
+
+        //convert user-product matrix to 2 dimensional
+        const user_product_2d = CVUserProduct2Dimensional(user_product, users, products);
+
+        //create similar users matrix
+        const similar_users = createSimilarUsersMatrix(user_product_2d, products, users);
+
+        //inverse matrix, use similarity lib
+        const user_product_2dx = inverseMatrix(user_product_2d, users, products);
+
+        //Movies that similar users watched. Remove movies that none of the similar users have watched
+
+        //remove products user bought
+        
+
         //remove products user picked rated.
         user_product_2d[userIdIndex ].forEach((e, index) => {
-            console.log(e)
+            // console.log(e)
             if(e != 0) {
                 // user_product_2dx.splice(index - i, 1);
                 for (let j = 0; j < users.length; j++) {
@@ -499,6 +515,10 @@ const recommendSystemService = (user) => new Promise(async(resolve, reject) => {
         resolve({
             err: "err",
             mes: "mes",
+            products: products,
+            recommend: recommend,
+            score_items: score_items,
+            productDataUser: productDataUser,
             productsRecommend: productsRecommend
         })
     } catch (error) {

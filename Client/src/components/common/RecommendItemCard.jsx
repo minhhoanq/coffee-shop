@@ -10,7 +10,7 @@ const RecommendItemCard = props => {
             borderRadius: "5px"
         }}>
             <Link 
-                to={`/shop/${item.slug}`} style={{ 
+                to={`/shop/${item?.slug}`} style={{ 
                 color: "rgba(0, 0, 0, 0.8)",
                 "&:hover" : {
                     color: "#000"
@@ -19,7 +19,7 @@ const RecommendItemCard = props => {
                 <Stack direction={"row"}>
                     <Box flex={2}>
                         <Typography variant="h6" fontWeight={600}>
-                            {item.productName}
+                            {item?.productName}
                         </Typography>
 
                         <Typography>
@@ -30,7 +30,7 @@ const RecommendItemCard = props => {
                     <Box sx={{
                         padding: "0 10px",
                     }}>
-                        <img src={item.productImg} alt="" 
+                        <img src={item?.productImg} alt="" 
                             style={{
                                 height: "90px",
                                 width: "90px",

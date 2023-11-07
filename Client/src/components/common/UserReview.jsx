@@ -71,8 +71,8 @@ const UserReview = props => {
                         }}/>
                     </Typography>
                     <Typography>
-                        {/* {userRating?.comment} */}
-                        Đây là đánh giá của người dùng đối với sản phẩm này, vui lòng hạn chế các từ ngữ không phù hợp. Hãy là người tiêu dùng lịch sự, thông minh và sáng suốt. Cảm ơn bạn đã để lại trải nghiệm của bản thân!
+                        {userRating?.comment}
+                        {/* Đây là đánh giá của người dùng đối với sản phẩm này, vui lòng hạn chế các từ ngữ không phù hợp. Hãy là người tiêu dùng lịch sự, thông minh và sáng suốt. Cảm ơn bạn đã để lại trải nghiệm của bản thân! */}
                     </Typography>
                     <Typography>
                         {/* {userRating?.updatedAt} */}
