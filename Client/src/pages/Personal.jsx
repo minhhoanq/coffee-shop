@@ -2,6 +2,7 @@ import { Autocomplete, Box, Stack, TextField, createFilterOptions, Typography, c
 import { useSelector } from "react-redux";
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { useCallback } from "react";
 
 const sexs = [
     {
@@ -25,6 +26,10 @@ const filterOptions = createFilterOptions({
 
 const Personal = () => {
     const user = useSelector(state => state.auth.currentUser);
+
+    const handleSubmitProfile = useCallback(() => {
+        console.log("check")
+    })
 
     return (
         <Box pl={2} pr={2} flex={1}>
@@ -70,17 +75,17 @@ const Personal = () => {
                     <Stack spacing={1} mt={2}>
                         <TextField
                             label="Username"
-
+                            value={user?.username}
                         />
 
                         <TextField
                             label="First name"
-                            
+                            value={user?.firstname}
                         />
 
                         <TextField
                             label="Last name"
-                            
+                            value={user?.lastname}
                         />
 
                         <Stack spacing={1} direction={"row"} width={"100%"}>
@@ -95,7 +100,7 @@ const Personal = () => {
                                     outline: "none"
                                 }}
                                 // size="small"
-                                renderInput={(params) => <TextField {...params} label="Sex" />}
+                                renderInput={(params) => <TextField {...params} label="Sex"/>}
                             />
 
                             {/* <DatePicker
@@ -117,9 +122,11 @@ const Personal = () => {
                         <TextField
                             label="Phone"
                             fullWidth
+                            value={user?.phone}
                         />
                         <TextField
                             label="Email"
+                            value={user?.email}
                         />
                     </Stack>
 
@@ -128,12 +135,14 @@ const Personal = () => {
                         justifyContent: "flex-end"
                     }}>
                         <Button variant="contained" sx={{
-                            width: "200px",
-                            bgcolor: colors.brown[500],
-                            "&:hover" : {
-                                bgcolor: colors.brown[400]
-                            }
-                        }}>
+                                width: "200px",
+                                bgcolor: colors.brown[500],
+                                "&:hover" : {
+                                    bgcolor: colors.brown[400]
+                                }
+                            }}
+                            onClick={handleSubmitProfile}
+                        >
                             Submit
                         </Button>
                     </Box>

@@ -53,7 +53,7 @@ const PaymentCard = props => {
                     </Stack>
 
                     <Typography color={"#999"}>
-                        Họ và tên: Nguyễn Thị My
+                        Họ và tên: Tran Minh Hoang
                     </Typography>
 
                     <Typography color={"#999"}>

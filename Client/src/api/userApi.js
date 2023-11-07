@@ -97,5 +97,3 @@ export const updateUserbyUser = async(user) => {
 
     return res;
 }
-
-// Tương tác với khách hàng => Đề xuất sản phẩm kích thích nhu cầu mua hàng.

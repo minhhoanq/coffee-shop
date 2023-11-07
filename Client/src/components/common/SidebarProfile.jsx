@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 // import WarehouseIcon from '@mui/icons-material/Warehouse';
 // import PostAddIcon from '@mui/icons-material/PostAdd';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import logo from "../../assets/images/logo.jpg";
+import { Link } from "react-router-dom";
 
 const menus = [
     {
@@ -18,14 +20,17 @@ const menus = [
             {
                 title: "Hồ sơ",
                 state: "profile",
+                pathname: "/user/account/profile",
             },
             {
                 title: "Địa chỉ",
                 state: "address",
+                pathname: "/user/account/address",
             },
             {
                 title: "Ngân hàng",
                 state: "payment",
+                pathname: "/user/account/payment",
             }
         ]
     },
@@ -66,13 +71,26 @@ const SidebarProfile = () => {
                     }}
                 >
                     {childrenOption && childrenOption.map((item, index) => (
-                        <ListItem>
-                            <ListItemButton>
-                                <ListItemText>
-                                    {item.title}
-                                </ListItemText>
-                            </ListItemButton>
-                        </ListItem>
+                        <Link to={item.pathname}
+                        style={{
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            textDecoration: "none",
+                            color: "rgba(0, 0, 0, 0.8)",
+                            "&:hover" : {
+                                color: "#000"
+                            }
+                        }}
+                        >
+                            <ListItem>
+                                <ListItemButton>
+                                    <ListItemText>
+                                        {item.title}
+                                    </ListItemText>
+                                </ListItemButton>
+                            </ListItem>
+                        </Link>
                     ))}
                 </Box>
             </Box>
@@ -106,7 +124,7 @@ const SidebarProfile = () => {
                     alignItems: "center"
                 }}
             >
-                <img src={user.image} height={100} width={100} style={{
+                <img src={logo} height={100} width={100} style={{
                     borderRadius: "50px",
                     objectFit: "cover"
                 }}/>

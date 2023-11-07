@@ -25,14 +25,14 @@ const Profile = () => {
 
     return (
         <Box 
-        sx={{
-            width: "100%",
-            borderTop: "1px solid #ccc",
-            borderBottom: "1px solid #ccc",
-            display:"flex",
-            justifyContent:"center",
-            alignItems:"center",
-        }}
+            sx={{
+                width: "100%",
+                borderTop: "1px solid #ccc",
+                borderBottom: "1px solid #ccc",
+                display:"flex",
+                justifyContent:"center",
+                alignItems:"center",
+            }}
         >
             <Grid container xs={8} width={"100%"}
             >
@@ -40,11 +40,11 @@ const Profile = () => {
                     <SidebarProfile/>
                 </Grid>
 
-                <Grid item xs={9}>
+                {/* <Grid item xs={9}>
                     <Box width={"100%"} height={"100%"}>
                         <Page/>
                     </Box>
-                </Grid>
+                </Grid> */}
             </Grid>
         </Box>
     )
