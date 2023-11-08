@@ -105,17 +105,20 @@ const SidebarProfile = () => {
             bgcolor: "#fff",
             position: "relative"
         }}>
-            <Button sx={{
-                position: "absolute",
-                top: 10,
-                left: 10
-            }}>
-                <KeyboardBackspaceIcon fontSize="large"
-                    sx={{
-                        color: "#000"
-                    }}
-                />
-            </Button>
+            <Link to={"/menu"}>
+                <Button sx={{
+                    position: "absolute",
+                    top: 10,
+                    left: 10
+                }}
+                >
+                    <KeyboardBackspaceIcon fontSize="large"
+                        sx={{
+                            color: "#000"
+                        }}
+                    />
+                </Button>
+            </Link>
             <Box width={"100%"}
                 p={4}
                 sx={{

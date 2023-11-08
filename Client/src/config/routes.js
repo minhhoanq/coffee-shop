@@ -16,23 +16,20 @@ import FinalRegister from "../pages/finalregister/FinalRegister";
 import ForgotPassword from "../pages/forgotpassword/ForgotPassword";
 import ResetPassword from "../pages/resetpassword/ResetPassword";
 import Ingredient from "../pages/admin/ingredient-page/ingredient/Ingredient";
-import Profile from "../pages/Profile";
-import Profile2 from "../pages/profile/Profile";
 import Payment from "../pages/Payment";
 import Payment2 from "../pages/payment/Payment";
-import DefaultLayoutUser from "../components/layout/defaultlayoutuser/DefaultLayoutUser";
 import Address from "../pages/Address";
 import LoginPage from "../pages/LoginPage";
 import DashboardPage from "../pages/DashboardPage";
 import MainLayout from "../components/layout/MainLayout";
 import Menu from "../pages/Menu";
 import DefaultProfileLayout from "../components/layout/DefaultProfileLayout";
-import Personal from "../pages/Personal";
+import Profile from "../pages/Profile";
 
 //Public routes
 const publicRoutes = [
     { path: '/', component: Home, layout: null},
-    { path: '/user/account/profile', component: Personal, layout: DefaultProfileLayout},
+    { path: '/user/account/profile', component: Profile, layout: DefaultProfileLayout},
     // { path: '/user/account/profile', component: Profile2, layout: DefaultLayoutUser},
     { path: '/user/account/payment', component: Payment, layout: DefaultProfileLayout},
     { path: '/user/account/payment2', component: Payment2, layout: DefaultProfileLayout},

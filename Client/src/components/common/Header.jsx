@@ -13,6 +13,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Animate from "./Animate";
 import { useState } from "react";
 import MenuAccount from "./MenuAccount";
+import { useSelector } from "react-redux";
 
 const navBars = [
     {
@@ -30,11 +31,11 @@ const navBars = [
         state: "cart",
         pathname: "/cart"
     },
-    {
-        title: "INFO",
-        state: "info",
-        pathname: "/"
-    }
+    // {
+    //     title: "INFO",
+    //     state: "info",
+    //     pathname: "/"
+    // }
 ]
 
 const navBarsRight = [
@@ -62,6 +63,7 @@ const Header = () => {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const openMenuRight = Boolean(anchorEl);
+    const user = useSelector(state => state.auth.currentUser);
 
     const MenuItem = (props) => {
         return (
@@ -278,7 +280,18 @@ const Header = () => {
                                         aria-haspopup="true"
                                         aria-expanded={openMenuRight ? "true" : undefined}
                                         >
-                                        {item.icon}
+                                        {item.state !== "profile" ? item.icon : 
+                                            user ? 
+                                                <img 
+                                                    src={user.image} 
+                                                    alt="avatar"
+                                                    height={"20px"}
+                                                    width={"20px"}
+                                                    style={{
+                                                        borderRadius: "50px"
+                                                    }}
+                                                /> :
+                                                item.icon}
                                     </IconButton>
                                 </Tooltip>
                                 {anchorEl?.ariaLabel === item.state && openMenuRight === true ? (

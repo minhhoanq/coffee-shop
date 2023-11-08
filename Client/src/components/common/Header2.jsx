@@ -17,11 +17,11 @@ const navBars = [
         state: "cart",
         pathname: "/cart"
     },
-    {
-        title: "INFO",
-        state: "info",
-        pathname: "/"
-    }
+    // {
+    //     title: "INFO",
+    //     state: "info",
+    //     pathname: "/"
+    // }
 ]
 
 const navBarsRight = [
@@ -29,19 +29,13 @@ const navBarsRight = [
         title: "NOTIFICATION",
         state: "notification",
         // icon: <FavoriteBorderIcon/>,
-        pathname: "/"
-    },
-    {
-        title: "CART",
-        state: "cart",
-        // icon: <ShoppingCartOutlinedIcon/>,
-        pathname: "/"
+        // pathname: "/"
     },
     {
         title: "PROFILE",
         state: "profile",
         // icon: <AccountCircleOutlinedIcon/>,
-        pathname: "/user/account"
+        pathname: "/user/account/profile"
     }
 ]
 

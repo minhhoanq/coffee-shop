@@ -11,8 +11,9 @@ import cartEmpty from '../assets/images/cart-empty.png'
 import { Link } from 'react-router-dom';
 
 const Cart = () => {
-    const [cartItems, setCartItems] = useState([])
+    const [cartItems, setCartItems] = useState([]);
     const user = useSelector(state => state.auth.currentUser);
+    const [checkDelete, setCheckDelete] = useState(false);
 
     const getData = async() => {
         const result = await getAllCartItem();
@@ -20,10 +21,11 @@ const Cart = () => {
     }
 
     useEffect(() => {
-        if(user){
+        if(user) {
             getData();
+            setCheckDelete(false);
         }
-    },[user]);
+    },[user, checkDelete])
 
     return (
         <Box 
@@ -49,7 +51,7 @@ const Cart = () => {
                             }}>
                             {cartItems.length > 0 ? 
                                 cartItems.map((item, index) => (
-                                    <ItemCardHorizontal item={item} key={index}/>
+                                    <ItemCardHorizontal item={item} key={index} delete={() => setCheckDelete(true)}/>
                                 )) :
                                 <Box sx={{
                                     display: "flex",

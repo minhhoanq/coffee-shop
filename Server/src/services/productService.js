@@ -378,6 +378,7 @@ const recommendSystemService = (user) => new Promise(async(resolve, reject) => {
         const userIdIndex = user.id - 1;
         const users = [];
         const products = [];
+        // const products = ["10", "8","28", "19", "15", "22", "11", "12", "13", "26", "27", "21"];
         const ratings = [];
 
         const cartId = await db.Cart.findOne({
@@ -447,18 +448,18 @@ const recommendSystemService = (user) => new Promise(async(resolve, reject) => {
             ratings.push([users.indexOf(user), products.indexOf(product), rating]);
         });
 
-        // let index = 0;
-        // const length = products.length;
-        // for (let i = 0; i < length; i++) {
-        //     for (let j = 0; j < productDataUser.length; j++) {
-        //         if(Number(products[i]) === Number(productDataUser[j].id)) {
-        //             products.splice(i - index, 1);
-        //             // delete products[i];
-        //             index++
-        //             console.log(products[i] + " | " + productDataUser[j].id)
-        //         }
-        //     }
-        // }
+        let index = 0;
+        for (let i = 0; i < products.length; i++) {
+            for (let j = 0; j < productDataUser.length; j++) {
+                // console.log(products[i] + " | " + products[i]);
+                if(Number(products[i]) === Number(productDataUser[j].id)) {
+                    products.splice(i, 1);
+                    //arrProducts.push(productDataUser[i])
+                    index++
+                    // console.log(arrProducts[i] + " | " + productDataUser[j].id + " | " + index) 
+                }
+            }
+        }
         // console.log(products[0])
 
         //create user-product matrix
