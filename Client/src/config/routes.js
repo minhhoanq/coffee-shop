@@ -25,6 +25,7 @@ import MainLayout from "../components/layout/MainLayout";
 import Menu from "../pages/Menu";
 import DefaultProfileLayout from "../components/layout/DefaultProfileLayout";
 import Profile from "../pages/Profile";
+import Checkout from "../pages/Checkout";
 
 //Public routes
 const publicRoutes = [
@@ -36,6 +37,7 @@ const publicRoutes = [
     { path: '/user/account/address', component: Address, layout: DefaultProfileLayout},
     { path: '/menu', component: Menu},
     { path: '/shop', component: Shop},
+    { path: '/checkout', component: Checkout},
     // { path: '/shop/test', component: DetailProduct},
     { path: '/shop/:slug', component: ProductDetail},
     { path: '/cart', component: Cart},

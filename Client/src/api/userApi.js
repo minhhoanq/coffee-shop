@@ -5,10 +5,7 @@ export const getAllStaff = async (accessToken) => {
         const res = await request.get('/api/v1/users', {
             params: {
                 roles: 2,
-            },
-            headers:({
-                token: `Bearer ${accessToken}`
-            })
+            }
         });
         return res.data;
     } catch (error) {

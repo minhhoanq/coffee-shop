@@ -8,20 +8,20 @@ import { useSelector } from "react-redux";
 
 const Staff = () => {
     const [staff, setStaff] = useState([]);
-    const isFetching = useSelector((state) => state.user.softDelete.isFetching);
-    const error = useSelector((state) => state.user.error);
+    // const isFetching = useSelector((state) => state.user.softDelete.isFetching);
+    // const error = useSelector((state) => state.user.error);
     const user = useSelector(state => state.auth.currentUser);
     const accessToken = user?.token;
 
     useEffect(() => {
         const getData = async() => {
-            const result = await getAllStaff(accessToken);
+            const result = await getAllStaff();
             setStaff(result?.usersData);
             console.log(result);
         };
 
         getData();
-    },[isFetching]);
+    },[]);
 
     const handleAddStaff = (e) => {
         e.preventDefault();
@@ -31,12 +31,12 @@ const Staff = () => {
 
     return (
         <div className="staff">
-            {isFetching ? 
+            {/* {isFetching ? 
                 <div className="staff__loading">
                     <i class="ri-loader-4-line staff__loading__icon"></i>
                     Vui lòng đợi ...
-                </div> : 
-            <>
+                </div> :  */}
+            {/* <> */}
                 <div className="staff__title">
                     Quản lý nhân viên
                 </div>
@@ -59,7 +59,7 @@ const Staff = () => {
                         <PersonCard item={item} key={i}/>
                     ))}
                 </div>
-            </>}
+            {/* </>} */}
         </div>
     )
 };

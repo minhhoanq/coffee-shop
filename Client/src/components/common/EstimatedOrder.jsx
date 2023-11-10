@@ -1,4 +1,5 @@
 import { Box, Button, Stack, Typography, colors } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const EstimatedOrder = () =>  {
     return (
@@ -68,13 +69,28 @@ const EstimatedOrder = () =>  {
             </Stack>
 
             <Button variant="contained" size="large" sx={{
-                color: "#fff",
-                bgcolor: colors.brown[500],
+                    // color: "#fff",
+                    bgcolor: colors.brown[500],
+                        "&:hover" : {
+                            bgcolor: colors.brown[400]
+                        }
+                }}>
+                <Link to={'/checkout'} style={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textDecoration: "none",
+                    color: "#fff",
                     "&:hover" : {
-                        bgcolor: colors.brown[400]
-                    }
-            }}>
-                Countinue to payment
+                        color: "#fff"
+                    },
+                    width: "100%"
+                }}>
+                    
+                    
+                        Countinue to payment
+                </Link>
             </Button>
         </Stack>
     )

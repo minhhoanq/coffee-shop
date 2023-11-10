@@ -2,8 +2,24 @@ import { Button, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import { useEffect, useState } from "react";
+import { getAllAddress } from "../../api/addressApi";
 
 const AddressGetIt = () => {
+    const [address, setAddress] = useState();
+
+    const getDataAddress = async() => {
+        const result = await getAllAddress();
+
+        const addressDefault = (result.data).filter(e => e.is_delivery_address === true);
+
+        setAddress(addressDefault[0]);
+    }
+
+    useEffect(() => {
+        getDataAddress();
+    },[]);
+
     return (
         <Stack>
                 <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
@@ -26,8 +42,10 @@ const AddressGetIt = () => {
                             color: "#000"
                         }
                     }}>
-                        <LocationOnOutlinedIcon/>
-                        Pickup: 1026 SW Harvey Milk Street
+                        <LocationOnOutlinedIcon sx={{
+                            mr: "10px"
+                        }}/>
+                        Delivery address: {address?.address}, {address?.ward}, {address?.district}, {address?.city_province}
                     </Link>
 
                     <Link to={'/'} style={{
@@ -37,7 +55,9 @@ const AddressGetIt = () => {
                         color: "rgba(0, 0, 0, 0.8)",
                         textDecoration: "none"
                     }}>
-                        <AccessTimeOutlinedIcon/>
+                        <AccessTimeOutlinedIcon sx={{
+                            mr: "10px"
+                        }}/>
                         Today at 8:00 am
                     </Link>
                 </Stack>

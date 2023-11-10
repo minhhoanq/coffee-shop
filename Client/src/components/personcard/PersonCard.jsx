@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 
 const PersonCard = props => {
 
-    const item = props.item;
+    const item = props?.item;
     const navigate = useNavigate();
     const dispatch = useDispatch();
 

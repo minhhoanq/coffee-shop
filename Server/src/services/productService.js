@@ -454,9 +454,7 @@ const recommendSystemService = (user) => new Promise(async(resolve, reject) => {
                 // console.log(products[i] + " | " + products[i]);
                 if(Number(products[i]) === Number(productDataUser[j].id)) {
                     products.splice(i, 1);
-                    //arrProducts.push(productDataUser[i])
                     index++
-                    // console.log(arrProducts[i] + " | " + productDataUser[j].id + " | " + index) 
                 }
             }
         }
@@ -480,8 +478,7 @@ const recommendSystemService = (user) => new Promise(async(resolve, reject) => {
         
 
         //remove products user picked rated.
-        user_product_2d[userIdIndex ].forEach((e, index) => {
-            // console.log(e)
+        user_product_2d[userIdIndex].forEach((e, index) => {
             if(e != 0) {
                 // user_product_2dx.splice(index - i, 1);
                 for (let j = 0; j < users.length; j++) {
@@ -519,6 +516,8 @@ const recommendSystemService = (user) => new Promise(async(resolve, reject) => {
             products: products,
             recommend: recommend,
             score_items: score_items,
+            user_product_2d: user_product_2d,
+            user_product_2dx: user_product_2dx,
             productDataUser: productDataUser,
             productsRecommend: productsRecommend
         })
