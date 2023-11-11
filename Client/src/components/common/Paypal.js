@@ -35,7 +35,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount }) => {
                 fundingSource={undefined}
                 createOrder={(data, actions) =>
                     actions.order.create({
-                        purchase_units: [{amount: { currency_code: currency}}]
+                        purchase_units: [{amount: { currency_code: currency, value: amount}}]
                     }).then(orderId => orderId) 
                 }
                 onApprove={(data, actions) => actions.order.capture().then(async(response) => {
@@ -48,7 +48,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount }) => {
 
 export default function Paypal({amount}) {
     return (
-        <div style={{ maxWidth: "400px", minHeight: "200px" , width:"400px"}}>
+        <div style={{ maxWidth: "400px", minHeight: "100px" , width:"400px"}}>
             <PayPalScriptProvider options={{ clientId: "test", components: "buttons", currency: "USD" }}>
                 <ButtonWrapper currency={'USD'} amount={amount} showSpinner={false} />
             </PayPalScriptProvider>
