@@ -14,34 +14,36 @@ const menus = [
     {
         title: "Home",
         icon: <HomeIcon/>,
-        state: "home"
+        state: "home",
+        pathname: "/dashboard"
     },
     {
         title: "Employee",
         icon: <PersonIcon/>,
         state: "employee",
+        pathname: "/dashboard/employee",
         childrens: [
             {
                 title: "List of employee",
                 state: "list_of_employee",
-                pathname: "/",
+                pathname: "/dashboard/employee",
             },
             {
                 title: "Trash",
                 state: "address",
-                pathname: "/user/account/address",
+                // pathname: "/user/account/address",
             },
             {
                 title: "Chấm công",
                 state: "payment",
-                pathname: "/user/account/payment",
+                // pathname: "/user/account/payment",
             }
         ]
     },
     {
         title: "Lịch sử mua hàng",
         icon: <BallotOutlinedIcon/>,
-        // state: "employee"
+        state: "order"
     },
     {
         title: "Kho voucher",
@@ -51,23 +53,24 @@ const menus = [
 ]
 
 const SidebarDashBoard = () => {
-    const [activeButton, setActiveButton] = useState("home");
-
+    const [activeParent, setActiveParent] = useState("home");
+    const [activeChildren, setActiveChildren] = useState("");
 
     const Menu = props => {
         const option = props.option;
         const childrenOption = option.childrens;
         const [open, setOpen] = useState(true);
         const active = props.active;
+        const activeChild = props.activeChild;
 
         return (
-            <Box width={"100%"} >
+            <Link width={"100%"} to={option.pathname}>
                 <ListItem onClick={() => setOpen(!open)}>
                     <ListItemButton sx={{
                         backgroundColor: active === option.state ? "#ccc" : "#fff",
                         borderRadius: "2px",
                     }}
-                    onClick={() => setActiveButton(option.state)}
+                    onClick={() => setActiveParent(option.state)}
                     >
                         <ListItemIcon>
                             {option.icon}
@@ -84,6 +87,7 @@ const SidebarDashBoard = () => {
                 >
                     {childrenOption && childrenOption.map((item, index) => (
                         <Link to={item.pathname}
+                        key={index}
                         style={{
                             cursor: "pointer",
                             display: "flex",
@@ -96,7 +100,16 @@ const SidebarDashBoard = () => {
                         }}
                         >
                             <ListItem>
-                                <ListItemButton>
+                                <ListItemButton sx={{
+                                    backgroundColor: activeChild === item.state ? "#ccc" : "#fff",
+                                    borderRadius: "2px",
+                                    }}
+                                    onClick={() => {
+                                        // setActiveParent(option.state);
+                                        setActiveChildren(item.state);
+                                        console.log(item.state)
+                                    }}
+                                >
                                     <ListItemText>
                                         {item.title}
                                     </ListItemText>
@@ -105,7 +118,7 @@ const SidebarDashBoard = () => {
                         </Link>
                     ))}
                 </Box>
-            </Box>
+            </Link>
         )
     }
 
@@ -132,7 +145,7 @@ const SidebarDashBoard = () => {
             </Box>
             <Stack>
                 {menus.map((item, index) => (
-                    <Menu option={item} key={index} active={activeButton}/>
+                    <Menu option={item} key={index} active={activeParent} activeChild={activeChildren}/>
                 ))}
             </Stack>
         </Box>

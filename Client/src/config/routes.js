@@ -26,6 +26,7 @@ import Menu from "../pages/Menu";
 import DefaultProfileLayout from "../components/layout/DefaultProfileLayout";
 import Profile from "../pages/Profile";
 import Checkout from "../pages/Checkout";
+import Employee from "../pages/admin/Employee";
 
 //Public routes
 const publicRoutes = [
@@ -48,7 +49,7 @@ const publicRoutes = [
     { path: '/finalregister/:status', component: FinalRegister,layout: FooterOnly},
     { path: '/reset-password/:token', component: ResetPassword,layout: FooterOnly},
     { path: '/dashboard', component: HomeAdmin, layout: DefaultLayoutAdmin},
-    { path: '/dashboard/staff', component: Staff, layout: DefaultLayoutAdmin},
+    { path: '/dashboard/employee', component: Employee, layout: DefaultLayoutAdmin},
     { path: '/dashboard/staff/:id', component: StaffDetail,layout: DefaultLayoutAdmin},
     { path: '/dashboard/staff/trash', component: StaffTrash,layout: DefaultLayoutAdmin},
     { path: '/dashboard/ingredient', component: Ingredient,layout: DefaultLayoutAdmin},
