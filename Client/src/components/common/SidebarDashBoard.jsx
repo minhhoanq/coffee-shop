@@ -1,4 +1,4 @@
-import { Box, Button, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material"
+import { Box, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material"
 
 import PersonIcon from '@mui/icons-material/Person';
 import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
@@ -64,11 +64,20 @@ const SidebarDashBoard = () => {
         const activeChild = props.activeChild;
 
         return (
-            <Link width={"100%"} to={option.pathname}>
+            <Link width={"100%"} to={option.pathname} style={{
+                cursor: "pointer",
+                textDecoration: "none",
+                color: "rgba(0, 0, 0, 0.8)",
+                
+            }}>
                 <ListItem onClick={() => setOpen(!open)}>
                     <ListItemButton sx={{
                         backgroundColor: active === option.state ? "#ccc" : "#fff",
                         borderRadius: "2px",
+                        "&:hover" : {
+                            backgroundColor: active === option.state && "#ccc",
+                            color: "#000"
+                        }
                     }}
                     onClick={() => setActiveParent(option.state)}
                     >
@@ -87,27 +96,25 @@ const SidebarDashBoard = () => {
                 >
                     {childrenOption && childrenOption.map((item, index) => (
                         <Link to={item.pathname}
-                        key={index}
-                        style={{
-                            cursor: "pointer",
-                            display: "flex",
-                            alignItems: "center",
-                            textDecoration: "none",
-                            color: "rgba(0, 0, 0, 0.8)",
-                            "&:hover" : {
-                                color: "#000"
-                            }
-                        }}
+                            key={index}
+                            style={{
+                                cursor: "pointer",
+                                textDecoration: "none",
+                                color: "rgba(0, 0, 0, 0.8)",
+                            }}
                         >
                             <ListItem>
                                 <ListItemButton sx={{
                                     backgroundColor: activeChild === item.state ? "#ccc" : "#fff",
                                     borderRadius: "2px",
+                                    "&:hover" : {
+                                        backgroundColor: activeChild === item.state && "#ccc",
+                                        color: "#000"
+                                    }
                                     }}
                                     onClick={() => {
                                         // setActiveParent(option.state);
                                         setActiveChildren(item.state);
-                                        console.log(item.state)
                                     }}
                                 >
                                     <ListItemText>
