@@ -47,11 +47,11 @@ const publicRoutes = [
     { path: '/register', component: Register, layout: null},
     { path: '/finalregister/:status', component: FinalRegister,layout: FooterOnly},
     { path: '/reset-password/:token', component: ResetPassword,layout: FooterOnly},
-    { path: '/admin/home', component: HomeAdmin, layout: DefaultLayoutAdmin},
-    { path: '/admin/staff', component: Staff, layout: DefaultLayoutAdmin},
-    { path: '/admin/staff/:id', component: StaffDetail,layout: DefaultLayoutAdmin},
-    { path: '/admin/staff/trash', component: StaffTrash,layout: DefaultLayoutAdmin},
-    { path: '/admin/ingredient', component: Ingredient,layout: DefaultLayoutAdmin},
+    { path: '/dashboard', component: HomeAdmin, layout: DefaultLayoutAdmin},
+    { path: '/dashboard/staff', component: Staff, layout: DefaultLayoutAdmin},
+    { path: '/dashboard/staff/:id', component: StaffDetail,layout: DefaultLayoutAdmin},
+    { path: '/dashboard/staff/trash', component: StaffTrash,layout: DefaultLayoutAdmin},
+    { path: '/dashboard/ingredient', component: Ingredient,layout: DefaultLayoutAdmin},
 
     //test
     { path: '/dashboard', component: DashboardPage, layout: MainLayout}

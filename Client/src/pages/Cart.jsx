@@ -14,6 +14,7 @@ const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const user = useSelector(state => state.auth.currentUser);
     const [checkDelete, setCheckDelete] = useState(false);
+    const [price, setPrice] = useState(0);
 
     const getData = async() => {
         const result = await getAllCartItem();
@@ -25,7 +26,7 @@ const Cart = () => {
             getData();
             setCheckDelete(false);
         }
-    },[user, checkDelete])
+    }, [user, checkDelete])
 
     return (
         <Box 
@@ -104,7 +105,7 @@ const Cart = () => {
                                 width: "100%",
                                 borderTop: "1px solid #ccc"
                             }}/>
-                            <EstimatedOrder/>
+                            <EstimatedOrder items={cartItems} price={e => setPrice(e)}/>
                         </Stack>
                     </Grid>
                 </Grid>

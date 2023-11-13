@@ -1,7 +1,18 @@
 import { Box, Button, Stack, Typography, colors } from "@mui/material";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const EstimatedOrder = () =>  {
+const EstimatedOrder = props =>  {
+    const items = props.items;
+    let priceTotal = 0;
+
+    useEffect(() => {
+        items?.forEach(element => {
+            priceTotal += element.price
+        });
+        props.price(priceTotal)
+    }, [items]);
+
     return (
         <Stack spacing={2}>
             <Stack spacing={1} width={"100%"}>
@@ -15,7 +26,7 @@ const EstimatedOrder = () =>  {
                     </Typography>
 
                     <Typography>
-                        $13.25
+                        ${priceTotal}
                     </Typography>
                 </Box>
 
@@ -60,7 +71,7 @@ const EstimatedOrder = () =>  {
                     <Typography
                         fontWeight={"600"}
                     >
-                        $15.90
+                        ${priceTotal}
                     </Typography>
                 </Box>
                 <Typography fontSize={"0.9rem"}>

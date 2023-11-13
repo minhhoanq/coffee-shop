@@ -1,87 +1,34 @@
-import React from "react";
-
-//import './defaultlayoutAdmin.scss';
-import SideBar from "../../sidebar/SideBar";
-import { 
-    CustomerIcon,
-    CustomerIconActive,
-    HomeIcon, 
-    HomeIconActive, 
-    ImportOrderIcon, 
-    IngredientIcon, 
-    IngredientIconActive, 
-    OrderIcon, 
-    OrderIconActive, 
-    StaffIcon, 
-    StaffIconActive 
-} from "../../icon/Icons";
+import React, { useState } from "react";
+import SidebarDashBoard from "../../common/SidebarDashBoard";
+import { Box, Grid } from "@mui/material";
 
 const DefaultLayoutAdmin = props => {
-
-    const MORE_ITEMS = [
-        {
-            icon: <HomeIcon/>,
-            iconActive: <HomeIconActive/>,
-            title: "Tài khoản của tôi",
-            pathname: "/admin/home",
-            opChild: [
-                {
-                    icon: <HomeIcon/>,
-                    iconActive: <HomeIconActive/>,
-                    title: "Tài khoản của tôi",
-                    pathname: "/admin/home",
-            }
-            ]
-        },
-        {
-            icon: <StaffIcon/>,
-            iconActive: <StaffIconActive/>,
-            title: "Nhân viên",
-            pathname: "/admin/staff",
-        },
-        {
-            icon: <CustomerIcon/>,
-            iconActive: <CustomerIconActive/>,
-            title: "Khách hàng",
-            pathname: "/admin/customer",
-        },
-        {
-            icon: <IngredientIcon/>,
-            iconActive: <IngredientIconActive/>,
-            title: "Nguyên liệu",
-            pathname: "/admin/ingredient",
-        },
-        {
-            icon: <OrderIcon/>,
-            iconActive: <OrderIconActive/>,
-            title: "Đơn đặt hàng",
-            pathname: "/admin/order",
-        },
-        {
-            icon: <ImportOrderIcon/>,
-            iconActive: <ImportOrderIcon/>,
-            title: "Đơn nhập hàng",
-            pathname: "/admin/import-orders",
-        },
-        {
-            icon: <HomeIcon/>,
-            iconActive: <HomeIconActive/>,
-            title: "Quản lý ...",
-            pathname: "/#",
-        },
-        {
-            icon: <HomeIcon/>,
-            iconActive: <HomeIconActive/>,
-            title: "Quản lý ...",
-            pathname: "/#",
-        }
-    ]
-
     return (
-        <div style={{display: "flex"}}>
-            <SideBar options={MORE_ITEMS}/>
-            <div style={{maxWidth: "80%", width: "80%", marginLeft: "20%"}}>{props.children}</div>
-        </div>
+        <Box
+        sx={{
+            width: "100%",
+            borderTop: "1px solid #ccc",
+            borderBottom: "1px solid #ccc",
+        }}
+        >
+            <Grid container xs={12} width={"100%"}
+            sx={{
+                // display:"flex",
+                // justifyContent:"center",
+                // alignItems:"center",
+            }}
+            >
+                <Grid item xs={3} >
+                    <SidebarDashBoard/>
+                </Grid>
+
+                <Grid item xs={9}>
+                    <Box width={"100%"} height={"100%"}>
+                        {props.children}
+                    </Box>
+                </Grid>
+            </Grid>
+        </Box>
     )
 }
 
