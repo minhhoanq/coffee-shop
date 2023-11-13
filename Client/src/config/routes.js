@@ -49,7 +49,7 @@ const publicRoutes = [
     { path: '/finalregister/:status', component: FinalRegister,layout: FooterOnly},
     { path: '/reset-password/:token', component: ResetPassword,layout: FooterOnly},
     { path: '/dashboard', component: HomeAdmin, layout: DefaultLayoutAdmin},
-    { path: '/dashboard/employee', component: Employee, layout: DefaultLayoutAdmin},
+    { path: '/dashboard/employees', component: Employee, layout: DefaultLayoutAdmin},
     { path: '/dashboard/staff/:id', component: StaffDetail,layout: DefaultLayoutAdmin},
     { path: '/dashboard/staff/trash', component: StaffTrash,layout: DefaultLayoutAdmin},
     { path: '/dashboard/ingredient', component: Ingredient,layout: DefaultLayoutAdmin},

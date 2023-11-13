@@ -18,25 +18,25 @@ const menus = [
         pathname: "/dashboard"
     },
     {
-        title: "Employee",
+        title: "Employees",
         icon: <PersonIcon/>,
-        state: "employee",
-        pathname: "/dashboard/employee",
+        state: "employees",
+        pathname: "/dashboard/employees",
         childrens: [
             {
                 title: "List of employee",
                 state: "list_of_employee",
-                pathname: "/dashboard/employee",
+                pathname: "/dashboard/employees",
             },
             {
                 title: "Trash",
-                state: "address",
-                // pathname: "/user/account/address",
+                state: "trash",
+                pathname: "/dashboard/employees/trash",
             },
             {
-                title: "Chấm công",
-                state: "payment",
-                // pathname: "/user/account/payment",
+                title: "Timekeeping",
+                state: "timekeeping",
+                pathname: "/dashboard/employees/timekeeping",
             }
         ]
     },
@@ -53,15 +53,15 @@ const menus = [
 ]
 
 const SidebarDashBoard = () => {
-    const [activeParent, setActiveParent] = useState("home");
-    const [activeChildren, setActiveChildren] = useState("");
+    const [activeParent, setActiveParent] = useState("/dashboard");
 
     const Menu = props => {
+        const [activeChildren, setActiveChildren] = useState("");
+
         const option = props.option;
         const childrenOption = option.childrens;
         const [open, setOpen] = useState(true);
         const active = props.active;
-        const activeChild = props.activeChild;
 
         return (
             <Link width={"100%"} to={option.pathname} style={{
@@ -72,14 +72,14 @@ const SidebarDashBoard = () => {
             }}>
                 <ListItem onClick={() => setOpen(!open)}>
                     <ListItemButton sx={{
-                        backgroundColor: active === option.state ? "#ccc" : "#fff",
+                        backgroundColor: active === option.pathname ? "#ccc" : "#fff",
                         borderRadius: "2px",
                         "&:hover" : {
-                            backgroundColor: active === option.state && "#ccc",
+                            backgroundColor: active === option.pathname && "#ccc",
                             color: "#000"
                         }
                     }}
-                    onClick={() => setActiveParent(option.state)}
+                    onClick={() => setActiveParent(option.pathname)}
                     >
                         <ListItemIcon>
                             {option.icon}
@@ -105,16 +105,16 @@ const SidebarDashBoard = () => {
                         >
                             <ListItem>
                                 <ListItemButton sx={{
-                                    backgroundColor: activeChild === item.state ? "#ccc" : "#fff",
+                                    backgroundColor: activeChildren === item.pathname ? "#ccc" : "#fff",
                                     borderRadius: "2px",
                                     "&:hover" : {
-                                        backgroundColor: activeChild === item.state && "#ccc",
+                                        backgroundColor: activeChildren === item.pathname && "#ccc",
                                         color: "#000"
                                     }
                                     }}
                                     onClick={() => {
-                                        // setActiveParent(option.state);
-                                        setActiveChildren(item.state);
+                                        // setActiveParent(option.pathname);
+                                        setActiveChildren(item.pathname);
                                     }}
                                 >
                                     <ListItemText>
@@ -152,7 +152,7 @@ const SidebarDashBoard = () => {
             </Box>
             <Stack>
                 {menus.map((item, index) => (
-                    <Menu option={item} key={index} active={activeParent} activeChild={activeChildren}/>
+                    <Menu option={item} key={index} active={activeParent} />
                 ))}
             </Stack>
         </Box>
