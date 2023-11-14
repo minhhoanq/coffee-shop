@@ -46,28 +46,29 @@ const menus = [
         icon: <PersonIcon/>,
         state: "customers",
         pathname: "/dashboard/customers",
-        childrens: [
-            {
-                title: "List of customer",
-                state: "list_of_customer",
-                pathname: "/dashboard/customers",
-            },
-            {
-                title: "Trash",
-                state: "trash",
-                pathname: "/dashboard/customers/trash",
-            },
-            {
-                title: "Timekeeping",
-                state: "timekeeping",
-                pathname: "/dashboard/customers/timekeeping",
-            }
-        ]
+        // childrens: [
+        //     {
+        //         title: "List of customer",
+        //         state: "list_of_customer",
+        //         pathname: "/dashboard/customers",
+        //     },
+        //     {
+        //         title: "Trash",
+        //         state: "trash",
+        //         pathname: "/dashboard/customers/trash",
+        //     },
+        //     {
+        //         title: "Timekeeping",
+        //         state: "timekeeping",
+        //         pathname: "/dashboard/customers/timekeeping",
+        //     }
+        // ]
     },
     {
-        title: "Lịch sử mua hàng",
+        title: "Products",
         icon: <BallotOutlinedIcon/>,
-        state: "order"
+        state: "product",
+        pathname: "/dashboard/products",
     },
     {
         title: "Kho voucher",
