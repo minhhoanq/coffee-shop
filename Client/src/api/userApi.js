@@ -1,6 +1,6 @@
 import request from "../utils/request";
 
-export const getAllStaff = async (accessToken) => {
+export const getAllStaff = async () => {
     try {
         const res = await request.get('/api/v1/users', {
             params: {

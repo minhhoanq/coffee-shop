@@ -6,13 +6,13 @@ const getAllUserService = ({roles}) => new Promise( async(resolve, reject) => {
             where: {
                 roles,
             },
-            attributes: ['id', 'email', 'username', 'firstname', 'lastname', 'roles', 'sex', 'phone', 'address'],
+            attributes: ['id', 'email', 'username', 'firstname', 'lastname', 'roles', 'sex', 'phone', 'address', 'updatedAt'],
         });
 
         resolve({
             err: response ? 0 : 1,
             mes: response ? "Thành công!" : "Không tìm thấy Users!",
-            usersData: response,
+            data: response,
         })
     } catch (error) {
         reject(error)
