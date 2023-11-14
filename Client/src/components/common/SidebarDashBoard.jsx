@@ -40,6 +40,30 @@ const menus = [
             }
         ]
     },
+    ,
+    {
+        title: "Customers",
+        icon: <PersonIcon/>,
+        state: "customers",
+        pathname: "/dashboard/customers",
+        childrens: [
+            {
+                title: "List of customer",
+                state: "list_of_customer",
+                pathname: "/dashboard/customers",
+            },
+            {
+                title: "Trash",
+                state: "trash",
+                pathname: "/dashboard/customers/trash",
+            },
+            {
+                title: "Timekeeping",
+                state: "timekeeping",
+                pathname: "/dashboard/customers/timekeeping",
+            }
+        ]
+    },
     {
         title: "Lịch sử mua hàng",
         icon: <BallotOutlinedIcon/>,
