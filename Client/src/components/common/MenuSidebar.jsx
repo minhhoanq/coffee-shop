@@ -95,6 +95,11 @@ const MenuSidebar = () => {
         }
     );
 
+    useEffect(() => {
+        setActiveParent(pathname);
+        setActiveChildren(pathname);
+    }, [pathname])
+
     return (
         <>
             {menus.map((item, index) => (

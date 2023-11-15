@@ -9,6 +9,7 @@ import { Link, useLocation } from "react-router-dom";
 import ModalAddAddress from "../../components/common/ModalAddAddress";
 import ModalAddProduct from "../../components/common/ModalAddProduct";
 import ModalFilter from "../../components/common/ModalFilter";
+import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -56,7 +57,7 @@ const Product = () => {
         }}>
             <Stack>
                 <Typography variant="h6">
-                    {pathname}
+                    <Breadcrumbs/>
                 </Typography>
 
                 <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}  mt={2}>

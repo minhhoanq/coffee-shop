@@ -5,6 +5,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { getAllStaff } from "../../api/userApi";
+import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -40,7 +41,7 @@ const Customer = () => {
         }}>
             <Stack>
                 <Typography variant="h6">
-                    Dashboard / Customer
+                    <Breadcrumbs/>
                 </Typography>
 
                 <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}  mt={2}>
