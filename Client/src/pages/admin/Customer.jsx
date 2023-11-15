@@ -94,7 +94,7 @@ const Customer = () => {
                 </Stack>
             </Stack>
             <Box mt={4} sx={{
-                width: "90%",
+                width: "100%",
                 height: "600px",
                 backgroundColor: "#fff",
                 boxShadow: "0 2px 10px 0 rgba(0,0,0,.15)",

@@ -1,11 +1,15 @@
 import { Box, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material"
 
 import PersonIcon from '@mui/icons-material/Person';
+import GroupsIcon from '@mui/icons-material/Groups';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
 import DiscountOutlinedIcon from '@mui/icons-material/DiscountOutlined';
 import { useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
 import HomeIcon from '@mui/icons-material/Home';
+import Diversity1Icon from '@mui/icons-material/Diversity1';
 import logo from "../../assets/images/logo.jpg";
 import { Link, useLocation } from "react-router-dom";
 
@@ -18,7 +22,7 @@ const menus = [
     },
     {
         title: "Employees",
-        icon: <PersonIcon/>,
+        icon: <GroupsIcon/>,
         state: "employees",
         pathname: "/dashboard/employees",
         childrens: [
@@ -42,7 +46,7 @@ const menus = [
     ,
     {
         title: "Customers",
-        icon: <PersonIcon/>,
+        icon: <Diversity1Icon/>,
         state: "customers",
         pathname: "/dashboard/customers",
         childrens: [
@@ -77,22 +81,19 @@ const menus = [
 ]
 
 const MenuSidebar = () => {
-    const [activeParent, setActiveParent] = useState("/dashboard");
-    const [activeChildren, setActiveChildren] = useState("");
     const { pathname } = useLocation();
 
-    const [open, setOpen] = useState(false);
-
-    console.log(activeParent + "|" + pathname)
-
-    // const handleClickItemSidebar = () => {
-    //     // setOpen(!open);
-    //     // setActiveParent(item.pathname);
-    //     if(activeParent !== pathname) {
-    //         setActiveParent(pathname);
-    //         setOpen(!open)
-    //     }
-    // }
+    const [activeParent, setActiveParent] = useState(pathname);
+    const [activeChildren, setActiveChildren] = useState(pathname);
+    const [open, setOpen] = useState(
+        () => {
+            if(pathname !== "/Dashboard") {
+                return true
+            } else {
+                return false
+            }
+        }
+    );
 
     return (
         <>
@@ -105,26 +106,37 @@ const MenuSidebar = () => {
                     onClick={() => {
                         if(activeParent !== item.pathname) {
                             setActiveParent(item.pathname);
+                            setActiveChildren(item.pathname)
                             setOpen(true);
                         }
                     }}
                 >
-                    <ListItem >
+                    <ListItem width={"100%"}>
                         <ListItemButton sx={{
                             backgroundColor: activeParent === item.pathname ? "#ccc" : "#fff",
                             borderRadius: "2px",
                             "&:hover" : {
                                 backgroundColor: activeParent === item.pathname && "#ccc",
                                 color: "#000"
-                            }
+                            },
+                            width: "100%"
                         }}
                         >
-                            <ListItemIcon>
-                                {item.icon}
-                            </ListItemIcon>
-                            <ListItemText>
-                                {item.title}
-                            </ListItemText>
+                            <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"} width={"100%"}>
+                                <Stack direction={"row"} alignItems={"center"}>
+                                    <ListItemIcon>
+                                        {item.icon}
+                                    </ListItemIcon>
+                                    <ListItemText>
+                                        {item.title}
+                                    </ListItemText>
+                                </Stack>
+                                {item.childrens ? 
+                                <>
+                                    { activeParent === item.pathname ? <ArrowDropUpIcon/> : <ArrowDropDownIcon/>}
+                                </> : 
+                                <></>}
+                            </Stack>
                         </ListItemButton>
                     </ListItem>
                     <Box ml={"55px"} width={"100% - 55px"}
@@ -151,8 +163,9 @@ const MenuSidebar = () => {
                                         }
                                         }}
                                         onClick={() => {
-                                            // setActiveParent(option.pathname);
-                                            setActiveChildren(item.pathname);
+                                            if(activeChildren !== item.pathname) {
+                                                setActiveChildren(item.pathname)
+                                            }
                                         }}
                                     >
                                         <ListItemText>

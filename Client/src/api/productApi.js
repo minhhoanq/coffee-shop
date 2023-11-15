@@ -5,7 +5,7 @@ export const getAllProduct = async () => {
         const res = await request.get('/api/v1/product');
         return res.data;
     } catch (error) {
-        console.log(error);
+        return error;
     }
 }
 
