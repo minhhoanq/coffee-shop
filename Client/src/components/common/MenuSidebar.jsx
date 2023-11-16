@@ -72,6 +72,23 @@ const menus = [
         icon: <BallotOutlinedIcon/>,
         state: "product",
         pathname: "/dashboard/products",
+        childrens: [
+            {
+                title: "List of products",
+                state: "list_of_customer",
+                pathname: "/dashboard/products",
+            },
+            {
+                title: "Create product",
+                state: "create_product",
+                pathname: "/dashboard/products/create",
+            },
+            {
+                title: "Trash",
+                state: "trash",
+                pathname: "/dashboard/customers/trash",
+            },
+        ]
     },
     {
         title: "Kho voucher",
@@ -95,10 +112,10 @@ const MenuSidebar = () => {
         }
     );
 
-    useEffect(() => {
-        setActiveParent(pathname);
-        setActiveChildren(pathname);
-    }, [pathname])
+    // useEffect(() => {
+    //     setActiveParent(pathname);
+    //     setActiveChildren(pathname);
+    // }, [pathname])
 
     return (
         <>

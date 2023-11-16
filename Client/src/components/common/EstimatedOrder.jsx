@@ -80,7 +80,6 @@ const EstimatedOrder = props =>  {
             </Stack>
 
             <Button variant="contained" size="large" sx={{
-                    // color: "#fff",
                     bgcolor: colors.brown[500],
                         "&:hover" : {
                             bgcolor: colors.brown[400]

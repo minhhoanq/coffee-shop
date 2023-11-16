@@ -29,6 +29,7 @@ import Checkout from "../pages/Checkout";
 import Employee from "../pages/admin/Employee";
 import Customer from "../pages/admin/Customer";
 import Product from "../pages/admin/Product";
+import CreateProduct from "../pages/admin/CreateProduct";
 
 //Public routes
 const publicRoutes = [
@@ -54,6 +55,7 @@ const publicRoutes = [
     { path: '/dashboard/employees', component: Employee, layout: DefaultLayoutAdmin},
     { path: '/dashboard/customers', component: Customer, layout: DefaultLayoutAdmin},
     { path: '/dashboard/products', component: Product, layout: DefaultLayoutAdmin},
+    { path: '/dashboard/products/create', component: CreateProduct, layout: DefaultLayoutAdmin},
     { path: '/dashboard/staff/:id', component: StaffDetail,layout: DefaultLayoutAdmin},
     { path: '/dashboard/staff/trash', component: StaffTrash,layout: DefaultLayoutAdmin},
     { path: '/dashboard/ingredient', component: Ingredient,layout: DefaultLayoutAdmin},

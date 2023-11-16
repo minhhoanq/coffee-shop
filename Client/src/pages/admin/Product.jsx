@@ -25,9 +25,8 @@ const rows = [
 
 const Product = () => {
     const [products, setProducts] = useState([]);
-    const { pathname } = useLocation();
     const [anchorEl, setAnchorEl] = useState(null);
-    const [showModal, setShowModal] = useState(false);
+    const [showModalFilter, setShowModalFilter] = useState(false);
 
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -86,16 +85,29 @@ const Product = () => {
                             color: "#3040d6",
 
                         }}
-                        // onClick={() => setShowModal(true)}
+                        // onClick={() => setShowModalCreateProduct(true)}
                         >
                             <GroupAddIcon/>
                             <Typography sx={{
                                 marginLeft: "10px"
                             }}>
-                                Create new
+                                <Link
+                                    to={'/dashboard/products/create'} style={{
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        textDecoration: "none",
+                                        color: "rgba(0, 0, 0, 0.8)",
+                                        "&:hover" : {
+                                            color: "#000"
+                                        }
+                                    }}
+                                >
+                                    Create new
+                                </Link>
                             </Typography>
                         </IconButton>
-                            {/* <ModalAddProduct open={showModal} close={() => setShowModal(false)}/> */}
+                            {/* <ModalAddProduct open={showModalCreateProduct} close={() => setShowModalCreateProduct(false)}/> */}
                         <IconButton sx={{
                             width: "100px",
                             border: "1px solid #3040d6",
@@ -104,7 +116,7 @@ const Product = () => {
 
                         }}
                         
-                        onClick={() => setShowModal(true)}
+                        onClick={() => setShowModalFilter(true)}
                         >
                             <FilterAltIcon/>
                             <Typography sx={{
@@ -114,7 +126,7 @@ const Product = () => {
                                 Filter
                             </Typography>
                         </IconButton>
-                        <ModalFilter open={showModal} close={() => setShowModal(false)}/>
+                        <ModalFilter open={showModalFilter} close={() => setShowModalFilter(false)}/>
                     </Stack>
                 </Stack>
             </Stack>

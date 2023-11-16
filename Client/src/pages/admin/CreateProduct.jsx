@@ -1,13 +1,11 @@
-import { Autocomplete, Box, Button, IconButton, Modal, Stack, TextField, Typography, colors, createFilterOptions } from "@mui/material";
-import axios from "axios";
-import { createUserAddress, setDefaultAddress } from "../../api/userApi";
-
-import ClearIcon from '@mui/icons-material/Clear';
-import { Controller, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
 
+import { Autocomplete, Box, Button, Checkbox, IconButton, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, colors, createFilterOptions } from "@mui/material";
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { getAllStaff } from "../../api/userApi";
+import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 const categories = [
     {
@@ -33,55 +31,53 @@ const filterOptions = createFilterOptions({
     stringify: (option) => option.title,
 })
 
-const ModalFilter = props => {
+const CreateProduct = () => {
+    const [customers, setCustomers] = useState([]);
 
-    const handleCloseModal = () => {
-        props.close();
+    const getAllCustomers = async() => {
+        const result = await getAllStaff();
+        setCustomers(result.data);
     }
 
+    useEffect(() => {
+        getAllCustomers()
+    }, [])
+
     return (
-        <Modal
-            open={props.open}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <Stack
-                sx={{
-                    position: 'fixed',
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    width: 400,
-                    minHeight: "100vh",
-                    height: "550px",
-                    bgcolor: 'background.paper',
-                    p: 4,
-                    outline: "none",
-                }}
-            >
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "flex-end"
-                    }}
-                >
-                    <IconButton onClick={handleCloseModal}>
-                        <ClearIcon/>
-                    </IconButton>
-                </Box>
-                <Typography variant="h4">
-                    Filters Products
+        <Box sx={{
+            p: "40px",
+            backgroundColor: "#f8f9fa",
+            minHeight: "100vh",
+            display: "flex",
+            flexDirection: "column",
+        }}>
+            <Stack>
+                <Typography variant="h6">
+                    <Breadcrumbs/>
                 </Typography>
-                <Box width={"100%"} sx={{
-                    height: "100vh",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between"
-                }}>
-                    <Stack spacing={4} mt={10}>
-                        <TextField label={`ID`} fullWidth
-                            name={`id`} 
-                            id={`id`}
+
+                <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}  mt={2}>
+                    <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                        <Typography variant="h4">
+                            Create new product
+                        </Typography>
+                    </Stack>
+                </Stack>
+            </Stack>
+            <Box mt={4} sx={{
+                width: "100%",
+                height: "600px",
+                backgroundColor: "#fff",
+                boxShadow: "0 2px 10px 0 rgba(0,0,0,.15)",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                padding: "30px"
+            }}>
+                <Stack spacing={4}>
+                        <TextField label={`Name`} fullWidth
+                            name={`name`} 
+                            id={`name`}
                             inputProps={{
                                 style: {
                                     height: "50px",
@@ -154,10 +150,9 @@ const ModalFilter = props => {
                         }}>
                             Apply changes
                     </Button>
-                </Box>
-            </Stack>
-        </Modal>
+            </Box>
+        </Box>
     )
 }
 
-export default ModalFilter;
+export default CreateProduct;
