@@ -4,30 +4,20 @@ import { Box, Grid } from "@mui/material";
 
 const DefaultLayoutAdmin = props => {
     return (
-        <Box
-        sx={{
-            width: "100%",
-            borderTop: "1px solid #ccc",
-            borderBottom: "1px solid #ccc",
-        }}
-        >
-            <Grid container xs={12} width={"100%"}
-            sx={{
-                // display:"flex",
-                // justifyContent:"center",
-                // alignItems:"center",
-            }}
-            >
-                <Grid item xs={3} >
-                    <SidebarDashBoard/>
-                </Grid>
-
-                <Grid item xs={9}>
-                    <Box width={"100%"} height={"100%"}>
-                        {props.children}
-                    </Box>
-                </Grid>
-            </Grid>
+        <Box>
+            <Box item xs={3} sx={{
+                position: "fixed",
+                top: 0,
+                bottom: 0,
+                left: 0,
+                width: "350px"
+            }}>
+                <SidebarDashBoard/>
+            </Box>
+                
+            <Box width={"100%"} height={"100%"} paddingLeft={"350px"}>
+                {props.children}
+            </Box>
         </Box>
     )
 }
