@@ -10,23 +10,17 @@ import ModalAddAddress from "../../components/common/ModalAddAddress";
 import ModalAddProduct from "../../components/common/ModalAddProduct";
 import ModalFilter from "../../components/common/ModalFilter";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
-
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Frozen', 159, 6.0, 24, 4.0),
-    createData('Ice', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+import { getProductsAction } from "../../redux/asyncActions/productActions";
+import { useDispatch } from "react-redux";
 
 const Product = () => {
     const [products, setProducts] = useState([]);
     const [anchorEl, setAnchorEl] = useState(null);
     const [showModalFilter, setShowModalFilter] = useState(false);
+
+    const [page, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
+    const dispatch = useDispatch();
 
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -35,16 +29,25 @@ const Product = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    const getAllProducts = async() => {
-        const result = await getProducts();
-        // console.log(result)
-        setProducts(result.productData.rows);
-    }
-
+    
+    //Handle page
     useEffect(() => {
-        getAllProducts()
-    }, [])
+        const getData = async() => {
+            const pagePicked = page;
+            const limit = 6;
+            
+            const productList = await dispatch(getProductsAction({pagePicked, limit}));
+            setProducts(productList.payload?.rows || []);
+
+            const quantityPage = Math.ceil((productList.payload?.count || 0) / limit);
+            setTotalPage(quantityPage);
+        }
+        getData();
+    },[page]);
+
+    const handleChange = (e, value) => {
+        setPage(value)
+    }
 
     return (
         <Box sx={{
@@ -227,13 +230,11 @@ const Product = () => {
                     }}
                 >
                     <Pagination 
-                        count={2}
-                        page={1}
-                        // onChange={handleChange}
+                        count={totalPage}
+                        page={page}
+                        onChange={handleChange}
                         sx={{
-                            // position: "absolute",
-                            // bottom: "10px",
-                            // right: "10px"
+                            // mt: "40px"
                         }}/>
                 </Box>
             </Box>

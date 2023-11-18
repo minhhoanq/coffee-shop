@@ -35,8 +35,27 @@ const filterOptions = createFilterOptions({
 
 const ModalFilter = props => {
 
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isDirty },
+        reset,
+    } = useForm({
+        defaultValues: {
+           id: "",
+           name: "",
+           category: "",
+           price: "",
+           sold: "",
+        }
+    });
+
     const handleCloseModal = () => {
         props.close();
+    }
+
+    const handleSubmitFilter = (data) => {
+        console.log(data)
     }
 
     return (
@@ -72,7 +91,11 @@ const ModalFilter = props => {
                 <Typography variant="h4">
                     Filters Products
                 </Typography>
-                <Box width={"100%"} sx={{
+                <Box 
+                
+                component={"form"}
+                onSubmit={handleSubmit(handleSubmitFilter)}
+                width={"100%"} sx={{
                     height: "100vh",
                     display: "flex",
                     flexDirection: "column",
@@ -91,6 +114,16 @@ const ModalFilter = props => {
                             sx={{
                                 bgcolor: colors.grey[200]
                             }}
+                            {...register("id", 
+                                // {
+                                //     required: 'Không bỏ trống',
+                                //     minLength: {
+                                //         value: 1,
+                                //         message: 'Chỉ nhập số, không nhập chữ cái hay ký tự đặc biệt'
+                                //     }
+                                // }
+                            )
+                        }
                         />
                         <TextField label={`Name`} fullWidth
                             name={`name`} 
@@ -104,6 +137,16 @@ const ModalFilter = props => {
                             sx={{
                                 bgcolor: colors.grey[200]
                             }}
+                            {...register("name", 
+                                // {
+                                //     required: 'Không bỏ trống',
+                                //     minLength: {
+                                //         value: 1,
+                                //         message: 'Chỉ nhập số, không nhập chữ cái hay ký tự đặc biệt'
+                                //     }
+                                // }
+                            )
+                        }
                         />
                         <Autocomplete
                             fullWidth
@@ -131,6 +174,16 @@ const ModalFilter = props => {
                             sx={{
                                 bgcolor: colors.grey[200]
                             }}
+                            {...register("price", 
+                                // {
+                                //     required: 'Không bỏ trống',
+                                //     minLength: {
+                                //         value: 1,
+                                //         message: 'Chỉ nhập số, không nhập chữ cái hay ký tự đặc biệt'
+                                //     }
+                                // }
+                            )
+                        }
                         />
                         <TextField label={`Sold`} fullWidth
                             name={`sold`} 
@@ -144,9 +197,19 @@ const ModalFilter = props => {
                             sx={{
                                 bgcolor: colors.grey[200]
                             }}
+                            {...register("sold", 
+                                // {
+                                //     required: 'Không bỏ trống',
+                                //     minLength: {
+                                //         value: 1,
+                                //         message: 'Chỉ nhập số, không nhập chữ cái hay ký tự đặc biệt'
+                                //     }
+                                // }
+                            )
+                        }
                         />
                     </Stack>
-                    <Button fullWidth variant="contained" size="large" sx={{
+                    <Button type="submit" fullWidth variant="contained" size="large" sx={{
                             bgcolor: colors.blue[700],
                             "&:hover" : {
                                 bgcolor: colors.blue[600]
