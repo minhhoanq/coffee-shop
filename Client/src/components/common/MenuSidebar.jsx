@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
 import HomeIcon from '@mui/icons-material/Home';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
+import CategoryIcon from '@mui/icons-material/Category';
 import logo from "../../assets/images/logo.jpg";
 import { Link, useLocation } from "react-router-dom";
 
@@ -82,6 +83,29 @@ const menus = [
                 title: "Create product",
                 state: "create_product",
                 pathname: "/dashboard/products/create",
+            },
+            {
+                title: "Trash",
+                state: "trash",
+                pathname: "/dashboard/customers/trash",
+            },
+        ]
+    },
+    {
+        title: "Categories",
+        icon: <CategoryIcon/>,
+        state: "category",
+        pathname: "/dashboard/categories",
+        childrens: [
+            {
+                title: "List of Categories",
+                state: "list_of_customer",
+                pathname: "/dashboard/categories",
+            },
+            {
+                title: "Create product",
+                state: "create_product",
+                pathname: "/dashboard/categories/create",
             },
             {
                 title: "Trash",
