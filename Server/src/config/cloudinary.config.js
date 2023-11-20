@@ -12,7 +12,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   allowedFormats: ['jpg', 'png'],
   params: {
-    folder: 'coffee-store/Users'
+    folder: 'coffee-store'
   }
 });
 

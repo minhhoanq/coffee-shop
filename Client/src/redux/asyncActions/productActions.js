@@ -9,6 +9,15 @@ export const getProductsAction = createAsyncThunk('product/getProduts', async(da
     return response.productData;
 });
 
+export const createProductAction = createAsyncThunk('product/createProduct', async(data, { rejectWithValue }) => {
+    try {
+        const res = await productApi.createProduct(data);
+        return res;
+    } catch (error) {
+        return rejectWithValue(error);
+    }
+})
+
 export const postRatingAction = createAsyncThunk('product/postRating', async(data, { rejectWithValue }) => {
     try {
         const response = await ratingApi.createRatingProduct(data.comment, data.star);

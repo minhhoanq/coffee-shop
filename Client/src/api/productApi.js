@@ -29,19 +29,10 @@ export const getProducts = async (name, order, page, limit, categoryId, price, i
     }
 }
 
-export const createProduct = async({name, image, category, price, description, sold, sizeId, recipeId}) => {
-    const res = await request.post('/api/v1/product/create', {
-        productName: name, 
-        productImg: image, 
-        categoryId: category.state, 
-        price: price, 
-        productDescription: description, 
-        sold: sold,
-        sizeId: 3,
-        recipeId: 1
-    })
+export const createProduct = async(data) => {
+    const res = await request.put('/api/v1/product/create', data);
     
-    return res.data;
+    return res;
 }
 
 export const getProductByCategoryId = async (id) => {

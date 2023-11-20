@@ -67,19 +67,19 @@ const Personal = () => {
         }
     });
     
-    useEffect(() => {
-        reset({
-            id: user.id,
-            username: user.username,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            sex: user.sex ? '1' : '2',
-            birth: user.birth,
-            phone: user.phone,
-            email: user.email,
-            image: user.image,
-        });
-    },[])
+    // useEffect(() => {
+    //     reset({
+    //         id: user.id,
+    //         username: user.username,
+    //         firstname: user.firstname,
+    //         lastname: user.lastname,
+    //         sex: user.sex ? '1' : '2',
+    //         birth: user.birth,
+    //         phone: user.phone,
+    //         email: user.email,
+    //         image: user.image,
+    //     });
+    // },[])
 
     const handleSubmitProfile = async(data) => {
         console.log(data);
@@ -89,6 +89,7 @@ const Personal = () => {
         
         for(let i of Object.entries(data)) formData.append(i[0], i[1])
 
+        console.log(formData)
         const updateProfile = await dispatch(updateUserbyUserAction(formData));
         console.log(updateProfile);
 
