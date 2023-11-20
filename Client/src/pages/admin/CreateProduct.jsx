@@ -6,6 +6,8 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { getAllStaff } from "../../api/userApi";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
+import { Controller, useForm } from "react-hook-form";
+import { createProduct } from "../../api/productApi";
 
 const categories = [
     {
@@ -32,16 +34,18 @@ const filterOptions = createFilterOptions({
 })
 
 const CreateProduct = () => {
-    const [customers, setCustomers] = useState([]);
 
-    const getAllCustomers = async() => {
-        const result = await getAllStaff();
-        setCustomers(result.data);
+    const {
+        control,
+        register,
+        handleSubmit
+    } = useForm()
+
+    const handleCreateProduct = async(data) => {
+        console.log(data)
+        // const response = await createProduct(data);
+        // console.log(response);
     }
-
-    useEffect(() => {
-        getAllCustomers()
-    }, [])
 
     return (
         <Box sx={{
@@ -64,7 +68,9 @@ const CreateProduct = () => {
                     </Stack>
                 </Stack>
             </Stack>
-            <Box mt={4} sx={{
+            <Box mt={4}
+            component={"form"} onSubmit={handleSubmit(handleCreateProduct)} 
+            sx={{
                 width: "100%",
                 // height: "600px",
                 backgroundColor: "#fff",
@@ -74,7 +80,7 @@ const CreateProduct = () => {
                 justifyContent: "space-between",
                 padding: "30px"
             }}>
-                <Stack spacing={4}>
+                <Stack spacing={4} >
                     <TextField label={`Name`} fullWidth
                         name={`name`} 
                         id={`name`}
@@ -84,20 +90,27 @@ const CreateProduct = () => {
                                 padding: '0 10px',
                             }
                         }}
+                        {...register("name")}
                     />
-                    <Autocomplete
-                        fullWidth
-                        id="filter-category"
-                        options={categories}
-                        getOptionLabel={(option) => option.title}
-                        // onChange={(e, value) => props.category(value?.state ? value.state : "0")}
-                        filterOptions={filterOptions}
-                        // sx={{
-                        //     width: { xl: "200px", lg: "200px", md: "200px", sm: "200px", xs: "60%"},
-                        //     outline: "none"
-                        // }}
-                        size = "large"
-                        renderInput={(params) => <TextField {...params} label="Categories" />}
+
+                    <Controller
+                        control={control}
+                        name="category"
+                        render={({ field: {onChange, value} }) =>  (
+                            <Autocomplete
+                                fullWidth
+                                id="category"
+                                name="category"
+                                options={categories}
+                                getOptionLabel={(option) => option.title}
+                                filterOptions={filterOptions}
+                                onChange={(event, values) => {
+                                    onChange(values);
+                                }}
+                                size = "large"
+                                renderInput={(params) => <TextField {...params} label="Categories" onChange={onChange}/>}
+                            />
+                        )}
                     />
                     <TextField label={`Price`} fullWidth
                         name={`price`} 
@@ -108,6 +121,8 @@ const CreateProduct = () => {
                                 padding: '0 10px',
                             }
                         }}
+                        {...register("price")}
+
                     />
                     
                     <TextField label={`Sold`} fullWidth
@@ -119,6 +134,7 @@ const CreateProduct = () => {
                                 padding: '0 10px',
                             }
                         }}
+                        {...register("sold")}
                     />
                     <TextareaAutosize
                         placeholder="Description"
@@ -129,6 +145,7 @@ const CreateProduct = () => {
                             padding: "10px 20px",
                             height: "100px"
                         }}
+                        {...register("description")}
                     />
 
                     <label htmlFor="image" style={{
@@ -149,7 +166,11 @@ const CreateProduct = () => {
                                 }
                             }}
                         >
-                            <img height={"80px"} width={"150px"} src="https://www.iav.com/app/uploads/2019/01/LM_prod_life_cycle_icon_16_9.png"/>
+                            <img 
+                                height={"80px"} 
+                                width={"150px"} 
+                                src="https://www.iav.com/app/uploads/2019/01/LM_prod_life_cycle_icon_16_9.png"
+                            />
                             <Stack alignItems={"center"} mt={1}>
                                 <Typography variant="h6">
                                     Drop your file here, or click to brower
@@ -164,9 +185,9 @@ const CreateProduct = () => {
                         </Box>
                     </label>
 
-                    <input id="image" name="image" type="file" hidden/>
+                    <input id="image" name="image" type="file" hidden {...register('image')}/>
                 </Stack>
-                <Button fullWidth variant="contained" size="large" sx={{
+                <Button type="submit" fullWidth variant="contained" size="large" sx={{
                         bgcolor: colors.blue[700],
                         marginTop: "40px",
                         "&:hover" : {

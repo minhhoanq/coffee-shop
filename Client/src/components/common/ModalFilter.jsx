@@ -42,16 +42,6 @@ const ModalFilter = props => {
         // formState: { errors, isDirty },
         reset,
     } = useForm(
-        // {
-            // defaultValues: {
-            //    id: "",
-            //    name: "",
-            //    category: "",
-            //    price: "",
-            //    sold: "",
-            // }
-        // }
-
     );
 
     const handleCloseModal = () => {

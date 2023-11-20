@@ -92,8 +92,8 @@ const productController = {
     },
 
     uploadImageProduct: async(req, res) => {
-        console.log(req.file);
-        return res.json('Upload Thành công!')
+        // console.log();
+        return res.json(req.file.path)
     },
 
     // Recommended System Controller

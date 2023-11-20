@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Box, Checkbox, IconButton, Menu, MenuItem, Modal, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Checkbox, CircularProgress, IconButton, Menu, MenuItem, Modal, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, colors } from "@mui/material";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -11,13 +11,13 @@ import ModalAddProduct from "../../components/common/ModalAddProduct";
 import ModalFilter from "../../components/common/ModalFilter";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { getProductsAction } from "../../redux/asyncActions/productActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Product = () => {
     const [products, setProducts] = useState([]);
     const [anchorEl, setAnchorEl] = useState(null);
     const [showModalFilter, setShowModalFilter] = useState(false);
-
+    const isFetching = useSelector(state => state.product.isPending);
     const [id, setId] = useState();
     const [name, setName] = useState("");
     const [category, setCategory] = useState();
@@ -48,26 +48,23 @@ const Product = () => {
 
             if(category !== "0") {
                 categoryId = category;
-                pagePicked = 1;
             }
 
             if(price !== "") {
                 priceProduct = price;
-                pagePicked = 1;
             }
 
             if(id !== "" && id !== 0) {
                 idProduct = id;
-                pagePicked = 1;
             }
 
             if(sold !== 0) {
                 soldProduct = sold;
-                pagePicked = 1;
             }
             
             const productList = await dispatch(getProductsAction({name, pagePicked, limit, categoryId, priceProduct, idProduct, soldProduct}));
             setProducts(productList.payload?.rows || []);
+            console.log(productList)
 
             const quantityPage = Math.ceil((productList.payload?.count || 0) / limit);
             setTotalPage(quantityPage);
@@ -180,7 +177,8 @@ const Product = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                overflow: "auto"
+                overflow: "auto",
+                position: "relative"
             }}>
                 <TableContainer >
                     <Table sx={{ minWidth: 650}} aria-label="simple table">
@@ -261,6 +259,27 @@ const Product = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                {/* Loading */}
+                {isFetching && (
+                        <Stack
+                            alignItems={"center"}
+                            justifyContent={"center"}
+                            sx={{
+                                height: "100%",
+                                width: "100%",
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                bgcolor: colors.common.white,
+                                zIndex: 1000
+                            }}
+                        >
+                            <Box position={"relative"}>
+                                <CircularProgress />
+                            </Box>
+                        </Stack>
+                    )}
+                    {/* Loading */}
                 <Box
                     sx={{
                         display: "flex",

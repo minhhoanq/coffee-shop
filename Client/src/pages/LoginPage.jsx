@@ -17,7 +17,6 @@ const LoginPage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const isFetching = useSelector(state => state.auth.isFetching);
 
-    
     const {
         register,
         handleSubmit,
@@ -265,20 +264,6 @@ const LoginPage = () => {
                         >
                             <Box position={"relative"}>
                                 <CircularProgress />
-                                {/* <CircularProgress
-                                    variant="determinate"
-                                    disableShrink
-                                    value={logginProgress}
-                                    size={100}
-                                    sx={{
-                                        [`& .${circularProgressClasses.circle}`] : {
-                                            strokeLinecap: "round"
-                                        },
-                                        position: "absolute",
-                                        left: 0,
-                                        color: colors.brown[600]
-                                    }}
-                                /> */}
                             </Box>
                         </Stack>
                     )}

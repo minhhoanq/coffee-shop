@@ -29,6 +29,20 @@ export const getProducts = async (name, order, page, limit, categoryId, price, i
     }
 }
 
+export const createProduct = async({name, image, category, price, description, sold, sizeId, recipeId}) => {
+    const res = await request.post('/api/v1/product/create', {
+        productName: name, 
+        productImg: image, 
+        categoryId: category.state, 
+        price: price, 
+        productDescription: description, 
+        sold: sold,
+        sizeId: 3,
+        recipeId: 1
+    })
+    
+    return res.data;
+}
 
 export const getProductByCategoryId = async (id) => {
     try {
