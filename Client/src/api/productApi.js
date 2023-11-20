@@ -9,7 +9,7 @@ export const getAllProduct = async () => {
     }
 }
 
-export const getProducts = async (name, order, page, limit, categoryId) => {
+export const getProducts = async (name, order, page, limit, categoryId, price, id, sold) => {
     try {
         const res = await request.get('/api/v1/product', {
             params: {
@@ -18,6 +18,9 @@ export const getProducts = async (name, order, page, limit, categoryId) => {
                 page,
                 limit,
                 categoryId,
+                price,
+                // id,
+                // sold
             }
         });
         return res.data;

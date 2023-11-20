@@ -1,12 +1,12 @@
 import { Autocomplete, Box, Button, IconButton, Modal, Stack, TextField, Typography, colors, createFilterOptions } from "@mui/material";
-import axios from "axios";
-import { createUserAddress, setDefaultAddress } from "../../api/userApi";
+// import axios from "axios";
+// import { createUserAddress, setDefaultAddress } from "../../api/userApi";
 
 import ClearIcon from '@mui/icons-material/Clear';
 import { Controller, useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+// import { useEffect, useState } from "react";
+// import Swal from "sweetalert2";
+// import { Link } from "react-router-dom";
 
 
 const categories = [
@@ -37,25 +37,32 @@ const ModalFilter = props => {
 
     const {
         register,
+        control,
         handleSubmit,
-        formState: { errors, isDirty },
+        // formState: { errors, isDirty },
         reset,
-    } = useForm({
-        defaultValues: {
-           id: "",
-           name: "",
-           category: "",
-           price: "",
-           sold: "",
-        }
-    });
+    } = useForm(
+        // {
+            // defaultValues: {
+            //    id: "",
+            //    name: "",
+            //    category: "",
+            //    price: "",
+            //    sold: "",
+            // }
+        // }
+
+    );
 
     const handleCloseModal = () => {
         props.close();
     }
 
     const handleSubmitFilter = (data) => {
-        console.log(data)
+        // console.log(data)
+        props.data(data)
+
+        // props.close()
     }
 
     return (
@@ -148,20 +155,37 @@ const ModalFilter = props => {
                             )
                         }
                         />
-                        <Autocomplete
+
+                        <Controller
+                            control={control}
+                            name="category"
+                            render={({ field: {onChange, value} }) =>  (
+                                <Autocomplete
+                                    fullWidth
+                                    id="category"
+                                    name="category"
+                                    options={categories}
+                                    getOptionLabel={(option) => option.title}
+                                    filterOptions={filterOptions}
+                                    onChange={(event, values) => {
+                                        onChange(values);
+                                    }}
+                                    size = "large"
+                                    renderInput={(params) => <TextField {...params} label="Categories" onChange={onChange}/>}
+                                />
+                            )}
+                        />
+
+                        {/* <Autocomplete
                             fullWidth
-                            id="filter-category"
+                            id="category"
+                            name="category"
                             options={categories}
                             getOptionLabel={(option) => option.title}
-                            // onChange={(e, value) => props.category(value?.state ? value.state : "0")}
                             filterOptions={filterOptions}
-                            // sx={{
-                            //     width: { xl: "200px", lg: "200px", md: "200px", sm: "200px", xs: "60%"},
-                            //     outline: "none"
-                            // }}
                             size = "large"
                             renderInput={(params) => <TextField {...params} label="Categories" />}
-                        />
+                        /> */}
                         <TextField label={`Price`} fullWidth
                             name={`price`} 
                             id={`price`}

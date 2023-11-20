@@ -18,6 +18,11 @@ const Product = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [showModalFilter, setShowModalFilter] = useState(false);
 
+    const [id, setId] = useState();
+    const [name, setName] = useState("");
+    const [category, setCategory] = useState();
+    const [price, setPrice] = useState();
+    const [sold, setSold] = useState();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
     const dispatch = useDispatch();
@@ -35,18 +40,33 @@ const Product = () => {
         const getData = async() => {
             const pagePicked = page;
             const limit = 6;
+
+            let categoryId = undefined;
+
+            if(category !== "0") {
+                categoryId = category;
+            }
             
-            const productList = await dispatch(getProductsAction({pagePicked, limit}));
+            const productList = await dispatch(getProductsAction({name, pagePicked, limit, categoryId, price}));
             setProducts(productList.payload?.rows || []);
 
             const quantityPage = Math.ceil((productList.payload?.count || 0) / limit);
             setTotalPage(quantityPage);
         }
         getData();
-    },[page]);
+    },[ category, page, name, price]);
 
     const handleChange = (e, value) => {
         setPage(value)
+    }
+
+    const setDataFilter = (data) => {
+        console.log(data)
+        setCategory(data.category?.state);
+        setName(data?.name);
+        setPrice(data?.price);
+        // setId(data?.id);
+        // setSold(Number(data?.sold));
     }
 
     return (
@@ -129,7 +149,7 @@ const Product = () => {
                                 Filter
                             </Typography>
                         </IconButton>
-                        <ModalFilter open={showModalFilter} close={() => setShowModalFilter(false)}/>
+                        <ModalFilter data={setDataFilter} open={showModalFilter} close={() => setShowModalFilter(false)}/>
                     </Stack>
                 </Stack>
             </Stack>
