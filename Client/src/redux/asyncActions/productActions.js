@@ -4,7 +4,7 @@ import * as productApi from '../../api/productApi';
 import * as ratingApi from '../../api/ratingApi';
 
 export const getProductsAction = createAsyncThunk('product/getProduts', async(data, { rejectWithValue }) => {
-    const response = await productApi.getProducts(data.name, data.order, data.pagePicked, data.limit, data.categoryId, data.price);
+    const response = await productApi.getProducts(data.name, data.order, data.pagePicked, data.limit, data.categoryId, data.priceProduct, data.idProduct, data.soldProduct);
     // console.log(response.productData)
     return response.productData;
 });

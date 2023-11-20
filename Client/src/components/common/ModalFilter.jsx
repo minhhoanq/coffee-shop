@@ -61,8 +61,7 @@ const ModalFilter = props => {
     const handleSubmitFilter = (data) => {
         // console.log(data)
         props.data(data)
-
-        // props.close()
+        props.close()
     }
 
     return (

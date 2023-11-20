@@ -21,8 +21,8 @@ const Product = () => {
     const [id, setId] = useState();
     const [name, setName] = useState("");
     const [category, setCategory] = useState();
-    const [price, setPrice] = useState();
-    const [sold, setSold] = useState();
+    const [price, setPrice] = useState(undefined);
+    const [sold, setSold] = useState(0);
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
     const dispatch = useDispatch();
@@ -38,23 +38,42 @@ const Product = () => {
     //Handle page
     useEffect(() => {
         const getData = async() => {
-            const pagePicked = page;
+            let pagePicked = page;
             const limit = 6;
 
             let categoryId = undefined;
+            let priceProduct = undefined;
+            let idProduct = undefined;
+            let soldProduct = undefined;
 
             if(category !== "0") {
                 categoryId = category;
+                pagePicked = 1;
+            }
+
+            if(price !== "") {
+                priceProduct = price;
+                pagePicked = 1;
+            }
+
+            if(id !== "" && id !== 0) {
+                idProduct = id;
+                pagePicked = 1;
+            }
+
+            if(sold !== 0) {
+                soldProduct = sold;
+                pagePicked = 1;
             }
             
-            const productList = await dispatch(getProductsAction({name, pagePicked, limit, categoryId, price}));
+            const productList = await dispatch(getProductsAction({name, pagePicked, limit, categoryId, priceProduct, idProduct, soldProduct}));
             setProducts(productList.payload?.rows || []);
 
             const quantityPage = Math.ceil((productList.payload?.count || 0) / limit);
             setTotalPage(quantityPage);
         }
         getData();
-    },[ category, page, name, price]);
+    },[ category, page, name, price, id, sold]);
 
     const handleChange = (e, value) => {
         setPage(value)
@@ -65,8 +84,8 @@ const Product = () => {
         setCategory(data.category?.state);
         setName(data?.name);
         setPrice(data?.price);
-        // setId(data?.id);
-        // setSold(Number(data?.sold));
+        setId(data?.id);
+        setSold(Number(data?.sold));
     }
 
     return (

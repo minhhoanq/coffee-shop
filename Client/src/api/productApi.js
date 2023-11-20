@@ -19,8 +19,8 @@ export const getProducts = async (name, order, page, limit, categoryId, price, i
                 limit,
                 categoryId,
                 price,
-                // id,
-                // sold
+                id,
+                sold
             }
         });
         return res.data;
