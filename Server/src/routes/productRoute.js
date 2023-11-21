@@ -16,7 +16,7 @@ router.get('/', productController.getProducts);
 //Get product detail
 router.get('/:slug', productController.getProductDetail);
 
-router.put('/create', isAuth.verifyToken, uploader.single('image'), productController.createProduct);
+router.post('/create', isAuth.verifyToken, uploader.single('image'), productController.createProduct);
 
 router.post('/ratings/:slug', isAuth.verifyToken, productController.ratingProduct);
 

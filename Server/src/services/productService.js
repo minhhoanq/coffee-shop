@@ -124,42 +124,40 @@ const getProductByCategoryService = ({categoryId}) => new Promise(async(resolve,
 
 const createProductService = (body, image) => new Promise(async(resolve, reject) => {
     try {
-        // const {sizeId, recipeId, ...product} = body;
-        // if(Object.keys(product).length === 0) {
-        //     reject("Dữ liệu đầu vào chưa đầy đủ!");
-        //     return;
-        // }
+        const {sizeId, recipeId, ...product} = body;
+        if(Object.keys(product).length === 0) {
+            reject("Dữ liệu đầu vào chưa đầy đủ!");
+            return;
+        }
 
-        // if(image) product.productImg = image.path;
+        if(image) product.productImg = image.path;
 
-        // console.log(product);
+        console.log(product);
 
-        // if(product.productName) {
-        //     product.slug = slugtify(product.productName, {lower: true});
-        // }
-        // const [item, createdItem] = await db.Product.findOrCreate({
-        //     where: product,
-        // });
+        if(product.productName) {
+            product.slug = slugtify(product.productName, {lower: true});
+        }
+        const [item, createdItem] = await db.Product.findOrCreate({
+            where: product,
+        });
 
-        // const newProduct_size = {
-        //     sizeId,
-        //     productId: item.id,
-        //     recipeId
-        // }
-        // const [itemDetail, createdItemDetail]  = await db.Product_Size.findOrCreate({
-        //     where: newProduct_size
-        // });
+        const newProduct_size = {
+            sizeId,
+            productId: item.id,
+            recipeId
+        }
+        const [itemDetail, createdItemDetail]  = await db.Product_Size.findOrCreate({
+            where: newProduct_size
+        });
 
-        // if(!createdItemDetail) {
-        //     reject({mes: "Sản phẩm đã có size tương ứng!"})
-        // }
+        if(!createdItemDetail) {
+            reject({mes: "Sản phẩm đã có size tương ứng!"})
+        }
         
         resolve({
-            // err: itemDetail ? 0 : 1,
-            // mes: itemDetail ? 'Thêm mới sản phẩm thành công' : 'Thêm mới sản phẩm thất bại!',
-            // createProductDetail: itemDetail
-            product: body,
-            image: image
+            err: itemDetail ? 0 : 1,
+            mes: itemDetail ? 'Thêm mới sản phẩm thành công' : 'Thêm mới sản phẩm thất bại!',
+            createProductDetail: itemDetail
         });
     } catch (error) {
         reject(error);

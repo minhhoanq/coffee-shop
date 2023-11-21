@@ -30,7 +30,7 @@ export const getProducts = async (name, order, page, limit, categoryId, price, i
 }
 
 export const createProduct = async(data) => {
-    const res = await request.put('/api/v1/product/create', data);
+    const res = await request.post('/api/v1/product/create', data);
     
     return res;
 }

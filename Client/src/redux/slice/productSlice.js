@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProductsAction, postRatingAction } from "../../redux/asyncActions/productActions";
+import { createProductAction, getProductsAction, postRatingAction } from "../../redux/asyncActions/productActions";
 
 const initialState = {
     isCurrent: [],
@@ -31,6 +31,22 @@ const productSlice = createSlice({
                 state.isError = true;
                 state.isCurrent = [];
             });
+
+        //Create product
+        builder.addCase(createProductAction.pending, (state) => {
+                state.isPending = true;
+                state.isError = false;
+            })
+
+        builder.addCase(createProductAction.fulfilled, (state) => {
+            state.isPending = false;
+            state.isError = false;
+        })
+
+        builder.addCase(createProductAction.rejected, (state) => {
+            state.isPending = false;
+            state.isError = true;
+        })
 
         // Rating
 

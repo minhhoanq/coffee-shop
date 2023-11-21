@@ -34,9 +34,8 @@ const productController = {
 
     createProduct: async(req, res) => {
         try {
-            // const response = await productService.createProductService(req.body, req.file);
-            // return res.status(200).json(response);
-            return res.status(200).json(req.body);
+            const response = await productService.createProductService(req.body, req.file);
+            return res.status(200).json(response);
         } catch (error) {
             return res.status(500).json(error);
         }
