@@ -23,7 +23,7 @@ const Product = () => {
     const [category, setCategory] = useState();
     const [price, setPrice] = useState(undefined);
     const [sold, setSold] = useState(0);
-    const [page, setPage] = useState(1);
+    const [pageProduct, setPageProduct] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
     const dispatch = useDispatch();
 
@@ -38,7 +38,7 @@ const Product = () => {
     //Handle page
     useEffect(() => {
         const getData = async() => {
-            let pagePicked = page;
+            let page = pageProduct;
             const limit = 6;
 
             let categoryId = undefined;
@@ -62,7 +62,7 @@ const Product = () => {
                 soldProduct = sold;
             }
             
-            const productList = await dispatch(getProductsAction({name, pagePicked, limit, categoryId, priceProduct, idProduct, soldProduct}));
+            const productList = await dispatch(getProductsAction({name, page, limit, categoryId, priceProduct, idProduct, soldProduct}));
             setProducts(productList.payload?.rows || []);
             console.log(productList)
 
@@ -70,10 +70,10 @@ const Product = () => {
             setTotalPage(quantityPage);
         }
         getData();
-    },[ category, page, name, price, id, sold]);
+    },[ category, pageProduct, name, price, id, sold]);
 
     const handleChange = (e, value) => {
-        setPage(value)
+        setPageProduct(value)
     }
 
     const setDataFilter = (data) => {
@@ -250,8 +250,8 @@ const Product = () => {
                                             horizontal: 'right',
                                         }}
                                         >
+                                            <MenuItem>Chi tiết</MenuItem>
                                             <MenuItem>Xóa</MenuItem>
-                                            <MenuItem>Báo cáo</MenuItem>
                                     </Menu>
                                 </TableCell>
                             </TableRow>
@@ -289,7 +289,7 @@ const Product = () => {
                 >
                     <Pagination 
                         count={totalPage}
-                        page={page}
+                        page={pageProduct}
                         onChange={handleChange}
                         sx={{
                             // mt: "40px"
