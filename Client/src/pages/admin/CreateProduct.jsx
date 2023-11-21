@@ -7,6 +7,7 @@ import { createProduct } from "../../api/productApi";
 import { useDispatch, useSelector } from "react-redux";
 import { createProductAction } from "../../redux/asyncActions/productActions";
 import Swal from "sweetalert2";
+import { fileToBase64 } from "../../utils/helpers";
 
 const categories = [
     {
@@ -50,11 +51,15 @@ const filterOptions = createFilterOptions({
 const CreateProduct = () => {
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.product.isPending);
+    const [preview, setPreview] = useState({
+        image: null,
+    })
 
     const {
         control,
         register,
-        handleSubmit
+        handleSubmit,
+        watch
     } = useForm({
         defaultValues: {
             productName: "",
@@ -67,6 +72,17 @@ const CreateProduct = () => {
             recipeId: 2
         }
     });
+
+    const handlePreview = async(file) => {
+        const toBase64 = await fileToBase64(file);
+        setPreview(prev => ({...prev, image: toBase64}));
+    }
+
+    useEffect(() => {
+        if(watch('image')) {
+            handlePreview(watch('image')[0]);
+        }
+    }, [watch('image')])
 
     const Toast = Swal.mixin({
         toast: true,
@@ -270,6 +286,13 @@ const CreateProduct = () => {
 
                             <input id="image" name="image" type="file" hidden {...register('image')}/>
                         </Box>
+                        {preview.image && 
+                        <Box fullWidth sx={{
+                            display: "flex",
+                            justifyContent: "center"
+                        }}>
+                            <img height={"300px"} src={preview.image} alt="image"/>
+                        </Box>}
                     </Stack>
                     <Button type="submit" fullWidth variant="contained" size="large" sx={{
                             bgcolor: colors.blue[700],

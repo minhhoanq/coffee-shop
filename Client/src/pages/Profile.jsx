@@ -1,11 +1,12 @@
 import { Autocomplete, Box, Stack, TextField, createFilterOptions, Typography, colors, Button } from "@mui/material"
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProfileActions, updateUserbyUserAction } from "../redux/asyncActions/authActions";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { fileToBase64 } from "../utils/helpers";
 
 const sexs = [
     {
@@ -31,9 +32,9 @@ const Personal = () => {
     const user = useSelector(state => state.auth.currentUser);
     const dispatch = useDispatch();
 
-    // const handleSubmitProfile = useCallback(() => {
-    //     console.log("check")
-    // })
+    const [preview, setPreview] = useState({
+        image: null,
+    })
 
     const Toast = Swal.mixin({
         toast: true,
@@ -47,12 +48,11 @@ const Personal = () => {
         }
     })
 
-
     const {
         register,
         handleSubmit,
         formState: { errors, isDirty },
-        reset,
+        watch
     } = useForm({
         defaultValues: {
             id: user.id,
@@ -63,23 +63,20 @@ const Personal = () => {
             birth: user.birth,
             phone: user.phone,
             email: user.email,
-            image: user.image,
+            image: "",
         }
     });
     
-    // useEffect(() => {
-    //     reset({
-    //         id: user.id,
-    //         username: user.username,
-    //         firstname: user.firstname,
-    //         lastname: user.lastname,
-    //         sex: user.sex ? '1' : '2',
-    //         birth: user.birth,
-    //         phone: user.phone,
-    //         email: user.email,
-    //         image: user.image,
-    //     });
-    // },[])
+    const handlePreview = async(file) => {
+        const toBase64 = await fileToBase64(file);
+        setPreview(prev => ({...prev, image: toBase64}));
+    }
+
+    useEffect(() => {
+        if(watch('image')) {
+            handlePreview(watch('image')[0]);
+        }
+    }, [watch('image')])
 
     const handleSubmitProfile = async(data) => {
         console.log(data);
@@ -126,7 +123,7 @@ const Personal = () => {
                     sx={{
                         position: "relative"
                     }}>
-                    <img src={user.image} height={"100%"} width={"100%"} style={{
+                    <img src={preview.image ? preview.image : user.image} alt="" height={"100%"} width={"100%"} style={{
                         objectFit: "cover",
                         borderRadius: "50px"
                     }}/>
