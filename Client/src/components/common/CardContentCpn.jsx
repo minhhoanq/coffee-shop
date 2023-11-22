@@ -28,6 +28,7 @@ const CardContentCpn = () => {
                             </Typography>
                                 <ArrowUpwardOutlinedIcon color="success" fontSize="small"/>
                        </Box>
+                       aaaa
                     </Stack>
                 </Stack>
             </CardContent>
