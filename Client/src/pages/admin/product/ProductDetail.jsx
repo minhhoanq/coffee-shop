@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 
 import { Autocomplete, Box, Button, CircularProgress, Stack, TextField, TextareaAutosize, Typography, colors, createFilterOptions } from "@mui/material";
-import Breadcrumbs from "../../components/common/Breadcrumbs";
+import Breadcrumbs from "../../../components/common/Breadcrumbs";
 import { Controller, useForm } from "react-hook-form";
-import { createProduct } from "../../api/productApi";
+import { createProduct, getProductDetailBySlug } from "../../../api/productApi";
 import { useDispatch, useSelector } from "react-redux";
-import { createProductAction } from "../../redux/asyncActions/productActions";
+import { createProductAction } from "../../../redux/asyncActions/productActions";
 import Swal from "sweetalert2";
-import { fileToBase64 } from "../../utils/helpers";
+import { fileToBase64 } from "../../../utils/helpers";
+import { useParams } from "react-router-dom";
 
 const categories = [
     {
@@ -53,25 +54,60 @@ const CreateProduct = () => {
     const isFetching = useSelector(state => state.product.isPending);
     const [preview, setPreview] = useState({
         image: null,
-    })
+    });
+    const { slug } = useParams();
+    const [products, setProducts] = useState([]);
+
+    const getDataBySlug = async() => {
+        const result = await getProductDetailBySlug(slug);
+        console.log(result)
+        setProducts(result.dataDetailProduct);
+        // // setProductSizeId(result.dataDetailProduct[0]?.id);
+        // const sizeRoot = result.dataDetailProduct[0]?.sizeData.sizeName;
+        // setSize(sizeRoot);
+        // let priceRoot = result.dataDetailProduct[0]?.productData.price;
+        // setPrice(sizeRoot === 'S' ? priceRoot : sizeRoot === 'M' ? priceRoot + 5 : priceRoot + 10);
+        
+    }
+    
+    useEffect(() => {
+        getDataBySlug();
+    },[]);
 
     const {
         control,
         register,
         handleSubmit,
-        watch
-    } = useForm({
-        defaultValues: {
-            productName: "",
-            categoryId: "",
-            price: "",
-            sold: "",
-            image: "",
-            productDescription: "",
-            sizeId: "",
-            recipeId: 2
+        watch,
+        reset,
+        formState: { isDirty }
+    } = useForm(
+        {
+            defaultValues: {
+                productName: "name",
+                categoryId: "",
+                price: 1,
+                sold: 0,
+                image: "",
+                productDescription: "0",
+                sizeId: "size",
+                recipeId: 2
+            }
         }
-    });
+    );
+
+    useEffect(() => {
+        reset({
+            productName: products[0]?.productData.productName,
+            categoryId: 1,
+            price: products[0]?.productData.price,
+            sold: products[0]?.productData.sold,
+            image: "",
+            productDescription: products[0]?.productData.productDescription,
+            sizeId: 1,
+            recipeId: 2
+        })
+    },[products])
 
     const handlePreview = async(file) => {
         const toBase64 = await fileToBase64(file);
@@ -91,8 +127,8 @@ const CreateProduct = () => {
         timer: 3000,
         timerProgressBar: true,
         didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
         }
     })
 
@@ -138,7 +174,7 @@ const CreateProduct = () => {
                 <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}  mt={2}>
                     <Stack direction={"row"} alignItems={"center"} spacing={1}>
                         <Typography variant="h4">
-                            Create new product
+                            Product Detail
                         </Typography>
                     </Stack>
                 </Stack>
@@ -158,7 +194,7 @@ const CreateProduct = () => {
             }}>
                 <Box>
                     <Stack spacing={4} >
-                        <TextField label={`Name`} fullWidth
+                        <TextField label={"Name"} fullWidth
                             name={`productName`} 
                             id={`productName`}
                             inputProps={{
@@ -177,6 +213,7 @@ const CreateProduct = () => {
                                 name="categoryId"
                                 render={({ field: {onChange, value} }) =>  (
                                     <Autocomplete
+                                    value={value}
                                         fullWidth
                                         id="categoryId"
                                         name="categoryId"
@@ -190,7 +227,8 @@ const CreateProduct = () => {
                                             onChange(values.state);
                                         }}
                                         size = "large"
-                                        renderInput={(params) => <TextField {...params} label="Categories" onChange={onChange}/>}
+                                        renderInput={(params) => <TextField {...params} placeholder="Category" id="categoryId"
+                                        name="categoryId" onChange={onChange} {...register("categoryId")}/>}
                                     />
                                 )}
                             />
@@ -213,7 +251,8 @@ const CreateProduct = () => {
                                             onChange(values.state);
                                         }}
                                         size = "large"
-                                        renderInput={(params) => <TextField {...params} label="Size" onChange={onChange}/>}
+                                        renderInput={(params) => <TextField {...params} placeholder="Size" id="sizeId"
+                                        name="sizeId" onChange={onChange} {...register("sizeId")}/>}
                                     />
                                 )}
                             />
@@ -251,7 +290,7 @@ const CreateProduct = () => {
                             name="productDescription"
                             style={{
                                 outline: "none",
-                                padding: "10px 20px",
+                                padding: "10px",
                                 height: "100px",
                                 backgroundColor: "#f5f5f5",
                                 borderRadius: "2px",
@@ -300,15 +339,14 @@ const CreateProduct = () => {
 
                             <input id="image" name="image" type="file" hidden {...register('image')}/>
                         </Box>
-                        {preview.image && 
                         <Box fullWidth sx={{
                             display: "flex",
                             justifyContent: "center"
                         }}>
-                            <img height={"300px"} src={preview.image} alt="image"/>
-                        </Box>}
+                            <img height={"300px"} src={preview.image ? preview.image : products[0]?.productData.productImg  } alt="image"/>
+                        </Box>
                     </Stack>
-                    <Button type="submit" fullWidth variant="contained" size="large" sx={{
+                    { isDirty && <Button type="submit" fullWidth variant="contained" size="large" sx={{
                             bgcolor: colors.blue[700],
                             marginTop: "40px",
                             "&:hover" : {
@@ -316,7 +354,7 @@ const CreateProduct = () => {
                             }
                         }}>
                             Apply changes
-                    </Button>
+                    </Button>}
                 </Box>
                 {isFetching && (
                     <Stack

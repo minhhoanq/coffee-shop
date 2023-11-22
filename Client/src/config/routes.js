@@ -7,7 +7,8 @@ import Register from '../pages/Register';
 import FooterOnly from '../components/layout/footeronly/FooterOnly';
 // import DetailProduct from "../pages/detailproduct/DetailProduct";
 import ProductDetail from "../pages/ProductDetail";
-import HomeAdmin from "../pages/admin/home/HomeAdmin";
+// import HomeAdmin from "../pages/admin/home/HomeAdmin";
+import Dashboard from "../pages/admin/Dashboard";
 import Staff from "../pages/admin/staff/Staff";
 import DefaultLayoutAdmin from "../components/layout/defaultlayoutAdmin/DefaultLayoutAdmin";
 import StaffDetail from "../pages/admin/staffdetail/StaffDetail";
@@ -31,6 +32,7 @@ import Customer from "../pages/admin/Customer";
 import Product from "../pages/admin/Product";
 import CreateProduct from "../pages/admin/CreateProduct";
 import Category from "../pages/admin/Category";
+import ProductDetailAdmin from "../pages/admin/product/ProductDetail"
 
 //Public routes
 const publicRoutes = [
@@ -52,11 +54,12 @@ const publicRoutes = [
     { path: '/register', component: Register, layout: null},
     { path: '/finalregister/:status', component: FinalRegister,layout: FooterOnly},
     { path: '/reset-password/:token', component: ResetPassword,layout: FooterOnly},
-    { path: '/dashboard', component: HomeAdmin, layout: DefaultLayoutAdmin},
+    { path: '/dashboard', component: Dashboard, layout: DefaultLayoutAdmin},
     { path: '/dashboard/employees', component: Employee, layout: DefaultLayoutAdmin},
     { path: '/dashboard/customers', component: Customer, layout: DefaultLayoutAdmin},
     { path: '/dashboard/products', component: Product, layout: DefaultLayoutAdmin},
     { path: '/dashboard/products/create', component: CreateProduct, layout: DefaultLayoutAdmin},
+    { path: '/dashboard/products/:slug', component: ProductDetailAdmin, layout: DefaultLayoutAdmin},
     { path: '/dashboard/categories', component: Category, layout: DefaultLayoutAdmin},
 
     { path: '/dashboard/staff/:id', component: StaffDetail,layout: DefaultLayoutAdmin},

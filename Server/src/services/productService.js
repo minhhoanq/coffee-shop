@@ -57,7 +57,7 @@ const getProductDetailService = ({slug}) => new Promise(async(resolve, reject) =
                 {
                     model: db.Product,
                     as: 'productData',
-                    attributes: ['id','slug', 'productName', 'categoryId', 'productDescription', 'productImg', 'price'],
+                    attributes: ['id','slug', 'productName', 'categoryId', 'productDescription', 'productImg', 'price', 'sold'],
                     include: [
                         {
                             model: db.Category,

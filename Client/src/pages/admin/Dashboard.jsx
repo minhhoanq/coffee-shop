@@ -1,8 +1,12 @@
+import { Box } from "@mui/material";
+
+import CardContentCpn from "../../components/common/CardContentCpn"
+
 const Dashboard = () => {
     return (
-        <>
-            Dashboard Page
-        </>
+        <Box p={4}>
+            <CardContentCpn/>
+        </Box>
     )
 }
 
