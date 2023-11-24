@@ -13,9 +13,17 @@ import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { getProductsAction } from "../../redux/asyncActions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 
+const options = [
+    {
+        title: "Chi tiết",
+    },
+    {
+        title: "Sửa",
+    },
+]
+
 const Product = () => {
     const [products, setProducts] = useState([]);
-    const [anchorEl, setAnchorEl] = useState(null);
     const [showModalFilter, setShowModalFilter] = useState(false);
     const isFetching = useSelector(state => state.product.isPending);
     const [id, setId] = useState();
@@ -26,13 +34,13 @@ const Product = () => {
     const [pageProduct, setPageProduct] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
     const dispatch = useDispatch();
+    const [openOptions, setOpenOptions] = useState({
+        title: "",
+        bool: false
+    });
 
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
     const handleClose = () => {
-        setAnchorEl(null);
+        // setAnchorEl(null);
     };
     
     //Handle page
@@ -89,7 +97,7 @@ const Product = () => {
         <Box sx={{
             p: "40px",
             backgroundColor: "#f8f9fa",
-            maxHeight: "100vh",
+            // maxHeight: "100vh",
             display: "flex",
             flexDirection: "column",
         }}>
@@ -171,7 +179,7 @@ const Product = () => {
             </Stack>
             <Box mt={2} sx={{
                 width: "100%",
-                height: "610px",
+                // height: "610px",
                 backgroundColor: "#fff",
                 boxShadow: "0 2px 10px 0 rgba(0,0,0,.15)",
                 display: "flex",
@@ -180,7 +188,9 @@ const Product = () => {
                 overflow: "auto",
                 position: "relative"
             }}>
-                <TableContainer >
+                <TableContainer sx={{
+                    height: 580
+                }}>
                     <Table sx={{ minWidth: 650}} aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -220,39 +230,81 @@ const Product = () => {
                                 <TableCell component="th" scope="row">
                                     {product.productName}
                                 </TableCell>
-                                <TableCell align="right">{product.price}</TableCell>
+                                <TableCell align="right">{product.l}</TableCell>
                                 <TableCell align="right">{product.sold}</TableCell>
                                 <TableCell align="right">{product.sold > 0 ? "Còn hàng" : "Hết hàng"}</TableCell>
                                 <TableCell align="right">{product.updatedAt}</TableCell>
                                 <TableCell align="right">
                                     <IconButton
                                         id="demo-positioned-button"
-                                        aria-controls={open ? 'demo-positioned-menu' : undefined}
+                                        // aria-controls={open ? 'demo-positioned-menu' : undefined}
                                         aria-haspopup="true"
-                                        onClick={handleClick}
-                                        sx={{height: "50%"}}
+                                        onClick={() => setOpenOptions({
+                                            title: product.slug,
+                                            bool: !openOptions.bool
+                                        })}
+                                        sx={{
+                                            height: "50%",
+                                            position: "relative"
+                                        }}
                                         >
                                         <MoreHorizIcon/>
+                                        <Box sx={{
+                                            position: "absolute",
+                                            top: 30,
+                                            right: 30,
+                                            border: "1px solid #ccc",
+                                            p: "5px 0",
+                                            width: "80px",
+                                            backgroundColor: "#fff",
+                                            boxShadow: "0 2px 10px 0 rgba(0,0,0,.15)",
+                                            zIndex: "1000",
+                                            borderRadius: "4px",
+                                            visibility: openOptions.title === product.slug && openOptions.bool === true ? "" : "hidden"
+                                        }}>
+                                            <Stack justifyContent={"center"} alignItems={"center"}>
+                                                <Link to={`/dashboard/products/${product.slug}`} style={{
+                                                    cursor: "pointer",
+                                                    width: "100%",
+                                                    height: "30px",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    "&:hover": {
+                                                        backgroundColor: "#ccc"
+                                                    }
+                                                }}>
+                                                    <Typography sx={{
+                                                        cursor: "pointer",
+                                                        width: "100%",
+                                                        height: "30px",
+                                                        display: "flex",
+                                                        justifyContent: "center",
+                                                        alignItems: "center",
+                                                        "&:hover": {
+                                                            backgroundColor: "#ccc"
+                                                        }
+                                                    }}>
+                                                        Chi tiết
+                                                    </Typography>
+                                                </Link>
+                                                <Typography sx={{
+                                                    cursor: "pointer",
+                                                    width: "100%",
+                                                    height: "30px",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    "&:hover": {
+                                                        backgroundColor: "#ccc"
+                                                    }
+                                                }}>
+                                                    Báo cáo
+                                                </Typography>
+                                            </Stack>
+                                        </Box>
                                     </IconButton>
-                                    <Menu
-                                        id="demo-positioned-menu"
-                                        aria-labelledby="demo-positioned-button"
-                                        anchorEl={anchorEl}
-                                        open={open}
-                                        onClose={handleClose}
-                                        
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'left',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        >
-                                            <MenuItem>Chi tiết</MenuItem>
-                                            <MenuItem>Xóa</MenuItem>
-                                    </Menu>
+                                    
                                 </TableCell>
                             </TableRow>
                         ))}

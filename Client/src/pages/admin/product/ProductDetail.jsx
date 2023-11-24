@@ -62,12 +62,6 @@ const CreateProduct = () => {
         const result = await getProductDetailBySlug(slug);
         console.log(result)
         setProducts(result.dataDetailProduct);
-        // // setProductSizeId(result.dataDetailProduct[0]?.id);
-        // const sizeRoot = result.dataDetailProduct[0]?.sizeData.sizeName;
-        // setSize(sizeRoot);
-        // let priceRoot = result.dataDetailProduct[0]?.productData.price;
-        // setPrice(sizeRoot === 'S' ? priceRoot : sizeRoot === 'M' ? priceRoot + 5 : priceRoot + 10);
-        
     }
     
     useEffect(() => {
