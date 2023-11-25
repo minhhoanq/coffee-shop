@@ -1,10 +1,14 @@
 import request from "../utils/request";
 
-export const getAllStaff = async () => {
+export const getAllUsers = async ({page, limit, name, id, roles}) => {
     try {
         const res = await request.get('/api/v1/users', {
             params: {
-                roles: 2,
+                page: page, 
+                limit: limit, 
+                name: name, 
+                id: id, 
+                roles: roles
             }
         });
         return res.data;

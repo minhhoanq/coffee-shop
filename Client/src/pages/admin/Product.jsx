@@ -262,7 +262,7 @@ const Product = () => {
                                             borderRadius: "4px",
                                             visibility: openOptions.title === product.slug && openOptions.bool === true ? "" : "hidden"
                                         }}>
-                                            <Stack justifyContent={"center"} alignItems={"center"}>
+                                            <Stack justifyContent={"center"} alignItems={"center"} >
                                                 <Link to={`/dashboard/products/${product.slug}`} style={{
                                                     cursor: "pointer",
                                                     width: "100%",
@@ -283,7 +283,8 @@ const Product = () => {
                                                         alignItems: "center",
                                                         "&:hover": {
                                                             backgroundColor: "#ccc"
-                                                        }
+                                                        },
+                                                        color: "#000"
                                                     }}>
                                                         Chi tiết
                                                     </Typography>
@@ -297,7 +298,8 @@ const Product = () => {
                                                     alignItems: "center",
                                                     "&:hover": {
                                                         backgroundColor: "#ccc"
-                                                    }
+                                                    },
+                                                    color: "#000"
                                                 }}>
                                                     Báo cáo
                                                 </Typography>

@@ -4,7 +4,7 @@ import { Box, Checkbox, IconButton, Pagination, Paper, Stack, Table, TableBody, 
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { getAllStaff } from "../../api/userApi";
+import { getAllUsers } from "../../api/userApi";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 function createData(name, calories, fat, carbs, protein) {
@@ -23,7 +23,7 @@ const Customer = () => {
     const [customers, setCustomers] = useState([]);
 
     const getAllCustomers = async() => {
-        const result = await getAllStaff();
+        const result = await getAllUsers();
         setCustomers(result.data);
     }
 

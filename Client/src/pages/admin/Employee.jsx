@@ -6,6 +6,8 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { getAllStaff } from "../../api/userApi";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUserActions } from "../../redux/asyncActions/userActions";
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -21,15 +23,38 @@ const rows = [
 
 const Employee = () => {
     const [employees, setEmployees] = useState([]);
-
-    const getAllEmployees = async() => {
-        const result = await getAllStaff();
-        setEmployees(result.data);
-    }
+    const isFetching = useSelector(state => state.auth.isPending);
+    const [id, setId] = useState();
+    const [name, setName] = useState("");
+    const [pageUser, setPageUser] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        getAllEmployees()
-    }, [])
+        const getData = async() => {
+            let page = pageUser;
+            const limit = 6;
+            const roles = 1;
+
+            // if(id !== "" && id !== 0) {
+            //     idProduct = id;
+            // }
+            
+            const userList = await dispatch(getAllUserActions({page, limit, name, id, roles}));
+            setEmployees(userList.payload?.data?.rows || []);
+            console.log(userList)
+
+            const quantityPage = Math.ceil((userList.payload?.count || 0) / limit);
+            setTotalPage(quantityPage);
+        }
+        getData();
+    },[pageUser, name, id]);
+
+    console.log(employees)
+
+    const handleChange = (e, value) => {
+        setPageUser(value)
+    }
 
     return (
         <Box sx={{
@@ -162,9 +187,9 @@ const Employee = () => {
                     }}
                 >
                     <Pagination 
-                        count={2}
-                        page={1}
-                        // onChange={handleChange}
+                        count={totalPage}
+                        page={pageUser}
+                        onChange={handleChange}
                         sx={{
                             // position: "absolute",
                             // bottom: "10px",

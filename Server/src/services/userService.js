@@ -1,11 +1,18 @@
 const db = require("../models")
 
-const getAllUserService = ({roles}) => new Promise( async(resolve, reject) => {
+const getAllUserService = ({page, limit, order, name, ...query}) => new Promise( async(resolve, reject) => {
     try {
-        const response = await db.User.findAll({
-            where: {
-                roles,
-            },
+
+        const queries = { raw: true, nest: true};
+        const offset = (!page || +page <=1) ? 0 : (+page - 1);
+        const flimit = +limit || +process.env.LIMIT_PRODUCT;
+        queries.offset = offset * flimit;
+        queries.limit = flimit;
+        if(order) queries.order = [order];
+        if(name) query.productName = { [Op.substring]: name };
+        const response = await db.User.findAndCountAll({
+            where: query,
+            ...queries,
             attributes: ['id', 'email', 'username', 'firstname', 'lastname', 'roles', 'sex', 'phone', 'address', 'updatedAt'],
         });
 
