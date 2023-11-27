@@ -14,28 +14,61 @@ const Employee = () => {
     const [employees, setEmployees] = useState([]);
     const isFetching = useSelector(state => state.auth.isPending);
     const [id, setId] = useState();
-    const [username, setUsername] = useState("");
-    const [firstname, setFirstname] = useState("");
-    const [lastname, setLastname] = useState("");
-    const [sex, setSex] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
+    const [username, setUsername] = useState(undefined);
+    const [fname, setFname] = useState(undefined);
+    const [lname, setLname] = useState(undefined);
+    const [sexValue, setSexValue] = useState(undefined);
+    const [emailValue, setEmailValue] = useState(undefined);
+    const [phoneValue, setPhoneValue] = useState(undefined);
     const [pageUser, setPageUser] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
     const dispatch = useDispatch();
-    const [showModalFilter, setShowModalFilter] = useState(true);
+    const [showModalFilter, setShowModalFilter] = useState(false);
 
     useEffect(() => {
         const getData = async() => {
             let page = pageUser;
             const limit = 6;
             const roles = 1;
-
-            // if(id !== "" && id !== 0) {
-            //     idProduct = id;
-            // }
             
-            const userList = await dispatch(getAllUserActions({page, limit, username, id, roles}));
+            let firstname = undefined;
+            let lastname = undefined;
+            let sex = undefined;
+            let email = undefined;
+            let phone = undefined;
+
+            if(fname !== "") {
+                firstname = fname
+            }
+
+            if(lname !== "") {
+                lastname = lname
+            }
+
+            if(sexValue !== "") {
+                sex = sexValue
+            }
+
+            if(emailValue !== "") {
+                email = emailValue
+            }
+
+            if(phoneValue !== "") {
+                phone = phoneValue
+            }
+            
+            const userList = await dispatch(getAllUserActions({
+                page, 
+                limit, 
+                username, 
+                id: undefined, 
+                roles, 
+                firstname,
+                lastname,
+                sex,
+                email,
+                phone
+            }));
             setEmployees(userList.payload?.data?.rows || []);
             console.log(userList)
 
@@ -43,9 +76,7 @@ const Employee = () => {
             setTotalPage(quantityPage);
         }
         getData();
-    },[pageUser, username, id, firstname, lastname, sex, email, phone]);
-
-    console.log(employees)
+    },[pageUser, username, id, fname, lname, sexValue, emailValue, phoneValue]);
 
     const handleChange = (e, value) => {
         setPageUser(value)
@@ -53,6 +84,13 @@ const Employee = () => {
 
     const setDataFilter = (data) => {
         console.log(data)
+        setId(data?.id)
+        setUsername(data?.username);
+        setFname(data?.firstname);
+        setLname(data?.lastname);
+        setSexValue(data?.sex?.state);
+        setEmailValue(data?.email);
+        setPhoneValue(data?.phone)
     }
 
     return (

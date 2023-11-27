@@ -196,12 +196,12 @@ const ModalFilterUsers = props => {
 
                         <Controller
                             control={control}
-                            name="Sex"
+                            name="sex"
                             render={({ field: {onChange, value} }) =>  (
                                 <Autocomplete
                                     fullWidth
-                                    id="Sex"
-                                    name="Sex"
+                                    id="sex"
+                                    name="sex"
                                     options={sexs}
                                     getOptionLabel={(option) => option.title}
                                     filterOptions={filterOptions}
@@ -238,54 +238,6 @@ const ModalFilterUsers = props => {
                         }
                         />
 
-                        <TextField label={`Phone number`} fullWidth
-                            name={`phone`} 
-                            id={`phone`}
-                            inputProps={{
-                                style: {
-                                    height: "50px",
-                                    padding: '0 10px',
-                                }
-                            }}
-                            sx={{
-                                bgcolor: colors.grey[200]
-                            }}
-                            {...register("phone", 
-                                // {
-                                //     required: 'Không bỏ trống',
-                                //     minLength: {
-                                //         value: 1,
-                                //         message: 'Chỉ nhập số, không nhập chữ cái hay ký tự đặc biệt'
-                                //     }
-                                // }
-                            )
-                        }
-                        />
-
-                        <TextField label={`Phone number`} fullWidth
-                            name={`phone`} 
-                            id={`phone`}
-                            inputProps={{
-                                style: {
-                                    height: "50px",
-                                    padding: '0 10px',
-                                }
-                            }}
-                            sx={{
-                                bgcolor: colors.grey[200]
-                            }}
-                            {...register("phone", 
-                                // {
-                                //     required: 'Không bỏ trống',
-                                //     minLength: {
-                                //         value: 1,
-                                //         message: 'Chỉ nhập số, không nhập chữ cái hay ký tự đặc biệt'
-                                //     }
-                                // }
-                            )
-                        }
-                        />
-                        
                         <TextField label={`Phone number`} fullWidth
                             name={`phone`} 
                             id={`phone`}

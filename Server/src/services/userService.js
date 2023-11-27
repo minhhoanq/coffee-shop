@@ -1,15 +1,18 @@
 const db = require("../models")
+const { Op } = require("sequelize");
 
-const getAllUserService = ({page, limit, order, name, ...query}) => new Promise( async(resolve, reject) => {
+const getAllUserService = ({page, limit, order, username, firstname, lastname, ...query}) => new Promise( async(resolve, reject) => {
     try {
-
         const queries = { raw: true, nest: true};
         const offset = (!page || +page <=1) ? 0 : (+page - 1);
         const flimit = +limit || +process.env.LIMIT_PRODUCT;
         queries.offset = offset * flimit;
         queries.limit = flimit;
         if(order) queries.order = [order];
-        if(name) query.productName = { [Op.substring]: name };
+        if(username) query.username = { [Op.substring]: username };
+        if(firstname) query.firstname = { [Op.substring]: firstname };
+        if(lastname) query.lastname = { [Op.substring]: lastname };
+        
         const response = await db.User.findAndCountAll({
             where: query,
             ...queries,
