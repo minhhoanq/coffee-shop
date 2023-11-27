@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Box, Checkbox, IconButton, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Checkbox, CircularProgress, IconButton, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, colors } from "@mui/material";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -8,27 +8,22 @@ import { getAllStaff } from "../../api/userApi";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUserActions } from "../../redux/asyncActions/userActions";
-
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Frozen', 159, 6.0, 24, 4.0),
-    createData('Ice', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+import ModalFilterUsers from "../../components/common/ModalFilterUsers";
 
 const Employee = () => {
     const [employees, setEmployees] = useState([]);
     const isFetching = useSelector(state => state.auth.isPending);
     const [id, setId] = useState();
-    const [name, setName] = useState("");
+    const [username, setUsername] = useState("");
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
+    const [sex, setSex] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [pageUser, setPageUser] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
     const dispatch = useDispatch();
+    const [showModalFilter, setShowModalFilter] = useState(true);
 
     useEffect(() => {
         const getData = async() => {
@@ -40,7 +35,7 @@ const Employee = () => {
             //     idProduct = id;
             // }
             
-            const userList = await dispatch(getAllUserActions({page, limit, name, id, roles}));
+            const userList = await dispatch(getAllUserActions({page, limit, username, id, roles}));
             setEmployees(userList.payload?.data?.rows || []);
             console.log(userList)
 
@@ -48,12 +43,16 @@ const Employee = () => {
             setTotalPage(quantityPage);
         }
         getData();
-    },[pageUser, name, id]);
+    },[pageUser, username, id, firstname, lastname, sex, email, phone]);
 
     console.log(employees)
 
     const handleChange = (e, value) => {
         setPageUser(value)
+    }
+
+    const setDataFilter = (data) => {
+        console.log(data)
     }
 
     return (
@@ -84,7 +83,7 @@ const Employee = () => {
                             height: "25px",
                             color: "#3040d6"
                         }}>
-                            400
+                            {employees.length}
                         </Box>
                     </Stack>
                     <Stack direction={"row"} spacing={3}>
@@ -108,7 +107,9 @@ const Employee = () => {
                             borderRadius: "2px",
                             color: "#3040d6",
 
-                        }}>
+                        }}
+                        onClick={() => setShowModalFilter(true)}
+                        >
                             <FilterAltIcon/>
                             <Typography sx={{
                                 marginLeft: "10px"
@@ -116,6 +117,7 @@ const Employee = () => {
                                 Filter
                             </Typography>
                         </IconButton>
+                        <ModalFilterUsers data={setDataFilter} open={showModalFilter} close={() => setShowModalFilter(false)}/>
                     </Stack>
                 </Stack>
             </Stack>
@@ -134,7 +136,7 @@ const Employee = () => {
                             <TableRow>
                                 <TableCell><Checkbox id="checkedAll"/></TableCell>
                                 <TableCell></TableCell>
-                                <TableCell sx={{ fontWeight: 600 }}>Name</TableCell>
+                                <TableCell sx={{ fontWeight: 600 }}>Username</TableCell>
                                 <TableCell sx={{ fontWeight: 600 }} align="right">ID</TableCell>
                                 <TableCell sx={{ fontWeight: 600 }} align="right">Position</TableCell>
                                 <TableCell sx={{ fontWeight: 600 }} align="right">Updated</TableCell>
@@ -179,6 +181,26 @@ const Employee = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                {isFetching && (
+                        <Stack
+                            alignItems={"center"}
+                            justifyContent={"center"}
+                            sx={{
+                                height: "100%",
+                                width: "100%",
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                bgcolor: colors.common.white,
+                                zIndex: 1000
+                            }}
+                        >
+                            <Box position={"relative"}>
+                                <CircularProgress/>
+                            </Box>
+                        </Stack>
+                    )}
+                    {/* Loading */}
                 <Box
                     sx={{
                         display: "flex",

@@ -121,7 +121,7 @@ const Product = () => {
                             height: "25px",
                             color: "#3040d6"
                         }}>
-                            400
+                            {products.length}
                         </Box>
                     </Stack>
                     <Stack direction={"row"} spacing={3}>

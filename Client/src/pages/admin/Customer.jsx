@@ -6,30 +6,43 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { getAllUsers } from "../../api/userApi";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
-
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Frozen', 159, 6.0, 24, 4.0),
-    createData('Ice', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUserActions } from "../../redux/asyncActions/userActions";
 
 const Customer = () => {
     const [customers, setCustomers] = useState([]);
-
-    const getAllCustomers = async() => {
-        const result = await getAllUsers();
-        setCustomers(result.data);
-    }
+    const isFetching = useSelector(state => state.auth.isPending);
+    const [id, setId] = useState();
+    const [name, setName] = useState("");
+    const [pageUser, setPageUser] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        getAllCustomers()
-    }, [])
+        const getData = async() => {
+            let page = pageUser;
+            const limit = 6;
+            const roles = 2;
+
+            // if(id !== "" && id !== 0) {
+            //     idProduct = id;
+            // }
+            
+            const userList = await dispatch(getAllUserActions({page, limit, name, id, roles}));
+            setCustomers(userList.payload?.data?.rows || []);
+            console.log(userList)
+
+            const quantityPage = Math.ceil((userList.payload?.count || 0) / limit);
+            setTotalPage(quantityPage);
+        }
+        getData();
+    },[pageUser, name, id]);
+
+    console.log(customers)
+
+    const handleChange = (e, value) => {
+        setPageUser(value)
+    }
 
     return (
         <Box sx={{
@@ -162,9 +175,9 @@ const Customer = () => {
                     }}
                 >
                     <Pagination 
-                        count={2}
-                        page={1}
-                        // onChange={handleChange}
+                        count={totalPage}
+                        page={pageUser}
+                        onChange={handleChange}
                         sx={{
                             // position: "absolute",
                             // bottom: "10px",
