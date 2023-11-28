@@ -5,9 +5,9 @@ import ItemCard from "../components/common/ItemCard";
 import { useCallback, useEffect, useState } from "react";
 import { getProductsAction } from "../redux/asyncActions/productActions";
 import { useSelector, useDispatch } from "react-redux";
-import ItemCardHorizontal from "../components/common/ItemCarHorizontal";
+// import ItemCardHorizontal from "../components/common/ItemCarHorizontal";
 import RecommendItemCard from "../components/common/RecommendItemCard";
-import { getAllProductRecommend } from "../api/productApi";
+// import { getAllProductRecommend } from "../api/productApi";
 // import useDebounce from "../hooks/useDebounce";
 
 const data = [
@@ -62,10 +62,10 @@ const Menu = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.currentUser);
 
-    const getDataRecommed = async () => {
-        const result = await getAllProductRecommend();
-        setProductsRecommed(result.productsRecommend);
-    }
+    // const getDataRecommed = async () => {
+    //     const result = await getAllProductRecommend();
+    //     setProductsRecommed(result.productsRecommend);
+    // }
 
     // console.log(searchValue)
 
@@ -96,11 +96,11 @@ const Menu = () => {
         getData();
     },[searchValue, sort, category, numPage]);
 
-    useEffect(() => {
-        if(user) {
-            getDataRecommed();
-        }
-    },[user])
+    // useEffect(() => {
+    //     if(user) {
+    //         getDataRecommed();
+    //     }
+    // },[user])
 
 
     const handleSearch = useCallback((search) => {

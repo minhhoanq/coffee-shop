@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { Autocomplete, Box, Button, CircularProgress, Stack, TextField, TextareaAutosize, Typography, colors, createFilterOptions } from "@mui/material";
+import { Autocomplete, Box, Button, CircularProgress, Stack, TextField, Typography, colors, createFilterOptions } from "@mui/material";
 import Breadcrumbs from "../../../components/common/Breadcrumbs";
 import { Controller, useForm } from "react-hook-form";
-import { createProduct } from "../../../api/productApi";
 import { useDispatch, useSelector } from "react-redux";
-import { createProductAction } from "../../../redux/asyncActions/productActions";
 import Swal from "sweetalert2";
-import { fileToBase64 } from "../../../utils/helpers";
+import ModalCodeRegistration from "../../../components/common/ModalCodeRegistration";
+import { registerActions } from "../../../redux/asyncActions/authActions";
 
 const sexs = [
     {
@@ -33,6 +32,8 @@ const filterOptions = createFilterOptions({
 const CreateEmployee = () => {
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.product.isPending);
+    const [modalCode, setModalCode] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const {
         control,
@@ -54,29 +55,16 @@ const CreateEmployee = () => {
 
     const handleCreateProduct = async(data) => {
         console.log(data)
-        // const formData = new FormData();
-        // if(data.image.length > 0) formData.append('image', data.image[0])
-        // delete data.image
-        
-        // for(let i of Object.entries(data)) formData.append(i[0], i[1])
-
-        // const response = await dispatch(createProductAction(formData));
-
-        // if(response.meta.requestStatus === 'fulfilled') {
-        //     Toast.fire({
-        //         icon: 'success',
-        //         title: response.payload.data.mes,
-        //     }).then(() => {
-        //         window.location.reload(true);
-        //     })
-        // }
-
-        // if(response.meta.requestStatus === 'rejected') {
-        //     Toast.fire({
-        //         icon: 'error',
-        //         title: 'Lỗi! Vui lòng thử lại sau.',
-        //     })
-        // }
+        const response = await dispatch(registerActions(data));
+        const reqStatus = response.meta.requestStatus;
+        console.log(response);
+        if(reqStatus === 'fulfilled') {
+            setModalCode(true)
+        } else if (reqStatus === 'rejected') {
+            console.log(response.payload.response.data.msg);
+            Swal.fire('', response.payload.response.data.msg, 'error')
+        }
+        // setModalCode(true)
     }
 
     return (
@@ -87,6 +75,11 @@ const CreateEmployee = () => {
             display: "flex",
             flexDirection: "column",
         }}>
+            <ModalCodeRegistration
+                open={modalCode}
+                close={(close) => setModalCode(close)}
+                isLoggedIn={(isLoggedIn) => setIsLoggedIn(isLoggedIn)}
+            />
             <Stack>
                 <Typography variant="h6">
                     <Breadcrumbs/>
@@ -296,8 +289,8 @@ const CreateEmployee = () => {
                             />
                             
                             <TextField label={`Confirm password`} fullWidth
-                                name={`confirmpassword`} 
-                                id={`confirmpassword`}
+                                name={`confirmPassword`} 
+                                id={`confirmPassword`}
                                 inputProps={{
                                     style: {
                                         height: "50px",
@@ -305,7 +298,7 @@ const CreateEmployee = () => {
                                         backgroundColor: "#f5f5f5"
                                     }
                                 }}
-                                {...register("confirmpassword")}
+                                {...register("confirmPassword")}
                             />
                         </Stack>
                     </Stack>

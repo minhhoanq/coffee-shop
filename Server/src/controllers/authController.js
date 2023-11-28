@@ -298,7 +298,7 @@ const authController = {
         try {
             const user = await db.User.findOne({where: {username: req.body.username}});
             if(!user) {
-                return res.status(404).json("Tài khoản chưa đưuọc đăng ký!");
+                return res.status(404).json("Tài khoản chưa được đăng ký!");
             }
 
             const validPassword = await bcrypt.compare(

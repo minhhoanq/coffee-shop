@@ -41,10 +41,6 @@ const Register = () => {
         const reqStatus = response.meta.requestStatus;
         console.log(response);
         if(reqStatus === 'fulfilled') {
-            // setIsLoggedIn(true);
-            // setTimeout(() => {
-            //     navigate('/')
-            // }, 1000)
             setModalCode(true)
 
         } else if (reqStatus === 'rejected') {
