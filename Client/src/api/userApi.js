@@ -35,13 +35,9 @@ export const getAllUserSoftDelete = async (roles) => {
     }
 }
 
-export const getUserById = async (id, accessToken) => {
+export const getUserById = async (id) => {
     try {
-        const res = await request.get(`/api/v1/users/${id}`, {
-            headers:({
-                token: `Bearer ${accessToken}`
-            })
-        });
+        const res = await request.get(`/api/v1/users/${id}`);
         return res.data;
     } catch (error) {
         return error;

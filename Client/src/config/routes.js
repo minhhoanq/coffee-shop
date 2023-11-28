@@ -34,6 +34,7 @@ import CreateProduct from "../pages/admin/CreateProduct";
 import Category from "../pages/admin/Category";
 import ProductDetailAdmin from "../pages/admin/product/ProductDetail"
 import CreateEmployee from "../pages/admin/employee/CreateEmployee";
+import EmployeeDetail from "../pages/admin/employee/EmployeeDetail";
 
 //Public routes
 const publicRoutes = [
@@ -58,6 +59,7 @@ const publicRoutes = [
     { path: '/dashboard', component: Dashboard, layout: DefaultLayoutAdmin},
     { path: '/dashboard/employees', component: Employee, layout: DefaultLayoutAdmin},
     { path: '/dashboard/employees/create', component: CreateEmployee, layout: DefaultLayoutAdmin},
+    { path: '/dashboard/employees/:slug', component: EmployeeDetail, layout: DefaultLayoutAdmin},
     { path: '/dashboard/customers', component: Customer, layout: DefaultLayoutAdmin},
     { path: '/dashboard/products', component: Product, layout: DefaultLayoutAdmin},
     { path: '/dashboard/products/create', component: CreateProduct, layout: DefaultLayoutAdmin},

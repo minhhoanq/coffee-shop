@@ -12,6 +12,7 @@ import { loginActions, registerActions } from "../redux/asyncActions/authActions
 import Swal from "sweetalert2";
 import ModalCodeRegistration from '../components/common/ModalCodeRegistration'
 
+
 const Register = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();

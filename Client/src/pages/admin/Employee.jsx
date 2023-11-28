@@ -9,6 +9,7 @@ import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUserActions } from "../../redux/asyncActions/userActions";
 import ModalFilterUsers from "../../components/common/ModalFilterUsers";
+import { Link } from "react-router-dom";
 
 const Employee = () => {
     const [employees, setEmployees] = useState([]);
@@ -146,7 +147,20 @@ const Employee = () => {
                             <Typography sx={{
                                 marginLeft: "10px"
                             }}>
-                                Create new
+                                <Link
+                                    to={'/dashboard/employees/create'} style={{
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        textDecoration: "none",
+                                        color: "rgba(0, 0, 0, 0.8)",
+                                        "&:hover" : {
+                                            color: "#000"
+                                        }
+                                    }}
+                                >
+                                    Create new
+                                </Link>
                             </Typography>
                         </IconButton>
                         <IconButton sx={{
