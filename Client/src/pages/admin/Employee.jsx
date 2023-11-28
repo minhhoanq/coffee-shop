@@ -13,8 +13,8 @@ import ModalFilterUsers from "../../components/common/ModalFilterUsers";
 const Employee = () => {
     const [employees, setEmployees] = useState([]);
     const isFetching = useSelector(state => state.auth.isPending);
-    const [id, setId] = useState();
-    const [username, setUsername] = useState(undefined);
+    const [idValue, setIdValue] = useState();
+    const [usernameValue, setUsernameValue] = useState(undefined);
     const [fname, setFname] = useState(undefined);
     const [lname, setLname] = useState(undefined);
     const [sexValue, setSexValue] = useState(undefined);
@@ -31,11 +31,21 @@ const Employee = () => {
             const limit = 6;
             const roles = 1;
             
+            let id = undefined;
+            let username = undefined;
             let firstname = undefined;
             let lastname = undefined;
             let sex = undefined;
             let email = undefined;
             let phone = undefined;
+
+            if(idValue !== "") {
+                id = idValue
+            }
+
+            if(usernameValue !== "") {
+                username = usernameValue
+            }
 
             if(fname !== "") {
                 firstname = fname
@@ -60,8 +70,8 @@ const Employee = () => {
             const userList = await dispatch(getAllUserActions({
                 page, 
                 limit, 
-                username, 
-                id: undefined, 
+                username: username, 
+                id: id, 
                 roles, 
                 firstname,
                 lastname,
@@ -76,7 +86,7 @@ const Employee = () => {
             setTotalPage(quantityPage);
         }
         getData();
-    },[pageUser, username, id, fname, lname, sexValue, emailValue, phoneValue]);
+    },[pageUser, usernameValue, idValue, fname, lname, sexValue, emailValue, phoneValue]);
 
     const handleChange = (e, value) => {
         setPageUser(value)
@@ -84,8 +94,8 @@ const Employee = () => {
 
     const setDataFilter = (data) => {
         console.log(data)
-        setId(data?.id)
-        setUsername(data?.username);
+        setIdValue(data?.id)
+        setUsernameValue(data?.username);
         setFname(data?.firstname);
         setLname(data?.lastname);
         setSexValue(data?.sex?.state);
@@ -155,7 +165,7 @@ const Employee = () => {
                                 Filter
                             </Typography>
                         </IconButton>
-                        <ModalFilterUsers data={setDataFilter} open={showModalFilter} close={() => setShowModalFilter(false)}/>
+                        <ModalFilterUsers data={(data) => setDataFilter(data)} open={showModalFilter} close={() => setShowModalFilter(false)}/>
                     </Stack>
                 </Stack>
             </Stack>
