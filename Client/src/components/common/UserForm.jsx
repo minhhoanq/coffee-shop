@@ -63,7 +63,7 @@ const UserForm = props => {
             phone: item.phone,
         })
        }
-    },[item])
+    },[item]);
 
     const handleSubmitForm = (data) => {
         props.submit(data);
@@ -79,7 +79,7 @@ const UserForm = props => {
                 <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}  mt={2}>
                     <Stack direction={"row"} alignItems={"center"} spacing={1}>
                         <Typography variant="h4">
-                            Create new employees
+                            Create new employee
                         </Typography>
                     </Stack>
                 </Stack>

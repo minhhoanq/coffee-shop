@@ -26,6 +26,11 @@ const Employee = () => {
     const dispatch = useDispatch();
     const [showModalFilter, setShowModalFilter] = useState(false);
 
+    const [openOptions, setOpenOptions] = useState({
+        id: "",
+        bool: false
+    });
+
     useEffect(() => {
         const getData = async() => {
             let page = pageUser;
@@ -235,7 +240,75 @@ const Employee = () => {
                                 <TableCell align="right">{employee.updatedAt}</TableCell>
                                 <TableCell align="right">
                                     <IconButton>
-                                        <MoreHorizIcon/>
+                                        <MoreHorizIcon
+                                            id="demo-positioned-button"
+                                            // aria-controls={open ? 'demo-positioned-menu' : undefined}
+                                            aria-haspopup="true"
+                                            onClick={() => setOpenOptions({
+                                                id: employee.id,
+                                                bool: !openOptions.bool
+                                            })}
+                                            sx={{
+                                                height: "50%",
+                                                position: "relative"
+                                            }}
+                                        />
+                                        <Box sx={{
+                                            position: "absolute",
+                                            top: 30,
+                                            right: 30,
+                                            border: "1px solid #ccc",
+                                            p: "5px 0",
+                                            width: "80px",
+                                            backgroundColor: "#fff",
+                                            boxShadow: "0 2px 10px 0 rgba(0,0,0,.15)",
+                                            zIndex: "1000",
+                                            borderRadius: "4px",
+                                            visibility: openOptions.id === employee.id && openOptions.bool === true ? "" : "hidden"
+                                        }}>
+                                            <Stack justifyContent={"center"} alignItems={"center"} >
+                                                <Link to={`/dashboard/employees/${employee.id}`} style={{
+                                                    cursor: "pointer",
+                                                    width: "100%",
+                                                    height: "30px",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    "&:hover": {
+                                                        backgroundColor: "#ccc"
+                                                    }
+                                                }}>
+                                                    <Typography sx={{
+                                                        cursor: "pointer",
+                                                        width: "100%",
+                                                        height: "30px",
+                                                        display: "flex",
+                                                        justifyContent: "center",
+                                                        alignItems: "center",
+                                                        "&:hover": {
+                                                            backgroundColor: "#ccc"
+                                                        },
+                                                        color: "#000"
+                                                    }}>
+                                                        Chi tiết
+                                                    </Typography>
+                                                </Link>
+                                                <Typography sx={{
+                                                    cursor: "pointer",
+                                                    width: "100%",
+                                                    height: "30px",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    "&:hover": {
+                                                        backgroundColor: "#ccc"
+                                                    },
+                                                    color: "#000"
+                                                }}>
+                                                    Báo cáo
+                                                </Typography>
+                                            </Stack>
+                                        </Box>
                                     </IconButton>
                                 </TableCell>
                             </TableRow>

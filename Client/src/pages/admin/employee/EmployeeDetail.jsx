@@ -2,12 +2,14 @@ import { Box } from "@mui/material";
 import UserForm from "../../../components/common/UserForm";
 import { useState, useEffect } from "react";
 import { getUserById } from "../../../api/userApi";
+import { useParams } from "react-router-dom";
 
 const EmployeeDetail = () => {
     const [employee, setEmployee] = useState();
+    const { id } = useParams();
 
     const getEmployeeDetail = async() => {
-        const res = await getUserById(1);
+        const res = await getUserById(Number(id));
         console.log(res);
         setEmployee(res.usersData);
     }
