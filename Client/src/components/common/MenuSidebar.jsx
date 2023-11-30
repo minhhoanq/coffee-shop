@@ -115,9 +115,10 @@ const menus = [
         ]
     },
     {
-        title: "Kho voucher",
+        title: "Orders",
         icon: <DiscountOutlinedIcon/>,
-        state: "customer"
+        state: "order",
+        pathname: "/dashboard/orders"
     }
 ]
 

@@ -11,151 +11,8 @@ import { Link } from "react-router-dom";
 import MenuSidebar from "./MenuSidebar";
 
 
-// const menus = [
-//     {
-//         title: "Home",
-//         icon: <HomeIcon/>,
-//         state: "home",
-//         pathname: "/dashboard"
-//     },
-//     {
-//         title: "Employees",
-//         icon: <PersonIcon/>,
-//         state: "employees",
-//         pathname: "/dashboard/employees",
-//         childrens: [
-//             {
-//                 title: "List of employee",
-//                 state: "list_of_employee",
-//                 pathname: "/dashboard/employees",
-//             },
-//             {
-//                 title: "Trash",
-//                 state: "trash",
-//                 pathname: "/dashboard/employees/trash",
-//             },
-//             {
-//                 title: "Timekeeping",
-//                 state: "timekeeping",
-//                 pathname: "/dashboard/employees/timekeeping",
-//             }
-//         ]
-//     },
-//     ,
-//     {
-//         title: "Customers",
-//         icon: <PersonIcon/>,
-//         state: "customers",
-//         pathname: "/dashboard/customers",
-//         childrens: [
-//             {
-//                 title: "List of customer",
-//                 state: "list_of_customer",
-//                 pathname: "/dashboard/customers",
-//             },
-//             {
-//                 title: "Trash",
-//                 state: "trash",
-//                 pathname: "/dashboard/customers/trash",
-//             },
-//             {
-//                 title: "Timekeeping",
-//                 state: "timekeeping",
-//                 pathname: "/dashboard/customers/timekeeping",
-//             }
-//         ]
-//     },
-//     {
-//         title: "Products",
-//         icon: <BallotOutlinedIcon/>,
-//         state: "product",
-//         pathname: "/dashboard/products",
-//     },
-//     {
-//         title: "Kho voucher",
-//         icon: <DiscountOutlinedIcon/>,
-//         state: "customer"
-//     }
-// ]
 
 const SidebarDashBoard = () => {
-    
-    // const Menu = props => {
-    //     const [activeChildren, setActiveChildren] = useState("");
-
-    //     const [open, setOpen] = useState(false);
-    //     const option = props.option;
-    //     const childrenOption = option.childrens;
-    //     const active = props.active;
-
-    //     return (
-    //         <Link width={"100%"} to={option.pathname} style={{
-    //             cursor: "pointer",
-    //             textDecoration: "none",
-    //             color: "rgba(0, 0, 0, 0.8)",
-    //         }}
-    //             onClick={() => {
-    //                 setOpen(!open);
-    //                 setActiveParent(option.pathname);
-    //             }}
-    //         >
-    //             <ListItem >
-    //                 <ListItemButton sx={{
-    //                     backgroundColor: active === option.pathname ? "#ccc" : "#fff",
-    //                     borderRadius: "2px",
-    //                     "&:hover" : {
-    //                         backgroundColor: active === option.pathname && "#ccc",
-    //                         color: "#000"
-    //                     }
-    //                 }}
-    //                 >
-    //                     <ListItemIcon>
-    //                         {option.icon}
-    //                     </ListItemIcon>
-    //                     <ListItemText>
-    //                         {option.title}
-    //                     </ListItemText>
-    //                 </ListItemButton>
-    //             </ListItem>
-    //             <Box ml={"55px"} width={"100% - 55px"}
-    //                 sx={{
-    //                     display: open ? "block" : "none"
-    //                 }}
-    //             >
-    //                 {childrenOption && childrenOption.map((item, index) => (
-    //                     <Link to={item.pathname}
-    //                         key={index}
-    //                         style={{
-    //                             cursor: "pointer",
-    //                             textDecoration: "none",
-    //                             color: "rgba(0, 0, 0, 0.8)",
-    //                         }}
-    //                     >
-    //                         <ListItem>
-    //                             <ListItemButton sx={{
-    //                                 backgroundColor: activeChildren === item.pathname ? "#ccc" : "#fff",
-    //                                 borderRadius: "2px",
-    //                                 "&:hover" : {
-    //                                     backgroundColor: activeChildren === item.pathname && "#ccc",
-    //                                     color: "#000"
-    //                                 }
-    //                                 }}
-    //                                 onClick={() => {
-    //                                     // setActiveParent(option.pathname);
-    //                                     setActiveChildren(item.pathname);
-    //                                 }}
-    //                             >
-    //                                 <ListItemText>
-    //                                     {item.title}
-    //                                 </ListItemText>
-    //                             </ListItemButton>
-    //                         </ListItem>
-    //                     </Link>
-    //                 ))}
-    //             </Box>
-    //         </Link>
-    //     )
-    // }
 
     return (
         <Box sx={{
@@ -179,9 +36,7 @@ const SidebarDashBoard = () => {
                 }}/>
             </Box>
             <Stack>
-                {/* {menus.map((item, index) => ( */}
-                    <MenuSidebar />
-                {/* ))} */}
+                <MenuSidebar />
             </Stack>
         </Box>
     )
