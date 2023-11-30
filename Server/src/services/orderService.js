@@ -2,7 +2,7 @@ const db = require("../models");
 
 const getAllOrderService = () => new Promise(async(resolve, reject) => {
     try {
-        const response = await db.Order.findAll({
+        const orderData = await db.Order.findAll({
             where: {},
             include: [
                 {
@@ -10,12 +10,40 @@ const getAllOrderService = () => new Promise(async(resolve, reject) => {
                     as: 'statusData',
                     attributes: ['id',
                                 'statusName'],
-                }
+                },
+                {
+                    model: db.Cart_Item,
+                    // as: 'statusData',
+                    attributes: ['id',
+                                'cartId', 'productSizeId', 'quantity', 'price'],
+                    include: [
+                        {
+                            model: db.Product_Size,
+                            as: 'productSizeData',
+                            attributes: ['id',
+                                        'productId'],
+                            include: [
+                                {
+                                    model: db.Product,
+                                    as: 'productData',
+                                    attributes: ['id',
+                                                'productName'],
+                                },
+                                {
+                                    model: db.Size,
+                                    as: 'sizeData',
+                                    attributes: ['id',
+                                                'sizeName'],
+                                },
+                            ]
+                        },
+                    ]
+                },
             ]
         });
 
         resolve({
-            data: response
+            data: orderData,
         })
     } catch (error) {
         reject(error)
