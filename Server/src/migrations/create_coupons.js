@@ -17,20 +17,32 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      minValue: {
+      discountAmount: {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },
-      minPrice: {
+      discountPercentage: {
         type: Sequelize.DOUBLE,
+        allowNull: false,
+      },
+      maxAmount: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+      },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      amount: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       startDate: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       endDate: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       createdAt: {
