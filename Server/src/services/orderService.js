@@ -50,4 +50,19 @@ const getAllOrderService = () => new Promise(async(resolve, reject) => {
     }
 });
 
-module.exports = { getAllOrderService }
+const createOrder = (data) => new Promise(async (resolve, reject) => {
+    try {
+        const {couponsId, statusId, price, } = data;
+
+        
+
+        resolve({
+            err: 0,
+            mes: "Check"
+        })
+    } catch (error) {
+        reject(error)
+    }
+})
+
+module.exports = { getAllOrderService, createOrder }

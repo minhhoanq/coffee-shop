@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
   return Coupons;
 };
 
+
 //  Id    code        couponsCondition      discountAmount      discountPercentage      maxAmount       startDate    endDate    isActive    amount
 //  1     noel20      trà sữa               null                0.8                     10000           22-12        27-12      true        100
 //  1     noel30      trà                   null                0.7                     15000           22-12        27-12      true        100
