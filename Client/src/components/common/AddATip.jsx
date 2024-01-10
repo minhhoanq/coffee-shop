@@ -15,7 +15,7 @@ const AddATip = () => {
         <Stack spacing={2}>
                 <VoucherModal
                     open={openModal}
-                    // close={(close) => setModal(close)}
+                    close={(close) => setModal(close)}
                 />
                 <Typography fontSize={"0.9rem"} fontWeight={"600"}>
                     Coupons
