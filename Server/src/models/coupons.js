@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Coupons.init({
     code: DataTypes.STRING,
+    nameCoupons: DataTypes.STRING,
     couponsCondition: DataTypes.STRING,
     discountAmount: DataTypes.DOUBLE,
     discountPercentage: DataTypes.DOUBLE,

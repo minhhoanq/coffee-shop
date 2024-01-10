@@ -13,17 +13,21 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      nameCoupons: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       couponsCondition: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       discountAmount: {
         type: Sequelize.DOUBLE,
-        allowNull: false,
+        allowNull: true,
       },
       discountPercentage: {
         type: Sequelize.DOUBLE,
-        allowNull: false,
+        allowNull: true,
       },
       maxAmount: {
         type: Sequelize.DOUBLE,

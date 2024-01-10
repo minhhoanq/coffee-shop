@@ -5,6 +5,7 @@ const categoryRoute = require("../routes/categoryRoute");
 const cartRoute = require("../routes/cartRouter");
 const ingredientRoute = require("../routes/ingredientRoute");
 const orderRouter = require("../routes/orderRouter");
+const couponsRouter = require("../routes/couponsRouter");
 
 const initRoutes = (app) => {
     app.use("/api/v1/auth", authRoute);
@@ -14,6 +15,7 @@ const initRoutes = (app) => {
     app.use("/api/v1/cart-item", cartRoute);
     app.use("/api/v1/ingredient", ingredientRoute);
     app.use("/api/v1/order", orderRouter);
+    app.use("/api/v1/coupons", couponsRouter);
 
 
     return app.use('/', (req, res) => {
