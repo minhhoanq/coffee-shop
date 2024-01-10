@@ -44,7 +44,8 @@ const Address = () => {
                         }
                     }}
                     
-                    onClick={hanldeShowAddAddress}>
+                    onClick={hanldeShowAddAddress}
+                    >
                         Add new address
                     </Button>
                 </Stack>
