@@ -11,7 +11,7 @@ const Paper = props => {
                 width: 500,
                 minHeight: 200,
                 height: "550px",
-                bgcolor: 'background.paper',
+                bgcolor: props.bgcolor,
                 borderRadius: 1,
                 p: 2,
                 outline: "none",

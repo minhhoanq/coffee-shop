@@ -2,9 +2,22 @@ import {  Box, IconButton, Modal, Stack, TextField, Typography, InputAdornment, 
 import Paper from "./Paper";
 import ClearIcon from '@mui/icons-material/Clear';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import VoucherItem from "./VoucherItem";
+import { useEffect, useState } from "react";
+import { getAllBillCoupons } from "../../api/couponsApi";
 
 const VoucherModal = props => {
-    
+    const [coupons, setCoupons] = useState([]);
+
+    useEffect(() => {
+        const getData = async () => {
+            const getData = await getAllBillCoupons();
+            setCoupons(getData.data);
+        }
+
+        getData();
+    },[])
+
     const handleCloseModal = () => {
         props.close(false);
     }
@@ -16,7 +29,7 @@ const VoucherModal = props => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <Paper>
+            <Paper bgcolor={"#fff"}>
                 <Box
                     sx={{
                         position: "absolute",
@@ -60,12 +73,14 @@ const VoucherModal = props => {
                     </Stack>
                 </Stack>
                 
-                <Box mt={2} sx={{
+                <Stack mt={2} spacing={1} sx={{
                     height: "400px",
-                    bgcolor: "#ccc"
+                    overflow: "auto"
                 }}>
-
-                </Box>
+                    {coupons.map((item, index) => (
+                        <VoucherItem item={item} key={index}/>
+                    ))}
+                </Stack>
 
                 <Box sx={{
                     width: "100%",
