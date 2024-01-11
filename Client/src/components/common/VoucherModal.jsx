@@ -9,6 +9,12 @@ import { getAllBillCoupons } from "../../api/couponsApi";
 const VoucherModal = props => {
     const [coupons, setCoupons] = useState([]);
 
+    const checkCoupons = () => {
+        if(props.orderTotal >= 100000) {
+            
+        }
+    }
+
     useEffect(() => {
         const getData = async () => {
             const getData = await getAllBillCoupons();
@@ -60,6 +66,7 @@ const VoucherModal = props => {
                                     </InputAdornment>
                                 ),
                             }}
+                            onChange={e => props.voucher(e.target.value)}
                         />
                         <Button variant="contained" size="large" sx={{
                             bgcolor: colors.brown[500],
@@ -93,7 +100,7 @@ const VoucherModal = props => {
                                         width: "20px",
                                         // cursor: "not-allowed"
                                     }}
-                                    onChange={e => console.log(e.target.value)}/>
+                                    onChange={e => props.voucher(e.target.value)}/>
                             </Box>
                         </Stack>
                     ))}

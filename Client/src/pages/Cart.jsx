@@ -114,7 +114,15 @@ const Cart = () => {
                                 width: "100%",
                                 borderTop: "1px solid #ccc"
                             }}/>
-                            <AddATip orderTotal={formOrder.orderTotal}/>
+                            <AddATip 
+                                voucher={e =>  
+                                    setFormOrder(prev => {
+                                        return {
+                                            ...prev,
+                                            voucher: e
+                                        }
+                                    })} 
+                                orderTotal={formOrder.orderTotal}/>
                             <Box
                             sx={{
                                 width: "100%",
