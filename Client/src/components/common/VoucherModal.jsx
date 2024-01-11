@@ -1,4 +1,4 @@
-import {  Box, IconButton, Modal, Stack, TextField, Typography, InputAdornment, Button, colors } from "@mui/material"
+import {  Box, IconButton, Modal, Stack, TextField, Typography, InputAdornment, Button, colors, Radio } from "@mui/material"
 import Paper from "./Paper";
 import ClearIcon from '@mui/icons-material/Clear';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
@@ -14,7 +14,6 @@ const VoucherModal = props => {
             const getData = await getAllBillCoupons();
             setCoupons(getData.data);
         }
-
         getData();
     },[])
 
@@ -78,7 +77,25 @@ const VoucherModal = props => {
                     overflow: "auto"
                 }}>
                     {coupons.map((item, index) => (
-                        <VoucherItem item={item} key={index}/>
+                        <Stack direction={"row"} justifyContent={"space-between"} key={index} sx={{
+                            border: "1px solid #ccc",
+                            borderRadius: "2px",
+                        }}>
+                            <VoucherItem item={item}/>
+                            <Box display={"flex"} alignItems={"center"} justifyContent={"center"} width={"40px"}>
+                                <input 
+                                // disabled
+                                    type="radio" 
+                                    value={item.code} 
+                                    name="voucher" 
+                                    style={{
+                                        height: "20px",
+                                        width: "20px",
+                                        // cursor: "not-allowed"
+                                    }}
+                                    onChange={e => console.log(e.target.value)}/>
+                            </Box>
+                        </Stack>
                     ))}
                 </Stack>
 

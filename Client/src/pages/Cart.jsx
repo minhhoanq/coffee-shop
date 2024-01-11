@@ -14,12 +14,27 @@ const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const user = useSelector(state => state.auth.currentUser);
     const [checkDelete, setCheckDelete] = useState(false);
-    const [price, setPrice] = useState(0);
+    // const [price, setPrice] = useState(0);
+
+    const [formOrder, setFormOrder] = useState({
+        items: [],
+        Transportfee: 10000,
+        voucher: "",
+        orderTotal: 0,
+    });
 
     const getData = async() => {
         const result = await getAllCartItem();
         setCartItems(result.productData);
+        setFormOrder(prev => {
+            return {
+                ...prev,
+                items: result.productData
+            }
+        })
     }
+
+    console.log(formOrder);
 
     useEffect(() => {
         if(user) {
@@ -99,13 +114,20 @@ const Cart = () => {
                                 width: "100%",
                                 borderTop: "1px solid #ccc"
                             }}/>
-                            <AddATip/>
+                            <AddATip orderTotal={formOrder.orderTotal}/>
                             <Box
                             sx={{
                                 width: "100%",
                                 borderTop: "1px solid #ccc"
                             }}/>
-                            <EstimatedOrder items={cartItems} price={e => setPrice(e)}/>
+                            <EstimatedOrder items={cartItems} price={e =>  
+                                setFormOrder(prev => {
+                                    return {
+                                        ...prev,
+                                        orderTotal: e
+                                    }
+                                })}
+                            />
                         </Stack>
                     </Grid>
                 </Grid>

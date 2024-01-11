@@ -4,7 +4,7 @@ import DiscountRoundedIcon from '@mui/icons-material/DiscountRounded';
 import VoucherModal from "./VoucherModal";
 import { useState } from "react";
 
-const AddATip = () => {
+const AddATip = props => {
     const [openModal, setModal] = useState(false);
 
     const handleShowVoucherModal = () => {
@@ -14,6 +14,7 @@ const AddATip = () => {
     return (
         <Stack spacing={2}>
                 <VoucherModal
+                    orderTotal={props.orderTotal}
                     open={openModal}
                     close={(close) => setModal(close)}
                 />
@@ -43,7 +44,6 @@ const AddATip = () => {
                     }}
                     onClick={handleShowVoucherModal}>
                         GET
-                        
                     </Button>
                 </Stack>
 
