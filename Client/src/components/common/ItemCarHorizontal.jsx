@@ -43,7 +43,7 @@ const ItemCardHorizontal = props => {
                         x{item?.quantity}
                     </Typography>
                     <Typography fontSize={"1.2rem"}>
-                        ${item?.price}
+                        ₫{item?.price}
                     </Typography>
                 </Stack>
 

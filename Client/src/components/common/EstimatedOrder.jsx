@@ -1,16 +1,18 @@
 import { Box, Button, Stack, Typography, colors } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const EstimatedOrder = props =>  {
     const items = props.items;
-    let priceTotal = 0;
+    const [priceTotal, setPriceTotal] = useState(0);
 
     useEffect(() => {
+        let priceTemp = 0;
         items?.forEach(element => {
-            priceTotal += element.price
+            priceTemp += element.price
         });
-        props.price(priceTotal)
+        props.price(priceTemp);
+        setPriceTotal(priceTemp);
     }, [items]);
 
     return (
@@ -26,7 +28,7 @@ const EstimatedOrder = props =>  {
                     </Typography>
 
                     <Typography>
-                        ${priceTotal}
+                        ₫{priceTotal}
                     </Typography>
                 </Box>
 
@@ -36,11 +38,11 @@ const EstimatedOrder = props =>  {
                     justifyContent: "space-between"
                 }}>
                     <Typography>
-                        Estimated taxes
+                        Transport fee
                     </Typography>
 
                     <Typography>
-                        $0.00
+                        ₫10000
                     </Typography>
                 </Box>
 
@@ -50,11 +52,11 @@ const EstimatedOrder = props =>  {
                     justifyContent: "space-between"
                 }}>
                     <Typography>
-                        Tip (20%)
+                        Total discount amount
                     </Typography>
 
                     <Typography>
-                        $2.65
+                        -₫10000
                     </Typography>
                 </Box>
                 <Box sx={{
@@ -71,11 +73,11 @@ const EstimatedOrder = props =>  {
                     <Typography
                         fontWeight={"600"}
                     >
-                        ${priceTotal}
+                        ₫{priceTotal}
                     </Typography>
                 </Box>
                 <Typography fontSize={"0.9rem"}>
-                    Additional taxes and fees will be calculated at checkout
+                    Delivery fees and coupons will apply
                 </Typography>
             </Stack>
 
@@ -96,10 +98,8 @@ const EstimatedOrder = props =>  {
                         color: "#fff"
                     },
                     width: "100%"
-                }}>
-                    
-                    
-                        Countinue to payment
+                }}> 
+                    Countinue to payment
                 </Link>
             </Button>
         </Stack>
