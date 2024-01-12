@@ -52,17 +52,41 @@ const getAllOrderService = () => new Promise(async(resolve, reject) => {
 
 const createOrder = (data) => new Promise(async (resolve, reject) => {
     try {
-        const {couponsId, statusId, price, } = data;
+        const {couponsId, price} = data;
 
-        
+        const createOrder = await db.Order.create({
+            couponsId: couponsId,
+            statusId: 2,
+            price: price
+        })
 
         resolve({
-            err: 0,
-            mes: "Check"
+            err: createOrder ? 0 : 1,
+            mes: createOrder ? "Tạo đơn hàng thành công" : "Lỗi tạo đơn hàng!",
+            data: createOrder
         })
     } catch (error) {
         reject(error)
     }
 })
 
-module.exports = { getAllOrderService, createOrder }
+const updateOrder = (data) => new Promise(async (resolve, reject) => {
+    try {
+        const {couponsId, price} = data;
+
+        const createOrder = await db.Order.update({ statusId: 1},{
+            couponsId: couponsId,
+            price: price
+        })
+
+        resolve({
+            err: createOrder ? 0 : 1,
+            mes: createOrder ? "Tạo đơn hàng thành công" : "Lỗi tạo đơn hàng!",
+            data: createOrder
+        })
+    } catch (error) {
+        reject(error)
+    }
+});
+
+module.exports = { getAllOrderService, createOrder, updateOrder }

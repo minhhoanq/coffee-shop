@@ -14,8 +14,8 @@ const AddATip = props => {
     return (
         <Stack spacing={2}>
                 <VoucherModal
-                    voucher={e => props.voucher(e)}
-                    orderTotal={props.orderTotal}
+                    couponsId={e => props.couponsId(e)}
+                    price={props.price}
                     open={openModal}
                     close={(close) => setModal(close)}
                 />
@@ -58,7 +58,7 @@ const AddATip = props => {
                             </InputAdornment>
                         ),
                     }}
-                    onChange={e => props.voucher(e.target.value)}
+                    onChange={e => props.couponsId(e.target.value)}
                 />
             </Stack>
     )

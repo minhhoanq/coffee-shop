@@ -19,8 +19,8 @@ const Cart = () => {
     const [formOrder, setFormOrder] = useState({
         items: [],
         Transportfee: 10000,
-        voucher: "",
-        orderTotal: 0,
+        couponsId: "",
+        price: 0,
     });
 
     const getData = async() => {
@@ -115,14 +115,14 @@ const Cart = () => {
                                 borderTop: "1px solid #ccc"
                             }}/>
                             <AddATip 
-                                voucher={e =>  
+                                couponsId={e =>  
                                     setFormOrder(prev => {
                                         return {
                                             ...prev,
-                                            voucher: e
+                                            couponsId: e
                                         }
                                     })} 
-                                orderTotal={formOrder.orderTotal}/>
+                                price={formOrder.price}/>
                             <Box
                             sx={{
                                 width: "100%",
@@ -132,7 +132,7 @@ const Cart = () => {
                                 setFormOrder(prev => {
                                     return {
                                         ...prev,
-                                        orderTotal: e
+                                        price: e
                                     }
                                 })}
                             />
