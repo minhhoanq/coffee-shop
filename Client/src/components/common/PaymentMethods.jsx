@@ -7,7 +7,9 @@ const PaymentMethods = () => {
     const [tab, setTab] = useState('bank-card');
 
     return (
-        <Stack height={"60%"} justifyContent={"space-between"}>
+        <Stack justifyContent={"space-between"} sx={{
+            height: { xl: "60%", lg: "60%", md: "auto", xs: "auto"}
+        }}>
             <Stack>
                 <Stack spacing={2} direction={"row"} justifyContent={"flex-start"} alignItems={"center"}
                     sx={{
@@ -46,7 +48,9 @@ const PaymentMethods = () => {
                         Payment upon delivery
                     </Button>
                 </Stack>
-                {tab === 'bank-card' ? <BankCardTab/> : <Typography>
+                {tab === 'bank-card' ? <BankCardTab/> : <Typography sx={{
+                    fontSize: { xl: "1.2rem", lg: "1.2rem", md: "1.2rem", xs: "1.2rem"}
+                }}>
                     Thanh toán khi nhận hàng
                     Phí thu hộ: ₫0 VNĐ. Ưu đãi về phí vận chuyển (nếu có) áp dụng cả với phí thu hộ.
                 </Typography>}

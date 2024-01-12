@@ -55,8 +55,7 @@ const Cart = () => {
                 <Typography variant='h4' fontWeight={"600"}>
                     Your cart
                 </Typography>
-                <Grid item container xs={12} justifyContent={"space-between"} mt={2} spacing={2}
-                >
+                <Grid item container xs={12} justifyContent={"space-between"} mt={2} spacing={2}>
                     <Grid item lg={7} xs={12}>
                         <Typography fontWeight={"600"} fontSize={"0.9rem"} color={"GrayText"}>
                             YOUR ORDER (1 ITEM)
@@ -105,7 +104,6 @@ const Cart = () => {
                                 Add more items
                             </Link>
                         </Button>
-
                         <PaymentMethods/>
                     </Grid>
 
