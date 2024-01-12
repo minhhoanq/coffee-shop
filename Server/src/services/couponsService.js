@@ -14,6 +14,8 @@ const getAllBillCouponsService = () => new Promise(async(resolve, reject) => {
     } catch (error) {
         reject(error)
     }
-})
+});
+
+
 
 module.exports = { getAllBillCouponsService };

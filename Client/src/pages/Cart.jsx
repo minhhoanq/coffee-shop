@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import cartEmpty from '../assets/images/cart-empty.png'
 import { Link } from 'react-router-dom';
+import PaymentMethods from '../components/common/PaymentMethods';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -54,7 +55,7 @@ const Cart = () => {
                 <Typography variant='h4' fontWeight={"600"}>
                     Your cart
                 </Typography>
-                <Grid item container xs={12} justifyContent={"space-between"} mt={4} spacing={2}
+                <Grid item container xs={12} justifyContent={"space-between"} mt={2} spacing={2}
                 >
                     <Grid item lg={7} xs={12}>
                         <Typography fontWeight={"600"} fontSize={"0.9rem"} color={"GrayText"}>
@@ -104,6 +105,8 @@ const Cart = () => {
                                 Add more items
                             </Link>
                         </Button>
+
+                        <PaymentMethods/>
                     </Grid>
 
                     <Grid item lg={4} xs={12}>
