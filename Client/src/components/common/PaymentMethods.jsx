@@ -1,14 +1,25 @@
 import { Button, Stack, Typography, colors } from "@mui/material"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const PaymentMethods = () => {
+import { getAllPaymentMethos } from "../../api/paymentMethodsApi"
 
-    const [tab, setTab] = useState('bank-card');
+const PaymentMethods = () => {
+    const [paymentMethods, setPaymentMethods] = useState([]);
+    const [tab, setTab] = useState('Bank Card');
+
+    useEffect(() => {
+        const getData = async() => {
+            const getPaymentMethods = await getAllPaymentMethos();
+            setPaymentMethods(getPaymentMethods.data);
+        }
+
+        getData();
+    },[])
 
     return (
         <Stack justifyContent={"space-between"} sx={{
-            height: { xl: "60%", lg: "60%", md: "auto", xs: "auto"}
+            height: { xl: "270px", lg: "270px", md: "auto", xs: "auto"}
         }}>
             <Stack>
                 <Stack spacing={2} direction={"row"} justifyContent={"flex-start"} alignItems={"center"}
@@ -19,21 +30,23 @@ const PaymentMethods = () => {
                     <Typography variant="h6">
                         Payment Methods
                     </Typography>
-                    <Button variant={tab === 'bank-card' ? "contained" : "outlined"}
+                    {paymentMethods.map((item, index) => (
+                        <Button key={index} variant={tab === `${item.nameMethod}` ? "contained" : "outlined"}
                         sx={{
-                            color: tab === 'bank-card' ? colors.common.white :colors.brown[400],
-                            bgcolor: tab === 'bank-card' ? colors.brown[500] : "" ,
+                            color: tab === `${item.nameMethod}` ? colors.common.white :colors.brown[400],
+                            bgcolor: tab === `${item.nameMethod}` ? colors.brown[500] : "" ,
                             border: `1px solid ${colors.brown[400]}`,
                             "&:hover" : {
                                 border: `1px solid ${colors.brown[400]}`,
-                                backgroundColor: tab === 'bank-card' ? colors.brown[400] : colors.brown[100],
+                                backgroundColor: tab === `${item.nameMethod}` ? colors.brown[400] : colors.brown[100],
                             }
                         }}
-                        onClick={() => setTab('bank-card')}
+                        onClick={() => setTab(`${item.nameMethod}`)}
                         >
-                        Bank Card
+                        {item.nameMethod}
                     </Button>
-                    <Button variant={tab === 'payment-upon-delivery' ? "contained" : "outlined"}
+                    ))}
+                    {/* <Button variant={tab === 'payment-upon-delivery' ? "contained" : "outlined"}
                         sx={{
                             color: tab === 'payment-upon-delivery' ? colors.common.white :colors.brown[400],
                             bgcolor: tab === 'payment-upon-delivery' ? colors.brown[500] : "" ,
@@ -46,9 +59,9 @@ const PaymentMethods = () => {
                         onClick={() => setTab('payment-upon-delivery')}
                         >
                         Payment upon delivery
-                    </Button>
+                    </Button> */}
                 </Stack>
-                {tab === 'bank-card' ? <BankCardTab/> : <Typography sx={{
+                {tab === 'Bank Card' ? <BankCardTab/> : <Typography sx={{
                     fontSize: { xl: "1.2rem", lg: "1.2rem", md: "1.2rem", xs: "1.2rem"}
                 }}>
                     Thanh toán khi nhận hàng
