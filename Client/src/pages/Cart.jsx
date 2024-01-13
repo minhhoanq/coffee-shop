@@ -19,9 +19,10 @@ const Cart = () => {
 
     const [formOrder, setFormOrder] = useState({
         items: [],
-        Transportfee: 10000,
+        transportfee: 10000,
         couponsId: "",
         price: 0,
+        paymentMethodsId: 1
     });
 
     const getData = async() => {
@@ -104,7 +105,12 @@ const Cart = () => {
                                 Add more items
                             </Link>
                         </Button>
-                        <PaymentMethods/>
+                        <PaymentMethods paymentMethods={(e) => setFormOrder(prev => {
+                            return {
+                                ...prev,
+                                paymentMethodsId: e
+                            }
+                        })}/>
                     </Grid>
 
                     <Grid item lg={4} xs={12}>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { getAllPaymentMethos } from "../../api/paymentMethodsApi"
 
-const PaymentMethods = () => {
+const PaymentMethods = props => {
     const [paymentMethods, setPaymentMethods] = useState([]);
     const [tab, setTab] = useState('Bank Card');
 
@@ -41,7 +41,10 @@ const PaymentMethods = () => {
                                 backgroundColor: tab === `${item.nameMethod}` ? colors.brown[400] : colors.brown[100],
                             }
                         }}
-                        onClick={() => setTab(`${item.nameMethod}`)}
+                        onClick={() => {
+                            setTab(`${item.nameMethod}`)
+                            props.paymentMethods(item.id)
+                        }}
                         >
                         {item.nameMethod}
                     </Button>
