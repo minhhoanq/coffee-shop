@@ -241,7 +241,10 @@ const Header = () => {
                             flexDirection: "column",
                         }}>
                             {/* Logo */}
-                            <img src={logo} alt="logo" height={60}/>
+                            <img 
+                                // src={logo} 
+                                src="https://phuclong.com.vn/images/logo_2.png"
+                                alt="logo" height={60}/>
                             {/* Logo */}
 
                             {/* Text */}

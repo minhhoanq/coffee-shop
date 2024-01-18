@@ -65,7 +65,7 @@ const Home = () => {
                 backgroundPosition:"center",
                 backgroundSize:"cover",
                 backgroundRepeat:"no-repeat",
-                backgroundImage: `url(${bgHome})`,
+                backgroundImage: `url(https://assets-global.website-files.com/5fb85f26f126ce08d792d2d9/639d496184d8d469df734ce6_cover.jpg)`,
             }}
         >
             <Box sx={{
@@ -75,11 +75,11 @@ const Home = () => {
                 alignItems: "center",
                 flexDirection: "column"
             }}>
-                {/* Logo */}
-                <img src={logo} alt="logo" height={80} style={{ marginTop: "20px"}}/>
-                {/* Logo */}
+                <img 
+                    // src={logo}
+                    src="https://phuclong.com.vn/images/logo_2.png"
+                    alt="logo" height={80} style={{ marginTop: "20px"}}/>
 
-                {/* Text */}
                 <Typography 
                     variant="h5" 
                     fontFamily= 'Roboto'
@@ -88,7 +88,6 @@ const Home = () => {
                         fontSize: { xl: "2rem", lg: "2rem", md: "1.8rem", xs: "1.6rem"}
                     }}
                     >C O F F E E & T E A</Typography>
-                {/* Text */}
             </Box>
 
             <Box sx={{
@@ -104,7 +103,7 @@ const Home = () => {
             }}>
                 <Typography variant="h5" sx={{
                     fontStyle: 'italic',
-                    color: colors.common.white,
+                    // color: colors.common.white,
                     fontFamily: 'Raleway',
                     fontSize: { xl: "1.6rem", lg: "1.6rem", md: "1.8rem", xs: "2rem"},
                     textAlign: "center"
@@ -119,7 +118,8 @@ const Home = () => {
                     alignItems: "center",
                     fontSize: "2rem",
                     fontWeight:"600",
-                    color: "#fff",
+                    // color: "#fff",
+                    color : colors.grey[900],
                     fontFamily: 'Roboto',
                     textAlign: "center",
                     flexDirection: { xl: "row", lg: "row", md: "row", xs: "column"},

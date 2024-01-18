@@ -38,9 +38,11 @@ const AddATip = props => {
                         </Typography>
                     </Box>
                     <Button variant="contained" size="large" sx={{
-                        bgcolor: colors.brown[500],
+                        // bgcolor: colors.brown[500],
+                        bgcolor: colors.green[700],
                         "&:hover" : {
-                            bgcolor: colors.brown[400]
+                            // bgcolor: colors.brown[400]
+                            bgcolor: colors.green[600]
                         }
                     }}
                     onClick={handleShowVoucherModal}>

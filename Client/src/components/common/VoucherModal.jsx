@@ -63,9 +63,9 @@ const VoucherModal = props => {
                             onChange={e => props.couponsId(e.target.value)}
                         />
                         <Button variant="contained" size="large" sx={{
-                            bgcolor: colors.brown[500],
+                            bgcolor: colors.green[700],
                             "&:hover" : {
-                                bgcolor: colors.brown[400]
+                                bgcolor: colors.green[600]
                             }
                         }}>
                             APPLY
@@ -110,11 +110,12 @@ const VoucherModal = props => {
                     <Stack direction={"row"} spacing={2}>
                     <Button variant="outlined"
                         sx={{
-                            color: colors.brown[400],
-                            border: `1px solid ${colors.brown[400]}`,
+                            // color: colors.brown[400],
+                            color: colors.green[600],
+                            border: `1px solid ${colors.green[600]}`,
                             "&:hover" : {
-                                border: `1px solid ${colors.brown[400]}`,
-                                backgroundColor: colors.brown[100],
+                                border: `1px solid ${colors.green[600]}`,
+                                backgroundColor: colors.green[100],
                             }
                         }}
                         onClick={handleCloseModal}
@@ -124,10 +125,10 @@ const VoucherModal = props => {
 
                         <Button variant="contained"
                             sx={{
-                                backgroundColor: colors.brown[500],
+                                backgroundColor: colors.green[600],
                                 color: "#fff",
                                 "&:hover" : {
-                                    backgroundColor: colors.brown[400]
+                                    backgroundColor: colors.green[500]
                                 }
                             }}
                             type="submit"

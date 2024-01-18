@@ -19,7 +19,7 @@ const Footer = () => {
                 <Grid xs={8} container >
                     <Grid xs={4} item>
                         <Typography variant="h5" fontWeight={"600"}>
-                            Coffee house
+                            Phúc Long Coffee
                         </Typography>
                     </Grid>
 
