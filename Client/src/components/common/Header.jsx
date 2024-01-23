@@ -242,8 +242,7 @@ const Header = () => {
                         }}>
                             {/* Logo */}
                             <img 
-                                // src={logo} 
-                                src="https://phuclong.com.vn/images/logo_2.png"
+                                src={logo} 
                                 alt="logo" height={60}/>
                             {/* Logo */}
 

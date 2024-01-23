@@ -128,9 +128,8 @@ const SidebarProfile = () => {
                 }}
             >
                 <img 
-                    // src={logo}
-                    src="https://phuclong.com.vn/images/logo_2.png" 
-                    // height={100} width={100} 
+                    src={logo}
+                    height={100} width={100} 
                     style={{
                     borderRadius: "50px",
                     objectFit: "cover"

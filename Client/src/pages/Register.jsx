@@ -126,7 +126,10 @@ const Register = () => {
                         textAlign: "center",
                     }}>
                         <Animate type="fade" delay={0.5}>
-                            <img src={logo} alt='logo' height={100}/>
+                            <img 
+                                // src={logo}
+                                src="https://phuclong.com.vn/images/logo_2.png"
+                                alt='logo' height={100}/>
                         </Animate>
                     </Box>
                     {/* Logo */}

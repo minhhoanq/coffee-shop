@@ -30,7 +30,9 @@ const SidebarDashBoard = () => {
                     alignItems: "center"
                 }}
             >
-                <img src={logo} height={100} width={100} style={{
+                <img 
+                src={logo}
+                 height={100} width={100} style={{
                     borderRadius: "50px",
                     objectFit: "cover"
                 }}/>

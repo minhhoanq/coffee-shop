@@ -32,22 +32,13 @@ const PaymentMethods = props => {
                     </Typography>
                     {paymentMethods.map((item, index) => (
                         <Button key={index} variant={tab === `${item.nameMethod}` ? "contained" : "outlined"}
-                        // sx={{
-                        //     color: tab === `${item.nameMethod}` ? colors.common.white :colors.brown[400],
-                        //     bgcolor: tab === `${item.nameMethod}` ? colors.brown[500] : "" ,
-                        //     border: `1px solid ${colors.brown[400]}`,
-                        //     "&:hover" : {
-                        //         border: `1px solid ${colors.brown[400]}`,
-                        //         backgroundColor: tab === `${item.nameMethod}` ? colors.brown[400] : colors.brown[100],
-                        //     }
-                        // }}
                         sx={{
-                            color: tab === `${item.nameMethod}` ? colors.common.white :colors.green[700],
-                            bgcolor: tab === `${item.nameMethod}` ? colors.green[700] : "" ,
-                            border: `1px solid ${colors.green[600]}`,
+                            color: tab === `${item.nameMethod}` ? colors.common.white :colors.brown[400],
+                            bgcolor: tab === `${item.nameMethod}` ? colors.brown[500] : "" ,
+                            border: `1px solid ${colors.brown[400]}`,
                             "&:hover" : {
-                                border: `1px solid ${colors.green[600]}`,
-                                backgroundColor: tab === `${item.nameMethod}` ? colors.green[600] : colors.green[100],
+                                border: `1px solid ${colors.brown[400]}`,
+                                backgroundColor: tab === `${item.nameMethod}` ? colors.brown[400] : colors.brown[100],
                             }
                         }}
                         onClick={() => {
