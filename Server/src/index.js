@@ -27,6 +27,7 @@ app.use(express.json());
 
 //init router
 initRoutes(app);
+
 // init error
 
 module.exports = app
