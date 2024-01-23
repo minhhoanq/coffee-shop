@@ -15,7 +15,7 @@ module.exports = {
         allowNull: false,
         unique: "unique_tag",
       },
-      productSizeId: {
+      priceId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
@@ -23,10 +23,6 @@ module.exports = {
       },
       quantity: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      price: {
-        type: Sequelize.DOUBLE,
         allowNull: false,
       },
       note: {
@@ -47,7 +43,7 @@ module.exports = {
     {uniqueKeys: {
       unique_tag: {
         customIndex: true,
-        fields: ["cartId", "productSizeId"]
+        fields: ["cartId", "priceId"]
       }}});
   },
   async down(queryInterface, Sequelize) {

@@ -1,38 +1,21 @@
 'use strict';
-
-const { Model, DataTypes } = require('sequelize');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Products', {
+    await queryInterface.createTable('Pr_Size_Ings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
-      productName: {
-        type: Sequelize.STRING,
+      productSizeId: {
         allowNull: false,
+        type: Sequelize.INTEGER
       },
-      slug: {
-        type: Sequelize.STRING,
+      ingredientId: {
         allowNull: false,
-      },
-      productImg: {
-        type: Sequelize.STRING,
-      },
-      categoryId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      productDescription: {
-        type: Sequelize.STRING
-      },
-      totalRatings: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -47,6 +30,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Products');
+    await queryInterface.dropTable('Pr_Size_Ings');
   }
 };

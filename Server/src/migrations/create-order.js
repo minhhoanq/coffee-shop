@@ -2,51 +2,35 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Coupons', {
+    await queryInterface.createTable('Orders', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      code: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      nameCoupons: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      couponsCondition: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      discountAmount: {
-        type: Sequelize.DOUBLE,
-        allowNull: true,
-      },
-      discountPercentage: {
-        type: Sequelize.DOUBLE,
-        allowNull: true,
-      },
-      maxAmount: {
-        type: Sequelize.DOUBLE,
-        allowNull: false,
-      },
-      isActive: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-      },
-      amount: {
+      discountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      startDate: {
-        type: Sequelize.DATE,
+      statusId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
-      endDate: {
-        type: Sequelize.DATE,
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      paymentMethodsId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+      },
+      note: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       createdAt: {
@@ -62,6 +46,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Coupons');
+    await queryInterface.dropTable('Orders');
   }
 };

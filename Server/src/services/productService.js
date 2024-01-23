@@ -288,247 +288,247 @@ const deleteRatingProductService = (user, { slug }) => new Promise( async(resolv
 
 // ===================================================================================== //
 
-//
-const createUserProductMatrix = (ratings, users) => {
-    const user_product = ratings;
+// //
+// const createUserProductMatrix = (ratings, users) => {
+//     const user_product = ratings;
 
-    //Create User Product Matrix
-    for (let i = 0; i < users.length; i++) {
-        let sum = 0;
-        let count = 0;
-        ratings.filter(e => {
-            if(e[0] == i) {
-                sum += Number(e[2]);
-                count++;
-            }
-        })
-        // console.log(sum + " | " + count);
-        user_product.forEach(e => {
-            if(e[0] == i) {
-                e[2] = (e[2] - (sum / count).toFixed(2));
-            }
-        })
-    }
+//     //Create User Product Matrix
+//     for (let i = 0; i < users.length; i++) {
+//         let sum = 0;
+//         let count = 0;
+//         ratings.filter(e => {
+//             if(e[0] == i) {
+//                 sum += Number(e[2]);
+//                 count++;
+//             }
+//         })
+//         // console.log(sum + " | " + count);
+//         user_product.forEach(e => {
+//             if(e[0] == i) {
+//                 e[2] = (e[2] - (sum / count).toFixed(2));
+//             }
+//         })
+//     }
 
-    return user_product;
-}
+//     return user_product;
+// }
 
-//
-const CVUserProduct2Dimensional = (user_product, users, products) => {
-    const array = [];
-    for(let i = 0; i < users.length; i++) {
-        array[i] = [0];
-        for (let j = 0; j < products.length; j++) {
-            array[i][j] = 0;
-            user_product.forEach(e => {
-                if(e[0] == i && e[1] == j) {
-                    array[i][j] = e[2];
-                }
-            })
-        }
-    }
-    return array;
-}
+// //
+// const CVUserProduct2Dimensional = (user_product, users, products) => {
+//     const array = [];
+//     for(let i = 0; i < users.length; i++) {
+//         array[i] = [0];
+//         for (let j = 0; j < products.length; j++) {
+//             array[i][j] = 0;
+//             user_product.forEach(e => {
+//                 if(e[0] == i && e[1] == j) {
+//                     array[i][j] = e[2];
+//                 }
+//             })
+//         }
+//     }
+//     return array;
+// }
 
-const createSimilarUsersMatrix = (user_product_2d, products, users) => {
-    const similar_users = [];
-    for(let i = 0; i < user_product_2d.length; i++) {
-        similar_users[i] = [1];
-        for(let j = 0; j < user_product_2d.length; j++) {
-            similar_users[i][j] = similarity(user_product_2d[i], user_product_2d[j]);
-        }
-    }
-    return similar_users;
-}
+// const createSimilarUsersMatrix = (user_product_2d, products, users) => {
+//     const similar_users = [];
+//     for(let i = 0; i < user_product_2d.length; i++) {
+//         similar_users[i] = [1];
+//         for(let j = 0; j < user_product_2d.length; j++) {
+//             similar_users[i][j] = similarity(user_product_2d[i], user_product_2d[j]);
+//         }
+//     }
+//     return similar_users;
+// }
 
-const inverseMatrix = (arr, users, products) => {
-    const array = [];
-    for (let i = 0; i < products.length; i++) {
-        array[i] = []
-        for (let j = 0; j < users.length; j++) {
-                array[i][j] = arr[j][i]
-        }
-    }
+// const inverseMatrix = (arr, users, products) => {
+//     const array = [];
+//     for (let i = 0; i < products.length; i++) {
+//         array[i] = []
+//         for (let j = 0; j < users.length; j++) {
+//                 array[i][j] = arr[j][i]
+//         }
+//     }
 
-    return array;
-}
+//     return array;
+// }
 
-const scoreItems = (user_product_2dx, user_picked, userIdIndex) => {
-    const score_items = [];
-    user_picked[0].splice(userIdIndex, 1);
-    // console.log(user_picked[0])
-    for (let i = 0; i < user_product_2dx.length; i++) {
-        let score = 0;
-        let count = 0;
-        let total = 0;
-        const movie_rating = user_product_2dx[i];
-        for (let j = 0; j < user_picked[0].length; j++) {
-            score = movie_rating[j] * user_picked[0][j];
-            total += score;
-            count++;
-        }
-        score_items[i] = total / count;
-    }
+// const scoreItems = (user_product_2dx, user_picked, userIdIndex) => {
+//     const score_items = [];
+//     user_picked[0].splice(userIdIndex, 1);
+//     // console.log(user_picked[0])
+//     for (let i = 0; i < user_product_2dx.length; i++) {
+//         let score = 0;
+//         let count = 0;
+//         let total = 0;
+//         const movie_rating = user_product_2dx[i];
+//         for (let j = 0; j < user_picked[0].length; j++) {
+//             score = movie_rating[j] * user_picked[0][j];
+//             total += score;
+//             count++;
+//         }
+//         score_items[i] = total / count;
+//     }
 
-    return score_items;
-}
+//     return score_items;
+// }
 
 //RecommendSystemService
-const recommendSystemService = (user) => new Promise(async(resolve, reject) => {
-    try {
-        const ratingData = await db.Rating.findAll();
+// const recommendSystemService = (user) => new Promise(async(resolve, reject) => {
+//     try {
+//         const ratingData = await db.Rating.findAll();
 
-        const userId = user.id;
-        const userIdIndex = user.id - 1;
-        const users = [];
-        const products = [];
-        // const products = ["10", "8","28", "19", "15", "22", "11", "12", "13", "26", "27", "21"];
-        const ratings = [];
+//         const userId = user.id;
+//         const userIdIndex = user.id - 1;
+//         const users = [];
+//         const products = [];
+//         // const products = ["10", "8","28", "19", "15", "22", "11", "12", "13", "26", "27", "21"];
+//         const ratings = [];
 
-        const cartId = await db.Cart.findOne({
-            where: {
-                userId: userId
-            }
-        });
+//         const cartId = await db.Cart.findOne({
+//             where: {
+//                 userId: userId
+//             }
+//         });
 
-        const cartItem = await db.Cart_Item.findAll({
-            where: {
-                cartId: cartId.id
-            }
-        });
+//         const cartItem = await db.Cart_Item.findAll({
+//             where: {
+//                 cartId: cartId.id
+//             }
+//         });
 
-        const productIdUser = [];
-        const arr = [];
-        for(let i = 0; i < cartItem.length; i++) {
-            const data = await db.Product_Size.findOne({
-                where: {
-                    id: cartItem[i].productSizeId
-                }
-            })
-            if(arr.length > 0) {
-                let check = false;
-                arr.forEach(e => {
-                    if(e !== data.productId) {
-                        check = true
-                    } else {
-                        check = false
-                    }
-                })
-                arr.push(data.productId);
+//         const productIdUser = [];
+//         const arr = [];
+//         for(let i = 0; i < cartItem.length; i++) {
+//             const data = await db.Product_Size.findOne({
+//                 where: {
+//                     id: cartItem[i].productSizeId
+//                 }
+//             })
+//             if(arr.length > 0) {
+//                 let check = false;
+//                 arr.forEach(e => {
+//                     if(e !== data.productId) {
+//                         check = true
+//                     } else {
+//                         check = false
+//                     }
+//                 })
+//                 arr.push(data.productId);
 
-                if(check) {
-                    productIdUser.push(data);
-                }
-            } else {
-                productIdUser.push(data);
-                arr.push(data.productId);
-            }
-        }
+//                 if(check) {
+//                     productIdUser.push(data);
+//                 }
+//             } else {
+//                 productIdUser.push(data);
+//                 arr.push(data.productId);
+//             }
+//         }
 
-        const productDataUser = [];
-        for (let i = 0; i < productIdUser.length; i++) {
-            const data = await db.Product.findOne({
-                where: {
-                    id: productIdUser[i].productId
-                }
-            });
+//         const productDataUser = [];
+//         for (let i = 0; i < productIdUser.length; i++) {
+//             const data = await db.Product.findOne({
+//                 where: {
+//                     id: productIdUser[i].productId
+//                 }
+//             });
 
-            productDataUser.push(data);
-        }
+//             productDataUser.push(data);
+//         }
 
-        ratingData.forEach(element => {
-            const user = element.userId;
-            const product = element.productId;
-            const rating = element.star;
+//         ratingData.forEach(element => {
+//             const user = element.userId;
+//             const product = element.productId;
+//             const rating = element.star;
 
-            if (!users.includes(user)) {
-                users.push(user);
-            }
+//             if (!users.includes(user)) {
+//                 users.push(user);
+//             }
 
-            if (!products.includes(product)) {
-                products.push(product);
-            }
+//             if (!products.includes(product)) {
+//                 products.push(product);
+//             }
 
-            ratings.push([users.indexOf(user), products.indexOf(product), rating]);
-        });
+//             ratings.push([users.indexOf(user), products.indexOf(product), rating]);
+//         });
 
-        let index = 0;
-        for (let i = 0; i < products.length; i++) {
-            for (let j = 0; j < productDataUser.length; j++) {
-                // console.log(products[i] + " | " + products[i]);
-                if(Number(products[i]) === Number(productDataUser[j].id)) {
-                    products.splice(i, 1);
-                    index++
-                }
-            }
-        }
-        // console.log(products[0])
+//         let index = 0;
+//         for (let i = 0; i < products.length; i++) {
+//             for (let j = 0; j < productDataUser.length; j++) {
+//                 // console.log(products[i] + " | " + products[i]);
+//                 if(Number(products[i]) === Number(productDataUser[j].id)) {
+//                     products.splice(i, 1);
+//                     index++
+//                 }
+//             }
+//         }
+//         // console.log(products[0])
 
-        //create user-product matrix
-        const user_product = createUserProductMatrix(ratings, users);
+//         //create user-product matrix
+//         const user_product = createUserProductMatrix(ratings, users);
 
-        //convert user-product matrix to 2 dimensional
-        const user_product_2d = CVUserProduct2Dimensional(user_product, users, products);
+//         //convert user-product matrix to 2 dimensional
+//         const user_product_2d = CVUserProduct2Dimensional(user_product, users, products);
 
-        //create similar users matrix
-        const similar_users = createSimilarUsersMatrix(user_product_2d, products, users);
+//         //create similar users matrix
+//         const similar_users = createSimilarUsersMatrix(user_product_2d, products, users);
 
-        //inverse matrix, use similarity lib
-        const user_product_2dx = inverseMatrix(user_product_2d, users, products);
+//         //inverse matrix, use similarity lib
+//         const user_product_2dx = inverseMatrix(user_product_2d, users, products);
 
-        //Movies that similar users watched. Remove movies that none of the similar users have watched
+//         //Movies that similar users watched. Remove movies that none of the similar users have watched
 
-        //remove products user bought
+//         //remove products user bought
         
 
-        //remove products user picked rated.
-        user_product_2d[userIdIndex].forEach((e, index) => {
-            if(e != 0) {
-                // user_product_2dx.splice(index - i, 1);
-                for (let j = 0; j < users.length; j++) {
-                    delete user_product_2dx[index][j];
-                }
-            }
-        })
+//         //remove products user picked rated.
+//         user_product_2d[userIdIndex].forEach((e, index) => {
+//             if(e != 0) {
+//                 // user_product_2dx.splice(index - i, 1);
+//                 for (let j = 0; j < users.length; j++) {
+//                     delete user_product_2dx[index][j];
+//                 }
+//             }
+//         })
         
-        //get user is picked
-        // const user = user.id;
-        const user_picked = similar_users.splice(userIdIndex, 1);
+//         //get user is picked
+//         // const user = user.id;
+//         const user_picked = similar_users.splice(userIdIndex, 1);
 
-        //prepare score for items with similar users and user picked
-        const score_items = scoreItems(user_product_2dx, user_picked, userIdIndex);
+//         //prepare score for items with similar users and user picked
+//         const score_items = scoreItems(user_product_2dx, user_picked, userIdIndex);
 
-        const recommend = [];
-        for (let i = 0; i < products.length; i++) {
-            recommend.push({id: products[i], score_item: score_items[i]})
-        }
+//         const recommend = [];
+//         for (let i = 0; i < products.length; i++) {
+//             recommend.push({id: products[i], score_item: score_items[i]})
+//         }
 
-        score_items.sort((a, b) => b - a);
+//         score_items.sort((a, b) => b - a);
 
-        const productsRecommend = [];
-        for (let i = 0; i < score_items.length; i++) {
-            for (let j = 0; j < recommend.length; j++) {
-                if(score_items[i] == recommend[j].score_item && score_items[i] > 0) {
-                    productsRecommend.push(await db.Product.findByPk(recommend[j].id))
-                }
-            }
-        }
+//         const productsRecommend = [];
+//         for (let i = 0; i < score_items.length; i++) {
+//             for (let j = 0; j < recommend.length; j++) {
+//                 if(score_items[i] == recommend[j].score_item && score_items[i] > 0) {
+//                     productsRecommend.push(await db.Product.findByPk(recommend[j].id))
+//                 }
+//             }
+//         }
 
-        resolve({
-            err: "err",
-            mes: "mes",
-            products: products,
-            recommend: recommend,
-            score_items: score_items,
-            user_product_2d: user_product_2d,
-            user_product_2dx: user_product_2dx,
-            productDataUser: productDataUser,
-            productsRecommend: productsRecommend
-        })
-    } catch (error) {
-        reject(error)
-    }
-})
+//         resolve({
+//             err: "err",
+//             mes: "mes",
+//             products: products,
+//             recommend: recommend,
+//             score_items: score_items,
+//             user_product_2d: user_product_2d,
+//             user_product_2dx: user_product_2dx,
+//             productDataUser: productDataUser,
+//             productsRecommend: productsRecommend
+//         })
+//     } catch (error) {
+//         reject(error)
+//     }
+// })
 
 module.exports = { 
     getProductsService, 
@@ -538,5 +538,5 @@ module.exports = {
     ratingProductService, 
     getAllRatingsProductService,
     deleteRatingProductService,
-    recommendSystemService
+    // recommendSystemService
 };

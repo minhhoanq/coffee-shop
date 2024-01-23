@@ -13,6 +13,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: 'TIMESTAMP',

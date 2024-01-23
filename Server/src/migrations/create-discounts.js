@@ -2,31 +2,39 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Payments', {
+    await queryInterface.createTable('Discounts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      shipId: {
-        type: Sequelize.INTEGER,
+      code: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      orderId: {
-        type: Sequelize.INTEGER,
+      nameDiscount: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      couponsId: {
-        type: Sequelize.INTEGER,
+      discountCondition: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      statusId: {
-        type: Sequelize.INTEGER,
+      isActive: {
+        type: Sequelize.BOOLEAN,
         allowNull: false,
       },
       amount: {
-        type: Sequelize.DOUBLE,
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      startDate: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      endDate: {
+        type: Sequelize.DATE,
         allowNull: false,
       },
       createdAt: {
@@ -42,6 +50,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Payments');
+    await queryInterface.dropTable('Discounts');
   }
 };
