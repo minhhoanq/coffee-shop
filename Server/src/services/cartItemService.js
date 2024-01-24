@@ -1,6 +1,6 @@
 const db = require("../models");
 
-const addToCartItemService = (user,{ quantity, priceId, note}) => new Promise(async (resolve, reject) => {
+const addToCartItemService = (user,{ quantity, priceId, note }) => new Promise(async (resolve, reject) => {
     try {
 
         if(!user) {
@@ -11,17 +11,10 @@ const addToCartItemService = (user,{ quantity, priceId, note}) => new Promise(as
             return;
         }
 
-        // const cart = await db.Cart.findOne({
-        //     where: { userId: user.id }
-        // });
-
         const [newCart, createdCart] = await db.Cart.findOrCreate({
             where: {
-                cartId: user.id,
+                id: user.id,
                 userId: user.id
-            },
-            defaults: {
-                price: price,
             },
         });
 
@@ -51,7 +44,7 @@ const addToCartItemService = (user,{ quantity, priceId, note}) => new Promise(as
                     where: {
                         cartId: cart.id,
                         priceId: priceId,
-                    }, 
+                    },
                 }
             );
         };
@@ -120,21 +113,40 @@ const getCartItemByIDService = (user) => new Promise(async (resolve, reject) => 
             where: {cartId: cart.id},
             include: [
                 {
-                    model: db.Product_Size,
-                    as: 'productSizeData',
-                    attributes: ['id', 'productId', 'sizeId'],
+                    model: db.Price,
+                    as: 'priceData',
+                    attributes: ['id', 'productSizeId', 'price'],
                     include: [
                         {
-                            model: db.Product,
-                            as: 'productData',
-                            attributes: ['id', 'productName', 'price', 'productDescription', 'productImg'],
-                        },
-                        {
-                            model: db.Size,
-                            as: 'sizeData',
-                            attributes: ['id', 'sizeName'],
+                            model: db.Product_Size,
+                            as: 'productSizePrice',
+                            attributes: ['id', 'productId', 'sizeId'],
+                            include: [
+                                {
+                                    model: db.Product,
+                                    as: 'productData',
+                                    attributes: ['id', 'productName', 'productDescription', 'productImg'],
+                                },
+                                {
+                                    model: db.Size,
+                                    as: 'sizeData',
+                                    attributes: ['id', 'sizeName'],
+                                }
+                            ]
                         }
                     ]
+                    // include: [
+                    //     {
+                    //         model: db.Product,
+                    //         as: 'productData',
+                    //         attributes: ['id', 'productName', 'productDescription', 'productImg'],
+                    //     },
+                    //     {
+                    //         model: db.Size,
+                    //         as: 'sizeData',
+                    //         attributes: ['id', 'sizeName'],
+                    //     }
+                    // ]
                 },
                 {
                     model: db.Cart,
