@@ -70,7 +70,7 @@ const deleteCartItemByIDService = (user, body) => new Promise(async (resolve, re
             return;
         }
 
-        if(!body.productSizeId) {
+        if(!body.priceId) {
             reject({
                 err: 1,
                 mes: 'Thiếu thông tin!',
@@ -85,7 +85,7 @@ const deleteCartItemByIDService = (user, body) => new Promise(async (resolve, re
         const response = await db.Cart_Item.destroy({
             where: {
                 cartId: cart.id,
-                productSizeId: body.productSizeId,
+                priceId: body.priceId,
             }
         });
 
@@ -119,7 +119,7 @@ const getCartItemByIDService = (user) => new Promise(async (resolve, reject) => 
                     include: [
                         {
                             model: db.Product_Size,
-                            as: 'productSizePrice',
+                            as: 'productSizeData',
                             attributes: ['id', 'productId', 'sizeId'],
                             include: [
                                 {

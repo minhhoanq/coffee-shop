@@ -20,11 +20,11 @@ export const createCartItem = async({productSizeId, quantity, price, note})=> {
     }
 }
 
-export const deleteCartItem = async( productSizeId) => {
+export const deleteCartItem = async(priceId) => {
     try {
         const response = await request.delete('/api/v1/cart-item', {
             data: {
-                productSizeId
+                priceId
             }
         });
         return response.data; 

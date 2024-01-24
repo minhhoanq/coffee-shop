@@ -9,13 +9,13 @@ import { getAllBillCoupons } from "../../api/couponsApi";
 const VoucherModal = props => {
     const [coupons, setCoupons] = useState([]);
 
-    useEffect(() => {
-        const getData = async () => {
-            const getData = await getAllBillCoupons();
-            setCoupons(getData.data);
-        }
-        getData();
-    },[])
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         const getData = await getAllBillCoupons();
+    //         setCoupons(getData.data);
+    //     }
+    //     getData();
+    // },[])
 
     const handleCloseModal = () => {
         props.close(false);

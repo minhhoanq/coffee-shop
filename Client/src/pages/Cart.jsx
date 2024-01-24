@@ -27,7 +27,9 @@ const Cart = () => {
 
     const getData = async() => {
         const result = await getAllCartItem();
-        setCartItems(result.productData);
+        setCartItems(result.productData || []);
+        console.log(result || []);
+
         setFormOrder(prev => {
             return {
                 ...prev,
