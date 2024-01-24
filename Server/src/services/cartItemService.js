@@ -1,6 +1,6 @@
 const db = require("../models");
 
-const addToCartItemService = (user,{ productSizeId, quantity, price, note}) => new Promise(async (resolve, reject) => {
+const addToCartItemService = (user,{ quantity, priceId, note}) => new Promise(async (resolve, reject) => {
     try {
 
         if(!user) {
@@ -11,11 +11,21 @@ const addToCartItemService = (user,{ productSizeId, quantity, price, note}) => n
             return;
         }
 
-        const cart = await db.Cart.findOne({
-            where: { userId: user.id }
+        // const cart = await db.Cart.findOne({
+        //     where: { userId: user.id }
+        // });
+
+        const [newCart, createdCart] = await db.Cart.findOrCreate({
+            where: {
+                cartId: user.id,
+                userId: user.id
+            },
+            defaults: {
+                price: price,
+            },
         });
 
-        if(!productSizeId || !quantity || !price) {
+        if(!priceId || !quantity) {
             reject({
                 err: 1,
                 mes: "Thiếu thông tin!"
@@ -23,12 +33,12 @@ const addToCartItemService = (user,{ productSizeId, quantity, price, note}) => n
         }
         const [newCartItem, createdCartItem] = await db.Cart_Item.findOrCreate({
             where: {
-                cartId: cart.id,
-                productSizeId: productSizeId
+                cartId: newCart.id,
+                priceId: priceId,
             },
             defaults: {
                 quantity: quantity,
-                price: price,
+                priceId: priceId,
                 note: note
             },
         });
@@ -36,12 +46,11 @@ const addToCartItemService = (user,{ productSizeId, quantity, price, note}) => n
         if(!createdCartItem) {
             await db.Cart_Item.update({
                     quantity: quantity,
-                    price: price,
                     note: note
                 }, { 
                     where: {
                         cartId: cart.id,
-                        productSizeId: productSizeId
+                        priceId: priceId,
                     }, 
                 }
             );

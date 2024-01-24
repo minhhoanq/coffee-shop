@@ -57,7 +57,7 @@ const getProductDetailService = ({slug}) => new Promise(async(resolve, reject) =
                 {
                     model: db.Product,
                     as: 'productData',
-                    attributes: ['id','slug', 'productName', 'categoryId', 'productDescription', 'productImg', 'price', 'sold'],
+                    attributes: ['id','slug', 'productName', 'categoryId', 'productDescription', 'productImg'],
                     include: [
                         {
                             model: db.Category,
@@ -73,6 +73,12 @@ const getProductDetailService = ({slug}) => new Promise(async(resolve, reject) =
                 }
             ]
         });
+
+        const price = await db.Price.findOne({
+            where: {
+                productSizeId: 1,
+            }
+        })
         
         const productId = response[0]?.productData.id;
         const ratingProduct = await db.Rating.findAll({
@@ -93,6 +99,7 @@ const getProductDetailService = ({slug}) => new Promise(async(resolve, reject) =
             err: response ? 0 : 1,
             mes: response ? 'Thành công!' : 'Lỗi',
             dataDetailProduct: response,
+            priceData: price,
             ratingProduct: ratingProduct,
         });
     } catch (error) {

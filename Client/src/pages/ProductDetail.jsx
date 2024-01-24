@@ -19,7 +19,7 @@ const ProductDetail = () => {
     const [products, setProducts] = useState([]);
     // const [productSizeId, setProductSizeId] = useState(products[0]?.id);
     const [quantity, setQuantity] = useState(1);
-    const [price, setPrice] = useState(products[0]?.productData.price);
+    const [price, setPrice] = useState();
     const [note, setNote] = useState("");
     const [size, setSize] = useState("");
 
@@ -34,8 +34,8 @@ const ProductDetail = () => {
         // setProductSizeId(result.dataDetailProduct[0]?.id);
         const sizeRoot = result.dataDetailProduct[0]?.sizeData.sizeName;
         setSize(sizeRoot);
-        let priceRoot = result.dataDetailProduct[0]?.productData.price;
-        setPrice(sizeRoot === 'S' ? priceRoot : sizeRoot === 'M' ? priceRoot + 5 : priceRoot + 10);
+        let priceRoot = result.priceData.price;
+        setPrice(priceRoot || 20000);
     }
 
     useEffect(() => {
@@ -180,7 +180,7 @@ const ProductDetail = () => {
                                         fontSize: { xl: "2.2rem", lg: "2.2rem", md: "1.8rem", xs: "1.6rem"},
                                         fontWeight: "600"
                                     }}>
-                                        ${price}
+                                        ₫{price}
                                     </Typography>
 
                                     <Stack width={"100%"} direction={"row"} spacing={2} sx={{

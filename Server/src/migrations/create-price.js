@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      startDate: {
+      price: {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },
