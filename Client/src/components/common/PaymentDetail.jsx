@@ -1,18 +1,10 @@
-import { Box, Button, Stack, Typography, colors } from "@mui/material";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import PaymentDetail from "./PaymentDetail";
+import { Box, Stack, Typography } from "@mui/material";
 
-const EstimatedOrder = props =>  {
-    const formOrder = props.formOrder;
+const PaymentDetail = props => {
+    const formOrder = props.formOrder || undefined;
 
     return (
-        <Stack spacing={2} sx={{
-            border: "1px solid #ccc",
-            borderRadius: "2px",
-            p: 2
-        }}>
-            {/* <Stack spacing={1} width={"100%"}>
+        <Stack spacing={1} width={"100%"}>
                 <Box sx={{
                     width: "100%",
                     display: "flex",
@@ -23,7 +15,7 @@ const EstimatedOrder = props =>  {
                     </Typography>
 
                     <Typography>
-                        ₫{formOrder.price || ""}
+                        {/* ₫{formOrder.price || ""} */}
                     </Typography>
                 </Box>
 
@@ -37,7 +29,7 @@ const EstimatedOrder = props =>  {
                     </Typography>
 
                     <Typography>
-                        ₫{formOrder.transportfee || ""}
+                        {/* ₫{formOrder.transportfee || ""} */}
                     </Typography>
                 </Box>
 
@@ -68,38 +60,14 @@ const EstimatedOrder = props =>  {
                     <Typography
                         fontWeight={"600"}
                     >
-                        ₫{formOrder.price || ""}
+                        {/* ₫{formOrder.price || ""} */}
                     </Typography>
                 </Box>
                 <Typography fontSize={"0.9rem"}>
                     Delivery fees and coupons will apply
                 </Typography>
-            </Stack> */}
-            <PaymentDetail formOrder={formOrder}/>
-
-            <Button variant="contained" size="large" sx={{
-                    bgcolor: colors.brown[500],
-                        "&:hover" : {
-                            bgcolor: colors.brown[400]
-                        }
-                }}>
-                <Link to={'/checkout'} style={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    textDecoration: "none",
-                    color: "#fff",
-                    "&:hover" : {
-                        color: "#fff"
-                    },
-                    width: "100%"
-                }}> 
-                    Countinue to payment
-                </Link>
-            </Button>
-        </Stack>
+            </Stack>
     )
 }
 
-export default EstimatedOrder;
+export default PaymentDetail;

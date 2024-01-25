@@ -146,7 +146,7 @@ const Cart = () => {
                                 width: "100%",
                                 borderTop: "1px solid #ccc"
                             }}/>
-                            <EstimatedOrder formOrder={formOrder}
+                                <EstimatedOrder formOrder={formOrder}
                             />
                         </Stack>
                     </Grid>

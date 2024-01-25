@@ -48,7 +48,7 @@ const publicRoutes = [
     { path: '/user/account/address', component: Address, layout: DefaultProfileLayout},
     { path: '/menu', component: Menu},
     { path: '/shop', component: Shop},
-    { path: '/checkout', component: Checkout, layout: null},
+    { path: '/checkout', component: Checkout},
     // { path: '/shop/test', component: DetailProduct},
     { path: '/shop/:slug', component: ProductDetail},
     { path: '/cart', component: Cart},
@@ -58,6 +58,8 @@ const publicRoutes = [
     { path: '/register', component: Register, layout: null},
     { path: '/finalregister/:status', component: FinalRegister,layout: FooterOnly},
     { path: '/reset-password/:token', component: ResetPassword,layout: FooterOnly},
+
+    //dashboard
     { path: '/dashboard', component: Dashboard, layout: DefaultLayoutAdmin},
     { path: '/dashboard/employees', component: Employee, layout: DefaultLayoutAdmin},
     { path: '/dashboard/employees/create', component: CreateEmployee, layout: DefaultLayoutAdmin},
