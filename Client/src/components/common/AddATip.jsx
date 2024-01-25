@@ -20,7 +20,7 @@ const AddATip = props => {
                     close={(close) => setModal(close)}
                 />
                 <Typography fontSize={"0.9rem"} fontWeight={"600"}>
-                    Coupons
+                    Discount
                 </Typography>
 
                 <Stack spacing={2} direction={"row"} mt={2} sx={{

@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const EstimatedOrder = props =>  {
-    const items = props.items;
-    const [priceTotal, setPriceTotal] = useState(0);
+    const formOrder = props.formOrder;
+    // const [priceTotal, setPriceTotal] = useState(0);
 
-    useEffect(() => {
-        let priceTemp = 0;
-        items?.forEach(element => {
-            priceTemp += element.price
-        });
-        props.price(priceTemp);
-        setPriceTotal(priceTemp);
-    }, [items]);
+    // useEffect(() => {
+    //     let priceTemp = 0;
+    //     items?.forEach(element => {
+    //         priceTemp += element.price
+    //     });
+    //     props.price(priceTemp);
+    //     setPriceTotal(priceTemp);
+    // }, [items]);
 
     return (
         <Stack spacing={2}>
@@ -28,7 +28,7 @@ const EstimatedOrder = props =>  {
                     </Typography>
 
                     <Typography>
-                        ₫{priceTotal}
+                        {/* ₫{priceTotal} */}
                     </Typography>
                 </Box>
 
@@ -73,7 +73,7 @@ const EstimatedOrder = props =>  {
                     <Typography
                         fontWeight={"600"}
                     >
-                        ₫{priceTotal}
+                        {/* ₫{priceTotal} */}
                     </Typography>
                 </Box>
                 <Typography fontSize={"0.9rem"}>

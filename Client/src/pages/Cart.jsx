@@ -15,7 +15,6 @@ const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const user = useSelector(state => state.auth.currentUser);
     const [checkDelete, setCheckDelete] = useState(false);
-    // const [price, setPrice] = useState(0);
 
     const [formOrder, setFormOrder] = useState({
         items: [],
@@ -25,15 +24,24 @@ const Cart = () => {
         paymentMethodsId: 1
     });
 
+    const setPrice = (items) => {
+        let sum = 0;
+        items.map(el => sum += Number(el.quantity * el.priceData.price))
+        return sum;
+    }
+
     const getData = async() => {
         const result = await getAllCartItem();
         setCartItems(result.productData || []);
         console.log(result || []);
 
+        const price = setPrice(result.productData);
+
         setFormOrder(prev => {
             return {
                 ...prev,
-                items: result.productData
+                items: result.productData,
+                price: price
             }
         })
     }
@@ -131,19 +139,14 @@ const Cart = () => {
                                             couponsId: e
                                         }
                                     })} 
-                                price={formOrder.price}/>
+                                price={formOrder.price}
+                                />
                             <Box
                             sx={{
                                 width: "100%",
                                 borderTop: "1px solid #ccc"
                             }}/>
-                            <EstimatedOrder items={cartItems} price={e =>  
-                                setFormOrder(prev => {
-                                    return {
-                                        ...prev,
-                                        price: e
-                                    }
-                                })}
+                            <EstimatedOrder formOrder={formOrder}
                             />
                         </Stack>
                     </Grid>
