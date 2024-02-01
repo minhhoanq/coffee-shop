@@ -60,7 +60,6 @@ const xLabels = [
 
 const Dashboard = () => {
 
-
     return (
         <Box display={"flex"} justifyContent={"center"} p={4} bgcolor={"#f5f5f5"}>
             <Grid container xs={12}>
