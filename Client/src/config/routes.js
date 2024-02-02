@@ -37,6 +37,8 @@ import CreateEmployee from "../pages/admin/employee/CreateEmployee";
 import EmployeeDetail from "../pages/admin/employee/EmployeeDetail";
 import Order from "../pages/admin/Order";
 import OrderDetail from "../pages/admin/order/OrderDetail";
+import appRoutes from "../config/appRoutes";
+import PageWrapper from "../components/layout/defaultlayoutAdmin/PageWrapper";
 
 //Public routes
 const publicRoutes = [
@@ -71,13 +73,12 @@ const publicRoutes = [
     { path: '/dashboard/categories', component: Category, layout: DefaultLayoutAdmin},
     { path: '/dashboard/orders', component: Order, layout: DefaultLayoutAdmin},
     { path: '/dashboard/orders/:id', component: OrderDetail, layout: DefaultLayoutAdmin},
-
     { path: '/dashboard/staff/:id', component: StaffDetail,layout: DefaultLayoutAdmin},
     { path: '/dashboard/staff/trash', component: StaffTrash,layout: DefaultLayoutAdmin},
     { path: '/dashboard/ingredient', component: Ingredient,layout: DefaultLayoutAdmin},
 
     //test
-    { path: '/dashboard', component: DashboardPage, layout: MainLayout}
+    // { path: '/dashboard', component: DashboardPage, layout: MainLayout}
 ];
 
 const privateRoutes = [];
