@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SidebarDashBoard from "../../common/SidebarDashBoard";
-import { Box, Grid } from "@mui/material";
-import Sidebar2 from "../../sidebar/Sidebar2"
+import { Box, Grid, Toolbar } from "@mui/material";
+import Sidebar2 from "../../common/Sidebar2";
+import sizeConfigs from "../../../config/sizeConfigs";
+import colorConfigs from "../../../config/colorConfigs";
+import { Outlet, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const DefaultLayoutAdmin = props => {
+const DefaultLayoutAdmin = (props) => {
+
     return (
-        <Box>
+        <Box sx={{
+            display: "flex"
+        }}>
             {/* <Box item xs={3} sx={{
                 position: "fixed",
                 top: 0,
@@ -20,7 +27,28 @@ const DefaultLayoutAdmin = props => {
                 {props.children}
             </Box> */}
 
-            <Sidebar2/>
+            <Box
+                component={"nav"}
+                sx={{
+                    width: sizeConfigs.sideBar.width,
+                    flexShrink: 0
+                }}
+            >
+                <Sidebar2/>
+            </Box>
+            <Box
+                component={"main"}
+                sx={{
+                    flexGrow: 1,
+                    p: 3,
+                    width: `calc(100% - ${sizeConfigs.sideBar.width})`,
+                    minHeight: "100vh",
+                    backgroundColor: colorConfigs.mainBg
+                }}
+            >
+                <Toolbar/>
+                <Outlet/>
+            </Box>
         </Box>
     )
 }

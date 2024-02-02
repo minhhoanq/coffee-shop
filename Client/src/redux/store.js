@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import cartSlice from "./slice/cartSlice";
 import authSlice from "./slice/authSlice";
 import productSlice from "./slice/productSlice";
+import appStateSlice from "./slice/appStateSlice";
 
 import {
     persistStore,
@@ -24,6 +25,7 @@ const authPersistConfig = {
 const store = configureStore({
     reducer: {
         cart: cartSlice,
+        appState: appStateSlice,
         product: productSlice,
         auth: persistReducer(authPersistConfig, authSlice)
     }
